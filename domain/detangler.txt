@@ -1,0 +1,36 @@
+{
+  reportDir domain/target/detangled
+  searchPaths
+  [
+    ./domain/target/condorcet-backend-domain-0.1.0.jar
+  ]
+  level 2
+  startsWith
+  {
+    include
+    [
+      [
+        com
+        seanshubin
+        condorcet
+        backend
+      ]
+    ]
+    exclude []
+    drop
+    [
+      [
+        com
+        seanshubin
+        condorcet
+        backend
+      ]
+    ]
+  }
+  ignoreFiles []
+  canFailBuild true
+  ignoreJavadoc true
+  logTiming true
+  logEffectiveConfiguration true
+  allowedInCycle domain/detangler-allowed-in-cycle.txt
+}
