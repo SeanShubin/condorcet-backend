@@ -13,35 +13,40 @@
   }
   dependencies {
     stdlib {
-      group org.jetbrains.kotlin
+      group    org.jetbrains.kotlin
       artifact kotlin-stdlib-jdk8
-    }
-    coroutines {
-      group    org.jetbrains.kotlinx
-      artifact kotlinx-coroutines-core
     }
     test {
       group    org.jetbrains.kotlin
       artifact kotlin-test-junit
       scope    test
     }
-    arrow {
-      group    io.arrow-kt
-      artifact arrow-core
+    jetty {
+      group    org.eclipse.jetty
+      artifact jetty-server
     }
     jackson {
-      group com.fasterxml.jackson.module
+      group    com.fasterxml.jackson.module
       artifact jackson-module-kotlin
     }
     jackson-time {
-      group com.fasterxml.jackson.datatype
+      group    com.fasterxml.jackson.datatype
       artifact jackson-datatype-jsr310
+    }
+    coroutines {
+      group    org.jetbrains.kotlinx
+      artifact kotlinx-coroutines-core
+    }
+    arrow {
+      group    io.arrow-kt
+      artifact arrow-core
     }
   }
   global [ stdlib test ]
   modules {
     domain  []
-    console [domain]
+    server  [ jetty domain ]
+    console [ server ]
   }
   detangler [domain]
   consoleEntryPoint {
