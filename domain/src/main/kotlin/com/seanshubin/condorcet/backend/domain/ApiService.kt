@@ -4,6 +4,16 @@ import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 
 class ApiService(private val passwordUtil: PasswordUtil) : Service {
     private var list: List<User> = emptyList()
+
+    override fun health(): Response {
+        return Response.Health("ok")
+    }
+
+    override fun unsupported(name: String, text: String): Response {
+        val userSafeMessage = "Unsupported command '$name'"
+        return Response.Unsupported(userSafeMessage, name, text)
+    }
+
     override fun addUser(name: String, email: String, password: String): Response {
         if (nameExists(name)) {
             return Response.Conflict("User with name '$name' already exists")

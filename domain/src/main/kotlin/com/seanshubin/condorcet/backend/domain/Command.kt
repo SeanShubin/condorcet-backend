@@ -13,4 +13,16 @@ interface Command {
             return service.authenticate(nameOrEmail, password)
         }
     }
+
+    data class Unsupported(val name: String, val text: String) : Command {
+        override fun exec(service: Service): Response {
+            return service.unsupported(name, text)
+        }
+    }
+
+    object Health : Command {
+        override fun exec(service: Service): Response {
+            return service.health()
+        }
+    }
 }

@@ -32,6 +32,7 @@ class ApiHandler(
     private val statusCodeMap = mapOf(
         Response.Unauthorized::class to 401,
         Response.NotFound::class to 404,
-        Response.Conflict::class to 409
+        Response.Conflict::class to 409,
+        Response.Unsupported::class to 400
     )
 }
