@@ -61,8 +61,11 @@
         <module>crypto</module>
         <module>io</module>
         <module>domain</module>
+        <module>database</module>
+        <module>database-util</module>
         <module>server</module>
         <module>console</module>
+        <module>json</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

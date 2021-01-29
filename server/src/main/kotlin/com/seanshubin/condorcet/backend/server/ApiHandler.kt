@@ -1,7 +1,11 @@
 package com.seanshubin.condorcet.backend.server
 
-import com.seanshubin.condorcet.backend.domain.*
+import com.seanshubin.condorcet.backend.domain.Parser
+import com.seanshubin.condorcet.backend.domain.Parsers
+import com.seanshubin.condorcet.backend.domain.Response
+import com.seanshubin.condorcet.backend.domain.Service
 import com.seanshubin.condorcet.backend.io.ioutil.consumeString
+import com.seanshubin.condorcet.backend.json.JsonMappers
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Request
@@ -33,6 +37,7 @@ class ApiHandler(
         Response.Unauthorized::class to 401,
         Response.NotFound::class to 404,
         Response.Conflict::class to 409,
-        Response.Unsupported::class to 400
+        Response.Unsupported::class to 400,
+        Response.MalformedJson::class to 400
     )
 }

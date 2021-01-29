@@ -16,12 +16,14 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
+            <groupId>com.seanshubin.condorcet.backend</groupId>
+            <artifactId>condorcet-backend-database</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
+            <groupId>com.seanshubin.condorcet.backend</groupId>
+            <artifactId>condorcet-backend-json</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     <parent>

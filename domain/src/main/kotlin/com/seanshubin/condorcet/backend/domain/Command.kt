@@ -14,15 +14,22 @@ interface Command {
         }
     }
 
-    data class Unsupported(val name: String, val text: String) : Command {
+    data class Unsupported(val name: String, val json: String) : Command {
         override fun exec(service: Service): Response {
-            return service.unsupported(name, text)
+            return service.unsupported(name, json)
         }
     }
 
     object Health : Command {
         override fun exec(service: Service): Response {
             return service.health()
+        }
+    }
+
+    data class MalformedJson(val name: String, val text: String) : Command {
+        override fun exec(service: Service): Response {
+            val userSafeMessage = "Malformed json for command '$name'\n$text"
+            return Response.MalformedJson(userSafeMessage, name, text)
         }
     }
 }

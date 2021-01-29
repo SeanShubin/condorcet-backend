@@ -44,11 +44,14 @@
   }
   global [ stdlib test ]
   modules {
-    crypto  []
-    io      []
-    domain  [ jackson jackson-time crypto io ]
-    server  [ jetty domain ]
-    console [ server ]
+    crypto        []
+    io            []
+    domain        [ crypto io database json ]
+    database      [ database-util]
+    database-util []
+    server        [ jetty domain ]
+    console       [ server ]
+    json          [ jackson jackson-time ]
   }
   detangler [domain]
   consoleEntryPoint {

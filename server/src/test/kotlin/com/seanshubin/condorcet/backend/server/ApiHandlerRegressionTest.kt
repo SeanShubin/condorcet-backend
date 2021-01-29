@@ -2,6 +2,7 @@ package com.seanshubin.condorcet.backend.server
 
 import com.seanshubin.condorcet.backend.crypto.*
 import com.seanshubin.condorcet.backend.domain.*
+import com.seanshubin.condorcet.backend.json.JsonMappers
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Request
 import org.junit.Test

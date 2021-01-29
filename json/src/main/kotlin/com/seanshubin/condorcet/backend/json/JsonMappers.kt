@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.domain
+package com.seanshubin.condorcet.backend.json
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
