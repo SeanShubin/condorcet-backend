@@ -58,6 +58,8 @@
         </dependencies>
     </dependencyManagement>
     <modules>
+        <module>crypto</module>
+        <module>io</module>
         <module>domain</module>
         <module>server</module>
         <module>console</module>

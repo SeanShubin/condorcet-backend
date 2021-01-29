@@ -44,7 +44,9 @@
   }
   global [ stdlib test ]
   modules {
-    domain  []
+    crypto  []
+    io      []
+    domain  [ jackson jackson-time crypto io ]
     server  [ jetty domain ]
     console [ server ]
   }

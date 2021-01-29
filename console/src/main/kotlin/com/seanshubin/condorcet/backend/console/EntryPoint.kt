@@ -1,5 +1,8 @@
 package com.seanshubin.condorcet.backend.console
 
-fun main(args: Array<String>) {
-    DependencyInjectionArgs(args).runner.run()
+object EntryPoint {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        Dependencies().runner.run()
+    }
 }
