@@ -3,16 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>condorcet-backend-database-util</artifactId>
+    <artifactId>condorcet-backend-logger</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.seanshubin.condorcet.backend</groupId>
-            <artifactId>condorcet-backend-io</artifactId>
+            <artifactId>condorcet-backend-contract</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
     <parent>

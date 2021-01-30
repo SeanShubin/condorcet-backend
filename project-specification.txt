@@ -41,17 +41,23 @@
       group    io.arrow-kt
       artifact arrow-core
     }
+    mysql-jdbc {
+        group mysql
+        artifact mysql-connector-java
+    }
   }
   global [ stdlib test ]
   modules {
     crypto        []
     io            []
-    domain        [ crypto io database json ]
-    database      [ database-util]
-    database-util []
+    domain        [ crypto io database json logger ]
+    database      [ database-util ]
+    database-util [ mysql-jdbc io ]
     server        [ jetty domain ]
     console       [ server ]
     json          [ jackson jackson-time ]
+    logger        [ contract ]
+    contract      []
   }
   detangler [domain]
   consoleEntryPoint {
