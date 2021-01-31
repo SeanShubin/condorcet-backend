@@ -26,12 +26,12 @@ class Dependencies {
     private val port: Int = 8080
     private val server: Server = Server(port)
     private val serverContract: ServerContract = JettyServer(server)
-    private val parser: Parser = ApiParser()
+    private val serviceEventParser: ServiceEventParser = ApiServiceEventParser()
     private val uniqueIdGennerator: UniqueIdGenerator = Uuid4()
     private val oneWayHash: OneWayHash = Sha256Hash()
     private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGennerator, oneWayHash)
     private val service: Service = ApiService(passwordUtil)
-    private val handler: Handler = ApiHandler(parser, service)
+    private val handler: Handler = ApiHandler(serviceEventParser, service)
     private val host: String = "localhost"
     private val user: String = "root"
     private val password: String = "insecure"

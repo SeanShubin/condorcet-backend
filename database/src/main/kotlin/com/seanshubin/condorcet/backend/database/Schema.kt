@@ -73,5 +73,16 @@ object Schema {
     val intVariableName = Field("name", STRING, unique = true)
     val intVariableValue = Field("value", INT)
     val intVariable = Table("int_variable", intVariableName, intVariableValue)
-    val tables = listOf(intVariable, user, event, status, election, candidate, voter, ballot, ranking, tally)
+    val tables = listOf(
+        intVariable,
+        user,
+        event,
+        status,
+        election,
+        candidate,
+        voter,
+        ballot,
+        ranking,
+        tally
+    )
 }

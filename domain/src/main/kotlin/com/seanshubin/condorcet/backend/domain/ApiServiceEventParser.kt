@@ -4,8 +4,8 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.seanshubin.condorcet.backend.json.JsonMappers
 import com.seanshubin.condorcet.backend.json.JsonUtil.normalizeJson
 
-class ApiParser : Parser {
-    override fun parse(name: String, text: String): Command {
+class ApiServiceEventParser : ServiceEventParser {
+    override fun parse(name: String, text: String): ServiceEvent {
         return try {
             val json = if (text.isBlank()) {
                 "{}"
@@ -14,16 +14,16 @@ class ApiParser : Parser {
             }
             parseJson(name, json)
         } catch (ex: Exception) {
-            Command.MalformedJson(name, text)
+            ServiceEvent.MalformedJson(name, text)
         }
     }
 
-    private fun parseJson(name: String, json: String): Command {
+    private fun parseJson(name: String, json: String): ServiceEvent {
         return when (name) {
-            "AddUser" -> parse<Command.AddUser>(json)
-            "Authenticate" -> parse<Command.Authenticate>(json)
-            "Health" -> parse<Command.Health>(json)
-            else -> Command.Unsupported(name, json)
+            "AddUser" -> parse<ServiceEvent.AddUser>(json)
+            "Authenticate" -> parse<ServiceEvent.Authenticate>(json)
+            "Health" -> parse<ServiceEvent.Health>(json)
+            else -> ServiceEvent.Unsupported(name, json)
         }
     }
 

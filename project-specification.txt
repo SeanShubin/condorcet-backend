@@ -61,7 +61,7 @@
   }
   detangler [domain]
   consoleEntryPoint {
-    console com.seanshubin.condorcet.backend.EntryPoint
+    console com.seanshubin.condorcet.backend.console.ServerApp
   }
   javaVersion 12
   deployableToMavenCentral true

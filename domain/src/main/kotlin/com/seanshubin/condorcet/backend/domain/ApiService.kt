@@ -5,29 +5,29 @@ import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 class ApiService(private val passwordUtil: PasswordUtil) : Service {
     private var list: List<User> = emptyList()
 
-    override fun health(): Response {
-        return Response.Health("ok")
+    override fun health(): ServiceResponse {
+        return ServiceResponse.Health("ok")
     }
 
-    override fun unsupported(name: String, text: String): Response {
+    override fun unsupported(name: String, text: String): ServiceResponse {
         val userSafeMessage = "Unsupported command '$name'"
-        return Response.Unsupported(userSafeMessage, name, text)
+        return ServiceResponse.Unsupported(userSafeMessage, name, text)
     }
 
-    override fun addUser(name: String, email: String, password: String): Response {
+    override fun addUser(name: String, email: String, password: String): ServiceResponse {
         if (nameExists(name)) {
-            return Response.Conflict("User with name '$name' already exists")
+            return ServiceResponse.Conflict("User with name '$name' already exists")
         }
         if (emailExists(email)) {
-            return Response.Conflict("User with email '$email' already exists")
+            return ServiceResponse.Conflict("User with email '$email' already exists")
         }
         val (salt, hash) = passwordUtil.createSaltAndHash(password)
         val user = User(name, email, salt, hash)
         list = list + user
-        return Response.UserName(user.name)
+        return ServiceResponse.UserName(user.name)
     }
 
-    override fun authenticate(nameOrEmail: String, password: String): Response {
+    override fun authenticate(nameOrEmail: String, password: String): ServiceResponse {
         var user: User? = null
         if (user == null) {
             user = list.find { it.name == nameOrEmail }
@@ -36,12 +36,12 @@ class ApiService(private val passwordUtil: PasswordUtil) : Service {
             user = list.find { it.email == nameOrEmail }
         }
         if (user == null) {
-            return Response.NotFound("User with name or email '$nameOrEmail' does not exist")
+            return ServiceResponse.NotFound("User with name or email '$nameOrEmail' does not exist")
         }
         if (passwordUtil.validatePassword(password, user.salt, user.hash)) {
-            return Response.UserName(user.name)
+            return ServiceResponse.UserName(user.name)
         } else {
-            return Response.Unauthorized("Authentication failed for user with name or email '$nameOrEmail'")
+            return ServiceResponse.Unauthorized("Authentication failed for user with name or email '$nameOrEmail'")
         }
     }
 

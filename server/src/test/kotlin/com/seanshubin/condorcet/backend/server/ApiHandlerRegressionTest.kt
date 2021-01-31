@@ -21,17 +21,17 @@ class ApiHandlerRegressionTest {
     fun regressionTest() {
         // given
         val commands = listOf(
-            Command.AddUser(name = "Alice", email = "alice@email.com", password = "alice-password"),
-            Command.AddUser(name = "duplicate-email", email = "alice@email.com", password = "alice-password"),
-            Command.AddUser(name = "Alice", email = "duplicate@name.com", password = "alice-password"),
-            Command.AddUser(name = "Bob", email = "bob@email.com", password = "bob-password"),
-            Command.AddUser(name = "Carol", email = "carol@email.com", password = "carol-password"),
-            Command.AddUser(name = "Dave", email = "dave@email.com", password = "dave-password"),
-            Command.Authenticate(nameOrEmail = "Alice", password = "alice-password"),
-            Command.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password"),
-            Command.Authenticate(nameOrEmail = "Alice", password = "wrong-password"),
-            Command.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password"),
-            Command.Authenticate(nameOrEmail = "Nobody", password = "password")
+            ServiceEvent.AddUser(name = "Alice", email = "alice@email.com", password = "alice-password"),
+            ServiceEvent.AddUser(name = "duplicate-email", email = "alice@email.com", password = "alice-password"),
+            ServiceEvent.AddUser(name = "Alice", email = "duplicate@name.com", password = "alice-password"),
+            ServiceEvent.AddUser(name = "Bob", email = "bob@email.com", password = "bob-password"),
+            ServiceEvent.AddUser(name = "Carol", email = "carol@email.com", password = "carol-password"),
+            ServiceEvent.AddUser(name = "Dave", email = "dave@email.com", password = "dave-password"),
+            ServiceEvent.Authenticate(nameOrEmail = "Alice", password = "alice-password"),
+            ServiceEvent.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password"),
+            ServiceEvent.Authenticate(nameOrEmail = "Alice", password = "wrong-password"),
+            ServiceEvent.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password"),
+            ServiceEvent.Authenticate(nameOrEmail = "Nobody", password = "password")
         )
         val tester = Tester(commands)
         tester.createSnapshotIfMissing()
@@ -79,12 +79,12 @@ class ApiHandlerRegressionTest {
         }
     }
 
-    class Tester(private val commands: List<Command>) {
+    class Tester(private val serviceEvents: List<ServiceEvent>) {
         private val snapshotDir = Paths.get("src", "test", "resources")
         private val snapshotName = "regression-snapshot.txt"
         private val snapshotPath = snapshotDir.resolve(snapshotName)
         private val charset: Charset = StandardCharsets.UTF_8
-        private val parser: Parser = ApiParser()
+        private val serviceEventParser: ServiceEventParser = ApiServiceEventParser()
         private val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
         private val oneWayHash: OneWayHash = Sha256Hash()
         private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
@@ -114,8 +114,8 @@ class ApiHandlerRegressionTest {
 
         fun runCommands(): List<Event> {
             val service: Service = ApiService(passwordUtil)
-            val handler: Handler = ApiHandler(parser, service)
-            return commands.map { runCommand(handler, it) }
+            val handler: Handler = ApiHandler(serviceEventParser, service)
+            return serviceEvents.map { runCommand(handler, it) }
         }
 
         private fun createSnapshot() {
@@ -124,10 +124,10 @@ class ApiHandlerRegressionTest {
             storeEvents(events)
         }
 
-        private fun runCommand(handler: Handler, command: Command): Event {
-            val name = command.javaClass.simpleName
+        private fun runCommand(handler: Handler, serviceEvent: ServiceEvent): Event {
+            val name = serviceEvent.javaClass.simpleName
             val method = "POST"
-            val requestBody = JsonMappers.pretty.writeValueAsString(command)
+            val requestBody = JsonMappers.pretty.writeValueAsString(serviceEvent)
             val target = "/$name"
             val request = RequestStub(name, method, requestBody)
             val baseRequest = Request(null, null)
