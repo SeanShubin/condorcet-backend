@@ -12,8 +12,8 @@ import com.seanshubin.condorcet.backend.logger.Logger
 import com.seanshubin.condorcet.backend.logger.LoggerFactory
 import com.seanshubin.condorcet.backend.server.ApiHandler
 import com.seanshubin.condorcet.backend.server.JettyServer
-import com.seanshubin.condorcet.backend.server.Runner
 import com.seanshubin.condorcet.backend.server.ServerContract
+import com.seanshubin.condorcet.backend.server.ServerRunner
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Server
 import java.nio.file.Path
@@ -41,5 +41,5 @@ class Dependencies {
         ConnectionLifecycle(host, user, password, sqlEvent)
     private val lifecycles: Lifecycles = DomainLifecycles(connectionLifecycle)
     private val initializer: Initializer = SchemaInitializer(lifecycles::connection, schemaName)
-    val runner: Runnable = Runner(lifecycles, initializer, serverContract, handler)
+    val runner: Runnable = ServerRunner(lifecycles, initializer, serverContract, handler)
 }
