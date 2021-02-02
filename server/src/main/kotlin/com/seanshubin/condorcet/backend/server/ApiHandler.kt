@@ -1,11 +1,11 @@
 package com.seanshubin.condorcet.backend.server
 
-import com.seanshubin.condorcet.backend.domain.Parsers
-import com.seanshubin.condorcet.backend.domain.Service
-import com.seanshubin.condorcet.backend.domain.ServiceEventParser
-import com.seanshubin.condorcet.backend.domain.ServiceResponse
 import com.seanshubin.condorcet.backend.io.ioutil.consumeString
 import com.seanshubin.condorcet.backend.json.JsonMappers
+import com.seanshubin.condorcet.backend.service.Parsers
+import com.seanshubin.condorcet.backend.service.Service
+import com.seanshubin.condorcet.backend.service.ServiceEventParser
+import com.seanshubin.condorcet.backend.service.ServiceResponse
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Request

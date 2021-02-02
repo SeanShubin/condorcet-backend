@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.domain
+package com.seanshubin.condorcet.backend.service
 
 interface Service {
     fun addUser(name: String, email: String, password: String): ServiceResponse

@@ -65,7 +65,7 @@
     <modules>
         <module>crypto</module>
         <module>io</module>
-        <module>domain</module>
+        <module>service</module>
         <module>database</module>
         <module>genericdb</module>
         <module>server</module>

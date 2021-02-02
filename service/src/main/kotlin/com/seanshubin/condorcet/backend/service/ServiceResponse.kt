@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.domain
+package com.seanshubin.condorcet.backend.service
 
 interface ServiceResponse {
     data class UserName(val name: String) : ServiceResponse

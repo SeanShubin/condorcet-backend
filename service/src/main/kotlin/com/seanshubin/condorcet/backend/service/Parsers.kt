@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.domain
+package com.seanshubin.condorcet.backend.service
 
 object Parsers {
     private val parseCommandNameFromTargetRegex = Regex("""/([^/]+).*""")

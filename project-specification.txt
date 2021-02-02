@@ -50,10 +50,10 @@
   modules {
     crypto        []
     io            []
-    domain        [ crypto io database json logger ]
+    service       [ crypto io database json logger ]
     database      [ genericdb json ]
     genericdb     [ mysql-jdbc io ]
-    server        [ jetty domain ]
+    server        [ jetty service ]
     console       [ server ]
     json          [ jackson jackson-time ]
     logger        [ contract ]

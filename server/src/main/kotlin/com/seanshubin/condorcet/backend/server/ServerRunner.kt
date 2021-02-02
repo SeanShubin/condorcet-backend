@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.server
 
-import com.seanshubin.condorcet.backend.domain.Lifecycles
 import com.seanshubin.condorcet.backend.genericdb.Initializer
+import com.seanshubin.condorcet.backend.service.Lifecycles
 import org.eclipse.jetty.server.Handler
 
 class ServerRunner(

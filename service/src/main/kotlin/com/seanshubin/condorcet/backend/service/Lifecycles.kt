@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.domain
+package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.genericdb.ConnectionWrapper
 
