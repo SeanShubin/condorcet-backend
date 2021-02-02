@@ -48,6 +48,8 @@ class ApiHandlerRegressionTest {
         assertEquals(expected, actual)
     }
 
+    data class Snapshot(val events: List<RegressionTestEvent>)
+
     class RequestStub(
         private val name: String,
         private val theMethod: String,
@@ -83,7 +85,7 @@ class ApiHandlerRegressionTest {
         }
     }
 
-    class Tester(private val serviceEvents: List<com.seanshubin.condorcet.backend.domain.ServiceEvent>) {
+    class Tester(private val serviceEvents: List<ServiceEvent>) {
         private val clock: Clock = Clock.systemUTC()
         private val snapshotDir = Paths.get("src", "test", "resources")
         private val snapshotName = "regression-snapshot.txt"
@@ -140,29 +142,33 @@ class ApiHandlerRegressionTest {
             }
         }
 
-        fun loadSnapshot(): List<Event> {
+        fun loadSnapshot(): Snapshot {
             val eventLines: List<String> = Files.readAllLines(snapshotPath)
-            val initialEvents = listOf<Event>()
-            return eventLinesToEvents(eventLines, initialEvents)
+            val initialEvents = listOf<RegressionTestEvent>()
+            val events = eventLinesToEvents(eventLines, initialEvents)
+            return Snapshot(events)
         }
 
-        tailrec
-        fun eventLinesToEvents(eventLines: List<String>, events: List<Event>): List<Event> {
-            if (eventLines.isEmpty()) return events
+        tailrec fun eventLinesToEvents(
+            eventLines: List<String>,
+            regressionTestEvents: List<RegressionTestEvent>
+        ): List<RegressionTestEvent> {
+            if (eventLines.isEmpty()) return regressionTestEvents
             else {
-                val (remainingEventLines, event) = Event.consumeFromLines(eventLines)
-                val eventsSoFar = events + event
+                val (remainingEventLines, event) = RegressionTestEvent.consumeFromLines(eventLines)
+                val eventsSoFar = regressionTestEvents + event
                 return eventLinesToEvents(remainingEventLines, eventsSoFar)
             }
 
         }
 
-        fun runCommands(): List<Event> {
+        fun runCommands(): Snapshot {
             try {
                 lifecycles.openAll()
                 initializer.reset()
                 initializer.initialize()
-                return serviceEvents.map { runCommand(handler, it) }
+                val events = serviceEvents.map { runCommand(handler, it) }
+                return Snapshot(events)
             } finally {
                 lifecycles.closeAll()
             }
@@ -171,14 +177,14 @@ class ApiHandlerRegressionTest {
 
         private fun createSnapshot() {
             Files.createDirectories(snapshotDir)
-            val events = runCommands()
-            storeEvents(events)
+            val snapshot = runCommands()
+            storeSnapshot(snapshot)
         }
 
         private fun runCommand(
             handler: Handler,
-            serviceEvent: com.seanshubin.condorcet.backend.domain.ServiceEvent
-        ): Event {
+            serviceEvent: ServiceEvent
+        ): RegressionTestEvent {
             val name = serviceEvent.javaClass.simpleName
             val method = "POST"
             val requestBody = JsonMappers.pretty.writeValueAsString(serviceEvent)
@@ -189,12 +195,12 @@ class ApiHandlerRegressionTest {
             handler.handle(target, baseRequest, request, response)
             val statusCode = response.status
             val responseBody = response.stringWriter.buffer.toString()
-            val event = Event(name, method, requestBody, statusCode, responseBody)
+            val event = RegressionTestEvent(name, method, requestBody, statusCode, responseBody)
             return event
         }
 
-        private fun storeEvents(events: List<Event>) {
-            val eventLines = events.flatMap { it.toLines() }
+        private fun storeSnapshot(snapshot: Snapshot) {
+            val eventLines = snapshot.events.flatMap { it.toLines() }
             Files.write(snapshotPath, eventLines, charset)
         }
     }

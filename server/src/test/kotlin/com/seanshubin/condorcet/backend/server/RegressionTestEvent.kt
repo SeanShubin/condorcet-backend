@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.server
 
-data class Event(
+data class RegressionTestEvent(
     val name: String,
     val method: String,
     val requestBody: String,
@@ -12,7 +12,7 @@ data class Event(
     }
 
     companion object {
-        fun consumeFromLines(lines: List<String>): Pair<List<String>, Event> {
+        fun consumeFromLines(lines: List<String>): Pair<List<String>, RegressionTestEvent> {
             var index = 0
             val name = lines[index++]
             val method = lines[index++]
@@ -32,7 +32,7 @@ data class Event(
             responseBodyLines.add(lines[index++])
             val responseBody = responseBodyLines.joinToString("\n")
             val remainingLines = lines.drop(index)
-            val event = Event(name, method, requestBody, status, responseBody)
+            val event = RegressionTestEvent(name, method, requestBody, status, responseBody)
             return Pair(remainingLines, event)
         }
     }
