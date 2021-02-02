@@ -1,10 +1,15 @@
 package com.seanshubin.condorcet.backend.domain
 
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
+import com.seanshubin.condorcet.backend.database.StateDbCommands
+import com.seanshubin.condorcet.backend.database.StateDbQueries
+import com.seanshubin.condorcet.backend.database.UserRow
 
-class ApiService(private val passwordUtil: PasswordUtil) : Service {
-    private var list: List<User> = emptyList()
-
+class ApiService(
+    private val passwordUtil: PasswordUtil,
+    private val stateDbCommands: StateDbCommands,
+    private val stateDbQueries: StateDbQueries
+) : Service {
     override fun health(): ServiceResponse {
         return ServiceResponse.Health("ok")
     }
@@ -22,18 +27,18 @@ class ApiService(private val passwordUtil: PasswordUtil) : Service {
             return ServiceResponse.Conflict("User with email '$email' already exists")
         }
         val (salt, hash) = passwordUtil.createSaltAndHash(password)
-        val user = User(name, email, salt, hash)
-        list = list + user
+        stateDbCommands.createUser(name, email, salt, hash)
+        val user = stateDbQueries.findUserByName(name)
         return ServiceResponse.UserName(user.name)
     }
 
     override fun authenticate(nameOrEmail: String, password: String): ServiceResponse {
-        var user: User? = null
+        var user: UserRow? = null
         if (user == null) {
-            user = list.find { it.name == nameOrEmail }
+            user = stateDbQueries.searchUserByName(nameOrEmail)
         }
         if (user == null) {
-            user = list.find { it.email == nameOrEmail }
+            user = stateDbQueries.searchUserByEmail(nameOrEmail)
         }
         if (user == null) {
             return ServiceResponse.NotFound("User with name or email '$nameOrEmail' does not exist")
@@ -45,97 +50,6 @@ class ApiService(private val passwordUtil: PasswordUtil) : Service {
         }
     }
 
-    private fun nameExists(name: String): Boolean = list.find { it.name == name } != null
-    private fun emailExists(email: String): Boolean = list.find { it.email == email } != null
+    private fun nameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
+    private fun emailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
 }
-/*
-import * as R from 'ramda'
-import util from 'util'
-
-const statusCode = {
-    ok: 200,
-    unauthorized: 401,
-    notFound: 404,
-    conflict: 409
-}
-
-const composeResponse = ({status, bodyJson}) => {
-    const json = () => Promise.resolve(bodyJson)
-    const ok = status >= 200 && status <= 299
-    const result = Promise.resolve({status, ok, json})
-    return result
-}
-
-const users = JSON.parse(sessionStorage.getItem('users')) || []
-const addUser = ({name, email, password}) => {
-    users.push({name, email, password})
-    sessionStorage.setItem('users', JSON.stringify(users))
-}
-const findByName = name => R.find(R.propEq('name', name), users)
-const findByEmail = email => R.find(R.propEq('email', email), users)
-const nameExists = name => !!findByName(name)
-const emailExists = email => !!findByEmail(email)
-const loginRequest = ({nameOrEmail, password}) => {
-    let found
-    if (!found) found = findByName(nameOrEmail)
-    if (!found) found = findByEmail(nameOrEmail)
-    if (found) {
-        if (found.password === password) {
-            return {
-                status: statusCode.ok,
-                bodyJson: {name: found.name}
-            }
-        } else {
-            return {
-                status: statusCode.unauthorized,
-                bodyJson: {userMessage: `Wrong password for user '${nameOrEmail}'`}
-            }
-        }
-    } else {
-        return {
-            status: statusCode.notFound,
-            bodyJson: {userMessage: `User '${nameOrEmail}' not found`}
-        }
-    }
-}
-const registerRequest = ({name, email, password}) => {
-    if (nameExists(name)) {
-        return {
-            status: statusCode.conflict,
-            bodyJson: {userMessage: `User name '${name}' is unavailable`}
-        }
-    } else if (emailExists(email)) {
-        return {
-            status: statusCode.conflict,
-            bodyJson: {userMessage: `User with email '${email}' is already registered`}
-        }
-    } else {
-        addUser({name, email, password})
-        return {
-            status: statusCode.ok,
-            bodyJson: {name}
-        }
-    }
-}
-
-if (R.isEmpty(users)) {
-    addUser({name: 'foo', email: 'foo@email.com', password: 'bar'})
-}
-
-const fetchSimulator = (resource, init) => {
-    let result
-    if (resource === '/proxy/login-request' && init.method === 'POST') {
-        const {nameOrEmail, password} = JSON.parse(init.body)
-        result = loginRequest({nameOrEmail, password})
-    } else if (resource === '/proxy/register-request' && init.method === 'POST') {
-        const {name, email, password} = JSON.parse(init.body)
-        result = registerRequest({name, email, password})
-    } else {
-        throw Error(`No response defined for ${util.inspect({resource, init})}`)
-    }
-    return composeResponse(result)
-}
-
-export default fetchSimulator
-
- */

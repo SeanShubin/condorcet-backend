@@ -36,25 +36,5 @@
         <artifactId>condorcet-backend-parent</artifactId>
         <version>0.1.0</version>
     </parent>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.seanshubin.detangler</groupId>
-                <artifactId>detangler-maven-plugin</artifactId>
-                <version>0.9.4</version>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <detanglerConfig>${basedir}/detangler.txt</detanglerConfig>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
     <name>${project.groupId}:${project.artifactId}</name>
 </project>

@@ -1,10 +1,9 @@
 package com.seanshubin.condorcet.backend.domain
 
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.seanshubin.condorcet.backend.json.JsonMappers
+import com.seanshubin.condorcet.backend.json.JsonMappers.parse
 import com.seanshubin.condorcet.backend.json.JsonUtil.normalizeJson
 
-class ApiServiceEventParser : ServiceEventParser {
+class ServiceEventParserImpl : ServiceEventParser {
     override fun parse(name: String, text: String): ServiceEvent {
         return try {
             val json = if (text.isBlank()) {
@@ -26,6 +25,4 @@ class ApiServiceEventParser : ServiceEventParser {
             else -> ServiceEvent.Unsupported(name, json)
         }
     }
-
-    private inline fun <reified T> parse(json: String): T = JsonMappers.parser.readValue(json)
 }

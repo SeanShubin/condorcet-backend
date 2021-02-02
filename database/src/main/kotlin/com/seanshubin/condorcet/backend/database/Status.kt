@@ -1,5 +1,5 @@
 package com.seanshubin.condorcet.backend.database
 
-enum class DbStatus {
+enum class Status {
     EDITING, LIVE, COMPLETE;
 }

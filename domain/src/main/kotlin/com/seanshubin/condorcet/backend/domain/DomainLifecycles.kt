@@ -3,15 +3,22 @@ package com.seanshubin.condorcet.backend.domain
 import com.seanshubin.condorcet.backend.database.util.ConnectionWrapper
 import com.seanshubin.condorcet.backend.database.util.Lifecycle
 
-class DomainLifecycles(private val connectionLifecycle: Lifecycle<ConnectionWrapper>) : Lifecycles {
+class DomainLifecycles(
+    private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper>,
+    private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper>
+) : Lifecycles {
     override fun openAll() {
-        connectionLifecycle.open()
+        eventConnectionLifecycle.open()
+        stateConnectionLifecycle.open()
     }
 
     override fun closeAll() {
-        connectionLifecycle.close()
+        stateConnectionLifecycle.close()
+        eventConnectionLifecycle.close()
     }
 
-    override val connection: ConnectionWrapper
-        get() = connectionLifecycle.getValue()
+    override val eventConnection: ConnectionWrapper
+        get() = eventConnectionLifecycle.getValue()
+    override val stateConnection: ConnectionWrapper
+        get() = stateConnectionLifecycle.getValue()
 }

@@ -51,7 +51,7 @@
     crypto        []
     io            []
     domain        [ crypto io database json logger ]
-    database      [ database-util ]
+    database      [ database-util json ]
     database-util [ mysql-jdbc io ]
     server        [ jetty domain ]
     console       [ server ]
@@ -59,7 +59,7 @@
     logger        [ contract ]
     contract      []
   }
-  detangler [domain]
+  detangler [console]
   consoleEntryPoint {
     console com.seanshubin.condorcet.backend.console.ServerApp
   }
