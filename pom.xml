@@ -67,7 +67,7 @@
         <module>io</module>
         <module>domain</module>
         <module>database</module>
-        <module>database-util</module>
+        <module>genericdb</module>
         <module>server</module>
         <module>console</module>
         <module>json</module>

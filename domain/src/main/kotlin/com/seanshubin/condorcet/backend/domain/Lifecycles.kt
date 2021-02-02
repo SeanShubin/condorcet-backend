@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.domain
 
-import com.seanshubin.condorcet.backend.database.util.ConnectionWrapper
+import com.seanshubin.condorcet.backend.genericdb.ConnectionWrapper
 
 interface Lifecycles {
     fun openAll()

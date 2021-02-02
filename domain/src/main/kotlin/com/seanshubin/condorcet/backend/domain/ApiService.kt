@@ -1,9 +1,9 @@
 package com.seanshubin.condorcet.backend.domain
 
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
-import com.seanshubin.condorcet.backend.database.StateDbCommands
-import com.seanshubin.condorcet.backend.database.StateDbQueries
-import com.seanshubin.condorcet.backend.database.UserRow
+import com.seanshubin.condorcet.backend.genericdb.StateDbCommands
+import com.seanshubin.condorcet.backend.genericdb.StateDbQueries
+import com.seanshubin.condorcet.backend.genericdb.UserRow
 
 class ApiService(
     private val passwordUtil: PasswordUtil,

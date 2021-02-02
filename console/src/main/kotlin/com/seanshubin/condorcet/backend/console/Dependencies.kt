@@ -1,9 +1,8 @@
 package com.seanshubin.condorcet.backend.console
 
 import com.seanshubin.condorcet.backend.crypto.*
-import com.seanshubin.condorcet.backend.database.*
-import com.seanshubin.condorcet.backend.database.util.*
 import com.seanshubin.condorcet.backend.domain.*
+import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.io.ClassLoaderUtil
 import com.seanshubin.condorcet.backend.logger.LogGroup
 import com.seanshubin.condorcet.backend.logger.Logger
@@ -74,8 +73,8 @@ class Dependencies {
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle
     )
-    private val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, CondorcetEventSchema)
-    private val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, CondorcetSchema)
+    private val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema)
+    private val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema)
     private val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     val runner: Runnable = ServerRunner(lifecycles, initializer, serverContract, handler)
 }

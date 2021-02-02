@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.domain
 
-import com.seanshubin.condorcet.backend.database.util.ConnectionWrapper
-import com.seanshubin.condorcet.backend.database.util.Lifecycle
+import com.seanshubin.condorcet.backend.genericdb.ConnectionWrapper
+import com.seanshubin.condorcet.backend.genericdb.Lifecycle
 
 class DomainLifecycles(
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper>,
