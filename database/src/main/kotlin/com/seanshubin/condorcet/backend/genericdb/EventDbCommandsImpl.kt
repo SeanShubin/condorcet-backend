@@ -11,7 +11,7 @@ class EventDbCommandsImpl(
 ) : EventDbCommands, GenericDatabase by genericDatabase {
     override fun addEvent(type: String, body: String) {
         update(
-            "insert-event.sql",
+            "insert-event",
             clock.instant(),
             type,
             body
@@ -20,11 +20,11 @@ class EventDbCommandsImpl(
     }
 
     override fun setLastSynced(lastSynced: Int) {
-        update("set-last-synced.sql", lastSynced)
+        update("set-last-synced", lastSynced)
     }
 
     override fun initializeLastSynced(lastSynced: Int) {
-        update("initialize-last-synced.sql", lastSynced)
+        update("initialize-last-synced", lastSynced)
     }
 
     private tailrec fun synchronize() {

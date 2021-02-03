@@ -2,7 +2,6 @@ package com.seanshubin.condorcet.backend.server
 
 import com.seanshubin.condorcet.backend.crypto.*
 import com.seanshubin.condorcet.backend.genericdb.*
-import com.seanshubin.condorcet.backend.io.ClassLoaderUtil
 import com.seanshubin.condorcet.backend.service.*
 import org.eclipse.jetty.server.Handler
 import java.nio.file.Path
@@ -22,7 +21,7 @@ class DeterministicDependencies(
     val uniqueIdGenerator: UniqueIdGenerator = RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdsPath)
     val oneWayHash: OneWayHash = Sha256Hash()
     val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
-    private fun loadResource(name: String): String = ClassLoaderUtil.loadResourceAsString("sql/$name")
+    val queryLoader: QueryLoader = QueryLoaderFromResource()
     val host: String = "localhost"
     val user: String = "root"
     val password: String = "insecure"
@@ -38,11 +37,11 @@ class DeterministicDependencies(
     val stateDatabase = Database(StateSchema, stateConnectionLifecycle)
     val eventGenericDatabase: GenericDatabase = GenericDatabaseImpl(
         eventConnectionLifecycle::getValue,
-        ::loadResource
+        queryLoader
     )
     val stateGenericDatabase: GenericDatabase = GenericDatabaseImpl(
         stateConnectionLifecycle::getValue,
-        ::loadResource
+        queryLoader
     )
     val stateDbQueries: StateDbQueries = StateDbQueriesFromResources(stateGenericDatabase)
     val eventDbQueries: EventDbQueries = EventDbQueriesImpl(
@@ -59,7 +58,7 @@ class DeterministicDependencies(
     )
     val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
     val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
-    val lifecycles: Lifecycles = DomainLifecycles(
+    val lifecycles: Lifecycles = ServiceLifecycles(
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle
     )

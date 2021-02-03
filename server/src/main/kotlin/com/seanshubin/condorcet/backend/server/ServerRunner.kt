@@ -11,14 +11,11 @@ class ServerRunner(
     private val handler: Handler
 ) : Runnable {
     override fun run() {
-        try {
-            lifecycles.openAll()
+        lifecycles.doInLifecycle {
             initializer.initialize()
             server.setHandler(handler)
             server.start()
             server.join()
-        } finally {
-            lifecycles.closeAll()
         }
     }
 }

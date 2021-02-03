@@ -4,9 +4,9 @@ import java.sql.ResultSet
 
 class EventDbQueriesImpl(genericDatabase: GenericDatabase) : EventDbQueries, GenericDatabase by genericDatabase {
     override fun eventsToSync(lastEventSynced: Int): List<EventRow> =
-        query(::createEvent, "list-unsynced-events.sql", lastEventSynced)
+        query(::createEvent, "list-unsynced-events", lastEventSynced)
 
-    override fun lastSynced(): Int? = queryZeroOrOneInt("get-last-synced.sql")
+    override fun lastSynced(): Int? = queryZeroOrOneInt("get-last-synced")
 
     private fun createEvent(resultSet: ResultSet): EventRow {
         val id = resultSet.getInt("id")

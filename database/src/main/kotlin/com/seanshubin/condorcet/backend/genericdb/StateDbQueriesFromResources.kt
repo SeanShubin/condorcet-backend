@@ -7,21 +7,21 @@ class StateDbQueriesFromResources(genericDatabase: GenericDatabase) : StateDbQue
     override fun findUserByName(name: String): UserRow =
         queryExactlyOneRow(
             ::createUser,
-            "user-by-name.sql",
+            "user-by-name",
             name
         )
 
     override fun searchUserByName(name: String): UserRow? =
         queryZeroOrOneRow(
             ::createUser,
-            "user-by-name.sql",
+            "user-by-name",
             name
         )
 
     override fun searchUserByEmail(email: String): UserRow? =
         queryZeroOrOneRow(
             ::createUser,
-            "user-by-email.sql",
+            "user-by-email",
             email
         )
 

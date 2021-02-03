@@ -5,14 +5,14 @@ import java.sql.ResultSet
 
 class GenericDatabaseImpl(
     private val getConnection: () -> ConnectionWrapper,
-    private val loadResource: (String) -> String
+    private val queryLoader: QueryLoader
 ) : GenericDatabase {
     override fun <T> queryExactlyOneRow(
         createFunction: (ResultSet) -> T,
         sqlResource: String,
         vararg parameters: Any?
     ): T {
-        val sql = loadResource(sqlResource)
+        val sql = queryLoader.load(sqlResource)
         return getConnection().queryExactlyOneRow(sql, *parameters) { createFunction(it) }
     }
 
@@ -21,7 +21,7 @@ class GenericDatabaseImpl(
         sqlResource: String,
         vararg parameters: Any?
     ): T? {
-        val sql = loadResource(sqlResource)
+        val sql = queryLoader.load(sqlResource)
         return getConnection().queryZeroOrOneRow(sql, *parameters) { createFunction(it) }
     }
 
@@ -30,7 +30,7 @@ class GenericDatabaseImpl(
         sqlResource: String,
         vararg parameters: Any?
     ): List<T> {
-        val sql = loadResource(sqlResource)
+        val sql = queryLoader.load(sqlResource)
         return getConnection().queryList(sql, *parameters) { createFunction(it) }
     }
 
@@ -41,7 +41,7 @@ class GenericDatabaseImpl(
         queryZeroOrOneRow(::createInt, sqlResource, *parameters)
 
     override fun update(sqlResource: String, vararg parameters: Any?): Int {
-        val sql = loadResource(sqlResource)
+        val sql = queryLoader.load(sqlResource)
         return getConnection().update(sql, *parameters)
     }
 }

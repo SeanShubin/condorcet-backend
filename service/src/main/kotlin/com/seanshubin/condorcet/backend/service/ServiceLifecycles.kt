@@ -3,7 +3,7 @@ package com.seanshubin.condorcet.backend.service
 import com.seanshubin.condorcet.backend.genericdb.ConnectionWrapper
 import com.seanshubin.condorcet.backend.genericdb.Lifecycle
 
-class DomainLifecycles(
+class ServiceLifecycles(
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper>,
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper>
 ) : Lifecycles {
