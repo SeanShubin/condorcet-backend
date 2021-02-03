@@ -87,9 +87,9 @@ class ApiHandlerRegressionTest {
         private val serviceEvents: List<ServiceEvent>
     ) {
         val snapshots = listOf(
-            Snapshot.Api,
-            Snapshot.Event,
-            Snapshot.State
+            SnapshotView.Api,
+            SnapshotView.Event,
+            SnapshotView.State
         )
 
         fun createMissingExpectations(snapshotDir: Path, dependencies: DeterministicDependencies) {
@@ -115,17 +115,17 @@ class ApiHandlerRegressionTest {
             snapshots.forEach { validateSnapshot(snapshotDir, it) }
         }
 
-        fun validateSnapshot(snapshotDir: Path, snapshot: Snapshot) {
-            val expectLines = snapshot.loadLines(snapshotDir, "expect")
-            val actualLines = snapshot.loadLines(snapshotDir, "actual")
+        fun validateSnapshot(snapshotDir: Path, snapshotView: SnapshotView) {
+            val expectLines = snapshotView.loadLines(snapshotDir, "expect")
+            val actualLines = snapshotView.loadLines(snapshotDir, "actual")
             val pairs = expectLines zip actualLines
             pairs.forEachIndexed { index, (expect, actual) ->
-                assertEquals(expect, actual, "failure on line $index in ${snapshot.name}")
+                assertEquals(expect, actual, "failure on line $index in ${snapshotView.name}")
             }
-            assertEquals(expectLines.size, actualLines.size, "sizes different in ${snapshot.name}")
+            assertEquals(expectLines.size, actualLines.size, "sizes different in ${snapshotView.name}")
         }
 
-        fun generateSnapshotInfo(dependencies: DeterministicDependencies): SnapshotInfo =
+        fun generateSnapshotInfo(dependencies: DeterministicDependencies): Snapshot =
             doInLifecycle(dependencies) {
                 dependencies.lifecycles.openAll()
                 dependencies.initializer.reset()
@@ -133,7 +133,7 @@ class ApiHandlerRegressionTest {
                 val events = serviceEvents.map { runCommand(dependencies.handler, it) }
                 val eventTables = queryTables(dependencies.eventDatabase)
                 val stateTables = queryTables(dependencies.stateDatabase)
-                SnapshotInfo(events, eventTables, stateTables)
+                Snapshot(events, eventTables, stateTables)
             }
 
         fun queryTables(database: Database): List<GenericTable> {
