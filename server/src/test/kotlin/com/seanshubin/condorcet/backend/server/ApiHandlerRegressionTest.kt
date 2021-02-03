@@ -80,7 +80,7 @@ class ApiHandlerRegressionTest {
     object StateSnapshot : Snapshot {
         override val name = "state"
         override fun getLines(info: SnapshotInfo): List<String> {
-            return info.eventTables.flatMap { it.toLines() }
+            return info.stateTables.flatMap { it.toLines() }
         }
     }
 
