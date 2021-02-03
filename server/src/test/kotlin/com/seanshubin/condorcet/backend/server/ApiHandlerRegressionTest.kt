@@ -1,10 +1,8 @@
 package com.seanshubin.condorcet.backend.server
 
-import com.seanshubin.condorcet.backend.crypto.*
-import com.seanshubin.condorcet.backend.genericdb.*
-import com.seanshubin.condorcet.backend.io.ClassLoaderUtil
+import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.json.JsonMappers
-import com.seanshubin.condorcet.backend.service.*
+import com.seanshubin.condorcet.backend.service.ServiceEvent
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Request
 import org.junit.Test
@@ -15,10 +13,6 @@ import java.io.StringWriter
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.nio.file.StandardOpenOption
-import java.time.Clock
-import java.time.Instant
-import java.time.ZoneId
 import kotlin.test.assertEquals
 
 class ApiHandlerRegressionTest {
@@ -39,57 +33,19 @@ class ApiHandlerRegressionTest {
             ServiceEvent.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password"),
             ServiceEvent.Authenticate(nameOrEmail = "Nobody", password = "password")
         )
+        val snapshotDir = Paths.get("src", "test", "resources")
         val tester = Tester(commands)
-        tester.createMissingExpectations()
+        tester.createMissingExpectations(snapshotDir, DeterministicDependencies(snapshotDir))
 
         // when
-        tester.generateActual()
+        tester.generateActual(snapshotDir, DeterministicDependencies(snapshotDir))
 
         // then
-        tester.validateExpectationsAgainstActual()
+        tester.validateExpectationsAgainstActual(snapshotDir)
     }
 
-    class Database(val schema: Schema, val lifecycle: Lifecycle<ConnectionWrapper>)
 
-    interface Snapshot {
-        val name: String
-        fun getPath(snapshotDir: Path, annotation: String): Path {
-            return snapshotDir.resolve("regression-$name-$annotation.txt")
-        }
 
-        fun getLines(info: SnapshotInfo): List<String>
-        fun loadLines(snapshotDir: Path, annotation: String): List<String> {
-            return Files.readAllLines(getPath(snapshotDir, annotation))
-        }
-    }
-
-    object ApiSnapshot : Snapshot {
-        override val name = "api"
-
-        override fun getLines(info: SnapshotInfo): List<String> {
-            return info.events.flatMap { it.toLines() }
-        }
-    }
-
-    object EventSnapshot : Snapshot {
-        override val name = "event"
-        override fun getLines(info: SnapshotInfo): List<String> {
-            return info.eventTables.flatMap { it.toLines() }
-        }
-    }
-
-    object StateSnapshot : Snapshot {
-        override val name = "state"
-        override fun getLines(info: SnapshotInfo): List<String> {
-            return info.stateTables.flatMap { it.toLines() }
-        }
-    }
-
-    data class SnapshotInfo(
-        val events: List<RegressionTestEvent>,
-        val eventTables: List<GenericTable>,
-        val stateTables: List<GenericTable>
-    )
 
     class RequestStub(
         private val name: String,
@@ -126,118 +82,20 @@ class ApiHandlerRegressionTest {
         }
     }
 
-    class RememberingUuidGenerator(val backing: UniqueIdGenerator, val path: Path) : UniqueIdGenerator {
-        var index = 0
-        val previous: MutableList<String> = if (Files.exists(path)) Files.readAllLines(path) else mutableListOf()
-        fun reset() {
-            index = 0
-        }
 
-        override fun uniqueId(): String {
-            if (index < previous.size) {
-                val result = previous[index]
-                index++
-                return result
-            } else {
-                val result = backing.uniqueId()
-                previous.add(result)
-                index++
-                Files.write(path, listOf(result), StandardOpenOption.CREATE, StandardOpenOption.APPEND)
-                return result
-            }
-        }
-    }
-
-    class RememberingClock(val backing: Clock, val path: Path) : Clock() {
-        var index = 0
-        val previous: MutableList<String> = if (Files.exists(path)) Files.readAllLines(path) else mutableListOf()
-        fun reset() {
-            index = 0
-        }
-
-        override fun getZone(): ZoneId {
-            throw UnsupportedOperationException()
-        }
-
-        override fun withZone(zone: ZoneId?): Clock {
-            throw UnsupportedOperationException()
-        }
-
-        override fun instant(): Instant {
-            if (index < previous.size) {
-                val result = Instant.parse(previous[index])
-                index++
-                return result
-            } else {
-                val result = backing.instant()
-                previous.add(result.toString())
-                index++
-                Files.write(path, listOf(result.toString()), StandardOpenOption.CREATE, StandardOpenOption.APPEND)
-                return result
-            }
-        }
-    }
-
-    class Tester(private val serviceEvents: List<ServiceEvent>) {
-        private val realClock: Clock = Clock.systemUTC()
-        private val snapshotDir = Paths.get("src", "test", "resources")
-        private val clockPath = snapshotDir.resolve("clock.txt")
-        private val clock: RememberingClock = RememberingClock(realClock, clockPath)
-        private val snapshots = listOf(ApiSnapshot, EventSnapshot, StateSnapshot)
-        private val uniqueIdsPath = snapshotDir.resolve("unique-ids.txt")
-        private val serviceEventParser: ServiceEventParser = ServiceEventParserImpl()
-        private val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
-        private val uniqueIdGenerator: RememberingUuidGenerator =
-            RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdsPath)
-        private val oneWayHash: OneWayHash = Sha256Hash()
-        private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
-        private fun loadResource(name: String): String = ClassLoaderUtil.loadResourceAsString("sql/$name")
-        private val host: String = "localhost"
-        private val user: String = "root"
-        private val password: String = "insecure"
-        private val sqlEvent: (String) -> Unit = ::println
-        private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-            ConnectionLifecycle(host, user, password, sqlEvent)
-        private val eventDatabase = Database(EventSchema, eventConnectionLifecycle)
-        private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-            ConnectionLifecycle(host, user, password, sqlEvent)
-        private val stateDatabase = Database(StateSchema, stateConnectionLifecycle)
-        private val eventGenericDatabase: GenericDatabase = GenericDatabaseImpl(
-            eventConnectionLifecycle::getValue,
-            ::loadResource
+    class Tester(
+        private val serviceEvents: List<ServiceEvent>
+    ) {
+        val snapshots = listOf(
+            Snapshot.Api,
+            Snapshot.Event,
+            Snapshot.State
         )
-        private val stateGenericDatabase: GenericDatabase = GenericDatabaseImpl(
-            stateConnectionLifecycle::getValue,
-            ::loadResource
-        )
-        private val stateDbQueries: StateDbQueries = StateDbQueriesFromResources(stateGenericDatabase)
-        private val eventDbQueries: EventDbQueries = EventDbQueriesImpl(
-            eventGenericDatabase
-        )
-        private val dbEventParser: DbEventParser = DbEventParserImpl()
-        private val stateDbCommands: StateDbCommands = StateDbCommandsImpl(stateGenericDatabase)
-        private val eventDbCommands: EventDbCommands = EventDbCommandsImpl(
-            eventGenericDatabase,
-            eventDbQueries,
-            stateDbCommands,
-            dbEventParser,
-            clock
-        )
-        private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
-        private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
-        private val lifecycles: Lifecycles = DomainLifecycles(
-            eventConnectionLifecycle = eventConnectionLifecycle,
-            stateConnectionLifecycle = stateConnectionLifecycle
-        )
-        private val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema)
-        private val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema)
-        private val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
-        private val handler: Handler = ApiHandler(serviceEventParser, service)
 
-        fun createMissingExpectations() {
+        fun createMissingExpectations(snapshotDir: Path, dependencies: DeterministicDependencies) {
             val missingSnapshots = snapshots.filter { !Files.exists(it.getPath(snapshotDir, "expect")) }
             if (missingSnapshots.isNotEmpty()) {
-                val snapshotInfo = generateSnapshotInfo()
+                val snapshotInfo = generateSnapshotInfo(dependencies)
                 missingSnapshots.forEach {
                     val snapshotLines = it.getLines(snapshotInfo)
                     Files.write(it.getPath(snapshotDir, "expect"), snapshotLines)
@@ -245,19 +103,19 @@ class ApiHandlerRegressionTest {
             }
         }
 
-        fun generateActual() {
-            val snapshotInfo = generateSnapshotInfo()
+        fun generateActual(snapshotDir: Path, dependencies: DeterministicDependencies) {
+            val snapshotInfo = generateSnapshotInfo(dependencies)
             snapshots.forEach {
                 val snapshotLines = it.getLines(snapshotInfo)
                 Files.write(it.getPath(snapshotDir, "actual"), snapshotLines)
             }
         }
 
-        fun validateExpectationsAgainstActual() {
-            snapshots.forEach(::validateSnapshot)
+        fun validateExpectationsAgainstActual(snapshotDir: Path) {
+            snapshots.forEach { validateSnapshot(snapshotDir, it) }
         }
 
-        fun validateSnapshot(snapshot: Snapshot) {
+        fun validateSnapshot(snapshotDir: Path, snapshot: Snapshot) {
             val expectLines = snapshot.loadLines(snapshotDir, "expect")
             val actualLines = snapshot.loadLines(snapshotDir, "actual")
             val pairs = expectLines zip actualLines
@@ -267,16 +125,14 @@ class ApiHandlerRegressionTest {
             assertEquals(expectLines.size, actualLines.size, "sizes different in ${snapshot.name}")
         }
 
-        fun generateSnapshotInfo(): SnapshotInfo =
-            doInLifecycle {
-                lifecycles.openAll()
-                uniqueIdGenerator.reset()
-                clock.reset()
-                initializer.reset()
-                initializer.initialize()
-                val events = serviceEvents.map { runCommand(handler, it) }
-                val eventTables = queryTables(eventDatabase)
-                val stateTables = queryTables(stateDatabase)
+        fun generateSnapshotInfo(dependencies: DeterministicDependencies): SnapshotInfo =
+            doInLifecycle(dependencies) {
+                dependencies.lifecycles.openAll()
+                dependencies.initializer.reset()
+                dependencies.initializer.initialize()
+                val events = serviceEvents.map { runCommand(dependencies.handler, it) }
+                val eventTables = queryTables(dependencies.eventDatabase)
+                val stateTables = queryTables(dependencies.stateDatabase)
                 SnapshotInfo(events, eventTables, stateTables)
             }
 
@@ -291,19 +147,19 @@ class ApiHandlerRegressionTest {
             }
         }
 
-        fun <T> doInLifecycle(f: () -> T): T {
+        fun <T> doInLifecycle(dependencies: DeterministicDependencies, f: () -> T): T {
             try {
-                lifecycles.openAll()
+                dependencies.lifecycles.openAll()
                 return f()
             } finally {
-                lifecycles.closeAll()
+                dependencies.lifecycles.closeAll()
             }
         }
 
 
-        fun debug() {
-            doInLifecycle {
-                val databases = listOf(eventDatabase, stateDatabase)
+        fun debug(dependencies: DeterministicDependencies) {
+            doInLifecycle(dependencies) {
+                val databases = listOf(dependencies.eventDatabase, dependencies.stateDatabase)
                 databases.forEach { database ->
                     val schema = database.schema
                     val schemaName = schema.name
