@@ -15,11 +15,13 @@ import java.io.StringWriter
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
-import java.time.Clock
+import java.nio.file.StandardOpenOption
 import kotlin.test.assertEquals
 
 class ApiHandlerRegressionTest {
+
     @Test
     fun regressionTest() {
         // given
@@ -37,17 +39,56 @@ class ApiHandlerRegressionTest {
             ServiceEvent.Authenticate(nameOrEmail = "Nobody", password = "password")
         )
         val tester = Tester(commands)
-        tester.createSnapshotIfMissing()
-        val expected = tester.loadSnapshot()
+        tester.createMissingExpectations()
 
         // when
-        val actual = tester.runCommands()
+        tester.generateActual()
 
         // then
-        assertEquals(expected, actual)
+        tester.validateExpectationsAgainstActual()
     }
 
-    data class Snapshot(val events: List<RegressionTestEvent>)
+    class Database(val schema: Schema, val lifecycle: Lifecycle<ConnectionWrapper>)
+
+    interface Snapshot {
+        val name: String
+        fun getPath(snapshotDir: Path, annotation: String): Path {
+            return snapshotDir.resolve("regression-$name-$annotation.txt")
+        }
+
+        fun getLines(info: SnapshotInfo): List<String>
+        fun loadLines(snapshotDir: Path, annotation: String): List<String> {
+            return Files.readAllLines(getPath(snapshotDir, annotation))
+        }
+    }
+
+    object ApiSnapshot : Snapshot {
+        override val name = "api"
+
+        override fun getLines(info: SnapshotInfo): List<String> {
+            return info.events.flatMap { it.toLines() }
+        }
+    }
+
+    object EventSnapshot : Snapshot {
+        override val name = "event"
+        override fun getLines(info: SnapshotInfo): List<String> {
+            return info.eventTables.flatMap { it.toLines() }
+        }
+    }
+
+    object StateSnapshot : Snapshot {
+        override val name = "state"
+        override fun getLines(info: SnapshotInfo): List<String> {
+            return info.eventTables.flatMap { it.toLines() }
+        }
+    }
+
+    data class SnapshotInfo(
+        val events: List<RegressionTestEvent>,
+        val eventTables: List<GenericTable>,
+        val stateTables: List<GenericTable>
+    )
 
     class RequestStub(
         private val name: String,
@@ -84,14 +125,41 @@ class ApiHandlerRegressionTest {
         }
     }
 
+    class RememberingUuidGenerator(val backing: UniqueIdGenerator, val path: Path) : UniqueIdGenerator {
+        var index = 0
+        val previous: MutableList<String> = if (Files.exists(path)) Files.readAllLines(path) else mutableListOf()
+        fun reset() {
+            index = 0
+        }
+
+        override fun uniqueId(): String {
+            if (index < previous.size) {
+                val result = previous[index]
+                index++
+                return result
+            } else {
+                val result = backing.uniqueId()
+                previous.add(result)
+                index++
+                Files.write(path, listOf(result), StandardOpenOption.CREATE, StandardOpenOption.APPEND)
+                return result
+            }
+        }
+    }
+
     class Tester(private val serviceEvents: List<ServiceEvent>) {
-        private val clock: Clock = Clock.systemUTC()
-        private val snapshotDir = Paths.get("src", "test", "resources")
-        private val snapshotName = "regression-snapshot.txt"
-        private val snapshotPath = snapshotDir.resolve(snapshotName)
         private val charset: Charset = StandardCharsets.UTF_8
+        private val clock: MinuteAtATime = MinuteAtATime()
+        private val snapshotDir = Paths.get("src", "test", "resources")
+        private val snapshots = listOf(ApiSnapshot, EventSnapshot, StateSnapshot)
+        private val snapshotPathApi = snapshotDir.resolve("regression-api.txt")
+        private val snapshotPathEvent = snapshotDir.resolve("regression-event.txt")
+        private val snapshotPathState = snapshotDir.resolve("regression-state.txt")
+        private val uniqueIdsPath = snapshotDir.resolve("unique-ids.txt")
         private val serviceEventParser: ServiceEventParser = ServiceEventParserImpl()
-        private val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
+        private val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
+        private val uniqueIdGenerator: RememberingUuidGenerator =
+            RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdsPath)
         private val oneWayHash: OneWayHash = Sha256Hash()
         private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
         private fun loadResource(name: String): String = ClassLoaderUtil.loadResourceAsString("sql/$name")
@@ -101,8 +169,10 @@ class ApiHandlerRegressionTest {
         private val sqlEvent: (String) -> Unit = ::println
         private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
             ConnectionLifecycle(host, user, password, sqlEvent)
+        private val eventDatabase = Database(EventSchema, eventConnectionLifecycle)
         private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
             ConnectionLifecycle(host, user, password, sqlEvent)
+        private val stateDatabase = Database(StateSchema, stateConnectionLifecycle)
         private val eventGenericDatabase: GenericDatabase = GenericDatabaseImpl(
             eventConnectionLifecycle::getValue,
             ::loadResource
@@ -135,48 +205,90 @@ class ApiHandlerRegressionTest {
         private val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
         private val handler: Handler = ApiHandler(serviceEventParser, service)
 
-        fun createSnapshotIfMissing() {
-            if (!Files.exists(snapshotPath)) {
-                createSnapshot()
+        fun createMissingExpectations() {
+            val missingSnapshots = snapshots.filter { !Files.exists(it.getPath(snapshotDir, "expect")) }
+            if (missingSnapshots.isNotEmpty()) {
+                val snapshotInfo = generateSnapshotInfo()
+                missingSnapshots.forEach {
+                    val snapshotLines = it.getLines(snapshotInfo)
+                    Files.write(it.getPath(snapshotDir, "expect"), snapshotLines)
+                }
             }
         }
 
-        fun loadSnapshot(): Snapshot {
-            val eventLines: List<String> = Files.readAllLines(snapshotPath)
-            val initialEvents = listOf<RegressionTestEvent>()
-            val events = eventLinesToEvents(eventLines, initialEvents)
-            return Snapshot(events)
-        }
-
-        tailrec fun eventLinesToEvents(
-            eventLines: List<String>,
-            regressionTestEvents: List<RegressionTestEvent>
-        ): List<RegressionTestEvent> {
-            if (eventLines.isEmpty()) return regressionTestEvents
-            else {
-                val (remainingEventLines, event) = RegressionTestEvent.consumeFromLines(eventLines)
-                val eventsSoFar = regressionTestEvents + event
-                return eventLinesToEvents(remainingEventLines, eventsSoFar)
+        fun generateActual() {
+            val snapshotInfo = generateSnapshotInfo()
+            snapshots.forEach {
+                val snapshotLines = it.getLines(snapshotInfo)
+                Files.write(it.getPath(snapshotDir, "actual"), snapshotLines)
             }
-
         }
 
-        fun runCommands(): Snapshot {
-            try {
+        fun validateExpectationsAgainstActual() {
+            snapshots.forEach(::validateSnapshot)
+        }
+
+        fun validateSnapshot(snapshot: Snapshot) {
+            val expectLines = snapshot.loadLines(snapshotDir, "expect")
+            val actualLines = snapshot.loadLines(snapshotDir, "actual")
+            val pairs = expectLines zip actualLines
+            pairs.forEachIndexed { index, (expect, actual) ->
+                assertEquals(expect, actual, "failure on line $index in ${snapshot.name}")
+            }
+            assertEquals(expectLines.size, actualLines.size, "sizes different in ${snapshot.name}")
+        }
+
+        fun generateSnapshotInfo(): SnapshotInfo =
+            doInLifecycle {
                 lifecycles.openAll()
+                uniqueIdGenerator.reset()
+                clock.reset()
                 initializer.reset()
                 initializer.initialize()
                 val events = serviceEvents.map { runCommand(handler, it) }
-                return Snapshot(events)
+                val eventTables = queryTables(eventDatabase)
+                val stateTables = queryTables(stateDatabase)
+                SnapshotInfo(events, eventTables, stateTables)
+            }
+
+        fun queryTables(database: Database): List<GenericTable> {
+            val schema = database.schema
+            val schemaName = schema.name
+            return schema.tables.map { table ->
+                val tableName = table.name
+                val query = "select * from $tableName"
+                database.lifecycle.getValue().update("use $schemaName")
+                database.lifecycle.getValue().queryGenericTable(query)
+            }
+        }
+
+        fun <T> doInLifecycle(f: () -> T): T {
+            try {
+                lifecycles.openAll()
+                return f()
             } finally {
                 lifecycles.closeAll()
             }
         }
 
-        private fun createSnapshot() {
-            Files.createDirectories(snapshotDir)
-            val snapshot = runCommands()
-            storeSnapshot(snapshot)
+
+        fun debug() {
+            doInLifecycle {
+                val databases = listOf(eventDatabase, stateDatabase)
+                databases.forEach { database ->
+                    val schema = database.schema
+                    val schemaName = schema.name
+                    schema.tables.forEach { table ->
+                        val tableName = table.name
+                        val query = "select * from $tableName"
+                        database.lifecycle.getValue().update("use $schemaName")
+                        val genericTable = database.lifecycle.getValue().queryGenericTable(query)
+                        genericTable.toLines().forEach(::println)
+                    }
+
+                }
+
+            }
         }
 
         private fun runCommand(
@@ -195,11 +307,6 @@ class ApiHandlerRegressionTest {
             val responseBody = response.stringWriter.buffer.toString()
             val event = RegressionTestEvent(name, method, requestBody, statusCode, responseBody)
             return event
-        }
-
-        private fun storeSnapshot(snapshot: Snapshot) {
-            val eventLines = snapshot.events.flatMap { it.toLines() }
-            Files.write(snapshotPath, eventLines, charset)
         }
     }
 

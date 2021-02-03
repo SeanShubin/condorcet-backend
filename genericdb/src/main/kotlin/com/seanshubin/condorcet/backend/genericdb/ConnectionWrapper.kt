@@ -32,6 +32,19 @@ class ConnectionWrapper(
         return list
     }
 
+    fun queryGenericTable(sql: String, vararg parameters: Any?): GenericTable {
+        val statement = connection.prepareStatement(sql) as ClientPreparedStatement
+        sqlEvent(statement.asSql())
+        updateParameters(parameters, statement)
+        return statement.use {
+            val resultSet = statement.executeQuery()
+            val iterator = ResultSetIterator.consume(resultSet)
+            val columnNames = iterator.columnNames
+            val rows = iterator.consumeRemainingToTable()
+            GenericTable(sql, columnNames, rows)
+        }
+    }
+
     fun <T> queryExactlyOneRow(sql: String, vararg parameters: Any?, f: (ResultSet) -> T): T =
         query(sql, *parameters) { resultSet ->
             if (resultSet.next()) {
