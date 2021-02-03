@@ -4,7 +4,7 @@ class SchemaInitializer(
     private val getConnection: () -> ConnectionWrapper,
     private val schema: Schema
 ) : Initializer {
-    override fun reset() {
+    override fun purgeAllData() {
         getConnection().update("drop database if exists ${schema.name}")
     }
 

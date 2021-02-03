@@ -7,4 +7,13 @@ interface Lifecycles {
     fun closeAll()
     val eventConnection: ConnectionWrapper
     val stateConnection: ConnectionWrapper
+    fun <T> doInLifecycle(f: () -> T): T {
+        openAll()
+        try {
+            return f()
+        } finally {
+            closeAll()
+        }
+    }
+
 }

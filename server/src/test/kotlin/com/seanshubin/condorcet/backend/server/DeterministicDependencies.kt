@@ -8,7 +8,11 @@ import org.eclipse.jetty.server.Handler
 import java.nio.file.Path
 import java.time.Clock
 
-class DeterministicDependencies(snapshotDir: Path) {
+class DeterministicDependencies(
+    snapshotDir: Path,
+    snapshotViews: List<SnapshotView>,
+    serviceEvents: List<ServiceEvent>
+) {
     val realClock: Clock = Clock.systemUTC()
     val clockPath = snapshotDir.resolve("clock.txt")
     val clock: Clock = RememberingClock(realClock, clockPath)
@@ -60,4 +64,14 @@ class DeterministicDependencies(snapshotDir: Path) {
     val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema)
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     val handler: Handler = ApiHandler(serviceEventParser, service)
+    val regressionTestRunner: RegressionTestRunner = RegressionTestRunnerImpl(
+        snapshotDir,
+        snapshotViews,
+        lifecycles,
+        initializer,
+        serviceEvents,
+        handler,
+        eventDatabase,
+        stateDatabase
+    )
 }
