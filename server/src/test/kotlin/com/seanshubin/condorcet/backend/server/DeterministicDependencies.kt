@@ -43,7 +43,7 @@ class DeterministicDependencies(
         stateConnectionLifecycle::getValue,
         queryLoader
     )
-    val stateDbQueries: StateDbQueries = StateDbQueriesFromResources(stateGenericDatabase)
+    val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     val eventDbQueries: EventDbQueries = EventDbQueriesImpl(
         eventGenericDatabase
     )

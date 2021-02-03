@@ -65,13 +65,7 @@ class Dependencies {
         clock
     )
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
-    private val connectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, sqlEvent)
-    private val genericDatabase: GenericDatabase = GenericDatabaseImpl(
-        connectionLifecycle::getValue,
-        queryLoader
-    )
-    private val stateDbQueries: StateDbQueries = StateDbQueriesFromResources(genericDatabase)
+    private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
     private val handler: Handler = ApiHandler(serviceEventParser, service)
     val runner: Runnable = ServerRunner(lifecycles, initializer, serverContract, handler)
