@@ -35,4 +35,18 @@ interface SnapshotView {
             return info.stateTables.flatMap { it.toLines() }
         }
     }
+
+    object EventSql : SnapshotView {
+        override val name = "sql-event"
+        override fun getLines(info: Snapshot): List<String> {
+            return info.sqlEventStatements.map { "$it;" }
+        }
+    }
+
+    object StateSql : SnapshotView {
+        override val name = "sql-state"
+        override fun getLines(info: Snapshot): List<String> {
+            return info.sqlStateStatements.map { "$it;" }
+        }
+    }
 }

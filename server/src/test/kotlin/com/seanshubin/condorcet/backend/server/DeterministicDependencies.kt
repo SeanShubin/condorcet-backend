@@ -14,9 +14,9 @@ class DeterministicDependencies(
     serviceEvents: List<ServiceEvent>
 ) {
     val realClock: Clock = Clock.systemUTC()
-    val clockPath = snapshotDir.resolve("clock.txt")
+    val clockPath = snapshotDir.resolve("deterministic-clock.txt")
     val clock: Clock = RememberingClock(realClock, clockPath)
-    val uniqueIdsPath = snapshotDir.resolve("unique-ids.txt")
+    val uniqueIdsPath = snapshotDir.resolve("deterministic-unique-ids.txt")
     val serviceEventParser: ServiceEventParser = ServiceEventParserImpl()
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
     val uniqueIdGenerator: UniqueIdGenerator = RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdsPath)
@@ -26,12 +26,15 @@ class DeterministicDependencies(
     val host: String = "localhost"
     val user: String = "root"
     val password: String = "insecure"
-    val sqlEvent: (String) -> Unit = ::println
+    val sqlEventMonitor: SqlMonitor = SqlMonitorInMemory()
+    val sqlStateMonitor: SqlMonitor = SqlMonitorInMemory()
+    val logSqlEvent: (String) -> Unit = sqlEventMonitor::monitor
+    val logSqlState: (String) -> Unit = sqlStateMonitor::monitor
     val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, sqlEvent)
+        ConnectionLifecycle(host, user, password, logSqlEvent)
     val eventDatabase = Database(EventSchema, eventConnectionLifecycle)
     val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, sqlEvent)
+        ConnectionLifecycle(host, user, password, logSqlState)
     val stateDatabase = Database(StateSchema, stateConnectionLifecycle)
     val eventGenericDatabase: GenericDatabase = GenericDatabaseImpl(
         eventConnectionLifecycle::getValue,
@@ -72,6 +75,8 @@ class DeterministicDependencies(
         serviceEvents,
         handler,
         eventDatabase,
-        stateDatabase
+        stateDatabase,
+        sqlEventMonitor,
+        sqlStateMonitor
     )
 }

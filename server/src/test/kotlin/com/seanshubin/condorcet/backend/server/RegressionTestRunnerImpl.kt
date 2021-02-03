@@ -18,7 +18,9 @@ class RegressionTestRunnerImpl(
     val serviceEvents: List<ServiceEvent>,
     val handler: Handler,
     val eventDatabase: Database,
-    val stateDatabase: Database
+    val stateDatabase: Database,
+    val sqlEventMonitor: SqlMonitor,
+    val sqlStateMonitor: SqlMonitor
 ) : RegressionTestRunner {
     override fun createMissingSnapshotsForExpected() {
         val missingSnapshots = snapshotViews.filter { !Files.exists(it.getPath(snapshotDir, "expect")) }
@@ -44,9 +46,11 @@ class RegressionTestRunnerImpl(
             initializer.purgeAllData()
             initializer.initialize()
             val events = serviceEvents.map(::runCommand)
+            val sqlEventStatements = sqlEventMonitor.getSqlStatements()
+            val sqlStateStatements = sqlStateMonitor.getSqlStatements()
             val eventTables = queryTables(eventDatabase)
             val stateTables = queryTables(stateDatabase)
-            Snapshot(events, eventTables, stateTables)
+            Snapshot(events, eventTables, stateTables, sqlEventStatements, sqlStateStatements)
         }
 
     private fun runCommand(serviceEvent: ServiceEvent): RegressionTestEvent {
@@ -66,11 +70,9 @@ class RegressionTestRunnerImpl(
 
     private fun queryTables(database: Database): List<GenericTable> {
         val schema = database.schema
-        val schemaName = schema.name
         return schema.tables.map { table ->
             val tableName = table.name
             val query = "select * from $tableName"
-            database.lifecycle.getValue().update("use $schemaName")
             database.lifecycle.getValue().queryGenericTable(query)
         }
     }

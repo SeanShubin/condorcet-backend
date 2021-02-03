@@ -82,7 +82,9 @@ class ApiHandlerRegressionTest {
         val snapshotViews = listOf(
             SnapshotView.Api,
             SnapshotView.Event,
-            SnapshotView.State
+            SnapshotView.State,
+            SnapshotView.EventSql,
+            SnapshotView.StateSql
         )
 
         fun createMissingSnapshotsForExpected() {
