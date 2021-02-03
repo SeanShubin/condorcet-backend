@@ -12,12 +12,13 @@ import java.io.BufferedReader
 import java.io.PrintWriter
 import java.io.StringReader
 import java.io.StringWriter
-import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneId
 import kotlin.test.assertEquals
 
 class ApiHandlerRegressionTest {
@@ -147,14 +148,42 @@ class ApiHandlerRegressionTest {
         }
     }
 
+    class RememberingClock(val backing: Clock, val path: Path) : Clock() {
+        var index = 0
+        val previous: MutableList<String> = if (Files.exists(path)) Files.readAllLines(path) else mutableListOf()
+        fun reset() {
+            index = 0
+        }
+
+        override fun getZone(): ZoneId {
+            throw UnsupportedOperationException()
+        }
+
+        override fun withZone(zone: ZoneId?): Clock {
+            throw UnsupportedOperationException()
+        }
+
+        override fun instant(): Instant {
+            if (index < previous.size) {
+                val result = Instant.parse(previous[index])
+                index++
+                return result
+            } else {
+                val result = backing.instant()
+                previous.add(result.toString())
+                index++
+                Files.write(path, listOf(result.toString()), StandardOpenOption.CREATE, StandardOpenOption.APPEND)
+                return result
+            }
+        }
+    }
+
     class Tester(private val serviceEvents: List<ServiceEvent>) {
-        private val charset: Charset = StandardCharsets.UTF_8
-        private val clock: MinuteAtATime = MinuteAtATime()
+        private val realClock: Clock = Clock.systemUTC()
         private val snapshotDir = Paths.get("src", "test", "resources")
+        private val clockPath = snapshotDir.resolve("clock.txt")
+        private val clock: RememberingClock = RememberingClock(realClock, clockPath)
         private val snapshots = listOf(ApiSnapshot, EventSnapshot, StateSnapshot)
-        private val snapshotPathApi = snapshotDir.resolve("regression-api.txt")
-        private val snapshotPathEvent = snapshotDir.resolve("regression-event.txt")
-        private val snapshotPathState = snapshotDir.resolve("regression-state.txt")
         private val uniqueIdsPath = snapshotDir.resolve("unique-ids.txt")
         private val serviceEventParser: ServiceEventParser = ServiceEventParserImpl()
         private val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
