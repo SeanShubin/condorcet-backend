@@ -15,5 +15,4 @@ object EventSchema : Schema {
         intVariable,
         event
     )
-    override val enums: List<DbEnum> = emptyList()
 }

@@ -2,24 +2,13 @@ drop database if exists condorcet_state;
 select count(*) from information_schema.schemata where schema_name = 'condorcet_state';
 create database condorcet_state;
 use condorcet_state;
-create table role (
-    id int not null auto_increment,
-    name varchar(255) not null,
-    primary key(id)
-);
 create table user (
     id int not null auto_increment,
     name varchar(255) not null unique,
     email varchar(255) not null unique,
     salt varchar(255) not null,
     hash varchar(255) not null,
-    role_id int not null,
-    foreign key fk_role(role_id) references role(id),
-    primary key(id)
-);
-create table status (
-    id int not null auto_increment,
-    name varchar(255) not null,
+    role ENUM('OWNER','ADMIN','TYPICAL') not null,
     primary key(id)
 );
 create table election (
@@ -29,8 +18,7 @@ create table election (
     name varchar(255) not null unique,
     end datetime(6),
     secret boolean not null,
-    status_id int not null,
-    foreign key fk_status(status_id) references status(id),
+    status ENUM('EDITING','LIVE','COMPLETE') not null,
     primary key(id)
 );
 create table candidate (
@@ -79,12 +67,6 @@ create table tally (
     primary key(id)
 );
 alter table tally add unique unique_tally(election_id);
-insert into status (name) values ('editing');
-insert into status (name) values ('live');
-insert into status (name) values ('complete');
-insert into role (name) values ('owner');
-insert into role (name) values ('admin');
-insert into role (name) values ('typical');
 select name,
        email,
        salt,
@@ -106,8 +88,8 @@ insert into user (name,
                   email,
                   salt,
                   hash,
-                  role_id)
-values ('Alice', 'alice@email.com', '01298967-e68a-4f65-97f5-8b31b1f94a75', '5DD7625619EB3DBB0DD1BD404AA1F4BC71B9B34E1A3C1109725631BFF959C4A7', (select id from role where name = 'OWNER'))
+                  role)
+values ('Alice', 'alice@email.com', '01298967-e68a-4f65-97f5-8b31b1f94a75', '5DD7625619EB3DBB0DD1BD404AA1F4BC71B9B34E1A3C1109725631BFF959C4A7', 'OWNER')
 ;
 select name,
        email,
@@ -158,8 +140,8 @@ insert into user (name,
                   email,
                   salt,
                   hash,
-                  role_id)
-values ('Bob', 'bob@email.com', '738cdf72-3487-4f6a-a8a7-438d15f5e22d', 'AA60D57CE55FE26F5820EADA7A62A1BB91B80C667CC4E6163D19ACE32B7E2C68', (select id from role where name = 'TYPICAL'))
+                  role)
+values ('Bob', 'bob@email.com', '738cdf72-3487-4f6a-a8a7-438d15f5e22d', 'AA60D57CE55FE26F5820EADA7A62A1BB91B80C667CC4E6163D19ACE32B7E2C68', 'TYPICAL')
 ;
 select name,
        email,
@@ -189,8 +171,8 @@ insert into user (name,
                   email,
                   salt,
                   hash,
-                  role_id)
-values ('Carol', 'carol@email.com', 'f38296e8-882d-4a22-a64c-a88660981dd6', '46C1FDAFECC2E858C91B34F75E41622DE8D70B67BABBEA32CD4F3654BA35D2F2', (select id from role where name = 'TYPICAL'))
+                  role)
+values ('Carol', 'carol@email.com', 'f38296e8-882d-4a22-a64c-a88660981dd6', '46C1FDAFECC2E858C91B34F75E41622DE8D70B67BABBEA32CD4F3654BA35D2F2', 'TYPICAL')
 ;
 select name,
        email,
@@ -220,8 +202,8 @@ insert into user (name,
                   email,
                   salt,
                   hash,
-                  role_id)
-values ('Dave', 'dave@email.com', 'cb33f280-89d0-4dc6-a01f-453aa87fcafb', 'C7362093884945D1657B57AD3ECC7DE449D60D7AA78246F31B12D579A220D2B2', (select id from role where name = 'TYPICAL'))
+                  role)
+values ('Dave', 'dave@email.com', 'cb33f280-89d0-4dc6-a01f-453aa87fcafb', 'C7362093884945D1657B57AD3ECC7DE449D60D7AA78246F31B12D579A220D2B2', 'TYPICAL')
 ;
 select name,
        email,

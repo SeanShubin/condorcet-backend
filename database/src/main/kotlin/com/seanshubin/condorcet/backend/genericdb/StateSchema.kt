@@ -5,19 +5,17 @@ import com.seanshubin.condorcet.backend.domain.Status
 import com.seanshubin.condorcet.backend.genericdb.FieldType.*
 
 object StateSchema : Schema {
-    val role = DbEnum.fromEnum<Role>()
     val userName = Field("name", STRING, unique = true)
     val userEmail = Field("email", STRING, unique = true)
     val userSalt = Field("salt", STRING)
     val userHash = Field("hash", STRING)
-    val userRole = ForeignKey("role", role.table)
+    val userRole = DbEnum("role", Role.values().toList())
     val user = Table("user", userName, userEmail, userSalt, userHash, userRole)
-    val status = DbEnum.fromEnum<Status>()
     val electionOwner = ForeignKey("owner", user)
     val electionName = Field("name", STRING, unique = true)
     val electionEnd = Field("end", DATE, allowNull = true)
     val electionSecret = Field("secret", BOOLEAN)
-    val electionStatus = ForeignKey("status", status.table)
+    val electionStatus = DbEnum("status", Status.values().toList())
     val election = Table(
         "election",
         electionOwner,
@@ -66,9 +64,7 @@ object StateSchema : Schema {
     )
     override val name: String = "condorcet_state"
     override val tables = listOf(
-        role.table,
         user,
-        status.table,
         election,
         candidate,
         voter,
@@ -76,5 +72,4 @@ object StateSchema : Schema {
         ranking,
         tally
     )
-    override val enums: List<DbEnum> = listOf(status, role)
 }

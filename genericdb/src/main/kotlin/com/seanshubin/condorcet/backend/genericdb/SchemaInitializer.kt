@@ -13,7 +13,6 @@ class SchemaInitializer(
             createDatabase()
             useDatabase()
             createSchema()
-            createStaticData()
         } else {
             useDatabase()
         }
@@ -36,14 +35,6 @@ class SchemaInitializer(
         val createTableStatements = schema.tables.flatMap { it.toCreateTableStatements() }
         createTableStatements.forEach {
             getConnection().update(it)
-        }
-    }
-
-    private fun createStaticData() {
-        schema.enums.forEach { dbEnum ->
-            dbEnum.valueNames.forEach { name ->
-                getConnection().update("insert into ${dbEnum.name} (name) values (?)", name.toLowerCase())
-            }
         }
     }
 }
