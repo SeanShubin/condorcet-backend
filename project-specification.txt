@@ -51,7 +51,7 @@
     crypto        []
     io            []
     service       [ crypto io database json logger ]
-    database      [ genericdb json ]
+    database      [ genericdb json domain ]
     genericdb     [ mysql-jdbc io table ]
     server        [ jetty service table ]
     console       [ server ]
@@ -59,6 +59,7 @@
     logger        [ contract ]
     contract      []
     table         []
+    domain        []
   }
   detangler [console]
   consoleEntryPoint {

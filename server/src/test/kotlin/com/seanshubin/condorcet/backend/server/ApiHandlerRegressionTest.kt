@@ -103,13 +103,9 @@ class ApiHandlerRegressionTest {
         }
 
         fun validateSnapshotView(snapshotDir: Path, snapshotView: SnapshotView) {
-            val expectLines = snapshotView.loadLines(snapshotDir, "expect")
-            val actualLines = snapshotView.loadLines(snapshotDir, "actual")
-            val pairs = expectLines zip actualLines
-            pairs.forEachIndexed { index, (expect, actual) ->
-                assertEquals(expect, actual, "failure on line $index in ${snapshotView.name}")
-            }
-            assertEquals(expectLines.size, actualLines.size, "sizes different in ${snapshotView.name}")
+            val expect = snapshotView.loadLines(snapshotDir, "expect").joinToString("\n")
+            val actual = snapshotView.loadLines(snapshotDir, "actual").joinToString("\n")
+            assertEquals(expect, actual, snapshotView.name)
         }
     }
 }

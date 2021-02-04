@@ -25,6 +25,8 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
             email
         )
 
+    override fun countUsers(): Int =
+        queryExactlyOneInt("count-users")
 
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")

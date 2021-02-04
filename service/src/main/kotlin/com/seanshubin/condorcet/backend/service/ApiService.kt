@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
+import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.StateDbCommands
 import com.seanshubin.condorcet.backend.genericdb.StateDbQueries
 import com.seanshubin.condorcet.backend.genericdb.UserRow
@@ -26,8 +27,13 @@ class ApiService(
         if (emailExists(email)) {
             return ServiceResponse.Conflict("User with email '$email' already exists")
         }
+        val role = if (stateDbQueries.countUsers() == 0) {
+            Role.OWNER
+        } else {
+            Role.TYPICAL
+        }
         val (salt, hash) = passwordUtil.createSaltAndHash(password)
-        stateDbCommands.createUser(name, email, salt, hash)
+        stateDbCommands.createUser(name, email, salt, hash, role)
         val user = stateDbQueries.findUserByName(name)
         return ServiceResponse.UserName(user.name)
     }

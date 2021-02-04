@@ -1,9 +1,7 @@
 package com.seanshubin.condorcet.backend.genericdb
 
 import com.mysql.cj.jdbc.ClientPreparedStatement
-import java.sql.Connection
-import java.sql.ResultSet
-import java.sql.Timestamp
+import java.sql.*
 import java.time.Instant
 
 class ConnectionWrapper(
@@ -15,7 +13,7 @@ class ConnectionWrapper(
         updateParameters(parameters, statement)
         return statement.use {
             sqlEvent(statement.asSql())
-            f(statement.executeQuery())
+            f(executeQuery(sql, statement))
         }
     }
 
@@ -24,7 +22,7 @@ class ConnectionWrapper(
         val statement = connection.prepareStatement(sql) as ClientPreparedStatement
         updateParameters(parameters, statement)
         statement.use {
-            val resultSet = statement.executeQuery()
+            val resultSet = executeQuery(sql, statement)
             while (resultSet.next()) {
                 list.add(f(resultSet))
             }
@@ -37,7 +35,7 @@ class ConnectionWrapper(
         sqlEvent(statement.asSql())
         updateParameters(parameters, statement)
         return statement.use {
-            val resultSet = statement.executeQuery()
+            val resultSet = executeQuery(sql, statement)
             val iterator = ResultSetIterator.consume(resultSet)
             val columnNames = iterator.columnNames
             val rows = iterator.consumeRemainingToTable()
@@ -82,7 +80,7 @@ class ConnectionWrapper(
         updateParameters(parameters, statement)
         return statement.use {
             sqlEvent(statement.asSql())
-            statement.executeUpdate()
+            executeUpdate(sql, statement)
         }
     }
 
@@ -102,6 +100,22 @@ class ConnectionWrapper(
                 is Instant -> statement.setTimestamp(position, Timestamp.from(any))
                 else -> throw UnsupportedOperationException("Unsupported type ${any.javaClass.simpleName}")
             }
+        }
+    }
+
+    private fun executeUpdate(sql: String, statement: PreparedStatement): Int {
+        try {
+            return statement.executeUpdate()
+        } catch (ex: SQLException) {
+            throw SQLException("$sql\n${ex.message}", ex)
+        }
+    }
+
+    private fun executeQuery(sql: String, statement: PreparedStatement): ResultSet {
+        try {
+            return statement.executeQuery()
+        } catch (ex: SQLException) {
+            throw SQLException("$sql\n${ex.message}", ex)
         }
     }
 
