@@ -25,6 +25,14 @@
       group    org.eclipse.jetty
       artifact jetty-server
     }
+    jetty-alpn {
+      group org.eclipse.jetty
+      artifact jetty-alpn-java-server
+    }
+    jetty-http2 {
+      group org.eclipse.jetty.http2
+      artifact http2-server
+    }
     jackson {
       group    com.fasterxml.jackson.module
       artifact jackson-module-kotlin
@@ -60,6 +68,7 @@
     contract      []
     table         []
     domain        []
+    prototype     [ jetty jetty-alpn jetty-http2 ]
   }
   detangler [console]
   consoleEntryPoint {
