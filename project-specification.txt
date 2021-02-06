@@ -53,6 +53,10 @@
         group mysql
         artifact mysql-connector-java
     }
+    java-jwt {
+        group com.auth0
+        artifact java-jwt
+    }
   }
   global [ stdlib test ]
   modules {
