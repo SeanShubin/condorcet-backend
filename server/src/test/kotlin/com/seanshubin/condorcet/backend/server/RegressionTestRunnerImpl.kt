@@ -4,7 +4,7 @@ import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Initializer
 import com.seanshubin.condorcet.backend.json.JsonMappers
 import com.seanshubin.condorcet.backend.service.Lifecycles
-import com.seanshubin.condorcet.backend.service.ServiceEvent
+import com.seanshubin.condorcet.backend.service.ServiceRequest
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Request
 import java.nio.file.Files
@@ -15,7 +15,7 @@ class RegressionTestRunnerImpl(
     val snapshotViews: List<SnapshotView>,
     val lifecycles: Lifecycles,
     val initializer: Initializer,
-    val serviceEvents: List<ServiceEvent>,
+    val serviceRequests: List<ServiceRequest>,
     val handler: Handler,
     val eventDatabase: Database,
     val stateDatabase: Database,
@@ -45,7 +45,7 @@ class RegressionTestRunnerImpl(
         lifecycles.doInLifecycle {
             initializer.purgeAllData()
             initializer.initialize()
-            val events = serviceEvents.map(::runCommand)
+            val events = serviceRequests.map(::runCommand)
             val sqlEventStatements = sqlEventMonitor.getSqlStatements()
             val sqlStateStatements = sqlStateMonitor.getSqlStatements()
             val eventTables = queryTables(eventDatabase)
@@ -53,10 +53,10 @@ class RegressionTestRunnerImpl(
             Snapshot(events, eventTables, stateTables, sqlEventStatements, sqlStateStatements)
         }
 
-    private fun runCommand(serviceEvent: ServiceEvent): RegressionTestEvent {
-        val name = serviceEvent.javaClass.simpleName
+    private fun runCommand(serviceRequest: ServiceRequest): RegressionTestEvent {
+        val name = serviceRequest.javaClass.simpleName
         val method = "POST"
-        val requestBody = JsonMappers.pretty.writeValueAsString(serviceEvent)
+        val requestBody = JsonMappers.pretty.writeValueAsString(serviceRequest)
         val target = "/$name"
         val request = ApiHandlerRegressionTest.RequestStub(name, method, requestBody)
         val baseRequest = Request(null, null)

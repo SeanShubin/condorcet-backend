@@ -10,7 +10,7 @@ import java.time.Clock
 class DeterministicDependencies(
     snapshotDir: Path,
     snapshotViews: List<SnapshotView>,
-    serviceEvents: List<ServiceEvent>
+    serviceRequests: List<ServiceRequest>
 ) {
     val realClock: Clock = Clock.systemUTC()
     val clockPath = snapshotDir.resolve("deterministic-clock.txt")
@@ -71,7 +71,7 @@ class DeterministicDependencies(
         snapshotViews,
         lifecycles,
         initializer,
-        serviceEvents,
+        serviceRequests,
         handler,
         eventDatabase,
         stateDatabase,

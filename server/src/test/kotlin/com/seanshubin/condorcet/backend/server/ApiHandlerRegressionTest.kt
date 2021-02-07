@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.server
 
-import com.seanshubin.condorcet.backend.service.ServiceEvent
+import com.seanshubin.condorcet.backend.service.ServiceRequest
 import org.junit.Test
 import java.io.BufferedReader
 import java.io.PrintWriter
@@ -16,17 +16,17 @@ class ApiHandlerRegressionTest {
     fun regressionTest() {
         // given
         val commands = listOf(
-            ServiceEvent.AddUser(name = "Alice", email = "alice@email.com", password = "alice-password"),
-            ServiceEvent.AddUser(name = "duplicate-email", email = "alice@email.com", password = "alice-password"),
-            ServiceEvent.AddUser(name = "Alice", email = "duplicate@name.com", password = "alice-password"),
-            ServiceEvent.AddUser(name = "Bob", email = "bob@email.com", password = "bob-password"),
-            ServiceEvent.AddUser(name = "Carol", email = "carol@email.com", password = "carol-password"),
-            ServiceEvent.AddUser(name = "Dave", email = "dave@email.com", password = "dave-password"),
-            ServiceEvent.Authenticate(nameOrEmail = "Alice", password = "alice-password"),
-            ServiceEvent.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password"),
-            ServiceEvent.Authenticate(nameOrEmail = "Alice", password = "wrong-password"),
-            ServiceEvent.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password"),
-            ServiceEvent.Authenticate(nameOrEmail = "Nobody", password = "password")
+            ServiceRequest.AddUser(name = "Alice", email = "alice@email.com", password = "alice-password"),
+            ServiceRequest.AddUser(name = "duplicate-email", email = "alice@email.com", password = "alice-password"),
+            ServiceRequest.AddUser(name = "Alice", email = "duplicate@name.com", password = "alice-password"),
+            ServiceRequest.AddUser(name = "Bob", email = "bob@email.com", password = "bob-password"),
+            ServiceRequest.AddUser(name = "Carol", email = "carol@email.com", password = "carol-password"),
+            ServiceRequest.AddUser(name = "Dave", email = "dave@email.com", password = "dave-password"),
+            ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "alice-password"),
+            ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password"),
+            ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "wrong-password"),
+            ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password"),
+            ServiceRequest.Authenticate(nameOrEmail = "Nobody", password = "password")
         )
         val snapshotDir = Paths.get("src", "test", "resources")
         val tester = Tester(snapshotDir, commands)
@@ -77,7 +77,7 @@ class ApiHandlerRegressionTest {
 
     class Tester(
         private val snapshotDir: Path,
-        private val serviceEvents: List<ServiceEvent>
+        private val serviceRequests: List<ServiceRequest>
     ) {
         val snapshotViews = listOf(
             SnapshotView.Api,
@@ -96,7 +96,7 @@ class ApiHandlerRegressionTest {
         }
 
         private fun createRunner(): RegressionTestRunner =
-            DeterministicDependencies(snapshotDir, snapshotViews, serviceEvents).regressionTestRunner
+            DeterministicDependencies(snapshotDir, snapshotViews, serviceRequests).regressionTestRunner
 
         fun validateExpectationsAgainstActual(snapshotDir: Path) {
             snapshotViews.forEach { validateSnapshotView(snapshotDir, it) }

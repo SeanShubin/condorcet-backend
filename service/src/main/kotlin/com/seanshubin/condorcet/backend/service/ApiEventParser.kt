@@ -4,7 +4,7 @@ import com.seanshubin.condorcet.backend.json.JsonMappers.parse
 import com.seanshubin.condorcet.backend.json.JsonUtil.normalizeJson
 
 class ServiceEventParserImpl : ServiceEventParser {
-    override fun parse(name: String, text: String): ServiceEvent {
+    override fun parse(name: String, text: String): ServiceRequest {
         return try {
             val json = if (text.isBlank()) {
                 "{}"
@@ -13,16 +13,16 @@ class ServiceEventParserImpl : ServiceEventParser {
             }
             parseJson(name, json)
         } catch (ex: Exception) {
-            ServiceEvent.MalformedJson(name, text)
+            ServiceRequest.MalformedJson(name, text)
         }
     }
 
-    private fun parseJson(name: String, json: String): ServiceEvent {
+    private fun parseJson(name: String, json: String): ServiceRequest {
         return when (name) {
-            "AddUser" -> parse<ServiceEvent.AddUser>(json)
-            "Authenticate" -> parse<ServiceEvent.Authenticate>(json)
-            "Health" -> parse<ServiceEvent.Health>(json)
-            else -> ServiceEvent.Unsupported(name, json)
+            "AddUser" -> parse<ServiceRequest.AddUser>(json)
+            "Authenticate" -> parse<ServiceRequest.Authenticate>(json)
+            "Health" -> parse<ServiceRequest.Health>(json)
+            else -> ServiceRequest.Unsupported(name, json)
         }
     }
 }
