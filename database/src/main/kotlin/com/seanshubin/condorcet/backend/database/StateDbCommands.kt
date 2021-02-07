@@ -4,6 +4,7 @@ import com.seanshubin.condorcet.backend.domain.Role
 
 interface StateDbCommands {
     fun createUser(
+        authority: String,
         name: String,
         email: String,
         salt: String,
@@ -11,7 +12,7 @@ interface StateDbCommands {
         role: Role
     )
 
-    fun setRole(name: String, role: Role)
+    fun setRole(authority: String, name: String, role: Role)
 
-    fun removeUser(name: String)
+    fun removeUser(authority: String, name: String)
 }

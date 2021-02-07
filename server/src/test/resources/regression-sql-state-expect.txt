@@ -363,7 +363,9 @@ select name,
 from user
 where name = 'Dave'
 ;
-delete from user where name = 'Dave';
+delete
+from user
+where name = 'Dave';
 select name,
        email,
        salt,

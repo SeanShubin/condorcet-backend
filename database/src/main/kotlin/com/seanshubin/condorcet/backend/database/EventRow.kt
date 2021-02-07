@@ -5,12 +5,13 @@ import java.time.Instant
 
 data class EventRow(
     val id: Int,
-    val type: String,
     val whenHappened: Instant,
+    val authority: String,
+    val type: String,
     val text: String
 ) : DbRow<Int> {
     override val primaryKey: Int
         get() = id
     override val cells: List<Any?>
-        get() = listOf(id, type, whenHappened, text)
+        get() = listOf(id, whenHappened, authority, type, text)
 }

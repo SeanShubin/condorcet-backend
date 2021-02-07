@@ -7,9 +7,10 @@ import com.seanshubin.condorcet.backend.genericdb.Table
 
 object EventSchema : Schema {
     val eventWhen = Field("when", DATE)
+    val eventAuthority = Field("authority", STRING)
     val eventType = Field("type", STRING)
     val eventText = Field("text", TEXT)
-    val event = Table("event", eventWhen, eventType, eventText)
+    val event = Table("event", eventWhen, eventAuthority, eventType, eventText)
     val intVariableName = Field("name", STRING, unique = true)
     val intVariableValue = Field("value", INT)
     val intVariable = Table("int_variable", intVariableName, intVariableValue)

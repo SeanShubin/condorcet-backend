@@ -11,10 +11,11 @@ class EventDbQueriesImpl(genericDatabase: GenericDatabase) : EventDbQueries, Gen
 
     private fun createEvent(resultSet: ResultSet): EventRow {
         val id = resultSet.getInt("id")
-        val type = resultSet.getString("type")
         val whenHappened = resultSet.getTimestamp("when").toInstant()
+        val authority = resultSet.getString("authority")
+        val type = resultSet.getString("type")
         val text = resultSet.getString("text")
-        return EventRow(id, type, whenHappened, text)
+        return EventRow(id, whenHappened, authority, type, text)
     }
 
 }

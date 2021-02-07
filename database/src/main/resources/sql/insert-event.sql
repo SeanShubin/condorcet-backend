@@ -1,2 +1,2 @@
-insert into event (`when`, type, text)
-values (?, ?, ?)
+insert into event (`when`, authority, type, text)
+values (?, ?, ?, ?)

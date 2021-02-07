@@ -10,10 +10,11 @@ class EventDbCommandsImpl(
     private val eventParser: DbEventParser,
     private val clock: Clock
 ) : EventDbCommands, GenericDatabase by genericDatabase {
-    override fun addEvent(type: String, body: String) {
+    override fun addEvent(authority: String, type: String, body: String) {
         update(
             "insert-event",
             clock.instant(),
+            authority,
             type,
             body
         )
@@ -35,16 +36,13 @@ class EventDbCommandsImpl(
             synchronize()
         } else {
             val eventsToSync = eventDbQueries.eventsToSync(lastSynced)
-            eventsToSync.forEach {
-                val event = eventParser.parse(it.type, it.text)
-                event.exec(stateDbCommands)
-                setLastSynced(it.id)
-            }
+            eventsToSync.forEach(::synchronizeEventRow)
         }
     }
 
     private fun synchronizeEventRow(eventRow: EventRow) {
         val event = eventParser.parse(eventRow.type, eventRow.text)
-        event.exec(stateDbCommands)
+        event.exec(eventRow.authority, stateDbCommands)
+        setLastSynced(eventRow.id)
     }
 }

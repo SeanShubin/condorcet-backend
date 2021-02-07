@@ -21,7 +21,8 @@ class ApiService(
             Role.UNASSIGNED
         }
         val (salt, hash) = passwordUtil.createSaltAndHash(password)
-        stateDbCommands.createUser(name, email, salt, hash, role)
+        val authority = name
+        stateDbCommands.createUser(authority, name, email, salt, hash, role)
         val user = stateDbQueries.findUserByName(name)
         return ServiceResponse.UserName(user.name)
     }
@@ -38,7 +39,7 @@ class ApiService(
         val permissionNeeded = Permission.MANAGE_USERS
         mustHavePermission(authorityUserRow, permissionNeeded)
         mustHaveGreaterRole(authorityUserRow, targetUserRow, "setRole")
-        stateDbCommands.setRole(target, role)
+        stateDbCommands.setRole(authority, target, role)
         return ServiceResponse.GenericOk
     }
 
@@ -47,7 +48,7 @@ class ApiService(
         val targetUserRow = mustMatchExistingName(target)
         mustHavePermission(authorityUserRow, Permission.MANAGE_USERS)
         mustHaveGreaterRole(authorityUserRow, targetUserRow, "removeUser")
-        stateDbCommands.removeUser(target)
+        stateDbCommands.removeUser(authority, target)
         return ServiceResponse.GenericOk
     }
 
