@@ -8,7 +8,7 @@ create table user (
     email varchar(255) not null unique,
     salt varchar(255) not null,
     hash varchar(255) not null,
-    role ENUM('OWNER','ADMIN','TYPICAL') not null,
+    role ENUM('OWNER','ADMIN','MAINTAINER','USER','OBSERVER','UNASSIGNED') not null,
     primary key(id)
 );
 create table election (
@@ -141,7 +141,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Bob', 'bob@email.com', '738cdf72-3487-4f6a-a8a7-438d15f5e22d', 'AA60D57CE55FE26F5820EADA7A62A1BB91B80C667CC4E6163D19ACE32B7E2C68', 'TYPICAL')
+values ('Bob', 'bob@email.com', '738cdf72-3487-4f6a-a8a7-438d15f5e22d', 'AA60D57CE55FE26F5820EADA7A62A1BB91B80C667CC4E6163D19ACE32B7E2C68', 'UNASSIGNED')
 ;
 select name,
        email,
@@ -172,7 +172,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Carol', 'carol@email.com', 'f38296e8-882d-4a22-a64c-a88660981dd6', '46C1FDAFECC2E858C91B34F75E41622DE8D70B67BABBEA32CD4F3654BA35D2F2', 'TYPICAL')
+values ('Carol', 'carol@email.com', 'f38296e8-882d-4a22-a64c-a88660981dd6', '46C1FDAFECC2E858C91B34F75E41622DE8D70B67BABBEA32CD4F3654BA35D2F2', 'UNASSIGNED')
 ;
 select name,
        email,
@@ -203,7 +203,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Dave', 'dave@email.com', 'cb33f280-89d0-4dc6-a01f-453aa87fcafb', 'C7362093884945D1657B57AD3ECC7DE449D60D7AA78246F31B12D579A220D2B2', 'TYPICAL')
+values ('Dave', 'dave@email.com', 'cb33f280-89d0-4dc6-a01f-453aa87fcafb', 'C7362093884945D1657B57AD3ECC7DE449D60D7AA78246F31B12D579A220D2B2', 'UNASSIGNED')
 ;
 select name,
        email,

@@ -30,7 +30,7 @@ class ApiService(
         val role = if (stateDbQueries.countUsers() == 0) {
             Role.OWNER
         } else {
-            Role.TYPICAL
+            Role.UNASSIGNED
         }
         val (salt, hash) = passwordUtil.createSaltAndHash(password)
         stateDbCommands.createUser(name, email, salt, hash, role)
