@@ -1,4 +1,4 @@
-AddUser
+Register
 POST
 {
   "name" : "Alice",
@@ -9,7 +9,7 @@ POST
 {
   "name" : "Alice"
 }
-AddUser
+Register
 POST
 {
   "name" : "duplicate-email",
@@ -20,7 +20,7 @@ POST
 {
   "userSafeMessage" : "User with email 'alice@email.com' already exists"
 }
-AddUser
+Register
 POST
 {
   "name" : "Alice",
@@ -31,7 +31,7 @@ POST
 {
   "userSafeMessage" : "User with name 'Alice' already exists"
 }
-AddUser
+Register
 POST
 {
   "name" : "Bob",
@@ -42,7 +42,7 @@ POST
 {
   "name" : "Bob"
 }
-AddUser
+Register
 POST
 {
   "name" : "Carol",
@@ -53,7 +53,7 @@ POST
 {
   "name" : "Carol"
 }
-AddUser
+Register
 POST
 {
   "name" : "Dave",

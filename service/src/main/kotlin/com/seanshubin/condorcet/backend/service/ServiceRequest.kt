@@ -4,9 +4,9 @@ import com.seanshubin.condorcet.backend.domain.Role
 
 interface ServiceRequest {
     fun exec(service: Service): ServiceResponse
-    data class AddUser(val name: String, val email: String, val password: String) : ServiceRequest {
+    data class Register(val name: String, val email: String, val password: String) : ServiceRequest {
         override fun exec(service: Service): ServiceResponse {
-            return service.addUser(name, email, password)
+            return service.register(name, email, password)
         }
     }
 

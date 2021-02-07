@@ -17,12 +17,12 @@ class ApiHandlerRegressionTest {
     fun regressionTest() {
         // given
         val commands = listOf(
-            ServiceRequest.AddUser(name = "Alice", email = "alice@email.com", password = "alice-password"),
-            ServiceRequest.AddUser(name = "duplicate-email", email = "alice@email.com", password = "alice-password"),
-            ServiceRequest.AddUser(name = "Alice", email = "duplicate@name.com", password = "alice-password"),
-            ServiceRequest.AddUser(name = "Bob", email = "bob@email.com", password = "bob-password"),
-            ServiceRequest.AddUser(name = "Carol", email = "carol@email.com", password = "carol-password"),
-            ServiceRequest.AddUser(name = "Dave", email = "dave@email.com", password = "dave-password"),
+            ServiceRequest.Register(name = "Alice", email = "alice@email.com", password = "alice-password"),
+            ServiceRequest.Register(name = "duplicate-email", email = "alice@email.com", password = "alice-password"),
+            ServiceRequest.Register(name = "Alice", email = "duplicate@name.com", password = "alice-password"),
+            ServiceRequest.Register(name = "Bob", email = "bob@email.com", password = "bob-password"),
+            ServiceRequest.Register(name = "Carol", email = "carol@email.com", password = "carol-password"),
+            ServiceRequest.Register(name = "Dave", email = "dave@email.com", password = "dave-password"),
             ServiceRequest.SetRole(authority = "Alice", name = "Bob", role = Role.USER),
             ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "alice-password"),
             ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password"),

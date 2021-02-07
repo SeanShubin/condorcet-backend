@@ -12,7 +12,7 @@ class ApiService(
     private val stateDbCommands: StateDbCommands,
     private val stateDbQueries: StateDbQueries
 ) : Service {
-    override fun addUser(name: String, email: String, password: String): ServiceResponse {
+    override fun register(name: String, email: String, password: String): ServiceResponse {
         if (nameExists(name)) {
             return ServiceResponse.Conflict("User with name '$name' already exists")
         }
@@ -72,5 +72,4 @@ class ApiService(
 
     private fun nameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
     private fun emailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
-    private fun getRole(name: String): Role = TODO()
 }
