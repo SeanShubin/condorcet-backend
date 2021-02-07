@@ -15,6 +15,11 @@ interface GenericDatabase {
         vararg parameters: Any?
     ): T?
 
+    fun queryExists(
+        queryPath: String,
+        vararg parameters: Any?
+    ): Boolean
+
     fun <T> query(
         createFunction: (ResultSet) -> T,
         queryPath: String,

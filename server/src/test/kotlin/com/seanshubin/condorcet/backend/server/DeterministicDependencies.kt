@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.server
 
 import com.seanshubin.condorcet.backend.crypto.*
+import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.service.*
 import org.eclipse.jetty.server.Handler
@@ -62,8 +63,8 @@ class DeterministicDependencies(
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle
     )
-    val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema)
-    val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema)
+    val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader)
+    val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     val handler: Handler = ApiHandler(serviceEventParser, service)
     val regressionTestRunner: RegressionTestRunner = RegressionTestRunnerImpl(

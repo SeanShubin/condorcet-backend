@@ -21,6 +21,7 @@ class ServiceEventParserImpl : ServiceEventParser {
         return when (name) {
             "AddUser" -> parse<ServiceRequest.AddUser>(json)
             "Authenticate" -> parse<ServiceRequest.Authenticate>(json)
+            "SetRole" -> parse<ServiceRequest.SetRole>(json)
             "Health" -> parse<ServiceRequest.Health>(json)
             else -> ServiceRequest.Unsupported(name, json)
         }

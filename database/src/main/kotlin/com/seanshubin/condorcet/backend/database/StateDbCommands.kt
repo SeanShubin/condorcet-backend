@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.genericdb
+package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.domain.Role
 
@@ -10,4 +10,6 @@ interface StateDbCommands {
         hash: String,
         role: Role
     )
+
+    fun setRole(name: String, role: Role)
 }

@@ -66,3 +66,14 @@ update int_variable
 set value = 4
 where name = 'last-synced'
 ;
+insert into event (`when`, type, text)
+values ('2021-02-07 07:07:36.12672', 'SetRole', '{"name":"Bob","role":"USER"}')
+;
+select value
+from int_variable
+where name = 'last-synced'
+;
+update int_variable
+set value = 5
+where name = 'last-synced'
+;

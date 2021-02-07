@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.server
 
+import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.service.ServiceRequest
 import org.junit.Test
 import java.io.BufferedReader
@@ -22,6 +23,7 @@ class ApiHandlerRegressionTest {
             ServiceRequest.AddUser(name = "Bob", email = "bob@email.com", password = "bob-password"),
             ServiceRequest.AddUser(name = "Carol", email = "carol@email.com", password = "carol-password"),
             ServiceRequest.AddUser(name = "Dave", email = "dave@email.com", password = "dave-password"),
+            ServiceRequest.SetRole(authority = "Alice", name = "Bob", role = Role.USER),
             ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "alice-password"),
             ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password"),
             ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "wrong-password"),

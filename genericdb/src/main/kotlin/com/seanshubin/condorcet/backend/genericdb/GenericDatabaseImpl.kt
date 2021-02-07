@@ -9,39 +9,44 @@ class GenericDatabaseImpl(
 ) : GenericDatabase {
     override fun <T> queryExactlyOneRow(
         createFunction: (ResultSet) -> T,
-        sqlResource: String,
+        queryPath: String,
         vararg parameters: Any?
     ): T {
-        val sql = queryLoader.load(sqlResource)
-        return getConnection().queryExactlyOneRow(sql, *parameters) { createFunction(it) }
+        val query = queryLoader.load(queryPath)
+        return getConnection().queryExactlyOneRow(query, *parameters) { createFunction(it) }
     }
 
     override fun <T> queryZeroOrOneRow(
         createFunction: (ResultSet) -> T,
-        sqlResource: String,
+        queryPath: String,
         vararg parameters: Any?
     ): T? {
-        val sql = queryLoader.load(sqlResource)
-        return getConnection().queryZeroOrOneRow(sql, *parameters) { createFunction(it) }
+        val query = queryLoader.load(queryPath)
+        return getConnection().queryZeroOrOneRow(query, *parameters) { createFunction(it) }
+    }
+
+    override fun queryExists(queryPath: String, vararg parameters: Any?): Boolean {
+        val query = queryLoader.load(queryPath)
+        return getConnection().queryExists(query, *parameters)
     }
 
     override fun <T> query(
         createFunction: (ResultSet) -> T,
-        sqlResource: String,
+        queryPath: String,
         vararg parameters: Any?
     ): List<T> {
-        val sql = queryLoader.load(sqlResource)
-        return getConnection().queryList(sql, *parameters) { createFunction(it) }
+        val query = queryLoader.load(queryPath)
+        return getConnection().queryList(query, *parameters) { createFunction(it) }
     }
 
-    override fun queryExactlyOneInt(sqlResource: String, vararg parameters: Any?): Int =
-        queryExactlyOneRow(::createInt, sqlResource, *parameters)
+    override fun queryExactlyOneInt(queryPath: String, vararg parameters: Any?): Int =
+        queryExactlyOneRow(::createInt, queryPath, *parameters)
 
-    override fun queryZeroOrOneInt(sqlResource: String, vararg parameters: Any?): Int? =
-        queryZeroOrOneRow(::createInt, sqlResource, *parameters)
+    override fun queryZeroOrOneInt(queryPath: String, vararg parameters: Any?): Int? =
+        queryZeroOrOneRow(::createInt, queryPath, *parameters)
 
-    override fun update(sqlResource: String, vararg parameters: Any?): Int {
-        val sql = queryLoader.load(sqlResource)
-        return getConnection().update(sql, *parameters)
+    override fun update(queryPath: String, vararg parameters: Any?): Int {
+        val query = queryLoader.load(queryPath)
+        return getConnection().update(query, *parameters)
     }
 }

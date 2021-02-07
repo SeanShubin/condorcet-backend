@@ -1,6 +1,9 @@
-package com.seanshubin.condorcet.backend.genericdb
+package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.genericdb.Field
 import com.seanshubin.condorcet.backend.genericdb.FieldType.*
+import com.seanshubin.condorcet.backend.genericdb.Schema
+import com.seanshubin.condorcet.backend.genericdb.Table
 
 object EventSchema : Schema {
     val eventWhen = Field("when", DATE)
@@ -15,4 +18,5 @@ object EventSchema : Schema {
         intVariable,
         event
     )
+    override val initializeQueryName: String? = null
 }

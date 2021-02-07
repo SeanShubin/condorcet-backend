@@ -1,25 +1,17 @@
 package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
+import com.seanshubin.condorcet.backend.database.StateDbCommands
+import com.seanshubin.condorcet.backend.database.StateDbQueries
+import com.seanshubin.condorcet.backend.database.UserRow
+import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Role
-import com.seanshubin.condorcet.backend.genericdb.StateDbCommands
-import com.seanshubin.condorcet.backend.genericdb.StateDbQueries
-import com.seanshubin.condorcet.backend.genericdb.UserRow
 
 class ApiService(
     private val passwordUtil: PasswordUtil,
     private val stateDbCommands: StateDbCommands,
     private val stateDbQueries: StateDbQueries
 ) : Service {
-    override fun health(): ServiceResponse {
-        return ServiceResponse.Health("ok")
-    }
-
-    override fun unsupported(name: String, text: String): ServiceResponse {
-        val userSafeMessage = "Unsupported command '$name'"
-        return ServiceResponse.Unsupported(userSafeMessage, name, text)
-    }
-
     override fun addUser(name: String, email: String, password: String): ServiceResponse {
         if (nameExists(name)) {
             return ServiceResponse.Conflict("User with name '$name' already exists")
@@ -56,6 +48,29 @@ class ApiService(
         }
     }
 
+    override fun setRole(authority: String, name: String, role: Role): ServiceResponse {
+        val authorityRole = stateDbQueries.findUserByName(authority).role
+        val canSetRole = stateDbQueries.roleHasPermission(authorityRole, Permission.MANAGE_USERS)
+        if (!canSetRole) {
+            return ServiceResponse.Unauthorized("User $authority with role $authorityRole is not allowed to set roles")
+        }
+        if (authorityRole.ordinal >= role.ordinal) {
+            return ServiceResponse.Unauthorized("User $authority with role $authorityRole can not assign role $role, as that role is not lower in rank")
+        }
+        stateDbCommands.setRole(name, role)
+        return ServiceResponse.GenericOk
+    }
+
+    override fun health(): ServiceResponse {
+        return ServiceResponse.Health("ok")
+    }
+
+    override fun unsupported(name: String, text: String): ServiceResponse {
+        val userSafeMessage = "Unsupported command '$name'"
+        return ServiceResponse.Unsupported(userSafeMessage, name, text)
+    }
+
     private fun nameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
     private fun emailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
+    private fun getRole(name: String): Role = TODO()
 }

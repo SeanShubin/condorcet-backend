@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.console
 
 import com.seanshubin.condorcet.backend.crypto.*
+import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.logger.LogGroup
 import com.seanshubin.condorcet.backend.logger.Logger
@@ -32,8 +33,9 @@ class Dependencies {
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle
     )
-    private val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema)
-    private val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema)
+    private val queryLoader: QueryLoader = QueryLoaderFromResource()
+    private val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader)
+    private val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
     private val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     private val port: Int = 8080
     private val server: Server = Server(port)
@@ -42,7 +44,6 @@ class Dependencies {
     private val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
     private val oneWayHash: OneWayHash = Sha256Hash()
     private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
-    private val queryLoader: QueryLoader = QueryLoaderFromResource()
     private val eventGenericDatabase: GenericDatabase = GenericDatabaseImpl(
         eventConnectionLifecycle::getValue,
         queryLoader

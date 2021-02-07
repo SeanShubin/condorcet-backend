@@ -30,6 +30,15 @@ class ConnectionWrapper(
         return list
     }
 
+    fun queryExists(sql: String, vararg parameters: Any?): Boolean {
+        val statement = connection.prepareStatement(sql) as ClientPreparedStatement
+        updateParameters(parameters, statement)
+        statement.use {
+            val resultSet = executeQuery(sql, statement)
+            return resultSet.next()
+        }
+    }
+
     fun queryGenericTable(sql: String, vararg parameters: Any?): GenericTable {
         val statement = connection.prepareStatement(sql) as ClientPreparedStatement
         sqlEvent(statement.asSql())

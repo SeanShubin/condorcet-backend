@@ -8,4 +8,5 @@ interface ServiceResponse {
     data class Conflict(val userSafeMessage: String) : ServiceResponse
     data class Unsupported(val userSafeMessage: String, val name: String, val text: String) : ServiceResponse
     data class MalformedJson(val userSafeMessage: String, val name: String, val text: String) : ServiceResponse
+    object GenericOk : ServiceResponse
 }

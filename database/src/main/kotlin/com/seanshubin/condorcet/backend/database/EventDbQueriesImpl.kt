@@ -1,5 +1,6 @@
-package com.seanshubin.condorcet.backend.genericdb
+package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.sql.ResultSet
 
 class EventDbQueriesImpl(genericDatabase: GenericDatabase) : EventDbQueries, GenericDatabase by genericDatabase {

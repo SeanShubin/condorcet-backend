@@ -2,13 +2,19 @@ drop database if exists condorcet_state;
 select count(*) from information_schema.schemata where schema_name = 'condorcet_state';
 create database condorcet_state;
 use condorcet_state;
+create table role_permission (
+    id int not null auto_increment,
+    role ENUM('OWNER','AUDITOR','ADMIN','USER','OBSERVER','UNASSIGNED') not null,
+    permission ENUM('TRANSFER_OWNER','VIEW_SECRETS','MANAGE_USERS','USE_APPLICATION','VIEW_APPLICATION') not null,
+    primary key(id)
+);
 create table user (
     id int not null auto_increment,
     name varchar(255) not null unique,
     email varchar(255) not null unique,
     salt varchar(255) not null,
     hash varchar(255) not null,
-    role ENUM('OWNER','ADMIN','MAINTAINER','USER','OBSERVER','UNASSIGNED') not null,
+    role ENUM('OWNER','AUDITOR','ADMIN','USER','OBSERVER','UNASSIGNED') not null,
     primary key(id)
 );
 create table election (
@@ -67,17 +73,34 @@ create table tally (
     primary key(id)
 );
 alter table tally add unique unique_tally(election_id);
+insert into role_permission (role, permission) values ('OWNER', 'TRANSFER_OWNER');
+insert into role_permission (role, permission) values ('OWNER', 'VIEW_SECRETS');
+insert into role_permission (role, permission) values ('OWNER', 'MANAGE_USERS');
+insert into role_permission (role, permission) values ('OWNER', 'USE_APPLICATION');
+insert into role_permission (role, permission) values ('OWNER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('AUDITOR', 'VIEW_SECRETS');
+insert into role_permission (role, permission) values ('AUDITOR', 'MANAGE_USERS');
+insert into role_permission (role, permission) values ('AUDITOR', 'USE_APPLICATION');
+insert into role_permission (role, permission) values ('AUDITOR', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('ADMIN', 'MANAGE_USERS');
+insert into role_permission (role, permission) values ('ADMIN', 'USE_APPLICATION');
+insert into role_permission (role, permission) values ('ADMIN', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('USER', 'USE_APPLICATION');
+insert into role_permission (role, permission) values ('USER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('OBSERVER', 'VIEW_APPLICATION');
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Alice'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = 'alice@email.com'
 ;
@@ -94,42 +117,48 @@ values ('Alice', 'alice@email.com', '01298967-e68a-4f65-97f5-8b31b1f94a75', '5DD
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Alice'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'duplicate-email'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = 'alice@email.com'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Alice'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Bob'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = 'bob@email.com'
 ;
@@ -146,21 +175,24 @@ values ('Bob', 'bob@email.com', '738cdf72-3487-4f6a-a8a7-438d15f5e22d', 'AA60D57
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Bob'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Carol'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = 'carol@email.com'
 ;
@@ -177,21 +209,24 @@ values ('Carol', 'carol@email.com', 'f38296e8-882d-4a22-a64c-a88660981dd6', '46C
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Carol'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Dave'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = 'dave@email.com'
 ;
@@ -208,63 +243,84 @@ values ('Dave', 'dave@email.com', 'cb33f280-89d0-4dc6-a01f-453aa87fcafb', 'C7362
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Dave'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
+from user
+where name = 'Alice'
+;
+update user
+set role='USER'
+where name='Bob'
+;
+select name,
+       email,
+       salt,
+       hash,
+       role
 from user
 where name = 'Alice'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'alice@email.com'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = 'alice@email.com'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Alice'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'alice@email.com'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = 'alice@email.com'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where name = 'Nobody'
 ;
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = 'Nobody'
 ;

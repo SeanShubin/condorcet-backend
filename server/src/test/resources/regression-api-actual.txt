@@ -64,6 +64,15 @@ POST
 {
   "name" : "Dave"
 }
+SetRole
+POST
+{
+  "authority" : "Alice",
+  "name" : "Bob",
+  "role" : "USER"
+}
+200
+{ }
 Authenticate
 POST
 {

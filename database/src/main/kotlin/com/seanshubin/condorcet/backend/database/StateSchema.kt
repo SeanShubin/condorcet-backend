@@ -1,10 +1,15 @@
-package com.seanshubin.condorcet.backend.genericdb
+package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.domain.Status
+import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.genericdb.FieldType.*
 
 object StateSchema : Schema {
+    val rolePermissionRole = DbEnum("role", Role.values().toList())
+    val rolePermissionPermission = DbEnum("permission", Permission.values().toList())
+    val rolePermission = Table("role_permission", rolePermissionRole, rolePermissionPermission)
     val userName = Field("name", STRING, unique = true)
     val userEmail = Field("email", STRING, unique = true)
     val userSalt = Field("salt", STRING)
@@ -64,6 +69,7 @@ object StateSchema : Schema {
     )
     override val name: String = "condorcet_state"
     override val tables = listOf(
+        rolePermission,
         user,
         election,
         candidate,
@@ -72,4 +78,5 @@ object StateSchema : Schema {
         ranking,
         tally
     )
+    override val initializeQueryName: String? = "initialize-state-db"
 }

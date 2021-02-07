@@ -1,6 +1,9 @@
 package com.seanshubin.condorcet.backend.crypto
 
-class PasswordUtil(private val uniqueIdGenerator: UniqueIdGenerator, private val oneWayHash: OneWayHash) {
+class PasswordUtil(
+    private val uniqueIdGenerator: UniqueIdGenerator,
+    private val oneWayHash: OneWayHash
+) {
     fun createSaltAndHash(password: String): SaltAndHash =
         SaltAndHash.fromPassword(password, uniqueIdGenerator, oneWayHash)
 

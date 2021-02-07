@@ -1,6 +1,7 @@
 select name,
        email,
        salt,
-       hash
+       hash,
+       role
 from user
 where email = ?

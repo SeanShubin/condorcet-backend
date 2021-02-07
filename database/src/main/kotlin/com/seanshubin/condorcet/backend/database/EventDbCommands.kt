@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.genericdb
+package com.seanshubin.condorcet.backend.database
 
 interface EventDbCommands {
     fun addEvent(type: String, body: String)

@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.genericdb
+package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.domain.Role
 
@@ -8,6 +8,12 @@ interface DbEvent {
         DbEvent {
         override fun exec(stateDbCommands: StateDbCommands) {
             stateDbCommands.createUser(name, email, salt, hash, role)
+        }
+    }
+
+    data class SetRole(val name: String, val role: Role) : DbEvent {
+        override fun exec(stateDbCommands: StateDbCommands) {
+            stateDbCommands.setRole(name, role)
         }
     }
 }
