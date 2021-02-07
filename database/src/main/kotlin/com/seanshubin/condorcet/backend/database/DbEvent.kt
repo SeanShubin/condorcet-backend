@@ -16,4 +16,10 @@ interface DbEvent {
             stateDbCommands.setRole(name, role)
         }
     }
+
+    data class RemoveUser(val name: String) : DbEvent {
+        override fun exec(stateDbCommands: StateDbCommands) {
+            stateDbCommands.removeUser(name)
+        }
+    }
 }

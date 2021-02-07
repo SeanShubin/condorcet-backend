@@ -40,7 +40,7 @@ class Dependencies {
     private val port: Int = 8080
     private val server: Server = Server(port)
     private val serverContract: ServerContract = JettyServer(server)
-    private val serviceEventParser: ServiceEventParser = ServiceEventParserImpl()
+    private val serviceRequestParser: ServiceRequestParser = ServiceRequestParserImpl()
     private val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
     private val oneWayHash: OneWayHash = Sha256Hash()
     private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
@@ -68,6 +68,6 @@ class Dependencies {
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
     private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
-    private val handler: Handler = ApiHandler(serviceEventParser, service)
+    private val handler: Handler = ApiHandler(serviceRequestParser, service)
     val runner: Runnable = ServerRunner(lifecycles, initializer, serverContract, handler)
 }

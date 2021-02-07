@@ -8,5 +8,6 @@ interface StateDbQueries {
     fun searchUserByName(name: String): UserRow?
     fun searchUserByEmail(email: String): UserRow?
     fun countUsers(): Int
+    fun listUsers(): List<UserRow>
     fun roleHasPermission(role: Role, permission: Permission): Boolean
 }

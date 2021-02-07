@@ -73,21 +73,36 @@ create table tally (
     primary key(id)
 );
 alter table tally add unique unique_tally(election_id);
-insert into role_permission (role, permission) values ('OWNER', 'TRANSFER_OWNER');
-insert into role_permission (role, permission) values ('OWNER', 'VIEW_SECRETS');
-insert into role_permission (role, permission) values ('OWNER', 'MANAGE_USERS');
-insert into role_permission (role, permission) values ('OWNER', 'USE_APPLICATION');
-insert into role_permission (role, permission) values ('OWNER', 'VIEW_APPLICATION');
-insert into role_permission (role, permission) values ('AUDITOR', 'VIEW_SECRETS');
-insert into role_permission (role, permission) values ('AUDITOR', 'MANAGE_USERS');
-insert into role_permission (role, permission) values ('AUDITOR', 'USE_APPLICATION');
-insert into role_permission (role, permission) values ('AUDITOR', 'VIEW_APPLICATION');
-insert into role_permission (role, permission) values ('ADMIN', 'MANAGE_USERS');
-insert into role_permission (role, permission) values ('ADMIN', 'USE_APPLICATION');
-insert into role_permission (role, permission) values ('ADMIN', 'VIEW_APPLICATION');
-insert into role_permission (role, permission) values ('USER', 'USE_APPLICATION');
-insert into role_permission (role, permission) values ('USER', 'VIEW_APPLICATION');
-insert into role_permission (role, permission) values ('OBSERVER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission)
+values ('OWNER', 'TRANSFER_OWNER');
+insert into role_permission (role, permission)
+values ('OWNER', 'VIEW_SECRETS');
+insert into role_permission (role, permission)
+values ('OWNER', 'MANAGE_USERS');
+insert into role_permission (role, permission)
+values ('OWNER', 'USE_APPLICATION');
+insert into role_permission (role, permission)
+values ('OWNER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission)
+values ('AUDITOR', 'VIEW_SECRETS');
+insert into role_permission (role, permission)
+values ('AUDITOR', 'MANAGE_USERS');
+insert into role_permission (role, permission)
+values ('AUDITOR', 'USE_APPLICATION');
+insert into role_permission (role, permission)
+values ('AUDITOR', 'VIEW_APPLICATION');
+insert into role_permission (role, permission)
+values ('ADMIN', 'MANAGE_USERS');
+insert into role_permission (role, permission)
+values ('ADMIN', 'USE_APPLICATION');
+insert into role_permission (role, permission)
+values ('ADMIN', 'VIEW_APPLICATION');
+insert into role_permission (role, permission)
+values ('USER', 'USE_APPLICATION');
+insert into role_permission (role, permission)
+values ('USER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission)
+values ('OBSERVER', 'VIEW_APPLICATION');
 select name,
        email,
        salt,
@@ -256,9 +271,17 @@ select name,
 from user
 where name = 'Alice'
 ;
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Bob'
+;
 update user
 set role='USER'
-where name='Bob'
+where name = 'Bob'
 ;
 select name,
        email,
@@ -323,4 +346,29 @@ select name,
        role
 from user
 where email = 'Nobody'
+;
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Alice'
+;
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Dave'
+;
+delete from user where name = 'Dave';
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Alice'
 ;

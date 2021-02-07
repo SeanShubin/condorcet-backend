@@ -31,6 +31,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun countUsers(): Int =
         queryExactlyOneInt("count-users")
 
+    override fun listUsers(): List<UserRow> =
+        query(::createUser, "list-users")
+
     override fun roleHasPermission(role: Role, permission: Permission): Boolean {
         return queryExists("role-has-permission", role.name, permission.name)
     }

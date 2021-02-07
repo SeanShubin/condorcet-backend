@@ -77,3 +77,14 @@ update int_variable
 set value = 5
 where name = 'last-synced'
 ;
+insert into event (`when`, type, text)
+values ('2021-02-07 09:12:28.702228', 'RemoveUser', '{"name":"Dave"}')
+;
+select value
+from int_variable
+where name = 'last-synced'
+;
+update int_variable
+set value = 6
+where name = 'last-synced'
+;

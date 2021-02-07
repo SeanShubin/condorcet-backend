@@ -271,6 +271,14 @@ select name,
 from user
 where name = 'Alice'
 ;
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Bob'
+;
 update user
 set role='USER'
 where name = 'Bob'
@@ -338,4 +346,29 @@ select name,
        role
 from user
 where email = 'Nobody'
+;
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Alice'
+;
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Dave'
+;
+delete from user where name = 'Dave';
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Alice'
 ;

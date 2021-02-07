@@ -11,4 +11,8 @@ class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, G
     override fun setRole(name: String, role: Role) {
         update("set-role", role.name, name)
     }
+
+    override fun removeUser(name: String) {
+        update("delete-user", name)
+    }
 }

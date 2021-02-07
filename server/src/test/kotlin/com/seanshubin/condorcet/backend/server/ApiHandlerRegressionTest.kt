@@ -28,7 +28,9 @@ class ApiHandlerRegressionTest {
             ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password"),
             ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "wrong-password"),
             ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password"),
-            ServiceRequest.Authenticate(nameOrEmail = "Nobody", password = "password")
+            ServiceRequest.Authenticate(nameOrEmail = "Nobody", password = "password"),
+            ServiceRequest.RemoveUser(authority = "Alice", name = "Dave"),
+            ServiceRequest.ListUsers(authority = "Alice")
         )
         val snapshotDir = Paths.get("src", "test", "resources")
         val tester = Tester(snapshotDir, commands)

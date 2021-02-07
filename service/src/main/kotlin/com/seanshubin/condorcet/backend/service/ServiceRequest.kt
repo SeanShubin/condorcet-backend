@@ -22,6 +22,18 @@ interface ServiceRequest {
         }
     }
 
+    data class RemoveUser(val authority: String, val name: String) : ServiceRequest {
+        override fun exec(service: Service): ServiceResponse {
+            return service.removeUser(authority, name)
+        }
+    }
+
+    data class ListUsers(val authority: String) : ServiceRequest {
+        override fun exec(service: Service): ServiceResponse {
+            return service.listUsers(authority)
+        }
+    }
+
     data class Unsupported(val name: String, val json: String) : ServiceRequest {
         override fun exec(service: Service): ServiceResponse {
             return service.unsupported(name, json)

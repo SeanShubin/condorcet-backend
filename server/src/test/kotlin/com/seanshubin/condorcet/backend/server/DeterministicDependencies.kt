@@ -17,7 +17,7 @@ class DeterministicDependencies(
     val clockPath = snapshotDir.resolve("deterministic-clock.txt")
     val clock: Clock = RememberingClock(realClock, clockPath)
     val uniqueIdsPath = snapshotDir.resolve("deterministic-unique-ids.txt")
-    val serviceEventParser: ServiceEventParser = ServiceEventParserImpl()
+    val serviceRequestParser: ServiceRequestParser = ServiceRequestParserImpl()
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
     val uniqueIdGenerator: UniqueIdGenerator = RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdsPath)
     val oneWayHash: OneWayHash = Sha256Hash()
@@ -66,7 +66,7 @@ class DeterministicDependencies(
     val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader)
     val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
-    val handler: Handler = ApiHandler(serviceEventParser, service)
+    val handler: Handler = ApiHandler(serviceRequestParser, service)
     val regressionTestRunner: RegressionTestRunner = RegressionTestRunnerImpl(
         snapshotDir,
         snapshotViews,

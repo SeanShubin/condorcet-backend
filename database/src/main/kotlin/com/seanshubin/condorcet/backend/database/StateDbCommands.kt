@@ -12,4 +12,6 @@ interface StateDbCommands {
     )
 
     fun setRole(name: String, role: Role)
+
+    fun removeUser(name: String)
 }

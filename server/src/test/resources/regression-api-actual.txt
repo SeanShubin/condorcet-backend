@@ -123,3 +123,29 @@ POST
 {
   "userSafeMessage" : "User with name or email 'Nobody' does not exist"
 }
+RemoveUser
+POST
+{
+  "authority" : "Alice",
+  "name" : "Dave"
+}
+200
+{ }
+ListUsers
+POST
+{
+  "authority" : "Alice"
+}
+200
+{
+  "users" : [ {
+    "user" : "Alice",
+    "role" : "OWNER"
+  }, {
+    "user" : "Bob",
+    "role" : "USER"
+  }, {
+    "user" : "Carol",
+    "role" : "UNASSIGNED"
+  } ]
+}

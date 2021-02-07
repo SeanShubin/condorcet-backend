@@ -12,6 +12,10 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
         processEvent(DbEvent.SetRole(name, role))
     }
 
+    override fun removeUser(name: String) {
+        processEvent(DbEvent.RemoveUser(name))
+    }
+
     private fun processEvent(dbEvent: DbEvent) {
         eventDbCommands.addEvent(dbEvent.javaClass.simpleName, JsonMappers.compact.writeValueAsString(dbEvent))
     }

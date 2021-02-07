@@ -2,17 +2,14 @@ package com.seanshubin.condorcet.backend.server
 
 import com.seanshubin.condorcet.backend.io.ioutil.consumeString
 import com.seanshubin.condorcet.backend.json.JsonMappers
-import com.seanshubin.condorcet.backend.service.Parsers
-import com.seanshubin.condorcet.backend.service.Service
-import com.seanshubin.condorcet.backend.service.ServiceEventParser
-import com.seanshubin.condorcet.backend.service.ServiceResponse
+import com.seanshubin.condorcet.backend.service.*
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.handler.AbstractHandler
 
 class ApiHandler(
-    private val serviceEventParser: ServiceEventParser,
+    private val serviceRequestParser: ServiceRequestParser,
     private val service: Service
 ) : AbstractHandler() {
     override fun handle(
@@ -23,14 +20,20 @@ class ApiHandler(
     ) {
         val serviceEventName = Parsers.parseCommandNameFromTarget(target)
         val requestBody = request.reader.consumeString()
-        val serviceEvent = serviceEventParser.parse(serviceEventName, requestBody)
-        val result = serviceEvent.exec(service)
+        val serviceEvent = serviceRequestParser.parse(serviceEventName, requestBody)
+        val result = exec(serviceEvent)
         val responseBody = JsonMappers.pretty.writeValueAsString(result)
         response.contentType = "application/json"
         response.writer.print(responseBody)
 
         response.status = statusCodeMap[result::class] ?: 200
         baseRequest.isHandled = true
+    }
+
+    private fun exec(serviceRequest: ServiceRequest): ServiceResponse = try {
+        serviceRequest.exec(service)
+    } catch (ex: ServiceException) {
+        ex.serviceResponse
     }
 
     private val statusCodeMap = mapOf(

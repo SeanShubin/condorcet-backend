@@ -1,5 +1,5 @@
 package com.seanshubin.condorcet.backend.service
 
-interface ServiceEventParser {
+interface ServiceRequestParser {
     fun parse(name: String, content: String): ServiceRequest
 }
