@@ -57,7 +57,7 @@ class ApiService(
         mustHavePermission(authorityUserRow, Permission.MANAGE_USERS)
         val userRows = stateDbQueries.listUsers()
         val list = userRows.map { row ->
-            ServiceResponse.UserRole(row.name, row.role)
+            ServiceResponse.UserNameRole(row.name, row.role)
         }
         return ServiceResponse.UserList(list)
     }

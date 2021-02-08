@@ -3,9 +3,6 @@ package com.seanshubin.condorcet.backend.console
 import com.seanshubin.condorcet.backend.crypto.*
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
-import com.seanshubin.condorcet.backend.logger.LogGroup
-import com.seanshubin.condorcet.backend.logger.Logger
-import com.seanshubin.condorcet.backend.logger.LoggerFactory
 import com.seanshubin.condorcet.backend.server.ApiHandler
 import com.seanshubin.condorcet.backend.server.JettyServer
 import com.seanshubin.condorcet.backend.server.ServerContract
@@ -22,13 +19,14 @@ class Dependencies {
     private val user: String = "root"
     private val password: String = "insecure"
     private val logDir: Path = Paths.get("out", "log")
-    private val logGroup: LogGroup = LoggerFactory.instanceDefaultZone.createLogGroup(logDir)
-    private val sqlLogger: Logger = logGroup.create("sql")
-    private val sqlEvent: (String) -> Unit = LogDecorators.logSql(sqlLogger)
+    private val notifications: Notifications = LoggingNotifications(logDir)
+    private val databaseEvent: (String) -> Unit = notifications::databaseEvent
+    private val requestEvent: (String, String) -> Unit = notifications::requestEvent
+    private val responseEvent: (Int, String) -> Unit = notifications::responseEvent
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, sqlEvent)
+        ConnectionLifecycle(host, user, password, databaseEvent)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, sqlEvent)
+        ConnectionLifecycle(host, user, password, databaseEvent)
     private val lifecycles: Lifecycles = ServiceLifecycles(
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle
@@ -68,6 +66,6 @@ class Dependencies {
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
     private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
-    private val handler: Handler = ApiHandler(serviceRequestParser, service)
+    private val handler: Handler = ApiHandler(serviceRequestParser, service, requestEvent, responseEvent)
     val runner: Runnable = ServerRunner(lifecycles, initializer, serverContract, handler)
 }

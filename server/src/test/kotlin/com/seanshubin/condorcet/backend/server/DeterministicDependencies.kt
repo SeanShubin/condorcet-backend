@@ -30,6 +30,9 @@ class DeterministicDependencies(
     val sqlStateMonitor: SqlMonitor = SqlMonitorInMemory()
     val logSqlEvent: (String) -> Unit = sqlEventMonitor::monitor
     val logSqlState: (String) -> Unit = sqlStateMonitor::monitor
+    val notifications: Notifications = NotificationsNop()
+    val requestEvent: (String, String) -> Unit = notifications::requestEvent
+    val responseEvent: (Int, String) -> Unit = notifications::responseEvent
     val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         ConnectionLifecycle(host, user, password, logSqlEvent)
     val eventDatabase = Database(EventSchema, eventConnectionLifecycle)
@@ -66,7 +69,7 @@ class DeterministicDependencies(
     val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader)
     val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
-    val handler: Handler = ApiHandler(serviceRequestParser, service)
+    val handler: Handler = ApiHandler(serviceRequestParser, service, requestEvent, responseEvent)
     val regressionTestRunner: RegressionTestRunner = RegressionTestRunnerImpl(
         snapshotDir,
         snapshotViews,

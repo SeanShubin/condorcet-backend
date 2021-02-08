@@ -72,7 +72,7 @@
     contract      []
     table         []
     domain        []
-    prototype     [ jetty jetty-alpn jetty-http2 ]
+    prototype     [ jetty jetty-alpn jetty-http2 java-jwt table]
   }
   detangler [console]
   consoleEntryPoint {

@@ -6,6 +6,11 @@
     <artifactId>condorcet-backend-prototype</artifactId>
     <dependencies>
         <dependency>
+            <groupId>com.seanshubin.condorcet.backend</groupId>
+            <artifactId>condorcet-backend-table</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
         </dependency>
@@ -16,6 +21,10 @@
         <dependency>
             <groupId>org.eclipse.jetty.http2</groupId>
             <artifactId>http2-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
         </dependency>
     </dependencies>
     <parent>

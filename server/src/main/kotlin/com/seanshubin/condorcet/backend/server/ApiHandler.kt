@@ -10,7 +10,9 @@ import org.eclipse.jetty.server.handler.AbstractHandler
 
 class ApiHandler(
     private val serviceRequestParser: ServiceRequestParser,
-    private val service: Service
+    private val service: Service,
+    private val requestEvent: (String, String) -> Unit,
+    private val responseEvent: (Int, String) -> Unit
 ) : AbstractHandler() {
     override fun handle(
         target: String,
@@ -18,15 +20,17 @@ class ApiHandler(
         request: HttpServletRequest,
         response: HttpServletResponse
     ) {
-        val serviceEventName = Parsers.parseCommandNameFromTarget(target)
+        val serviceRequestName = Parsers.parseCommandNameFromTarget(target)
         val requestBody = request.reader.consumeString()
-        val serviceEvent = serviceRequestParser.parse(serviceEventName, requestBody)
-        val result = exec(serviceEvent)
-        val responseBody = JsonMappers.pretty.writeValueAsString(result)
+        requestEvent(target, requestBody)
+        val serviceRequest = serviceRequestParser.parse(serviceRequestName, requestBody)
+        val serviceResponse = exec(serviceRequest)
+        val status = statusCodeMap[serviceResponse::class] ?: 200
+        val responseBody = JsonMappers.pretty.writeValueAsString(serviceResponse)
+        responseEvent(status, responseBody)
         response.contentType = "application/json"
         response.writer.print(responseBody)
-
-        response.status = statusCodeMap[result::class] ?: 200
+        response.status = status
         baseRequest.isHandled = true
     }
 
