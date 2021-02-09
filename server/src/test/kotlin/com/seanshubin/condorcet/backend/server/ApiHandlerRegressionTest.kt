@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.server
 
 import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.service.AccessToken
 import com.seanshubin.condorcet.backend.service.ServiceRequest
 import org.junit.Test
 import java.io.BufferedReader
@@ -16,6 +17,7 @@ class ApiHandlerRegressionTest {
     @Test
     fun regressionTest() {
         // given
+        val aliceAccessToken = AccessToken("Alice", Role.OWNER)
         val commands = listOf(
             ServiceRequest.Register(name = "Alice", email = "alice@email.com", password = "alice-password"),
             ServiceRequest.Register(name = "duplicate-email", email = "alice@email.com", password = "alice-password"),
@@ -23,14 +25,14 @@ class ApiHandlerRegressionTest {
             ServiceRequest.Register(name = "Bob", email = "bob@email.com", password = "bob-password"),
             ServiceRequest.Register(name = "Carol", email = "carol@email.com", password = "carol-password"),
             ServiceRequest.Register(name = "Dave", email = "dave@email.com", password = "dave-password"),
-            ServiceRequest.SetRole(authority = "Alice", name = "Bob", role = Role.USER),
+            ServiceRequest.SetRole(accessToken = aliceAccessToken, name = "Bob", role = Role.USER),
             ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "alice-password"),
             ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password"),
             ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "wrong-password"),
             ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password"),
             ServiceRequest.Authenticate(nameOrEmail = "Nobody", password = "password"),
-            ServiceRequest.RemoveUser(authority = "Alice", name = "Dave"),
-            ServiceRequest.ListUsers(authority = "Alice")
+            ServiceRequest.RemoveUser(accessToken = aliceAccessToken, name = "Dave"),
+            ServiceRequest.ListUsers(accessToken = aliceAccessToken)
         )
         val snapshotDir = Paths.get("src", "test", "resources")
         val tester = Tester(snapshotDir, commands)

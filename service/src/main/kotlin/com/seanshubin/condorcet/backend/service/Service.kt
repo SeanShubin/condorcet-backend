@@ -4,9 +4,10 @@ import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.domain.UserNameRole
 
 interface Service {
+    fun refresh(refreshToken: RefreshToken): Tokens
     fun register(name: String, email: String, password: String): Tokens
     fun authenticate(nameOrEmail: String, password: String): Tokens
-    fun setRole(authority: String, target: String, role: Role)
-    fun removeUser(authority: String, target: String)
-    fun listUsers(authority: String): List<UserNameRole>
+    fun setRole(accessToken: AccessToken, target: String, role: Role)
+    fun removeUser(accessToken: AccessToken, target: String)
+    fun listUsers(accessToken: AccessToken): List<UserNameRole>
 }

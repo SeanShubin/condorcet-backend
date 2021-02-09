@@ -19,6 +19,7 @@ class ServiceRequestParserImpl : ServiceRequestParser {
 
     private fun parseJson(name: String, json: String): ServiceRequest {
         return when (name) {
+            "Refresh" -> parse<ServiceRequest.Refresh>(json)
             "Register" -> parse<ServiceRequest.Register>(json)
             "Authenticate" -> parse<ServiceRequest.Authenticate>(json)
             "SetRole" -> parse<ServiceRequest.SetRole>(json)

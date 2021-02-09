@@ -91,7 +91,10 @@ POST
 SetRole
 POST
 {
-  "authority" : "Alice",
+  "accessToken" : {
+    "userName" : "Alice",
+    "role" : "OWNER"
+  },
   "name" : "Bob",
   "role" : "USER"
 }
@@ -162,7 +165,10 @@ POST
 RemoveUser
 POST
 {
-  "authority" : "Alice",
+  "accessToken" : {
+    "userName" : "Alice",
+    "role" : "OWNER"
+  },
   "name" : "Dave"
 }
 200
@@ -170,7 +176,10 @@ POST
 ListUsers
 POST
 {
-  "authority" : "Alice"
+  "accessToken" : {
+    "userName" : "Alice",
+    "role" : "OWNER"
+  }
 }
 200
 [ {

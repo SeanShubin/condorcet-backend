@@ -13,6 +13,12 @@ class ApiService(
     private val stateDbCommands: StateDbCommands,
     private val stateDbQueries: StateDbQueries
 ) : Service {
+    override fun refresh(refreshToken: RefreshToken): Tokens {
+        val userRow = stateDbQueries.findUserByName(refreshToken.userName)
+        val accessToken = AccessToken(userRow.name, userRow.role)
+        return Tokens(refreshToken, accessToken)
+    }
+
     override fun register(name: String, email: String, password: String): Tokens {
         mustNotConflictWithExistingName(name)
         mustNotConflictWithExistingEmail(email)
@@ -34,26 +40,23 @@ class ApiService(
         return createTokens(userRow)
     }
 
-    override fun setRole(authority: String, target: String, role: Role) {
-        val authorityUserRow = mustMatchExistingName(authority)
+    override fun setRole(accessToken: AccessToken, target: String, role: Role) {
         val targetUserRow = mustMatchExistingName(target)
         val permissionNeeded = Permission.MANAGE_USERS
-        mustHavePermission(authorityUserRow, permissionNeeded)
-        mustHaveGreaterRole(authorityUserRow, targetUserRow, "setRole")
-        stateDbCommands.setRole(authority, target, role)
+        mustHavePermission(accessToken, permissionNeeded)
+        mustHaveGreaterRole(accessToken, targetUserRow, "setRole")
+        stateDbCommands.setRole(accessToken.userName, target, role)
     }
 
-    override fun removeUser(authority: String, target: String) {
-        val authorityUserRow = mustMatchExistingName(authority)
+    override fun removeUser(accessToken: AccessToken, target: String) {
         val targetUserRow = mustMatchExistingName(target)
-        mustHavePermission(authorityUserRow, Permission.MANAGE_USERS)
-        mustHaveGreaterRole(authorityUserRow, targetUserRow, "removeUser")
-        stateDbCommands.removeUser(authority, target)
+        mustHavePermission(accessToken, Permission.MANAGE_USERS)
+        mustHaveGreaterRole(accessToken, targetUserRow, "removeUser")
+        stateDbCommands.removeUser(accessToken.userName, target)
     }
 
-    override fun listUsers(authority: String): List<UserNameRole> {
-        val authorityUserRow = mustMatchExistingName(authority)
-        mustHavePermission(authorityUserRow, Permission.MANAGE_USERS)
+    override fun listUsers(accessToken: AccessToken): List<UserNameRole> {
+        mustHavePermission(accessToken, Permission.MANAGE_USERS)
         val userRows = stateDbQueries.listUsers()
         val list = userRows.map { row ->
             UserNameRole(row.name, row.role)
@@ -109,19 +112,19 @@ class ApiService(
 
     }
 
-    private fun mustHavePermission(userRow: UserRow, permission: Permission) {
-        if (!stateDbQueries.roleHasPermission(userRow.role, permission)) {
+    private fun mustHavePermission(accessToken: AccessToken, permission: Permission) {
+        if (!stateDbQueries.roleHasPermission(accessToken.role, permission)) {
             throw ServiceException.Unauthorized(
-                "User ${userRow.name} with role ${userRow.role} does not have permission $permission"
+                "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permission"
             )
         }
     }
 
-    private fun mustHaveGreaterRole(first: UserRow, second: UserRow, operation: String) {
-        if (first.role.ordinal >= second.role.ordinal) {
+    private fun mustHaveGreaterRole(accessToken: AccessToken, userRow: UserRow, operation: String) {
+        if (accessToken.role.ordinal >= userRow.role.ordinal) {
             throw ServiceException.Unauthorized(
-                "For operation $operation, user ${first.name} with role ${first.role}" +
-                        " must have greater role than user ${second.name} with role ${second.role}"
+                "For operation $operation, user ${accessToken.userName} with role ${accessToken.role}" +
+                        " must have greater role than user ${userRow.name} with role ${userRow.role}"
             )
         }
     }
