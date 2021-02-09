@@ -139,13 +139,13 @@ POST
 200
 {
   "users" : [ {
-    "user" : "Alice",
+    "name" : "Alice",
     "role" : "OWNER"
   }, {
-    "user" : "Bob",
+    "name" : "Bob",
     "role" : "USER"
   }, {
-    "user" : "Carol",
+    "name" : "Carol",
     "role" : "UNASSIGNED"
   } ]
 }
