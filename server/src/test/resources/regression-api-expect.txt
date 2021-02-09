@@ -7,7 +7,13 @@ POST
 }
 200
 {
-  "name" : "Alice"
+  "refreshToken" : {
+    "userName" : "Alice"
+  },
+  "accessToken" : {
+    "userName" : "Alice",
+    "role" : "OWNER"
+  }
 }
 Register
 POST
@@ -40,7 +46,13 @@ POST
 }
 200
 {
-  "name" : "Bob"
+  "refreshToken" : {
+    "userName" : "Bob"
+  },
+  "accessToken" : {
+    "userName" : "Bob",
+    "role" : "UNASSIGNED"
+  }
 }
 Register
 POST
@@ -51,7 +63,13 @@ POST
 }
 200
 {
-  "name" : "Carol"
+  "refreshToken" : {
+    "userName" : "Carol"
+  },
+  "accessToken" : {
+    "userName" : "Carol",
+    "role" : "UNASSIGNED"
+  }
 }
 Register
 POST
@@ -62,7 +80,13 @@ POST
 }
 200
 {
-  "name" : "Dave"
+  "refreshToken" : {
+    "userName" : "Dave"
+  },
+  "accessToken" : {
+    "userName" : "Dave",
+    "role" : "UNASSIGNED"
+  }
 }
 SetRole
 POST
@@ -81,7 +105,13 @@ POST
 }
 200
 {
-  "name" : "Alice"
+  "refreshToken" : {
+    "userName" : "Alice"
+  },
+  "accessToken" : {
+    "userName" : "Alice",
+    "role" : "OWNER"
+  }
 }
 Authenticate
 POST
@@ -91,7 +121,13 @@ POST
 }
 200
 {
-  "name" : "Alice"
+  "refreshToken" : {
+    "userName" : "Alice"
+  },
+  "accessToken" : {
+    "userName" : "Alice",
+    "role" : "OWNER"
+  }
 }
 Authenticate
 POST
@@ -137,15 +173,13 @@ POST
   "authority" : "Alice"
 }
 200
-{
-  "users" : [ {
-    "name" : "Alice",
-    "role" : "OWNER"
-  }, {
-    "name" : "Bob",
-    "role" : "USER"
-  }, {
-    "name" : "Carol",
-    "role" : "UNASSIGNED"
-  } ]
-}
+[ {
+  "name" : "Alice",
+  "role" : "OWNER"
+}, {
+  "name" : "Bob",
+  "role" : "USER"
+}, {
+  "name" : "Carol",
+  "role" : "UNASSIGNED"
+} ]
