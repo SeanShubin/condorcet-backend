@@ -12,7 +12,7 @@ class ApiService(
     private val stateDbCommands: StateDbCommands,
     private val stateDbQueries: StateDbQueries
 ) : Service {
-    override fun register(name: String, email: String, password: String): ServiceResponse {
+    override fun register(name: String, email: String, password: String): ServiceResponse.UserName {
         mustNotConflictWithExistingName(name)
         mustNotConflictWithExistingEmail(email)
         val role = if (stateDbQueries.countUsers() == 0) {
@@ -27,13 +27,13 @@ class ApiService(
         return ServiceResponse.UserName(user.name)
     }
 
-    override fun authenticate(nameOrEmail: String, password: String): ServiceResponse {
+    override fun authenticate(nameOrEmail: String, password: String): ServiceResponse.UserName {
         val userRow = mustMatchExistingNameOrEmail(nameOrEmail)
         mustMatchPassword(nameOrEmail, userRow, password)
         return ServiceResponse.UserName(userRow.name)
     }
 
-    override fun setRole(authority: String, target: String, role: Role): ServiceResponse {
+    override fun setRole(authority: String, target: String, role: Role): ServiceResponse.GenericOk {
         val authorityUserRow = mustMatchExistingName(authority)
         val targetUserRow = mustMatchExistingName(target)
         val permissionNeeded = Permission.MANAGE_USERS
@@ -43,7 +43,7 @@ class ApiService(
         return ServiceResponse.GenericOk
     }
 
-    override fun removeUser(authority: String, target: String): ServiceResponse {
+    override fun removeUser(authority: String, target: String): ServiceResponse.GenericOk {
         val authorityUserRow = mustMatchExistingName(authority)
         val targetUserRow = mustMatchExistingName(target)
         mustHavePermission(authorityUserRow, Permission.MANAGE_USERS)
@@ -52,7 +52,7 @@ class ApiService(
         return ServiceResponse.GenericOk
     }
 
-    override fun listUsers(authority: String): ServiceResponse {
+    override fun listUsers(authority: String): ServiceResponse.UserList {
         val authorityUserRow = mustMatchExistingName(authority)
         mustHavePermission(authorityUserRow, Permission.MANAGE_USERS)
         val userRows = stateDbQueries.listUsers()
@@ -62,11 +62,11 @@ class ApiService(
         return ServiceResponse.UserList(list)
     }
 
-    override fun health(): ServiceResponse {
+    override fun health(): ServiceResponse.Health {
         return ServiceResponse.Health("ok")
     }
 
-    override fun unsupported(name: String, text: String): ServiceResponse {
+    override fun unsupported(name: String, text: String): ServiceResponse.Unsupported {
         val userSafeMessage = "Unsupported command '$name'"
         return ServiceResponse.Unsupported(userSafeMessage, name, text)
     }
