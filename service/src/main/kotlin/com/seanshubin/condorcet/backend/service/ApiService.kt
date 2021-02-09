@@ -6,13 +6,14 @@ import com.seanshubin.condorcet.backend.database.StateDbQueries
 import com.seanshubin.condorcet.backend.database.UserRow
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.domain.UserNameRole
 
 class ApiService(
     private val passwordUtil: PasswordUtil,
     private val stateDbCommands: StateDbCommands,
     private val stateDbQueries: StateDbQueries
 ) : Service {
-    override fun register(name: String, email: String, password: String): ServiceResponse.UserName {
+    override fun register(name: String, email: String, password: String): Tokens {
         mustNotConflictWithExistingName(name)
         mustNotConflictWithExistingEmail(email)
         val role = if (stateDbQueries.countUsers() == 0) {
@@ -24,51 +25,40 @@ class ApiService(
         val authority = name
         stateDbCommands.createUser(authority, name, email, salt, hash, role)
         val user = stateDbQueries.findUserByName(name)
-        return ServiceResponse.UserName(user.name)
+        return createTokens(user)
     }
 
-    override fun authenticate(nameOrEmail: String, password: String): ServiceResponse.UserName {
+    override fun authenticate(nameOrEmail: String, password: String): Tokens {
         val userRow = mustMatchExistingNameOrEmail(nameOrEmail)
         mustMatchPassword(nameOrEmail, userRow, password)
-        return ServiceResponse.UserName(userRow.name)
+        return createTokens(userRow)
     }
 
-    override fun setRole(authority: String, target: String, role: Role): ServiceResponse.GenericOk {
+    override fun setRole(authority: String, target: String, role: Role) {
         val authorityUserRow = mustMatchExistingName(authority)
         val targetUserRow = mustMatchExistingName(target)
         val permissionNeeded = Permission.MANAGE_USERS
         mustHavePermission(authorityUserRow, permissionNeeded)
         mustHaveGreaterRole(authorityUserRow, targetUserRow, "setRole")
         stateDbCommands.setRole(authority, target, role)
-        return ServiceResponse.GenericOk
     }
 
-    override fun removeUser(authority: String, target: String): ServiceResponse.GenericOk {
+    override fun removeUser(authority: String, target: String) {
         val authorityUserRow = mustMatchExistingName(authority)
         val targetUserRow = mustMatchExistingName(target)
         mustHavePermission(authorityUserRow, Permission.MANAGE_USERS)
         mustHaveGreaterRole(authorityUserRow, targetUserRow, "removeUser")
         stateDbCommands.removeUser(authority, target)
-        return ServiceResponse.GenericOk
     }
 
-    override fun listUsers(authority: String): ServiceResponse.UserList {
+    override fun listUsers(authority: String): List<UserNameRole> {
         val authorityUserRow = mustMatchExistingName(authority)
         mustHavePermission(authorityUserRow, Permission.MANAGE_USERS)
         val userRows = stateDbQueries.listUsers()
         val list = userRows.map { row ->
-            ServiceResponse.UserNameRole(row.name, row.role)
+            UserNameRole(row.name, row.role)
         }
-        return ServiceResponse.UserList(list)
-    }
-
-    override fun health(): ServiceResponse.Health {
-        return ServiceResponse.Health("ok")
-    }
-
-    override fun unsupported(name: String, text: String): ServiceResponse.Unsupported {
-        val userSafeMessage = "Unsupported command '$name'"
-        return ServiceResponse.Unsupported(userSafeMessage, name, text)
+        return list
     }
 
     private fun nameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
@@ -84,20 +74,20 @@ class ApiService(
 
     private fun mustNotConflictWithExistingName(name: String) {
         if (nameExists(name)) {
-            throw ServiceException(ServiceResponse.Conflict("User with name '$name' already exists"))
+            throw ServiceException.Conflict("User with name '$name' already exists")
         }
     }
 
     private fun mustNotConflictWithExistingEmail(email: String) {
         if (emailExists(email)) {
-            throw ServiceException(ServiceResponse.Conflict("User with email '$email' already exists"))
+            throw ServiceException.Conflict("User with email '$email' already exists")
         }
     }
 
     private fun mustMatchExistingNameOrEmail(nameOrEmail: String): UserRow {
         val userRow = searchByNameOrEmail(nameOrEmail)
         if (userRow == null) {
-            throw ServiceException(ServiceResponse.NotFound("User with name or email '$nameOrEmail' does not exist"))
+            throw ServiceException.NotFound("User with name or email '$nameOrEmail' does not exist")
         } else {
             return userRow
         }
@@ -106,7 +96,7 @@ class ApiService(
     private fun mustMatchExistingName(name: String): UserRow {
         val userRow = searchByName(name)
         if (userRow == null) {
-            throw ServiceException(ServiceResponse.NotFound("User with name '$name' does not exist"))
+            throw ServiceException.NotFound("User with name '$name' does not exist")
         } else {
             return userRow
         }
@@ -114,33 +104,31 @@ class ApiService(
 
     private fun mustMatchPassword(nameOrEmail: String, userRow: UserRow, password: String) {
         if (!passwordUtil.validatePassword(password, userRow.salt, userRow.hash)) {
-            throw ServiceException(
-                ServiceResponse.Unauthorized(
-                    "Authentication failed for user with name or email '$nameOrEmail'"
-                )
-            )
+            throw ServiceException.Unauthorized("Authentication failed for user with name or email '$nameOrEmail'")
         }
 
     }
 
     private fun mustHavePermission(userRow: UserRow, permission: Permission) {
         if (!stateDbQueries.roleHasPermission(userRow.role, permission)) {
-            throw ServiceException(
-                ServiceResponse.Unauthorized(
-                    "User ${userRow.name} with role ${userRow.role} does not have permission $permission"
-                )
+            throw ServiceException.Unauthorized(
+                "User ${userRow.name} with role ${userRow.role} does not have permission $permission"
             )
         }
     }
 
     private fun mustHaveGreaterRole(first: UserRow, second: UserRow, operation: String) {
         if (first.role.ordinal >= second.role.ordinal) {
-            throw ServiceException(
-                ServiceResponse.Unauthorized(
-                    "For operation $operation, user ${first.name} with role ${first.role}" +
-                            " must have greater role than user ${second.name} with role ${second.role}"
-                )
+            throw ServiceException.Unauthorized(
+                "For operation $operation, user ${first.name} with role ${first.role}" +
+                        " must have greater role than user ${second.name} with role ${second.role}"
             )
         }
+    }
+
+    private fun createTokens(userRow: UserRow): Tokens {
+        val refreshToken = RefreshToken(userRow.name)
+        val accessToken = AccessToken(userRow.name, userRow.role)
+        return Tokens(refreshToken, accessToken)
     }
 }

@@ -13,7 +13,7 @@ class ServiceRequestParserImpl : ServiceRequestParser {
             }
             parseJson(name, json)
         } catch (ex: Exception) {
-            ServiceRequest.MalformedJson(name, text)
+            throw ServiceException.MalformedJson("malformed json\n$text")
         }
     }
 
@@ -24,8 +24,7 @@ class ServiceRequestParserImpl : ServiceRequestParser {
             "SetRole" -> parse<ServiceRequest.SetRole>(json)
             "RemoveUser" -> parse<ServiceRequest.RemoveUser>(json)
             "ListUsers" -> parse<ServiceRequest.ListUsers>(json)
-            "Health" -> parse<ServiceRequest.Health>(json)
-            else -> ServiceRequest.Unsupported(name, json)
+            else -> throw ServiceException.Unsupported("unsupported command $name\n$json")
         }
     }
 }

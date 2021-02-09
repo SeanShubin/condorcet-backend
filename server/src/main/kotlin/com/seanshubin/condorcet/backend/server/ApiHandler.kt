@@ -25,26 +25,26 @@ class ApiHandler(
         requestEvent(target, requestBody)
         val serviceRequest = serviceRequestParser.parse(serviceRequestName, requestBody)
         val serviceResponse = exec(serviceRequest)
-        val status = statusCodeMap[serviceResponse::class] ?: 200
-        val responseBody = JsonMappers.pretty.writeValueAsString(serviceResponse)
-        responseEvent(status, responseBody)
+        val responseBody = JsonMappers.pretty.writeValueAsString(serviceResponse.value)
+        responseEvent(serviceResponse.status, responseBody)
         response.contentType = "application/json"
         response.writer.print(responseBody)
-        response.status = status
+        response.status = serviceResponse.status
         baseRequest.isHandled = true
     }
 
     private fun exec(serviceRequest: ServiceRequest): ServiceResponse = try {
-        serviceRequest.exec(service)
+        ServiceResponse(200, serviceRequest.exec(service))
     } catch (ex: ServiceException) {
-        ex.serviceResponse
+        val statusCode = statusCodeMap[ex::class] ?: 500
+        ServiceResponse(statusCode, mapOf("userSafeMessage" to ex.userSafeMessage))
     }
 
     private val statusCodeMap = mapOf(
-        ServiceResponse.Unauthorized::class to 401,
-        ServiceResponse.NotFound::class to 404,
-        ServiceResponse.Conflict::class to 409,
-        ServiceResponse.Unsupported::class to 400,
-        ServiceResponse.MalformedJson::class to 400
+        ServiceException.Unauthorized::class to 401,
+        ServiceException.NotFound::class to 404,
+        ServiceException.Conflict::class to 409,
+        ServiceException.Unsupported::class to 400,
+        ServiceException.MalformedJson::class to 400
     )
 }
