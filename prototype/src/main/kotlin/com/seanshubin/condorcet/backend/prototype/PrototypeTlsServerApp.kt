@@ -14,7 +14,9 @@ add line
     127.0.0.1 condorcet.com
 
 keytool -genkey -alias condorcet -keyalg RSA -keystore 'secrets/condorcet.jks' -dname "CN=*.condorcet.com, OU=Sean Shubin 4, O=Sean Shubin, L=Los Angeles, ST=California, C=US" -ext san=dns:condorcet.com -storepass insecure
-keytool -export -alias condorcet -file 'secrets/condorcet_public_cert.cer' -keystore 'secrets/condorcet.jks' -storepass insecure
+keytool -export -alias condorcet -file 'secrets/condorcet.cer' -keystore 'secrets/condorcet.jks' -storepass insecure
+keytool -importkeystore -srckeystore secrets/condorcet.jks -destkeystore secrets/condorcet.p12 -deststoretype PKCS12 -srcstorepass insecure -deststorepass insecure
+openssl pkcs12 -in secrets/condorcet.p12 -nocerts -out secrets/condorcet.key -nodes -password pass:insecure
 keytool -list -v -keystore 'secrets/condorcet.jks' -storepass insecure
 https://condorcet.com:8443
  */
