@@ -10,7 +10,6 @@ import java.nio.file.Paths
 import kotlin.test.assertEquals
 
 class ApiHandlerRegressionTest {
-
     @Test
     fun regressionTest() {
         // given
@@ -55,6 +54,7 @@ class ApiHandlerRegressionTest {
             RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "wrong-password")),
             RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password")),
             RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "Nobody", password = "password")),
+            RequestEvent(ServiceRequest.Refresh),
             RequestEvent(ServiceRequest.RemoveUser(name = "Dave"), aliceAuthorizationHeaders),
             RequestEvent(ServiceRequest.ListUsers, aliceAuthorizationHeaders)
         )
