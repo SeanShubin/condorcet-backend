@@ -87,10 +87,13 @@
         <module>console</module>
         <module>json</module>
         <module>logger</module>
+        <module>service-http</module>
+        <module>http</module>
         <module>contract</module>
         <module>table</module>
         <module>domain</module>
         <module>prototype</module>
+        <module>jwt</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

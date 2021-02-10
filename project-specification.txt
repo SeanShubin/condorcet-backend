@@ -69,10 +69,13 @@
     console       [ server ]
     json          [ jackson jackson-time ]
     logger        [ contract ]
+    service-http  [ service http jwt ]
+    http          []
     contract      []
     table         []
     domain        []
     prototype     [ jetty jetty-alpn jetty-http2 java-jwt table]
+    jwt           [ java-jwt ]
   }
   detangler [console]
   consoleEntryPoint {
