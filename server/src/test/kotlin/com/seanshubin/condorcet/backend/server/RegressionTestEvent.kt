@@ -1,39 +1,49 @@
 package com.seanshubin.condorcet.backend.server
 
+import jakarta.servlet.http.Cookie
+
 data class RegressionTestEvent(
     val name: String,
     val method: String,
     val requestBody: String,
+    val requestHeaders: List<Pair<String, String>>,
+    val requestCookies: List<Cookie>,
     val status: Int,
-    val responseBody: String
+    val responseBody: String,
+    val responseHeaders: List<Pair<String, String>>,
+    val responseCookies: List<Cookie>
 ) {
     fun toLines(): List<String> {
-        return listOf(name, method, requestBody, status.toString(), responseBody)
+        return listOf(name, method, requestBody) +
+                requestHeaders.toLines() +
+                requestCookies.toGetCookieLines() +
+                listOf(status.toString(), responseBody) +
+                responseHeaders.toLines() +
+                responseCookies.toSetCookieLines()
     }
 
-    companion object {
-        fun consumeFromLines(lines: List<String>): Pair<List<String>, RegressionTestEvent> {
-            var index = 0
-            val name = lines[index++]
-            val method = lines[index++]
-            if (lines[index] != "{") throw RuntimeException("'{' expected")
-            val requestBodyLines = mutableListOf<String>()
-            while (lines[index] != "}") {
-                requestBodyLines.add(lines[index++])
-            }
-            requestBodyLines.add(lines[index++])
-            val requestBody = requestBodyLines.joinToString("\n")
-            val status = lines[index++].toInt()
-            val responseBodyLines = mutableListOf<String>()
-            if (lines[index] != "{") throw RuntimeException("'{' expected")
-            while (lines[index] != "}") {
-                responseBodyLines.add(lines[index++])
-            }
-            responseBodyLines.add(lines[index++])
-            val responseBody = responseBodyLines.joinToString("\n")
-            val remainingLines = lines.drop(index)
-            val event = RegressionTestEvent(name, method, requestBody, status, responseBody)
-            return Pair(remainingLines, event)
+    private fun List<Pair<String, String>>.toLines(): List<String> =
+        flatMap { it.toLines() }
+
+    private fun Pair<String, String>.toLines(): List<String> =
+        listOf("$first -> $second")
+
+    private fun List<Cookie>.toGetCookieLines(): List<String> =
+        if (isEmpty()) emptyList()
+        else {
+            val parts = this.map { it.toGetCookieElement() }
+            val asString = parts.joinToString("; ")
+            val line = "Cookie: $asString"
+            listOf(line)
         }
-    }
+
+    private fun List<Cookie>.toSetCookieLines(): List<String> =
+        map { it.toSetCookieLine() }
+
+    private fun Cookie.toSetCookieLine(): String =
+        "Set-Cookie: ${this.toGetCookieElement()}"
+
+    private fun Cookie.toGetCookieElement(): String =
+        "${name}=${value}"
+
 }

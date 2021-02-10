@@ -7,14 +7,10 @@ POST
 }
 200
 {
-  "refreshToken" : {
-    "userName" : "Alice"
-  },
-  "accessToken" : {
-    "userName" : "Alice",
-    "role" : "OWNER"
-  }
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+Set-Cookie: Refresh={"userName":"Alice"}
 Register
 POST
 {
@@ -22,6 +18,7 @@ POST
   "email" : "alice@email.com",
   "password" : "alice-password"
 }
+Cookie: Refresh={"userName":"Alice"}
 409
 {
   "userSafeMessage" : "User with email 'alice@email.com' already exists"
@@ -33,6 +30,7 @@ POST
   "email" : "duplicate@name.com",
   "password" : "alice-password"
 }
+Cookie: Refresh={"userName":"Alice"}
 409
 {
   "userSafeMessage" : "User with name 'Alice' already exists"
@@ -44,16 +42,13 @@ POST
   "email" : "bob@email.com",
   "password" : "bob-password"
 }
+Cookie: Refresh={"userName":"Alice"}
 200
 {
-  "refreshToken" : {
-    "userName" : "Bob"
-  },
-  "accessToken" : {
-    "userName" : "Bob",
-    "role" : "UNASSIGNED"
-  }
+  "userName" : "Bob",
+  "role" : "UNASSIGNED"
 }
+Set-Cookie: Refresh={"userName":"Bob"}
 Register
 POST
 {
@@ -61,16 +56,13 @@ POST
   "email" : "carol@email.com",
   "password" : "carol-password"
 }
+Cookie: Refresh={"userName":"Bob"}
 200
 {
-  "refreshToken" : {
-    "userName" : "Carol"
-  },
-  "accessToken" : {
-    "userName" : "Carol",
-    "role" : "UNASSIGNED"
-  }
+  "userName" : "Carol",
+  "role" : "UNASSIGNED"
 }
+Set-Cookie: Refresh={"userName":"Carol"}
 Register
 POST
 {
@@ -78,66 +70,56 @@ POST
   "email" : "dave@email.com",
   "password" : "dave-password"
 }
+Cookie: Refresh={"userName":"Carol"}
 200
 {
-  "refreshToken" : {
-    "userName" : "Dave"
-  },
-  "accessToken" : {
-    "userName" : "Dave",
-    "role" : "UNASSIGNED"
-  }
+  "userName" : "Dave",
+  "role" : "UNASSIGNED"
 }
+Set-Cookie: Refresh={"userName":"Dave"}
 SetRole
 POST
 {
-  "accessToken" : {
-    "userName" : "Alice",
-    "role" : "OWNER"
-  },
   "name" : "Bob",
   "role" : "USER"
 }
+Authorization -> Bearer {"userName":"Alice","role":"OWNER"}
+Cookie: Refresh={"userName":"Dave"}
 200
-{ }
+null
 Authenticate
 POST
 {
   "nameOrEmail" : "Alice",
   "password" : "alice-password"
 }
+Cookie: Refresh={"userName":"Dave"}
 200
 {
-  "refreshToken" : {
-    "userName" : "Alice"
-  },
-  "accessToken" : {
-    "userName" : "Alice",
-    "role" : "OWNER"
-  }
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+Set-Cookie: Refresh={"userName":"Alice"}
 Authenticate
 POST
 {
   "nameOrEmail" : "alice@email.com",
   "password" : "alice-password"
 }
+Cookie: Refresh={"userName":"Alice"}
 200
 {
-  "refreshToken" : {
-    "userName" : "Alice"
-  },
-  "accessToken" : {
-    "userName" : "Alice",
-    "role" : "OWNER"
-  }
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+Set-Cookie: Refresh={"userName":"Alice"}
 Authenticate
 POST
 {
   "nameOrEmail" : "Alice",
   "password" : "wrong-password"
 }
+Cookie: Refresh={"userName":"Alice"}
 401
 {
   "userSafeMessage" : "Authentication failed for user with name or email 'Alice'"
@@ -148,6 +130,7 @@ POST
   "nameOrEmail" : "alice@email.com",
   "password" : "wrong-password"
 }
+Cookie: Refresh={"userName":"Alice"}
 401
 {
   "userSafeMessage" : "Authentication failed for user with name or email 'alice@email.com'"
@@ -158,6 +141,7 @@ POST
   "nameOrEmail" : "Nobody",
   "password" : "password"
 }
+Cookie: Refresh={"userName":"Alice"}
 404
 {
   "userSafeMessage" : "User with name or email 'Nobody' does not exist"
@@ -165,22 +149,17 @@ POST
 RemoveUser
 POST
 {
-  "accessToken" : {
-    "userName" : "Alice",
-    "role" : "OWNER"
-  },
   "name" : "Dave"
 }
+Authorization -> Bearer {"userName":"Alice","role":"OWNER"}
+Cookie: Refresh={"userName":"Alice"}
 200
 { }
 ListUsers
 POST
-{
-  "accessToken" : {
-    "userName" : "Alice",
-    "role" : "OWNER"
-  }
-}
+{ }
+Authorization -> Bearer {"userName":"Alice","role":"OWNER"}
+Cookie: Refresh={"userName":"Alice"}
 200
 [ {
   "name" : "Alice",

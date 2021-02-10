@@ -4,7 +4,7 @@ import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Initializer
 import com.seanshubin.condorcet.backend.json.JsonMappers
 import com.seanshubin.condorcet.backend.service.Lifecycles
-import com.seanshubin.condorcet.backend.service.ServiceRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Request
 import java.nio.file.Files
@@ -15,12 +15,13 @@ class RegressionTestRunnerImpl(
     val snapshotViews: List<SnapshotView>,
     val lifecycles: Lifecycles,
     val initializer: Initializer,
-    val serviceRequests: List<ServiceRequest>,
+    val requestEvents: List<RequestEvent>,
     val handler: Handler,
     val eventDatabase: Database,
     val stateDatabase: Database,
     val sqlEventMonitor: SqlMonitor,
-    val sqlStateMonitor: SqlMonitor
+    val sqlStateMonitor: SqlMonitor,
+    val cookieSimulator: CookieSimulator
 ) : RegressionTestRunner {
     override fun createMissingSnapshotsForExpected() {
         val missingSnapshots = snapshotViews.filter { !Files.exists(it.getPath(snapshotDir, "expect")) }
@@ -45,7 +46,7 @@ class RegressionTestRunnerImpl(
         lifecycles.doInLifecycle {
             initializer.purgeAllData()
             initializer.initialize()
-            val events = serviceRequests.map(::runCommand)
+            val events = requestEvents.map(::runCommand)
             val sqlEventStatements = sqlEventMonitor.getSqlStatements()
             val sqlStateStatements = sqlStateMonitor.getSqlStatements()
             val eventTables = queryTables(eventDatabase)
@@ -53,20 +54,41 @@ class RegressionTestRunnerImpl(
             Snapshot(events, eventTables, stateTables, sqlEventStatements, sqlStateStatements)
         }
 
-    private fun runCommand(serviceRequest: ServiceRequest): RegressionTestEvent {
+    private fun runCommand(requestEvent: RequestEvent): RegressionTestEvent {
+        val serviceRequest = requestEvent.serviceRequest
+        val requestHeaders = requestEvent.headers
         val name = serviceRequest.javaClass.simpleName
         val method = "POST"
         val requestBody = JsonMappers.pretty.writeValueAsString(serviceRequest)
         val target = "/$name"
-        val request = ApiHandlerRegressionTest.RequestStub(name, method, requestBody)
+        val request = RequestStub(name, method, requestBody, cookieSimulator, requestHeaders)
+        val requestCookies = cookieSimulator.cookieList.toList()
         val baseRequest = Request(null, null)
-        val response = ApiHandlerRegressionTest.ResponseStub()
+        val response = ResponseStub(cookieSimulator)
+        val responseHeaders = getHeaders(response)
+        cookieSimulator.addCookieInvocations.clear()
         handler.handle(target, baseRequest, request, response)
+        val responseCookies = cookieSimulator.addCookieInvocations.toList()
         val statusCode = response.status
         val responseBody = response.stringWriter.buffer.toString()
-        val event = RegressionTestEvent(name, method, requestBody, statusCode, responseBody)
+        val event = RegressionTestEvent(
+            name,
+            method,
+            requestBody,
+            requestHeaders,
+            requestCookies,
+            statusCode,
+            responseBody,
+            responseHeaders,
+            responseCookies
+        )
         return event
     }
+
+    private fun getHeaders(request: HttpServletResponse): List<Pair<String, String>> =
+        request.headerNames.toList().map {
+            Pair(it, request.getHeader(it))
+        }
 
     private fun queryTables(database: Database): List<GenericTable> {
         val schema = database.schema

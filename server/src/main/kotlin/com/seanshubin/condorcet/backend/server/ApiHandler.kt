@@ -11,6 +11,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler
 class ApiHandler(
     private val serviceRequestParser: ServiceRequestParser,
     private val service: Service,
+    private val tokenService: TokenService,
     private val requestEvent: (String, String) -> Unit,
     private val responseEvent: (Int, String) -> Unit
 ) : AbstractHandler() {
@@ -23,21 +24,34 @@ class ApiHandler(
         val serviceRequestName = Parsers.parseCommandNameFromTarget(target)
         val requestBody = request.reader.consumeString()
         requestEvent(target, requestBody)
+        val accessToken = tokenService.getAccessToken(request)
+        val refreshToken = tokenService.getRefreshToken(request)
         val serviceRequest = serviceRequestParser.parse(serviceRequestName, requestBody)
-        val serviceResponse = exec(serviceRequest)
-        val responseBody = JsonMappers.pretty.writeValueAsString(serviceResponse.value)
-        responseEvent(serviceResponse.status, responseBody)
+        val httpResponse = exec(serviceRequest, accessToken, refreshToken)
+        val responseBody = JsonMappers.pretty.writeValueAsString(httpResponse.value)
+        responseEvent(httpResponse.status, responseBody)
         response.contentType = "application/json"
         response.writer.print(responseBody)
-        response.status = serviceResponse.status
+        response.status = httpResponse.status
+        tokenService.setRefreshToken(response, httpResponse.refreshToken)
         baseRequest.isHandled = true
     }
 
-    private fun exec(serviceRequest: ServiceRequest): ServiceResponse = try {
-        ServiceResponse(200, serviceRequest.exec(service))
+    private fun exec(
+        serviceRequest: ServiceRequest,
+        accessToken: AccessToken?,
+        refreshToken: RefreshToken?
+    ): HttpResponse = try {
+        val serviceResponse = serviceRequest.exec(service, accessToken, refreshToken)
+        val httpResponse = serviceResponse.toHttpResponse(200)
+        httpResponse
     } catch (ex: ServiceException) {
         val statusCode = statusCodeMap[ex::class] ?: 500
-        ServiceResponse(statusCode, mapOf("userSafeMessage" to ex.userSafeMessage))
+        HttpResponse(
+            status = statusCode,
+            value = mapOf("userSafeMessage" to ex.userSafeMessage),
+            refreshToken = null
+        )
     }
 
     private val statusCodeMap = mapOf(
@@ -46,5 +60,11 @@ class ApiHandler(
         ServiceException.Conflict::class to 409,
         ServiceException.Unsupported::class to 400,
         ServiceException.MalformedJson::class to 400
+    )
+
+    private fun ServiceResponse.toHttpResponse(status: Int) = HttpResponse(
+        status = status,
+        value = value,
+        refreshToken = refreshToken
     )
 }

@@ -71,7 +71,7 @@ abstract class HttpServletResponseNotImplemented : HttpServletResponse {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun addCookie(cookie: Cookie?) {
+    override fun addCookie(cookie: Cookie) {
         throw UnsupportedOperationException("not implemented")
     }
 

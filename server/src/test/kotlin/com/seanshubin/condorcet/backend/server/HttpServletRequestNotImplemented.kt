@@ -159,7 +159,7 @@ abstract class HttpServletRequestNotImplemented : HttpServletRequest {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun getCookies(): Array<Cookie> {
+    override fun getCookies(): Array<Cookie>? {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -167,7 +167,7 @@ abstract class HttpServletRequestNotImplemented : HttpServletRequest {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun getHeader(name: String?): String {
+    override fun getHeader(name: String?): String? {
         throw UnsupportedOperationException("not implemented")
     }
 

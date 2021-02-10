@@ -11,7 +11,7 @@ import java.time.Clock
 class DeterministicDependencies(
     snapshotDir: Path,
     snapshotViews: List<SnapshotView>,
-    serviceRequests: List<ServiceRequest>
+    requestEvents: List<RequestEvent>
 ) {
     val realClock: Clock = Clock.systemUTC()
     val clockPath = snapshotDir.resolve("deterministic-clock.txt")
@@ -69,17 +69,20 @@ class DeterministicDependencies(
     val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader)
     val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
-    val handler: Handler = ApiHandler(serviceRequestParser, service, requestEvent, responseEvent)
+    val tokenService: TokenService = TokenServiceImpl()
+    val handler: Handler = ApiHandler(serviceRequestParser, service, tokenService, requestEvent, responseEvent)
+    val cookieSimulator: CookieSimulator = CookieSimulator()
     val regressionTestRunner: RegressionTestRunner = RegressionTestRunnerImpl(
         snapshotDir,
         snapshotViews,
         lifecycles,
         initializer,
-        serviceRequests,
+        requestEvents,
         handler,
         eventDatabase,
         stateDatabase,
         sqlEventMonitor,
-        sqlStateMonitor
+        sqlStateMonitor,
+        cookieSimulator
     )
 }

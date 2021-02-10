@@ -269,14 +269,6 @@ select name,
        hash,
        role
 from user
-where name = 'Alice'
-;
-select name,
-       email,
-       salt,
-       hash,
-       role
-from user
 where name = 'Bob'
 ;
 update user
@@ -353,24 +345,8 @@ select name,
        hash,
        role
 from user
-where name = 'Alice'
-;
-select name,
-       email,
-       salt,
-       hash,
-       role
-from user
 where name = 'Dave'
 ;
 delete
 from user
 where name = 'Dave';
-select name,
-       email,
-       salt,
-       hash,
-       role
-from user
-where name = 'Alice'
-;

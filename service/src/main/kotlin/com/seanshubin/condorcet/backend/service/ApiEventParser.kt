@@ -4,16 +4,16 @@ import com.seanshubin.condorcet.backend.json.JsonMappers.parse
 import com.seanshubin.condorcet.backend.json.JsonUtil.normalizeJson
 
 class ServiceRequestParserImpl : ServiceRequestParser {
-    override fun parse(name: String, text: String): ServiceRequest {
+    override fun parse(name: String, content: String): ServiceRequest {
         return try {
-            val json = if (text.isBlank()) {
+            val json = if (content.isBlank()) {
                 "{}"
             } else {
-                text.normalizeJson()
+                content.normalizeJson()
             }
             parseJson(name, json)
         } catch (ex: Exception) {
-            throw ServiceException.MalformedJson("malformed json\n$text")
+            throw ServiceException.MalformedJson("malformed json\n$content")
         }
     }
 
