@@ -345,6 +345,14 @@ select name,
        hash,
        role
 from user
+where name = 'Alice'
+;
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
 where name = 'Dave'
 ;
 delete

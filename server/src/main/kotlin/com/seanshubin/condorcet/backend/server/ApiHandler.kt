@@ -10,7 +10,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler
 
 class ApiHandler(
     private val serviceRequestParser: ServiceRequestParser,
-    private val service: Service,
+    private val serviceEnvironmentFactory: ServiceEnvironmentFactory,
     private val tokenService: TokenService,
     private val requestEvent: (String, String) -> Unit,
     private val responseEvent: (Int, String) -> Unit
@@ -26,8 +26,9 @@ class ApiHandler(
         requestEvent(target, requestBody)
         val accessToken = tokenService.getAccessToken(request)
         val refreshToken = tokenService.getRefreshToken(request)
+        val serviceEnvironment = serviceEnvironmentFactory.createEnvironment(accessToken, refreshToken)
         val serviceRequest = serviceRequestParser.parse(serviceRequestName, requestBody)
-        val httpResponse = exec(serviceRequest, accessToken, refreshToken)
+        val httpResponse = exec(serviceEnvironment, serviceRequest)
         val responseBody = JsonMappers.pretty.writeValueAsString(httpResponse.value)
         responseEvent(httpResponse.status, responseBody)
         response.contentType = "application/json"
@@ -38,11 +39,10 @@ class ApiHandler(
     }
 
     private fun exec(
-        serviceRequest: ServiceRequest,
-        accessToken: AccessToken?,
-        refreshToken: RefreshToken?
+        serviceEnvironment: ServiceEnvironment,
+        serviceRequest: ServiceRequest
     ): HttpResponse = try {
-        val serviceResponse = serviceRequest.exec(service, accessToken, refreshToken)
+        val serviceResponse = serviceRequest.exec(serviceEnvironment)
         val httpResponse = serviceResponse.toHttpResponse(200)
         httpResponse
     } catch (ex: ServiceException) {

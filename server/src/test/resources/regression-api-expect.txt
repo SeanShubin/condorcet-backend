@@ -146,6 +146,16 @@ Cookie: Refresh={"userName":"Alice"}
 {
   "userSafeMessage" : "User with name or email 'Nobody' does not exist"
 }
+Refresh
+POST
+{ }
+Cookie: Refresh={"userName":"Alice"}
+200
+{
+  "userName" : "Alice",
+  "role" : "OWNER"
+}
+Set-Cookie: Refresh={"userName":"Alice"}
 RemoveUser
 POST
 {

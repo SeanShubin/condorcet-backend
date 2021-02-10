@@ -3,10 +3,7 @@ package com.seanshubin.condorcet.backend.console
 import com.seanshubin.condorcet.backend.crypto.*
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
-import com.seanshubin.condorcet.backend.server.ApiHandler
-import com.seanshubin.condorcet.backend.server.JettyServer
-import com.seanshubin.condorcet.backend.server.ServerContract
-import com.seanshubin.condorcet.backend.server.ServerRunner
+import com.seanshubin.condorcet.backend.server.*
 import com.seanshubin.condorcet.backend.service.*
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Server
@@ -66,6 +63,14 @@ class Dependencies {
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
     private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
-    private val handler: Handler = ApiHandler(serviceRequestParser, service, requestEvent, responseEvent)
+    private val tokenService: TokenService = TokenServiceImpl()
+    private val serviceEnvironmentFactory: ServiceEnvironmentFactory = ServiceEnvironmentFactoryImpl(service)
+    private val handler: Handler = ApiHandler(
+        serviceRequestParser,
+        serviceEnvironmentFactory,
+        tokenService,
+        requestEvent,
+        responseEvent
+    )
     val runner: Runnable = ServerRunner(lifecycles, initializer, serverContract, handler)
 }

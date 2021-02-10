@@ -70,7 +70,9 @@ class DeterministicDependencies(
     val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     val tokenService: TokenService = TokenServiceImpl()
-    val handler: Handler = ApiHandler(serviceRequestParser, service, tokenService, requestEvent, responseEvent)
+    val serviceEnvironmentFactory: ServiceEnvironmentFactory = ServiceEnvironmentFactoryImpl(service)
+    val handler: Handler =
+        ApiHandler(serviceRequestParser, serviceEnvironmentFactory, tokenService, requestEvent, responseEvent)
     val cookieSimulator: CookieSimulator = CookieSimulator()
     val regressionTestRunner: RegressionTestRunner = RegressionTestRunnerImpl(
         snapshotDir,
