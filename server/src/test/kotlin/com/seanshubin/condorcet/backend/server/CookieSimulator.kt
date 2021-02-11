@@ -1,22 +1,15 @@
 package com.seanshubin.condorcet.backend.server
 
-import jakarta.servlet.http.Cookie
+import com.seanshubin.condorcet.backend.http.CookieList
+import com.seanshubin.condorcet.backend.http.HeaderList
 
 class CookieSimulator() {
-    val cookieList: MutableList<Cookie> = mutableListOf()
-    val addCookieInvocations: MutableList<Cookie> = mutableListOf()
-    fun addCookie(cookie: Cookie) {
-        addCookieInvocations.add(cookie)
-        val existingCookie = cookieList.withIndex().find { (_, existingCookie) ->
-            existingCookie.name.equals(cookie.name, ignoreCase = true)
+    var cookieList: CookieList = CookieList.empty
+    fun cookieHeader():Pair<String, String> = cookieList.toHeader().toPair()
+    fun trackCookies(headers:List<Pair<String, String>>){
+        val setCookieList = HeaderList.fromPairs(headers).setCookieList()
+        setCookieList.forEach{
+            cookieList= cookieList.addCookie(it)
         }
-        if (existingCookie != null) {
-            cookieList.removeAt(existingCookie.index)
-        }
-        cookieList.add(cookie)
     }
-
-    fun getCookies(): Array<Cookie>? =
-        if (cookieList.isEmpty()) null
-        else cookieList.toTypedArray()
 }

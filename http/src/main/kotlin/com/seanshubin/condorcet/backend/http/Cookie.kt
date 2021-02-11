@@ -1,6 +1,8 @@
 package com.seanshubin.condorcet.backend.http
 
 data class Cookie(val name: String, val value: String) {
+    override fun toString(): String = "$name=$value"
+
     companion object {
         fun parse(s: String): Cookie {
             val parts = s.split("=")

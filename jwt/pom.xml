@@ -6,6 +6,11 @@
     <artifactId>condorcet-backend-jwt</artifactId>
     <dependencies>
         <dependency>
+            <groupId>com.seanshubin.condorcet.backend</groupId>
+            <artifactId>condorcet-backend-contract</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
         </dependency>

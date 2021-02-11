@@ -1,19 +1,28 @@
 package com.seanshubin.condorcet.backend.server
 
+import com.seanshubin.condorcet.backend.http.Header
+import com.seanshubin.condorcet.backend.http.HeaderList
+import com.seanshubin.condorcet.backend.http.RequestValue
+import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.io.ioutil.consumeString
-import com.seanshubin.condorcet.backend.json.JsonMappers
-import com.seanshubin.condorcet.backend.service.*
+import com.seanshubin.condorcet.backend.jwt.Cipher
+import com.seanshubin.condorcet.backend.service.Parsers
+import com.seanshubin.condorcet.backend.service.Service
+import com.seanshubin.condorcet.backend.service.ServiceException
+import com.seanshubin.condorcet.backend.service.http.ServiceCommand
+import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
+import com.seanshubin.condorcet.backend.service.http.ServiceEnvironment
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.handler.AbstractHandler
 
 class ApiHandler(
-    private val serviceRequestParser: ServiceRequestParser,
-    private val serviceEnvironmentFactory: ServiceEnvironmentFactory,
-    private val tokenService: TokenService,
-    private val requestEvent: (String, String) -> Unit,
-    private val responseEvent: (Int, String) -> Unit
+    private val serviceCommandParser: ServiceCommandParser,
+    private val service: Service,
+    private val cipher: Cipher,
+    private val requestEvent: (RequestValue) -> Unit,
+    private val responseEvent: (ResponseValue) -> Unit
 ) : AbstractHandler() {
     override fun handle(
         target: String,
@@ -22,49 +31,44 @@ class ApiHandler(
         response: HttpServletResponse
     ) {
         val serviceRequestName = Parsers.parseCommandNameFromTarget(target)
-        val requestBody = request.reader.consumeString()
-        requestEvent(target, requestBody)
-        val accessToken = tokenService.getAccessToken(request)
-        val refreshToken = tokenService.getRefreshToken(request)
-        val serviceEnvironment = serviceEnvironmentFactory.createEnvironment(accessToken, refreshToken)
-        val serviceRequest = serviceRequestParser.parse(serviceRequestName, requestBody)
-        val httpResponse = exec(serviceEnvironment, serviceRequest)
-        val responseBody = JsonMappers.pretty.writeValueAsString(httpResponse.value)
-        responseEvent(httpResponse.status, responseBody)
-        response.contentType = "application/json"
-        response.writer.print(responseBody)
-        response.status = httpResponse.status
-        tokenService.setRefreshToken(response, httpResponse.refreshToken)
+        val requestValue = request.toRequestValue(target)
+        requestEvent(requestValue)
+        val serviceCommand = serviceCommandParser.parse(serviceRequestName, requestValue.body)
+        val environment = ServiceEnvironment(service, cipher)
+        val responseValue = exec(serviceCommand, environment, requestValue)
+        responseEvent(responseValue)
+        responseValue.writeTo(response)
         baseRequest.isHandled = true
     }
 
-    private fun exec(
-        serviceEnvironment: ServiceEnvironment,
-        serviceRequest: ServiceRequest
-    ): HttpResponse = try {
-        val serviceResponse = serviceRequest.exec(serviceEnvironment)
-        val httpResponse = serviceResponse.toHttpResponse(200)
-        httpResponse
-    } catch (ex: ServiceException) {
-        val statusCode = statusCodeMap[ex::class] ?: 500
-        HttpResponse(
-            status = statusCode,
-            value = mapOf("userSafeMessage" to ex.userSafeMessage),
-            refreshToken = null
-        )
+    fun exec(
+        serviceCommand: ServiceCommand,
+        environment: ServiceEnvironment,
+        requestValue: RequestValue
+    ): ResponseValue =
+        try {
+            serviceCommand.exec(environment, requestValue)
+        } catch (ex: ServiceException) {
+            ServiceCommand.ServiceExceptionCommand(ex).exec(environment, requestValue)
+        }
+
+    private fun HttpServletRequest.toRequestValue(target: String): RequestValue {
+        val body = reader.consumeString()
+        val headerList = headerNames.toList().map { name ->
+            val value = getHeader(name)
+            Header(name, value)
+        }
+        val headers = HeaderList(headerList)
+        return RequestValue(target, body, headers)
     }
 
-    private val statusCodeMap = mapOf(
-        ServiceException.Unauthorized::class to 401,
-        ServiceException.NotFound::class to 404,
-        ServiceException.Conflict::class to 409,
-        ServiceException.Unsupported::class to 400,
-        ServiceException.MalformedJson::class to 400
-    )
-
-    private fun ServiceResponse.toHttpResponse(status: Int) = HttpResponse(
-        status = status,
-        value = value,
-        refreshToken = refreshToken
-    )
+    private fun ResponseValue.writeTo(response: HttpServletResponse) {
+        response.status = status
+        if (body != null) {
+            response.writer.println(body)
+        }
+        for (header in headers.list) {
+            response.addHeader(header.name, header.value)
+        }
+    }
 }

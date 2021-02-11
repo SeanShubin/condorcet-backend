@@ -119,7 +119,7 @@ abstract class HttpServletResponseNotImplemented : HttpServletResponse {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun addHeader(name: String?, value: String?) {
+    override fun addHeader(name: String, value: String) {
         throw UnsupportedOperationException("not implemented")
     }
 

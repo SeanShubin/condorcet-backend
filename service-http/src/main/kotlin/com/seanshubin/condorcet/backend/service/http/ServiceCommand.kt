@@ -6,6 +6,7 @@ import com.seanshubin.condorcet.backend.json.JsonMappers
 import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.service.AccessToken
 import com.seanshubin.condorcet.backend.service.RefreshToken
+import com.seanshubin.condorcet.backend.service.ServiceException
 import com.seanshubin.condorcet.backend.service.Tokens
 
 interface ServiceCommand {
@@ -92,6 +93,12 @@ interface ServiceCommand {
         }
     }
 
+    class ServiceExceptionCommand(val serviceException:ServiceException):ServiceCommand{
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
+            val status = statusCodeMap[serviceException::class] ?: 500
+            return responseBuilder().status(status).userSafeMessage(serviceException.userSafeMessage).build()
+        }
+    }
 
     data class ResponseBuilder(
         val status: Int? = null,
@@ -188,5 +195,14 @@ interface ServiceCommand {
         }
 
         private fun responseBuilder(): ResponseBuilder = ResponseBuilder()
+
+        private val statusCodeMap = mapOf(
+            ServiceException.Unauthorized::class to 401,
+            ServiceException.NotFound::class to 404,
+            ServiceException.Conflict::class to 409,
+            ServiceException.Unsupported::class to 400,
+            ServiceException.MalformedJson::class to 400
+        )
+
     }
 }

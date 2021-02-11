@@ -9,6 +9,7 @@ import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Request
 import java.nio.file.Files
 import java.nio.file.Path
+// todo: do we need to keep track of http method?
 
 class RegressionTestRunnerImpl(
     val snapshotDir: Path,
@@ -56,19 +57,17 @@ class RegressionTestRunnerImpl(
 
     private fun runCommand(requestEvent: RequestEvent): RegressionTestEvent {
         val serviceRequest = requestEvent.serviceRequest
-        val requestHeaders = requestEvent.headers
+        val requestHeaders = requestEvent.headers + cookieSimulator.cookieHeader()
         val name = serviceRequest.javaClass.simpleName
-        val method = "POST"
         val requestBody = JsonMappers.pretty.writeValueAsString(serviceRequest)
         val target = "/$name"
-        val request = RequestStub(name, method, requestBody, cookieSimulator, requestHeaders)
-        val requestCookies = cookieSimulator.cookieList.toList()
+        val method = "POST"
+        val request = RequestStub(requestBody, requestHeaders)
         val baseRequest = Request(null, null)
-        val response = ResponseStub(cookieSimulator)
+        val response = ResponseStub()
         val responseHeaders = getHeaders(response)
-        cookieSimulator.addCookieInvocations.clear()
         handler.handle(target, baseRequest, request, response)
-        val responseCookies = cookieSimulator.addCookieInvocations.toList()
+        cookieSimulator.trackCookies(response.headers)
         val statusCode = response.status
         val responseBody = response.stringWriter.buffer.toString()
         val event = RegressionTestEvent(
@@ -76,11 +75,9 @@ class RegressionTestRunnerImpl(
             method,
             requestBody,
             requestHeaders,
-            requestCookies,
             statusCode,
             responseBody,
-            responseHeaders,
-            responseCookies
+            responseHeaders
         )
         return event
     }

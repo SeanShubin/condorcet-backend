@@ -65,7 +65,7 @@
     service       [ crypto io database json logger ]
     database      [ genericdb json domain ]
     genericdb     [ mysql-jdbc io table ]
-    server        [ jetty service table ]
+    server        [ jetty table service-http ]
     console       [ server ]
     json          [ jackson jackson-time ]
     logger        [ contract ]
@@ -75,7 +75,7 @@
     table         []
     domain        []
     prototype     [ jetty jetty-alpn jetty-http2 java-jwt table]
-    jwt           [ java-jwt ]
+    jwt           [ java-jwt contract ]
   }
   detangler [console]
   consoleEntryPoint {

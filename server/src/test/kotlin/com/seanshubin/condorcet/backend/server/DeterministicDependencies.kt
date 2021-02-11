@@ -1,11 +1,24 @@
 package com.seanshubin.condorcet.backend.server
 
+import com.seanshubin.condorcet.backend.contract.FilesContract
+import com.seanshubin.condorcet.backend.contract.FilesDelegate
 import com.seanshubin.condorcet.backend.crypto.*
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
+import com.seanshubin.condorcet.backend.http.RequestValue
+import com.seanshubin.condorcet.backend.http.ResponseValue
+import com.seanshubin.condorcet.backend.jwt.AlgorithmFactory
+import com.seanshubin.condorcet.backend.jwt.AlgorithmFactoryImpl
+import com.seanshubin.condorcet.backend.jwt.Cipher
+import com.seanshubin.condorcet.backend.jwt.CipherImpl
 import com.seanshubin.condorcet.backend.service.*
+import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
+import com.seanshubin.condorcet.backend.service.http.ServiceCommandParserImpl
 import org.eclipse.jetty.server.Handler
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import java.nio.file.Path
+import java.nio.file.Paths
 import java.time.Clock
 
 class DeterministicDependencies(
@@ -31,8 +44,8 @@ class DeterministicDependencies(
     val logSqlEvent: (String) -> Unit = sqlEventMonitor::monitor
     val logSqlState: (String) -> Unit = sqlStateMonitor::monitor
     val notifications: Notifications = NotificationsNop()
-    val requestEvent: (String, String) -> Unit = notifications::requestEvent
-    val responseEvent: (Int, String) -> Unit = notifications::responseEvent
+    val requestEvent: (RequestValue) -> Unit = notifications::requestEvent
+    val responseEvent: (ResponseValue) -> Unit = notifications::responseEvent
     val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         ConnectionLifecycle(host, user, password, logSqlEvent)
     val eventDatabase = Database(EventSchema, eventConnectionLifecycle)
@@ -69,10 +82,14 @@ class DeterministicDependencies(
     val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader)
     val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
-    val tokenService: TokenService = TokenServiceImpl()
-    val serviceEnvironmentFactory: ServiceEnvironmentFactory = ServiceEnvironmentFactoryImpl(service)
+    val serviceCommandParser:ServiceCommandParser = ServiceCommandParserImpl()
+    private val files: FilesContract = FilesDelegate
+    private val charset: Charset = StandardCharsets.UTF_8
+    val keyBasePath:Path = Paths.get("src/test/resources")
+    val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, keyBasePath)
+    val cipher:Cipher = CipherImpl(algorithmFactory)
     val handler: Handler =
-        ApiHandler(serviceRequestParser, serviceEnvironmentFactory, tokenService, requestEvent, responseEvent)
+        ApiHandler(serviceCommandParser, service, cipher, requestEvent, responseEvent)
     val cookieSimulator: CookieSimulator = CookieSimulator()
     val regressionTestRunner: RegressionTestRunner = RegressionTestRunnerImpl(
         snapshotDir,

@@ -11,6 +11,14 @@ data class HeaderList(val list: List<Header>) {
         return matchResult.groupValues[1]
     }
 
+    fun filterByName(name:String):List<Header> =
+        list.filter { it.name.equals(name, ignoreCase = true) }
+
+    fun setCookieList():List<SetCookie> =
+        filterByName("Set-Cookie").map{
+            SetCookie.parse(it.value)
+        }
+
     fun cookies(): CookieList {
         val cookieValue = headerValue("Cookie") ?: return CookieList.empty
         val cookieStrings = cookieValue.split("; ")
@@ -18,7 +26,12 @@ data class HeaderList(val list: List<Header>) {
         return CookieList(list)
     }
 
+    fun toPairs():List<Pair<String, String>> =
+        list.map{header -> Pair(header.name, header.value)}
+
     companion object {
         val bearerTokenPattern = Regex("""^ *Bearer +(.*) *$""", RegexOption.IGNORE_CASE)
+        fun fromPairs(pairs:List<Pair<String, String>>):HeaderList =
+            HeaderList(pairs.map{Header.fromPair(it)})
     }
 }

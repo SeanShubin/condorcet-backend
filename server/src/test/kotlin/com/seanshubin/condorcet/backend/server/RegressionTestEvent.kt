@@ -7,19 +7,15 @@ data class RegressionTestEvent(
     val method: String,
     val requestBody: String,
     val requestHeaders: List<Pair<String, String>>,
-    val requestCookies: List<Cookie>,
     val status: Int,
     val responseBody: String,
-    val responseHeaders: List<Pair<String, String>>,
-    val responseCookies: List<Cookie>
+    val responseHeaders: List<Pair<String, String>>
 ) {
     fun toLines(): List<String> {
         return listOf(name, method, requestBody) +
                 requestHeaders.toLines() +
-                requestCookies.toGetCookieLines() +
                 listOf(status.toString(), responseBody) +
-                responseHeaders.toLines() +
-                responseCookies.toSetCookieLines()
+                responseHeaders.toLines()
     }
 
     private fun List<Pair<String, String>>.toLines(): List<String> =

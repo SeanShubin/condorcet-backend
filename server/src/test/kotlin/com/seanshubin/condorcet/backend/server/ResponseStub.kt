@@ -1,17 +1,16 @@
 package com.seanshubin.condorcet.backend.server
 
+import com.seanshubin.condorcet.backend.http.HeaderList
 import jakarta.servlet.http.Cookie
 import java.io.PrintWriter
 import java.io.StringWriter
 
-class ResponseStub(
-    private val cookieSimulator: CookieSimulator,
-    private val headers: List<Pair<String, String>> = emptyList()
-) : HttpServletResponseNotImplemented() {
+class ResponseStub : HttpServletResponseNotImplemented() {
     var theContentType: String? = null
     var theStatus: Int? = null
     val stringWriter = StringWriter()
     val printWriter = PrintWriter(stringWriter)
+    val headers: MutableList<Pair<String, String>> = mutableListOf()
 
     override fun getHeaderNames(): MutableCollection<String> =
         headers.map { it.first }.toMutableList()
@@ -32,7 +31,7 @@ class ResponseStub(
         return printWriter
     }
 
-    override fun addCookie(cookie: Cookie) {
-        cookieSimulator.addCookie(cookie)
+    override fun addHeader(name: String, value: String) {
+        headers.add(Pair(name, value))
     }
 }
