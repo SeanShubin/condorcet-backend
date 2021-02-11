@@ -11,3 +11,8 @@ Looking into JWT
 Could be useful for figuring out java keytool
 
 - https://keystore-explorer.org/
+
+## Encryption notes
+
+- PKCS#1 PEM-encoded public key starts with `-----BEGIN RSA PUBLIC KEY-----`
+- x.509 public key starts with `-----BEGIN PUBLIC KEY-----`
