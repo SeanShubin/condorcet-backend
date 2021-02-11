@@ -3,6 +3,7 @@ package com.seanshubin.condorcet.backend.server
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Initializer
 import com.seanshubin.condorcet.backend.json.JsonMappers
+import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.service.Lifecycles
 import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Handler
@@ -22,7 +23,8 @@ class RegressionTestRunnerImpl(
     val stateDatabase: Database,
     val sqlEventMonitor: SqlMonitor,
     val sqlStateMonitor: SqlMonitor,
-    val cookieSimulator: CookieSimulator
+    val cookieSimulator: CookieSimulator,
+    val cipher: Cipher
 ) : RegressionTestRunner {
     override fun createMissingSnapshotsForExpected() {
         val missingSnapshots = snapshotViews.filter { !Files.exists(it.getPath(snapshotDir, "expect")) }
@@ -57,7 +59,22 @@ class RegressionTestRunnerImpl(
 
     private fun runCommand(requestEvent: RequestEvent): RegressionTestEvent {
         val serviceRequest = requestEvent.serviceRequest
-        val requestHeaders = requestEvent.headers + cookieSimulator.cookieHeader()
+        val accessToken = requestEvent.accessToken
+        val maybeAccessHeader = if (accessToken == null) {
+            emptyList<Pair<String, String>>()
+        } else {
+            val bearerToken = cipher.encode(
+                mapOf(
+                    "userName" to accessToken.userName,
+                    "role" to accessToken.role.name
+                )
+            )
+            val authValue = "Bearer $bearerToken"
+            val header = Pair("Authorization", authValue)
+            listOf(header)
+        }
+
+        val requestHeaders = maybeAccessHeader + cookieSimulator.maybeCookieHeader()
         val name = serviceRequest.javaClass.simpleName
         val requestBody = JsonMappers.pretty.writeValueAsString(serviceRequest)
         val target = "/$name"
@@ -65,8 +82,8 @@ class RegressionTestRunnerImpl(
         val request = RequestStub(requestBody, requestHeaders)
         val baseRequest = Request(null, null)
         val response = ResponseStub()
-        val responseHeaders = getHeaders(response)
         handler.handle(target, baseRequest, request, response)
+        val responseHeaders = getHeaders(response)
         cookieSimulator.trackCookies(response.headers)
         val statusCode = response.status
         val responseBody = response.stringWriter.buffer.toString()
@@ -82,9 +99,9 @@ class RegressionTestRunnerImpl(
         return event
     }
 
-    private fun getHeaders(request: HttpServletResponse): List<Pair<String, String>> =
-        request.headerNames.toList().map {
-            Pair(it, request.getHeader(it))
+    private fun getHeaders(response: HttpServletResponse): List<Pair<String, String>> =
+        response.headerNames.toList().map {
+            Pair(it, response.getHeader(it))
         }
 
     private fun queryTables(database: Database): List<GenericTable> {

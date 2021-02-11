@@ -102,6 +102,7 @@ class DeterministicDependencies(
         stateDatabase,
         sqlEventMonitor,
         sqlStateMonitor,
-        cookieSimulator
+        cookieSimulator,
+        cipher
     )
 }

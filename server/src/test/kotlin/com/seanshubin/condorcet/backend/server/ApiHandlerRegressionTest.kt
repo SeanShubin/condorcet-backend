@@ -1,7 +1,6 @@
 package com.seanshubin.condorcet.backend.server
 
 import com.seanshubin.condorcet.backend.domain.Role
-import com.seanshubin.condorcet.backend.json.JsonMappers
 import com.seanshubin.condorcet.backend.service.AccessToken
 import com.seanshubin.condorcet.backend.service.ServiceRequest
 import org.junit.Test
@@ -14,9 +13,6 @@ class ApiHandlerRegressionTest {
     fun regressionTest() {
         // given
         val aliceAccessToken = AccessToken("Alice", Role.OWNER)
-        val aliceAccessTokenString = JsonMappers.compact.writeValueAsString(aliceAccessToken)
-        val aliceAuthorizationHeader = Pair("Authorization", "Bearer $aliceAccessTokenString")
-        val aliceAuthorizationHeaders = listOf(aliceAuthorizationHeader)
         val commands = listOf(
             RequestEvent(
                 ServiceRequest.Register(
@@ -48,15 +44,15 @@ class ApiHandlerRegressionTest {
                 )
             ),
             RequestEvent(ServiceRequest.Register(name = "Dave", email = "dave@email.com", password = "dave-password")),
-            RequestEvent(ServiceRequest.SetRole(name = "Bob", role = Role.USER), aliceAuthorizationHeaders),
+            RequestEvent(ServiceRequest.SetRole(name = "Bob", role = Role.USER), aliceAccessToken),
             RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "alice-password")),
             RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password")),
             RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "wrong-password")),
             RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password")),
             RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "Nobody", password = "password")),
             RequestEvent(ServiceRequest.Refresh),
-            RequestEvent(ServiceRequest.RemoveUser(name = "Dave"), aliceAuthorizationHeaders),
-            RequestEvent(ServiceRequest.ListUsers, aliceAuthorizationHeaders)
+            RequestEvent(ServiceRequest.RemoveUser(name = "Dave"), aliceAccessToken),
+            RequestEvent(ServiceRequest.ListUsers, aliceAccessToken)
         )
         val snapshotDir = Paths.get("src", "test", "resources")
         val tester = Tester(snapshotDir, commands)

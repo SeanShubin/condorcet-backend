@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.http
 
 data class CookieList(val list: List<Cookie>) {
+    fun isEmpty(): Boolean = list.isEmpty()
     fun addCookie(setCookie: SetCookie): CookieList {
         val targetIndex = list.indexOfFirst { it.name.equals(setCookie.name, ignoreCase = true) }
         return if (targetIndex == -1) {

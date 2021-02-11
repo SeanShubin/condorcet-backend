@@ -63,8 +63,8 @@ interface ServiceCommand {
             return if (accessToken == null) {
                 responseBuilder().unauthorized("No valid access token").build()
             } else {
-                val value = environment.service.removeUser(accessToken, name)
-                return responseBuilder().json(value).build()
+                environment.service.removeUser(accessToken, name)
+                return responseBuilder().build()
             }
         }
     }

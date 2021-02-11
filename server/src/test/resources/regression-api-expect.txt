@@ -7,10 +7,10 @@ POST
 }
 200
 {
-  "userName" : "Alice",
-  "role" : "OWNER"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4"
 }
-Set-Cookie: Refresh={"userName":"Alice"}
+Content-Type -> application/json
+Set-Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly; Secure
 Register
 POST
 {
@@ -18,11 +18,12 @@ POST
   "email" : "alice@email.com",
   "password" : "alice-password"
 }
-Cookie: Refresh={"userName":"Alice"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 409
 {
   "userSafeMessage" : "User with email 'alice@email.com' already exists"
 }
+Content-Type -> application/json
 Register
 POST
 {
@@ -30,11 +31,12 @@ POST
   "email" : "duplicate@name.com",
   "password" : "alice-password"
 }
-Cookie: Refresh={"userName":"Alice"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 409
 {
   "userSafeMessage" : "User with name 'Alice' already exists"
 }
+Content-Type -> application/json
 Register
 POST
 {
@@ -42,13 +44,13 @@ POST
   "email" : "bob@email.com",
   "password" : "bob-password"
 }
-Cookie: Refresh={"userName":"Alice"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
 {
-  "userName" : "Bob",
-  "role" : "UNASSIGNED"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.IxUv-N5mJCVTsW5K18dd7-GuJWeaeEa7GBL6sE3u0h96pyOgyatQvPmJ2Za339CH8jI946Bo_Nuty9RWBCjWKs4WVyp3NtCFo8h5HkkwA9pLIGJd5lh2rBZUdZNLPItYWFGQFlhIlqWe4CKCCLrK_XeGxXNdoxMksRx5uOcs6q0"
 }
-Set-Cookie: Refresh={"userName":"Bob"}
+Content-Type -> application/json
+Set-Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.cOaeBwS1dyVffToMUh0soazAQCIPYQA_bgZ6YuAYiZT7AaOpcj_J6cCqDJf2m7g3WIE3Ijc7An-l_4cJ1bUnugWBNzotS4j_O6Yb1sAnyp4rLMkmCs3vlZct_IisYrmthk1n_x0Z2MEIXYQSjmLxoJllbNDMH11KufScLgR7XjM; HttpOnly; Secure
 Register
 POST
 {
@@ -56,13 +58,13 @@ POST
   "email" : "carol@email.com",
   "password" : "carol-password"
 }
-Cookie: Refresh={"userName":"Bob"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.cOaeBwS1dyVffToMUh0soazAQCIPYQA_bgZ6YuAYiZT7AaOpcj_J6cCqDJf2m7g3WIE3Ijc7An-l_4cJ1bUnugWBNzotS4j_O6Yb1sAnyp4rLMkmCs3vlZct_IisYrmthk1n_x0Z2MEIXYQSjmLxoJllbNDMH11KufScLgR7XjM
 200
 {
-  "userName" : "Carol",
-  "role" : "UNASSIGNED"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.Kxb1pFRcse1m4qUYW_bK9Sh1yznQK8ofmJBYG7XkQw8zpSeeZkVU04eJpUOPfDb3DJmNxbgPfsK0gK_v978ysjbuSpeD5bioFKkVoSty1Cly2x1md8Z7avh0zHRXJPrPCIls49zxNDjvN2b4kB4vOF3OIE5Q4twlmz4tj1CXI5U"
 }
-Set-Cookie: Refresh={"userName":"Carol"}
+Content-Type -> application/json
+Set-Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.TLExfi4mgd3fFhnhHYII8QG_TaY9id9KPy17Mmi4Go2BIDfnHpBeN1pXBekNzTXWiKaIu6PXKsTipqMPlA5Fc1pksfTMGEtW7s9HkUtLStx53h-ZRDKS-bhzWCrjky_M6xyo3vALbObXI4BeqEIWXj8XFDeDYbOf2GshZiGOaK8; HttpOnly; Secure
 Register
 POST
 {
@@ -70,106 +72,109 @@ POST
   "email" : "dave@email.com",
   "password" : "dave-password"
 }
-Cookie: Refresh={"userName":"Carol"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.TLExfi4mgd3fFhnhHYII8QG_TaY9id9KPy17Mmi4Go2BIDfnHpBeN1pXBekNzTXWiKaIu6PXKsTipqMPlA5Fc1pksfTMGEtW7s9HkUtLStx53h-ZRDKS-bhzWCrjky_M6xyo3vALbObXI4BeqEIWXj8XFDeDYbOf2GshZiGOaK8
 200
 {
-  "userName" : "Dave",
-  "role" : "UNASSIGNED"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRGF2ZSJ9.Bz_dNbyqNhPYwSxLDJNRjXQm_AAgj2qw3XgdC47QKwIsJymgsYFVZn206TDTGB-uCLdsU3ZMM38uinoaWAzEnYel1pebFlSPwmYoQkv5zUsHgNDksVPKEAjH7FzVcMNhRiJ_y3EZ49aj9qjcSFqHAgb73lYlesuUTNTuJCs6rUY"
 }
-Set-Cookie: Refresh={"userName":"Dave"}
+Content-Type -> application/json
+Set-Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.OMkHVI0gCGlmhmLq4vh9-owRgIRCno0QfhpQdZ0Pe-9ABaBMHApoXqZztR9on8P7n8hwb8KFW0-c7atvKMNOx3-hUTulaGiwI6P4MTlsMS3MzkNLxNp0Kr0uAyZc1cylUgL88zeJjCQmAwAIhXtKgGycimQhyPXhW5HlEllDnM8; HttpOnly; Secure
 SetRole
 POST
 {
   "name" : "Bob",
   "role" : "USER"
 }
-Authorization -> Bearer {"userName":"Alice","role":"OWNER"}
-Cookie: Refresh={"userName":"Dave"}
+Authorization -> Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.OMkHVI0gCGlmhmLq4vh9-owRgIRCno0QfhpQdZ0Pe-9ABaBMHApoXqZztR9on8P7n8hwb8KFW0-c7atvKMNOx3-hUTulaGiwI6P4MTlsMS3MzkNLxNp0Kr0uAyZc1cylUgL88zeJjCQmAwAIhXtKgGycimQhyPXhW5HlEllDnM8
 200
-null
+
 Authenticate
 POST
 {
   "nameOrEmail" : "Alice",
   "password" : "alice-password"
 }
-Cookie: Refresh={"userName":"Dave"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.OMkHVI0gCGlmhmLq4vh9-owRgIRCno0QfhpQdZ0Pe-9ABaBMHApoXqZztR9on8P7n8hwb8KFW0-c7atvKMNOx3-hUTulaGiwI6P4MTlsMS3MzkNLxNp0Kr0uAyZc1cylUgL88zeJjCQmAwAIhXtKgGycimQhyPXhW5HlEllDnM8
 200
 {
-  "userName" : "Alice",
-  "role" : "OWNER"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4"
 }
-Set-Cookie: Refresh={"userName":"Alice"}
+Content-Type -> application/json
+Set-Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly; Secure
 Authenticate
 POST
 {
   "nameOrEmail" : "alice@email.com",
   "password" : "alice-password"
 }
-Cookie: Refresh={"userName":"Alice"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
 {
-  "userName" : "Alice",
-  "role" : "OWNER"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4"
 }
-Set-Cookie: Refresh={"userName":"Alice"}
+Content-Type -> application/json
+Set-Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly; Secure
 Authenticate
 POST
 {
   "nameOrEmail" : "Alice",
   "password" : "wrong-password"
 }
-Cookie: Refresh={"userName":"Alice"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 401
 {
   "userSafeMessage" : "Authentication failed for user with name or email 'Alice'"
 }
+Content-Type -> application/json
 Authenticate
 POST
 {
   "nameOrEmail" : "alice@email.com",
   "password" : "wrong-password"
 }
-Cookie: Refresh={"userName":"Alice"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 401
 {
   "userSafeMessage" : "Authentication failed for user with name or email 'alice@email.com'"
 }
+Content-Type -> application/json
 Authenticate
 POST
 {
   "nameOrEmail" : "Nobody",
   "password" : "password"
 }
-Cookie: Refresh={"userName":"Alice"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 404
 {
   "userSafeMessage" : "User with name or email 'Nobody' does not exist"
 }
+Content-Type -> application/json
 Refresh
 POST
 { }
-Cookie: Refresh={"userName":"Alice"}
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
 {
-  "userName" : "Alice",
-  "role" : "OWNER"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4"
 }
-Set-Cookie: Refresh={"userName":"Alice"}
+Content-Type -> application/json
+Set-Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly; Secure
 RemoveUser
 POST
 {
   "name" : "Dave"
 }
-Authorization -> Bearer {"userName":"Alice","role":"OWNER"}
-Cookie: Refresh={"userName":"Alice"}
+Authorization -> Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
-{ }
+
 ListUsers
 POST
 { }
-Authorization -> Bearer {"userName":"Alice","role":"OWNER"}
-Cookie: Refresh={"userName":"Alice"}
+Authorization -> Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4
+Cookie -> Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
 [ {
   "name" : "Alice",
@@ -181,3 +186,4 @@ Cookie: Refresh={"userName":"Alice"}
   "name" : "Carol",
   "role" : "UNASSIGNED"
 } ]
+Content-Type -> application/json

@@ -65,7 +65,7 @@ class ApiHandler(
     private fun ResponseValue.writeTo(response: HttpServletResponse) {
         response.status = status
         if (body != null) {
-            response.writer.println(body)
+            response.writer.print(body)
         }
         for (header in headers.list) {
             response.addHeader(header.name, header.value)

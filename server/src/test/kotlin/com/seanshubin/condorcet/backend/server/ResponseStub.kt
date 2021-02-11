@@ -1,7 +1,5 @@
 package com.seanshubin.condorcet.backend.server
 
-import com.seanshubin.condorcet.backend.http.HeaderList
-import jakarta.servlet.http.Cookie
 import java.io.PrintWriter
 import java.io.StringWriter
 
@@ -34,4 +32,7 @@ class ResponseStub : HttpServletResponseNotImplemented() {
     override fun addHeader(name: String, value: String) {
         headers.add(Pair(name, value))
     }
+
+    override fun getHeader(name: String): String =
+        headers.find { it.first.equals(name, ignoreCase = true) }?.second!!
 }
