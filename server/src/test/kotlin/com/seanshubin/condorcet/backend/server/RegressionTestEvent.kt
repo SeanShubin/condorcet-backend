@@ -22,7 +22,7 @@ data class RegressionTestEvent(
         flatMap { it.toLines() }
 
     private fun Pair<String, String>.toLines(): List<String> =
-        listOf("$first -> $second")
+        listOf("$first: $second")
 
     private fun List<Cookie>.toGetCookieLines(): List<String> =
         if (isEmpty()) emptyList()

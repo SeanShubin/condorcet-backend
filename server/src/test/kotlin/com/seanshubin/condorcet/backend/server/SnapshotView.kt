@@ -18,7 +18,7 @@ interface SnapshotView {
         override val name = "api"
 
         override fun getLines(info: Snapshot): List<String> {
-            return info.events.flatMap { it.toLines() }
+            return info.events.flatMap { it.toLines() + "" }
         }
     }
 

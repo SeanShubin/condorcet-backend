@@ -61,7 +61,7 @@ class RegressionTestRunnerImpl(
         val serviceRequest = requestEvent.serviceRequest
         val accessToken = requestEvent.accessToken
         val maybeAccessHeader = if (accessToken == null) {
-            emptyList<Pair<String, String>>()
+            emptyList()
         } else {
             val bearerToken = cipher.encode(
                 mapOf(
