@@ -80,6 +80,18 @@ interface ServiceCommand {
         }
     }
 
+    data class Unsupported(val name: String, val content: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
+            return responseBuilder().unsupported("Unsupported command '$name'\n$content").build()
+        }
+    }
+
+    data class Malformed(val name: String, val content: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
+            return responseBuilder().unsupported("Malformed body for command '$name'\n$content").build()
+        }
+    }
+
 
     data class ResponseBuilder(
         val status: Int? = null,
@@ -99,6 +111,10 @@ interface ServiceCommand {
 
         fun unauthorized(message: String): ResponseBuilder {
             return status(401).userSafeMessage(message)
+        }
+
+        fun unsupported(message: String): ResponseBuilder {
+            return status(400).userSafeMessage(message)
         }
 
         fun build(): ResponseValue {
