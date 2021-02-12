@@ -5,10 +5,10 @@ import java.io.StringReader
 import java.util.*
 
 class RequestStub(
-    body: String,
+    body: String?,
     private val headers: List<Pair<String, String>> = emptyList()
 ) : HttpServletRequestNotImplemented() {
-    private val stringReader = StringReader(body)
+    private val stringReader = StringReader(body ?: "")
     private val theReader = BufferedReader(stringReader)
     override fun getReader(): BufferedReader {
         return theReader

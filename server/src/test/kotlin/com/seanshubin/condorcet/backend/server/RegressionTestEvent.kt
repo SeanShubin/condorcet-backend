@@ -5,16 +5,20 @@ import jakarta.servlet.http.Cookie
 data class RegressionTestEvent(
     val name: String,
     val method: String,
-    val requestBody: String,
+    val requestBody: String?,
     val requestHeaders: List<Pair<String, String>>,
     val status: Int,
-    val responseBody: String,
+    val responseBody: String?,
     val responseHeaders: List<Pair<String, String>>
 ) {
     fun toLines(): List<String> {
-        return listOf(name, method, requestBody) +
+        val maybeRequestBody = if (requestBody == null) emptyList() else listOf(requestBody)
+        val maybeResponseBody = if (responseBody == null) emptyList() else listOf(responseBody)
+        return listOf(name, method) +
+                maybeRequestBody +
                 requestHeaders.toLines() +
-                listOf(status.toString(), responseBody) +
+                listOf(status.toString()) +
+                maybeResponseBody +
                 responseHeaders.toLines()
     }
 
