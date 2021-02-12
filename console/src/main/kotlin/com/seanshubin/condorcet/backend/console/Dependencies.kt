@@ -7,14 +7,16 @@ import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
-import com.seanshubin.condorcet.backend.jwt.*
+import com.seanshubin.condorcet.backend.jwt.AlgorithmFactory
+import com.seanshubin.condorcet.backend.jwt.AlgorithmFactoryImpl
+import com.seanshubin.condorcet.backend.jwt.Cipher
+import com.seanshubin.condorcet.backend.jwt.CipherImpl
 import com.seanshubin.condorcet.backend.server.*
 import com.seanshubin.condorcet.backend.service.*
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParserImpl
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Server
-import java.net.http.HttpRequest
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
@@ -63,15 +65,16 @@ class Dependencies {
     private val stateDbCommands: StateDbCommands = StateDbCommandsImpl(stateGenericDatabase)
     private val dbEventParser: DbEventParser = DbEventParserImpl()
     private val clock: Clock = Clock.systemUTC()
+    private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     private val eventDbCommands: EventDbCommands = EventDbCommandsImpl(
         eventGenericDatabase,
         eventDbQueries,
+        stateDbQueries,
         stateDbCommands,
         dbEventParser,
         clock
     )
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
-    private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
     private val tokenService: TokenService = TokenServiceImpl()
     private val serviceEnvironmentFactory: ServiceEnvironmentFactory = ServiceEnvironmentFactoryImpl(service)

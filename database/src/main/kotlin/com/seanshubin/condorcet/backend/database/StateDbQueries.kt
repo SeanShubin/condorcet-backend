@@ -10,4 +10,5 @@ interface StateDbQueries {
     fun countUsers(): Int
     fun listUsers(): List<UserRow>
     fun roleHasPermission(role: Role, permission: Permission): Boolean
+    fun lastSynced(): Int?
 }

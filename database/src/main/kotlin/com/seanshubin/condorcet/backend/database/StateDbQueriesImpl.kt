@@ -38,6 +38,8 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         return queryExists("role-has-permission", role.name, permission.name)
     }
 
+    override fun lastSynced(): Int? = queryZeroOrOneInt("get-last-synced")
+
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
         val email = resultSet.getString("email")

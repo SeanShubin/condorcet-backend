@@ -7,6 +7,9 @@ import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.genericdb.FieldType.*
 
 object StateSchema : Schema {
+    val intVariableName = Field("name", STRING, unique = true)
+    val intVariableValue = Field("value", INT)
+    val intVariable = Table("int_variable", intVariableName, intVariableValue)
     val rolePermissionRole = DbEnum("role", Role.values().toList())
     val rolePermissionPermission = DbEnum("permission", Permission.values().toList())
     val rolePermission = Table("role_permission", rolePermissionRole, rolePermissionPermission)
@@ -69,6 +72,7 @@ object StateSchema : Schema {
     )
     override val name: String = "condorcet_state"
     override val tables = listOf(
+        intVariable,
         rolePermission,
         user,
         election,

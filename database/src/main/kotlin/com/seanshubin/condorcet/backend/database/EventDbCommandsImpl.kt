@@ -6,6 +6,7 @@ import java.time.Clock
 class EventDbCommandsImpl(
     genericDatabase: GenericDatabase,
     private val eventDbQueries: EventDbQueries,
+    private val stateDbQueries: StateDbQueries,
     private val stateDbCommands: StateDbCommands,
     private val eventParser: DbEventParser,
     private val clock: Clock
@@ -21,18 +22,10 @@ class EventDbCommandsImpl(
         synchronize()
     }
 
-    override fun setLastSynced(lastSynced: Int) {
-        update("set-last-synced", lastSynced)
-    }
-
-    override fun initializeLastSynced(lastSynced: Int) {
-        update("initialize-last-synced", lastSynced)
-    }
-
     private tailrec fun synchronize() {
-        val lastSynced = eventDbQueries.lastSynced()
+        val lastSynced = stateDbQueries.lastSynced()
         if (lastSynced == null) {
-            initializeLastSynced(0)
+            stateDbCommands.initializeLastSynced(0)
             synchronize()
         } else {
             val eventsToSync = eventDbQueries.eventsToSync(lastSynced)
@@ -43,6 +36,6 @@ class EventDbCommandsImpl(
     private fun synchronizeEventRow(eventRow: EventRow) {
         val event = eventParser.parse(eventRow.type, eventRow.text)
         event.exec(eventRow.authority, stateDbCommands)
-        setLastSynced(eventRow.id)
+        stateDbCommands.setLastSynced(eventRow.id)
     }
 }

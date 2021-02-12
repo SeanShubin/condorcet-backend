@@ -3,6 +3,10 @@ package com.seanshubin.condorcet.backend.database
 import com.seanshubin.condorcet.backend.domain.Role
 
 interface StateDbCommands {
+    fun setLastSynced(lastSynced: Int)
+
+    fun initializeLastSynced(lastSynced: Int)
+
     fun createUser(
         authority: String,
         name: String,

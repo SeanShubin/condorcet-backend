@@ -69,6 +69,7 @@ class DeterministicDependencies(
     val eventDbCommands: EventDbCommands = EventDbCommandsImpl(
         eventGenericDatabase,
         eventDbQueries,
+        stateDbQueries,
         stateDbCommands,
         dbEventParser,
         clock
