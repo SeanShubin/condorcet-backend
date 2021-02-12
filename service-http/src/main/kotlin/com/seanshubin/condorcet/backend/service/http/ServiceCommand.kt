@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.service.http
 
+import com.auth0.jwt.exceptions.JWTDecodeException
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.http.*
 import com.seanshubin.condorcet.backend.json.JsonMappers
@@ -11,13 +12,6 @@ import com.seanshubin.condorcet.backend.service.Tokens
 
 interface ServiceCommand {
     fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue
-    fun toHttpCommand(environment: ServiceEnvironment): HttpCommand {
-        return object : HttpCommand {
-            override fun exec(request: RequestValue): ResponseValue {
-                return exec(environment, request)
-            }
-        }
-    }
 
     object Refresh : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
@@ -46,39 +40,28 @@ interface ServiceCommand {
     }
 
     data class SetRole(val name: String, val role: Role) : ServiceCommand {
-        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            val accessToken = request.accessToken(environment.cipher)
-            return if (accessToken == null) {
-                responseBuilder().unauthorized("No valid access token").build()
-            } else {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
                 environment.service.setRole(accessToken, name, role)
-                return responseBuilder().build()
+                responseBuilder().build()
             }
-        }
     }
 
     data class RemoveUser(val name: String) : ServiceCommand {
-        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            val accessToken = request.accessToken(environment.cipher)
-            return if (accessToken == null) {
-                responseBuilder().unauthorized("No valid access token").build()
-            } else {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
                 environment.service.removeUser(accessToken, name)
-                return responseBuilder().build()
+                responseBuilder().build()
             }
-        }
     }
 
     object ListUsers : ServiceCommand {
-        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            val accessToken = request.accessToken(environment.cipher)
-            return if (accessToken == null) {
-                responseBuilder().unauthorized("No valid access token").build()
-            } else {
-                val value = environment.service.listUsers(accessToken)
-                return responseBuilder().json(value).build()
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val users = environment.service.listUsers(accessToken)
+                val value = mapOf("users" to users)
+                responseBuilder().json(value).build()
             }
-        }
     }
 
     data class Unsupported(val name: String, val content: String) : ServiceCommand {
@@ -93,7 +76,7 @@ interface ServiceCommand {
         }
     }
 
-    class ServiceExceptionCommand(val serviceException:ServiceException):ServiceCommand{
+    class ServiceExceptionCommand(val serviceException: ServiceException) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             val status = statusCodeMap[serviceException::class] ?: 500
             return responseBuilder().status(status).userSafeMessage(serviceException.userSafeMessage).build()
@@ -204,5 +187,22 @@ interface ServiceCommand {
             ServiceException.MalformedJson::class to 400
         )
 
+        private fun requireAccessToken(
+            request: RequestValue,
+            cipher: Cipher,
+            f: (AccessToken) -> ResponseValue
+        ): ResponseValue {
+            return try {
+                val accessToken = request.accessToken(cipher)
+                if (accessToken == null) {
+                    responseBuilder().unauthorized("No valid access token").build()
+                } else {
+                    f(accessToken)
+                }
+            } catch (ex: JWTDecodeException) {
+                val bearerToken = request.bearerToken() ?: "<null>"
+                responseBuilder().unauthorized("Unable to decode access token ($bearerToken): ${ex.message}").build()
+            }
+        }
     }
 }

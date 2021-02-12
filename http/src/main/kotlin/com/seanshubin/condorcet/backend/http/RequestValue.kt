@@ -8,6 +8,5 @@ data class RequestValue(
     fun headerValue(name: String): String? = headers.headerValue(name)
     fun cookies(): CookieList = headers.cookies()
     fun cookieValue(name: String): String? = headers.cookieValue(name)
-
     fun bearerToken(): String? = headers.bearerToken()
 }
