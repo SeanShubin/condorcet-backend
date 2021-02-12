@@ -2,7 +2,7 @@ package com.seanshubin.condorcet.backend.server
 
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.service.AccessToken
-import com.seanshubin.condorcet.backend.service.ServiceRequest
+import com.seanshubin.condorcet.backend.service.http.ServiceCommand
 import org.junit.Test
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -15,44 +15,44 @@ class ApiHandlerRegressionTest {
         val aliceAccessToken = AccessToken("Alice", Role.OWNER)
         val commands = listOf(
             RequestEvent(
-                ServiceRequest.Register(
+                ServiceCommand.Register(
                     name = "Alice",
                     email = "alice@email.com",
                     password = "alice-password"
                 )
             ),
             RequestEvent(
-                ServiceRequest.Register(
+                ServiceCommand.Register(
                     name = "duplicate-email",
                     email = "alice@email.com",
                     password = "alice-password"
                 )
             ),
             RequestEvent(
-                ServiceRequest.Register(
+                ServiceCommand.Register(
                     name = "Alice",
                     email = "duplicate@name.com",
                     password = "alice-password"
                 )
             ),
-            RequestEvent(ServiceRequest.Register(name = "Bob", email = "bob@email.com", password = "bob-password")),
+            RequestEvent(ServiceCommand.Register(name = "Bob", email = "bob@email.com", password = "bob-password")),
             RequestEvent(
-                ServiceRequest.Register(
+                ServiceCommand.Register(
                     name = "Carol",
                     email = "carol@email.com",
                     password = "carol-password"
                 )
             ),
-            RequestEvent(ServiceRequest.Register(name = "Dave", email = "dave@email.com", password = "dave-password")),
-            RequestEvent(ServiceRequest.SetRole(name = "Bob", role = Role.USER), aliceAccessToken),
-            RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "alice-password")),
-            RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password")),
-            RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "Alice", password = "wrong-password")),
-            RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password")),
-            RequestEvent(ServiceRequest.Authenticate(nameOrEmail = "Nobody", password = "password")),
-            RequestEvent(ServiceRequest.Refresh),
-            RequestEvent(ServiceRequest.RemoveUser(name = "Dave"), aliceAccessToken),
-            RequestEvent(ServiceRequest.ListUsers, aliceAccessToken)
+            RequestEvent(ServiceCommand.Register(name = "Dave", email = "dave@email.com", password = "dave-password")),
+            RequestEvent(ServiceCommand.SetRole(name = "Bob", role = Role.USER), aliceAccessToken),
+            RequestEvent(ServiceCommand.Authenticate(nameOrEmail = "Alice", password = "alice-password")),
+            RequestEvent(ServiceCommand.Authenticate(nameOrEmail = "alice@email.com", password = "alice-password")),
+            RequestEvent(ServiceCommand.Authenticate(nameOrEmail = "Alice", password = "wrong-password")),
+            RequestEvent(ServiceCommand.Authenticate(nameOrEmail = "alice@email.com", password = "wrong-password")),
+            RequestEvent(ServiceCommand.Authenticate(nameOrEmail = "Nobody", password = "password")),
+            RequestEvent(ServiceCommand.Refresh),
+            RequestEvent(ServiceCommand.RemoveUser(name = "Dave"), aliceAccessToken),
+            RequestEvent(ServiceCommand.ListUsers, aliceAccessToken)
         )
         val snapshotDir = Paths.get("src", "test", "resources")
         val tester = Tester(snapshotDir, commands)

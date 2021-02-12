@@ -59,7 +59,7 @@ class RegressionTestRunnerImpl(
         }
 
     private fun runCommand(requestEvent: RequestEvent): RegressionTestEvent {
-        val serviceRequest = requestEvent.serviceRequest
+        val serviceRequest = requestEvent.serviceCommand
         val accessToken = requestEvent.accessToken
         val requestHeaders = maybeAccessHeader(accessToken) + cookieSimulator.maybeCookieHeader()
         val name = serviceRequest.javaClass.simpleName
