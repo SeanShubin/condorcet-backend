@@ -44,9 +44,6 @@ class Dependencies {
         stateConnectionLifecycle = stateConnectionLifecycle
     )
     private val queryLoader: QueryLoader = QueryLoaderFromResource()
-    private val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader)
-    private val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
-    private val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     private val port: Int = 8080
     private val server: Server = Server(port)
     private val serverContract: ServerContract = JettyServer(server)
@@ -68,21 +65,30 @@ class Dependencies {
     private val dbEventParser: DbEventParser = DbEventParserImpl()
     private val clock: Clock = Clock.systemUTC()
     private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
-    private val eventDbCommands: EventDbCommands = EventDbCommandsImpl(
-        eventGenericDatabase,
+    val synchronizer: Synchronizer = SynchronizerImpl(
         eventDbQueries,
         stateDbQueries,
         stateDbCommands,
-        dbEventParser,
+        dbEventParser
+    )
+    val eventDbCommands: EventDbCommands = EventDbCommandsImpl(
+        eventGenericDatabase,
+        synchronizer,
         clock
     )
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
+    private val nop: () -> Unit = {}
+    private val eventInitializer: Initializer =
+        SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader, nop)
+    private val stateInitializer: Initializer =
+        SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader, synchronizer::synchronize)
+    private val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val files: FilesContract = FilesDelegate
     private val charset: Charset = StandardCharsets.UTF_8
-    private val keyBasePath:Path = Paths.get("keys")
-    private val algorithmFactory:AlgorithmFactory = AlgorithmFactoryImpl(files, charset, keyBasePath)
+    private val keyBasePath: Path = Paths.get("keys")
+    private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, keyBasePath)
     private val cipher: Cipher = CipherImpl(algorithmFactory)
     private val handler: Handler = ApiHandler(
         serviceCommandParser,

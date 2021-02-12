@@ -109,6 +109,17 @@ insert into role_permission (role, permission)
 values ('USER', 'VIEW_APPLICATION');
 insert into role_permission (role, permission)
 values ('OBSERVER', 'VIEW_APPLICATION');
+select value
+from int_variable
+where name = 'last-synced'
+;
+insert into int_variable (name, value)
+values ('last-synced', 0)
+;
+select value
+from int_variable
+where name = 'last-synced'
+;
 select name,
        email,
        salt,
@@ -127,13 +138,6 @@ where email = 'alice@email.com'
 ;
 select count(id)
 from user
-;
-select value
-from int_variable
-where name = 'last-synced'
-;
-insert into int_variable (name, value)
-values ('last-synced', 0)
 ;
 select value
 from int_variable

@@ -68,12 +68,15 @@ class DeterministicDependencies(
     )
     val dbEventParser: DbEventParser = DbEventParserImpl()
     val stateDbCommands: StateDbCommands = StateDbCommandsImpl(stateGenericDatabase)
-    val eventDbCommands: EventDbCommands = EventDbCommandsImpl(
-        eventGenericDatabase,
+    val synchronizer: Synchronizer = SynchronizerImpl(
         eventDbQueries,
         stateDbQueries,
         stateDbCommands,
-        dbEventParser,
+        dbEventParser
+    )
+    val eventDbCommands: EventDbCommands = EventDbCommandsImpl(
+        eventGenericDatabase,
+        synchronizer,
         clock
     )
     val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
@@ -82,15 +85,17 @@ class DeterministicDependencies(
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle
     )
-    val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader)
-    val stateInitializer: Initializer = SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader)
+    val nop: () -> Unit = {}
+    val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader, nop)
+    val stateInitializer: Initializer =
+        SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader, synchronizer::synchronize)
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
-    val serviceCommandParser:ServiceCommandParser = ServiceCommandParserImpl()
+    val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val files: FilesContract = FilesDelegate
     private val charset: Charset = StandardCharsets.UTF_8
-    val keyBasePath:Path = Paths.get("src/test/resources")
+    val keyBasePath: Path = Paths.get("src/test/resources")
     val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, keyBasePath)
-    val cipher:Cipher = CipherImpl(algorithmFactory)
+    val cipher: Cipher = CipherImpl(algorithmFactory)
     val handler: Handler =
         ApiHandler(serviceCommandParser, service, cipher, requestEvent, responseEvent)
     val cookieSimulator: CookieSimulator = CookieSimulator()

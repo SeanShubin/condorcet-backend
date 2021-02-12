@@ -3,7 +3,8 @@ package com.seanshubin.condorcet.backend.genericdb
 class SchemaInitializer(
     private val getConnection: () -> ConnectionWrapper,
     private val schema: Schema,
-    private val queryLoader: QueryLoader
+    private val queryLoader: QueryLoader,
+    private val afterInitialize: () -> Unit
 ) : Initializer {
     override fun purgeAllData() {
         getConnection().update("drop database if exists ${schema.name}")
@@ -18,6 +19,7 @@ class SchemaInitializer(
         } else {
             useDatabase()
         }
+        afterInitialize()
     }
 
     private fun needsInitialize(): Boolean {
