@@ -3,7 +3,7 @@ package com.seanshubin.condorcet.backend.http
 data class SetCookie(val name: String, val value: String, val httpOnly: Boolean = false, val secure: Boolean = false) {
     fun toHeader(): Header {
         val httpOnlyString = if (httpOnly) "; HttpOnly" else ""
-        val secureString = if (httpOnly) "; Secure" else ""
+        val secureString = if (secure) "; Secure" else ""
         val cookieValue = "$name=$value$httpOnlyString$secureString"
         return Header("Set-Cookie", cookieValue)
     }
