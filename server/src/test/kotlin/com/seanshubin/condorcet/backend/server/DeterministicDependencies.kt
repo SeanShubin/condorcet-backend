@@ -11,7 +11,10 @@ import com.seanshubin.condorcet.backend.jwt.AlgorithmFactory
 import com.seanshubin.condorcet.backend.jwt.AlgorithmFactoryImpl
 import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.jwt.CipherImpl
-import com.seanshubin.condorcet.backend.service.*
+import com.seanshubin.condorcet.backend.service.ApiService
+import com.seanshubin.condorcet.backend.service.Lifecycles
+import com.seanshubin.condorcet.backend.service.Service
+import com.seanshubin.condorcet.backend.service.ServiceLifecycles
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParserImpl
 import org.eclipse.jetty.server.Handler
@@ -30,7 +33,6 @@ class DeterministicDependencies(
     val clockPath = snapshotDir.resolve("deterministic-clock.txt")
     val clock: Clock = RememberingClock(realClock, clockPath)
     val uniqueIdsPath = snapshotDir.resolve("deterministic-unique-ids.txt")
-    val serviceRequestParser: ServiceRequestParser = ServiceRequestParserImpl()
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
     val uniqueIdGenerator: UniqueIdGenerator = RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdsPath)
     val oneWayHash: OneWayHash = Sha256Hash()

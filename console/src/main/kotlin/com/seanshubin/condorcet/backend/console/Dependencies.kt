@@ -12,7 +12,10 @@ import com.seanshubin.condorcet.backend.jwt.AlgorithmFactoryImpl
 import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.jwt.CipherImpl
 import com.seanshubin.condorcet.backend.server.*
-import com.seanshubin.condorcet.backend.service.*
+import com.seanshubin.condorcet.backend.service.ApiService
+import com.seanshubin.condorcet.backend.service.Lifecycles
+import com.seanshubin.condorcet.backend.service.Service
+import com.seanshubin.condorcet.backend.service.ServiceLifecycles
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParserImpl
 import org.eclipse.jetty.server.Handler
@@ -47,7 +50,6 @@ class Dependencies {
     private val port: Int = 8080
     private val server: Server = Server(port)
     private val serverContract: ServerContract = JettyServer(server)
-    private val serviceRequestParser: ServiceRequestParser = ServiceRequestParserImpl()
     private val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
     private val oneWayHash: OneWayHash = Sha256Hash()
     private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
@@ -76,8 +78,6 @@ class Dependencies {
     )
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
-    private val tokenService: TokenService = TokenServiceImpl()
-    private val serviceEnvironmentFactory: ServiceEnvironmentFactory = ServiceEnvironmentFactoryImpl(service)
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val files: FilesContract = FilesDelegate
     private val charset: Charset = StandardCharsets.UTF_8
