@@ -7,10 +7,12 @@ POST
 }
 200
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
 Content-Type: application/json
-Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly; Secure
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly
 
 Register
 POST
@@ -50,10 +52,12 @@ POST
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.IxUv-N5mJCVTsW5K18dd7-GuJWeaeEa7GBL6sE3u0h96pyOgyatQvPmJ2Za339CH8jI946Bo_Nuty9RWBCjWKs4WVyp3NtCFo8h5HkkwA9pLIGJd5lh2rBZUdZNLPItYWFGQFlhIlqWe4CKCCLrK_XeGxXNdoxMksRx5uOcs6q0"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.IxUv-N5mJCVTsW5K18dd7-GuJWeaeEa7GBL6sE3u0h96pyOgyatQvPmJ2Za339CH8jI946Bo_Nuty9RWBCjWKs4WVyp3NtCFo8h5HkkwA9pLIGJd5lh2rBZUdZNLPItYWFGQFlhIlqWe4CKCCLrK_XeGxXNdoxMksRx5uOcs6q0",
+  "userName" : "Bob",
+  "role" : "UNASSIGNED"
 }
 Content-Type: application/json
-Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.cOaeBwS1dyVffToMUh0soazAQCIPYQA_bgZ6YuAYiZT7AaOpcj_J6cCqDJf2m7g3WIE3Ijc7An-l_4cJ1bUnugWBNzotS4j_O6Yb1sAnyp4rLMkmCs3vlZct_IisYrmthk1n_x0Z2MEIXYQSjmLxoJllbNDMH11KufScLgR7XjM; HttpOnly; Secure
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.cOaeBwS1dyVffToMUh0soazAQCIPYQA_bgZ6YuAYiZT7AaOpcj_J6cCqDJf2m7g3WIE3Ijc7An-l_4cJ1bUnugWBNzotS4j_O6Yb1sAnyp4rLMkmCs3vlZct_IisYrmthk1n_x0Z2MEIXYQSjmLxoJllbNDMH11KufScLgR7XjM; HttpOnly
 
 Register
 POST
@@ -65,10 +69,12 @@ POST
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.cOaeBwS1dyVffToMUh0soazAQCIPYQA_bgZ6YuAYiZT7AaOpcj_J6cCqDJf2m7g3WIE3Ijc7An-l_4cJ1bUnugWBNzotS4j_O6Yb1sAnyp4rLMkmCs3vlZct_IisYrmthk1n_x0Z2MEIXYQSjmLxoJllbNDMH11KufScLgR7XjM
 200
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.Kxb1pFRcse1m4qUYW_bK9Sh1yznQK8ofmJBYG7XkQw8zpSeeZkVU04eJpUOPfDb3DJmNxbgPfsK0gK_v978ysjbuSpeD5bioFKkVoSty1Cly2x1md8Z7avh0zHRXJPrPCIls49zxNDjvN2b4kB4vOF3OIE5Q4twlmz4tj1CXI5U"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.Kxb1pFRcse1m4qUYW_bK9Sh1yznQK8ofmJBYG7XkQw8zpSeeZkVU04eJpUOPfDb3DJmNxbgPfsK0gK_v978ysjbuSpeD5bioFKkVoSty1Cly2x1md8Z7avh0zHRXJPrPCIls49zxNDjvN2b4kB4vOF3OIE5Q4twlmz4tj1CXI5U",
+  "userName" : "Carol",
+  "role" : "UNASSIGNED"
 }
 Content-Type: application/json
-Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.TLExfi4mgd3fFhnhHYII8QG_TaY9id9KPy17Mmi4Go2BIDfnHpBeN1pXBekNzTXWiKaIu6PXKsTipqMPlA5Fc1pksfTMGEtW7s9HkUtLStx53h-ZRDKS-bhzWCrjky_M6xyo3vALbObXI4BeqEIWXj8XFDeDYbOf2GshZiGOaK8; HttpOnly; Secure
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.TLExfi4mgd3fFhnhHYII8QG_TaY9id9KPy17Mmi4Go2BIDfnHpBeN1pXBekNzTXWiKaIu6PXKsTipqMPlA5Fc1pksfTMGEtW7s9HkUtLStx53h-ZRDKS-bhzWCrjky_M6xyo3vALbObXI4BeqEIWXj8XFDeDYbOf2GshZiGOaK8; HttpOnly
 
 Register
 POST
@@ -80,10 +86,12 @@ POST
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.TLExfi4mgd3fFhnhHYII8QG_TaY9id9KPy17Mmi4Go2BIDfnHpBeN1pXBekNzTXWiKaIu6PXKsTipqMPlA5Fc1pksfTMGEtW7s9HkUtLStx53h-ZRDKS-bhzWCrjky_M6xyo3vALbObXI4BeqEIWXj8XFDeDYbOf2GshZiGOaK8
 200
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRGF2ZSJ9.Bz_dNbyqNhPYwSxLDJNRjXQm_AAgj2qw3XgdC47QKwIsJymgsYFVZn206TDTGB-uCLdsU3ZMM38uinoaWAzEnYel1pebFlSPwmYoQkv5zUsHgNDksVPKEAjH7FzVcMNhRiJ_y3EZ49aj9qjcSFqHAgb73lYlesuUTNTuJCs6rUY"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRGF2ZSJ9.Bz_dNbyqNhPYwSxLDJNRjXQm_AAgj2qw3XgdC47QKwIsJymgsYFVZn206TDTGB-uCLdsU3ZMM38uinoaWAzEnYel1pebFlSPwmYoQkv5zUsHgNDksVPKEAjH7FzVcMNhRiJ_y3EZ49aj9qjcSFqHAgb73lYlesuUTNTuJCs6rUY",
+  "userName" : "Dave",
+  "role" : "UNASSIGNED"
 }
 Content-Type: application/json
-Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.OMkHVI0gCGlmhmLq4vh9-owRgIRCno0QfhpQdZ0Pe-9ABaBMHApoXqZztR9on8P7n8hwb8KFW0-c7atvKMNOx3-hUTulaGiwI6P4MTlsMS3MzkNLxNp0Kr0uAyZc1cylUgL88zeJjCQmAwAIhXtKgGycimQhyPXhW5HlEllDnM8; HttpOnly; Secure
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.OMkHVI0gCGlmhmLq4vh9-owRgIRCno0QfhpQdZ0Pe-9ABaBMHApoXqZztR9on8P7n8hwb8KFW0-c7atvKMNOx3-hUTulaGiwI6P4MTlsMS3MzkNLxNp0Kr0uAyZc1cylUgL88zeJjCQmAwAIhXtKgGycimQhyPXhW5HlEllDnM8; HttpOnly
 
 SetRole
 POST
@@ -104,10 +112,12 @@ POST
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.OMkHVI0gCGlmhmLq4vh9-owRgIRCno0QfhpQdZ0Pe-9ABaBMHApoXqZztR9on8P7n8hwb8KFW0-c7atvKMNOx3-hUTulaGiwI6P4MTlsMS3MzkNLxNp0Kr0uAyZc1cylUgL88zeJjCQmAwAIhXtKgGycimQhyPXhW5HlEllDnM8
 200
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
 Content-Type: application/json
-Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly; Secure
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly
 
 Authenticate
 POST
@@ -118,10 +128,12 @@ POST
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
 Content-Type: application/json
-Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly; Secure
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly
 
 Authenticate
 POST
@@ -167,10 +179,12 @@ POST
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4"
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
 Content-Type: application/json
-Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly; Secure
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY; HttpOnly
 
 RemoveUser
 POST
@@ -186,15 +200,20 @@ POST
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.W5XPHil2XRcZSYsUdJJqoY4d3zAxHCSv1DYKHCHnIxhwggSuPC7VGpUXLjnp_Hbitrls2ul-NZYKD2NfV43tDvbEN3xuvtNY5OFmNDkZfp55I3121Y0iECIEc7DEpBGSN9AgbmOjsQQWmQWeBpOzGfuZMQ78RgzG56trzVpylY4
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.Rv-qjBY4_LH9j55wdLkZ_rdERa49x3BZpTuttCVEpquSAM0ZorzWV2p-_lKASE_dGyLe-hozZxjRLGqkcLcP4PhdMpGv9JI34wibJmZ--GVihgaPxrfXo9mSVD6-Z6MLW8bQKBF7a7ftx-1Ietoq5ginVyoI_BUcdB0tD1odwMY
 200
-[ {
-  "name" : "Alice",
-  "role" : "OWNER"
-}, {
-  "name" : "Bob",
-  "role" : "USER"
-}, {
-  "name" : "Carol",
-  "role" : "UNASSIGNED"
-} ]
+{
+  "users" : [ {
+    "name" : "Alice",
+    "role" : "OWNER",
+    "allowedRoles" : [ "OWNER" ]
+  }, {
+    "name" : "Bob",
+    "role" : "USER",
+    "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  }, {
+    "name" : "Carol",
+    "role" : "UNASSIGNED",
+    "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  } ]
+}
 Content-Type: application/json
 

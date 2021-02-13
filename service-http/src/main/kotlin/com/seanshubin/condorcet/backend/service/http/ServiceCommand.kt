@@ -115,20 +115,20 @@ interface ServiceCommand {
             return ResponseValue(status, body, headers)
         }
 
-        fun createContentTypeHeaderList(contentType: String?): List<Header> =
+        private fun createContentTypeHeaderList(contentType: String?): List<Header> =
             if (contentType == null) {
                 emptyList()
             } else {
                 listOf(createContentTypeHeader(contentType))
             }
 
-        fun createContentTypeHeader(contentType: String): Header =
+        private fun createContentTypeHeader(contentType: String): Header =
             Header("Content-Type", contentType)
 
-        fun createRefreshTokenCookie(refreshTokenString: String): SetCookie =
+        private fun createRefreshTokenCookie(refreshTokenString: String): SetCookie =
             SetCookie("Refresh", refreshTokenString, httpOnly = true)
 
-        fun createRefreshTokenCookieList(refreshTokenString: String?): List<SetCookie> =
+        private fun createRefreshTokenCookieList(refreshTokenString: String?): List<SetCookie> =
             if (refreshTokenString == null) {
                 emptyList()
             } else {

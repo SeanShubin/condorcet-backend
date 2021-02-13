@@ -44,14 +44,14 @@ class ApiService(
         val targetUserRow = mustMatchExistingName(target)
         val permissionNeeded = Permission.MANAGE_USERS
         mustHavePermission(accessToken, permissionNeeded)
-        mustHaveGreaterRole(accessToken, targetUserRow, "setRole")
+        mustBeAllowedToChangeRoleTo(accessToken, targetUserRow, role)
         stateDbCommands.setRole(accessToken.userName, target, role)
     }
 
     override fun removeUser(accessToken: AccessToken, target: String) {
         val targetUserRow = mustMatchExistingName(target)
         mustHavePermission(accessToken, Permission.MANAGE_USERS)
-        mustHaveGreaterRole(accessToken, targetUserRow, "removeUser")
+        mustBeAllowedToRemoveUser(accessToken, targetUserRow)
         stateDbCommands.removeUser(accessToken.userName, target)
     }
 
@@ -59,10 +59,27 @@ class ApiService(
         mustHavePermission(accessToken, Permission.MANAGE_USERS)
         val userRows = stateDbQueries.listUsers()
         val list = userRows.map { row ->
-            UserNameRole(row.name, row.role)
+            val allowedRoles = Role.values().filter {
+                allowedToChangeRoleTo(accessToken, row, it)
+            }
+            UserNameRole(row.name, row.role, allowedRoles)
         }
         return list
     }
+
+    private fun allowedToChangeRoleTo(accessToken: AccessToken, userRow: UserRow, targetRole: Role): Boolean =
+        if (accessToken.userName == userRow.name) {
+            accessToken.role == targetRole
+        } else {
+            accessToken.role.ordinal < targetRole.ordinal
+        }
+
+    private fun allowedToRemoveUser(accessToken: AccessToken, userRow: UserRow): Boolean =
+        if (accessToken.userName == userRow.name) {
+            false
+        } else {
+            accessToken.role.ordinal < userRow.role.ordinal
+        }
 
     private fun nameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
     private fun emailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
@@ -120,11 +137,20 @@ class ApiService(
         }
     }
 
-    private fun mustHaveGreaterRole(accessToken: AccessToken, userRow: UserRow, operation: String) {
-        if (accessToken.role.ordinal >= userRow.role.ordinal) {
+    private fun mustBeAllowedToChangeRoleTo(accessToken: AccessToken, userRow: UserRow, role: Role) {
+        if (!allowedToChangeRoleTo(accessToken, userRow, role)) {
             throw ServiceException.Unauthorized(
-                "For operation $operation, user ${accessToken.userName} with role ${accessToken.role}" +
-                        " must have greater role than user ${userRow.name} with role ${userRow.role}"
+                "User ${accessToken.userName} with role ${accessToken.role}" +
+                        " is not allowed to change role of user ${userRow.name} from ${userRow.role} to $role"
+            )
+        }
+    }
+
+    private fun mustBeAllowedToRemoveUser(accessToken: AccessToken, userRow: UserRow) {
+        if (!allowedToRemoveUser(accessToken, userRow)) {
+            throw ServiceException.Unauthorized(
+                "User ${accessToken.userName} with role ${accessToken.role}" +
+                        " is not allowed to remove user ${userRow.name} with role ${userRow.role}"
             )
         }
     }
