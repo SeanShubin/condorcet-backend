@@ -173,8 +173,12 @@ interface ServiceCommand {
                     "role" to tokens.accessToken.role.name
                 )
             )
-            val accessTokenObject = mapOf("accessToken" to accessTokenString)
-            return responseBuilder().refreshToken(refreshTokenString).json(accessTokenObject).build()
+            val value = mapOf(
+                "accessToken" to accessTokenString,
+                "userName" to tokens.accessToken.userName,
+                "role" to tokens.accessToken.role.name
+            )
+            return responseBuilder().refreshToken(refreshTokenString).json(value).build()
         }
 
         private fun responseBuilder(): ResponseBuilder = ResponseBuilder()
