@@ -10,6 +10,11 @@
             <artifactId>condorcet-backend-server</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.seanshubin.condorcet.backend</groupId>
+            <artifactId>condorcet-backend-dependencies</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <parent>
         <groupId>com.seanshubin.condorcet.backend</groupId>
@@ -45,7 +50,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.seanshubin.condorcet.backend.console.ServerApp</mainClass>
+                            <mainClass>com.seanshubin.condorcet.backend.console.ServerAppKt</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -1,8 +1,11 @@
-package com.seanshubin.condorcet.backend.console
+package com.seanshubin.condorcet.backend.dependencies
 
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.contract.FilesDelegate
-import com.seanshubin.condorcet.backend.crypto.*
+import com.seanshubin.condorcet.backend.crypto.OneWayHash
+import com.seanshubin.condorcet.backend.crypto.PasswordUtil
+import com.seanshubin.condorcet.backend.crypto.Sha256Hash
+import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.http.RequestValue
@@ -11,7 +14,10 @@ import com.seanshubin.condorcet.backend.jwt.AlgorithmFactory
 import com.seanshubin.condorcet.backend.jwt.AlgorithmFactoryImpl
 import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.jwt.CipherImpl
-import com.seanshubin.condorcet.backend.server.*
+import com.seanshubin.condorcet.backend.server.ApiHandler
+import com.seanshubin.condorcet.backend.server.JettyServer
+import com.seanshubin.condorcet.backend.server.ServerContract
+import com.seanshubin.condorcet.backend.server.ServerRunner
 import com.seanshubin.condorcet.backend.service.ApiService
 import com.seanshubin.condorcet.backend.service.Lifecycles
 import com.seanshubin.condorcet.backend.service.Service
@@ -23,20 +29,20 @@ import org.eclipse.jetty.server.Server
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
-import java.nio.file.Paths
 import java.time.Clock
 
-class Dependencies {
-    private val host: String = DatabaseConstants.host
-    private val user: String = DatabaseConstants.user
-    private val password: String = DatabaseConstants.password
-    private val eventSchemaName: String = DatabaseConstants.eventSchemaName
-    private val stateSchemaName: String = DatabaseConstants.stateSchemaName
-    private val logDir: Path = Paths.get("out", "log")
-    private val notifications: Notifications = LoggingNotifications(logDir)
-    private val databaseEvent: (String) -> Unit = notifications::databaseEvent
-    private val requestEvent: (RequestValue) -> Unit = notifications::requestEvent
-    private val responseEvent: (ResponseValue) -> Unit = notifications::responseEvent
+class DeterministicDependencies(
+    integration: Integration
+) {
+    private val host: String = integration.host
+    private val user: String = integration.user
+    private val password: String = integration.password
+    private val eventSchemaName: String = integration.eventSchemaName
+    private val stateSchemaName: String = integration.stateSchemaName
+
+    private val databaseEvent: (String) -> Unit = integration.databaseEvent
+    private val requestEvent: (RequestValue) -> Unit = integration.requestEvent
+    private val responseEvent: (ResponseValue) -> Unit = integration.responseEvent
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         ConnectionLifecycle(host, user, password, databaseEvent)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
@@ -49,8 +55,8 @@ class Dependencies {
     private val port: Int = 8080
     private val server: Server = Server(port)
     private val serverContract: ServerContract = JettyServer(server)
-    private val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
     private val oneWayHash: OneWayHash = Sha256Hash()
+    private val uniqueIdGenerator: UniqueIdGenerator = integration.uniqueIdGenerator
     private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
     private val eventGenericDatabase: GenericDatabase = GenericDatabaseImpl(
         eventConnectionLifecycle::getValue,
@@ -65,7 +71,7 @@ class Dependencies {
     )
     private val stateDbCommands: StateDbCommands = StateDbCommandsImpl(stateGenericDatabase)
     private val dbEventParser: DbEventParser = DbEventParserImpl()
-    private val clock: Clock = Clock.systemUTC()
+    private val clock: Clock = integration.clock
     private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     val synchronizer: Synchronizer = SynchronizerImpl(
         eventDbQueries,
@@ -95,8 +101,8 @@ class Dependencies {
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val files: FilesContract = FilesDelegate
     private val charset: Charset = StandardCharsets.UTF_8
-    private val keyBasePath: Path = Paths.get("keys")
-    private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, keyBasePath)
+    private val whereKeysAreStored: Path = integration.whereKeysAreStored
+    private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, whereKeysAreStored)
     private val cipher: Cipher = CipherImpl(algorithmFactory)
     private val handler: Handler = ApiHandler(
         serviceCommandParser,

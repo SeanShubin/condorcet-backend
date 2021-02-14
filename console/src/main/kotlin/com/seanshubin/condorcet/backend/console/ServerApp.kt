@@ -1,8 +1,10 @@
 package com.seanshubin.condorcet.backend.console
 
+import com.seanshubin.condorcet.backend.dependencies.DeterministicDependencies
+
 object ServerApp {
     @JvmStatic
     fun main(args: Array<String>) {
-        Dependencies().runner.run()
+        DeterministicDependencies(ConsoleIntegration()).runner.run()
     }
 }
