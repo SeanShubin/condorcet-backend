@@ -70,7 +70,6 @@ object StateSchema : Schema {
         columns = listOf(tallyElection, tallyReport),
         unique = listOf(tallyElection)
     )
-    override val name: String = "condorcet_state"
     override val tables = listOf(
         intVariable,
         rolePermission,

@@ -11,7 +11,6 @@ object EventSchema : Schema {
     val eventType = Field("type", STRING)
     val eventText = Field("text", TEXT)
     val event = Table("event", eventWhen, eventAuthority, eventType, eventText)
-    override val name: String = "condorcet_event"
     override val tables = listOf(
         event
     )

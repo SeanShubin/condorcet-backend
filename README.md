@@ -1,5 +1,17 @@
 # Condorcet Backend
 
+## Prerequisites
+
+Make sure you have a mysql database running configured with the settings listed in
+[DatabaseConstants](console/src/main/kotlin/com/seanshubin/condorcet/backend/console/DatabaseConstants.kt)
+
+## Scripts
+
+- `./scripts/prepare.sh`
+  - One time initialization
+- `./scripts/run.sh`
+  - Run application
+
 ## Notes
 
 Looking into JWT

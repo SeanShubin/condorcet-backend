@@ -1,7 +1,7 @@
-drop database if exists condorcet_event;
-select count(*) from information_schema.schemata where schema_name = 'condorcet_event';
-create database condorcet_event;
-use condorcet_event;
+drop database if exists condorcet_regression_test_event;
+select count(*) from information_schema.schemata where schema_name = 'condorcet_regression_test_event';
+create database condorcet_regression_test_event;
+use condorcet_regression_test_event;
 create table event (
     id int not null auto_increment,
     `when` datetime(6) not null,

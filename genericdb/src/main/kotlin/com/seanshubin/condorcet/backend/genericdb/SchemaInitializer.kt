@@ -2,12 +2,13 @@ package com.seanshubin.condorcet.backend.genericdb
 
 class SchemaInitializer(
     private val getConnection: () -> ConnectionWrapper,
+    private val schemaName: String,
     private val schema: Schema,
     private val queryLoader: QueryLoader,
     private val afterInitialize: () -> Unit
 ) : Initializer {
     override fun purgeAllData() {
-        getConnection().update("drop database if exists ${schema.name}")
+        getConnection().update("drop database if exists $schemaName")
     }
 
     override fun initialize() {
@@ -24,15 +25,15 @@ class SchemaInitializer(
 
     private fun needsInitialize(): Boolean {
         val hasSchema = "select count(*) from information_schema.schemata where schema_name = ?"
-        return getConnection().queryExactlyOneInt(hasSchema, schema.name) == 0
+        return getConnection().queryExactlyOneInt(hasSchema, schemaName) == 0
     }
 
     private fun createDatabase() {
-        getConnection().update("create database ${schema.name}")
+        getConnection().update("create database $schemaName")
     }
 
     private fun useDatabase() {
-        getConnection().update("use ${schema.name}")
+        getConnection().update("use $schemaName")
     }
 
     private fun createSchema() {

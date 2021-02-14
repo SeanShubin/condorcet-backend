@@ -29,6 +29,11 @@ class DeterministicDependencies(
     snapshotViews: List<SnapshotView>,
     requestEvents: List<RequestEvent>
 ) {
+    val host: String = "localhost"
+    val user: String = "root"
+    val password: String = "insecure"
+    val eventSchemaName: String = "condorcet_regression_test_event"
+    val stateSchemaName: String = "condorcet_regression_test_state"
     val realClock: Clock = Clock.systemUTC()
     val clockPath = snapshotDir.resolve("deterministic-clock.txt")
     val clock: Clock = RememberingClock(realClock, clockPath)
@@ -38,9 +43,6 @@ class DeterministicDependencies(
     val oneWayHash: OneWayHash = Sha256Hash()
     val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
     val queryLoader: QueryLoader = QueryLoaderFromResource()
-    val host: String = "localhost"
-    val user: String = "root"
-    val password: String = "insecure"
     val sqlEventMonitor: SqlMonitor = SqlMonitorInMemory()
     val sqlStateMonitor: SqlMonitor = SqlMonitorInMemory()
     val logSqlEvent: (String) -> Unit = sqlEventMonitor::monitor
@@ -86,9 +88,16 @@ class DeterministicDependencies(
         stateConnectionLifecycle = stateConnectionLifecycle
     )
     val nop: () -> Unit = {}
-    val eventInitializer: Initializer = SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader, nop)
+    val eventInitializer: Initializer =
+        SchemaInitializer(lifecycles::eventConnection, eventSchemaName, EventSchema, queryLoader, nop)
     val stateInitializer: Initializer =
-        SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader, synchronizer::synchronize)
+        SchemaInitializer(
+            lifecycles::stateConnection,
+            stateSchemaName,
+            StateSchema,
+            queryLoader,
+            synchronizer::synchronize
+        )
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val files: FilesContract = FilesDelegate

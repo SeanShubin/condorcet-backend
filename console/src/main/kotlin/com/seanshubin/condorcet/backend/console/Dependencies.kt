@@ -27,9 +27,11 @@ import java.nio.file.Paths
 import java.time.Clock
 
 class Dependencies {
-    private val host: String = "localhost"
-    private val user: String = "root"
-    private val password: String = "insecure"
+    private val host: String = DatabaseConstants.host
+    private val user: String = DatabaseConstants.user
+    private val password: String = DatabaseConstants.password
+    private val eventSchemaName: String = DatabaseConstants.eventSchemaName
+    private val stateSchemaName: String = DatabaseConstants.stateSchemaName
     private val logDir: Path = Paths.get("out", "log")
     private val notifications: Notifications = LoggingNotifications(logDir)
     private val databaseEvent: (String) -> Unit = notifications::databaseEvent
@@ -79,9 +81,15 @@ class Dependencies {
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
     private val nop: () -> Unit = {}
     private val eventInitializer: Initializer =
-        SchemaInitializer(lifecycles::eventConnection, EventSchema, queryLoader, nop)
+        SchemaInitializer(lifecycles::eventConnection, eventSchemaName, EventSchema, queryLoader, nop)
     private val stateInitializer: Initializer =
-        SchemaInitializer(lifecycles::stateConnection, StateSchema, queryLoader, synchronizer::synchronize)
+        SchemaInitializer(
+            lifecycles::stateConnection,
+            stateSchemaName,
+            StateSchema,
+            queryLoader,
+            synchronizer::synchronize
+        )
     private val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()

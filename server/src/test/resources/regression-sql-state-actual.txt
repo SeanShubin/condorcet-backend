@@ -1,7 +1,7 @@
-drop database if exists condorcet_state;
-select count(*) from information_schema.schemata where schema_name = 'condorcet_state';
-create database condorcet_state;
-use condorcet_state;
+drop database if exists condorcet_regression_test_state;
+select count(*) from information_schema.schemata where schema_name = 'condorcet_regression_test_state';
+create database condorcet_regression_test_state;
+use condorcet_regression_test_state;
 create table int_variable (
     id int not null auto_increment,
     name varchar(255) not null unique,
