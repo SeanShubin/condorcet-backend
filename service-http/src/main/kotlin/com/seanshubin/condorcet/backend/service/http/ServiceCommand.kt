@@ -8,6 +8,7 @@ import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.service.AccessToken
 import com.seanshubin.condorcet.backend.service.RefreshToken
 import com.seanshubin.condorcet.backend.service.ServiceException
+import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import com.seanshubin.condorcet.backend.service.Tokens
 
 interface ServiceCommand {
@@ -78,7 +79,7 @@ interface ServiceCommand {
 
     class ServiceExceptionCommand(val serviceException: ServiceException) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            val status = statusCodeMap[serviceException::class] ?: 500
+            val status = statusCodeMap[serviceException.category] ?: 500
             return responseBuilder().status(status).userSafeMessage(serviceException.userSafeMessage).build()
         }
     }
@@ -184,11 +185,11 @@ interface ServiceCommand {
         private fun responseBuilder(): ResponseBuilder = ResponseBuilder()
 
         private val statusCodeMap = mapOf(
-            ServiceException.Unauthorized::class to 401,
-            ServiceException.NotFound::class to 404,
-            ServiceException.Conflict::class to 409,
-            ServiceException.Unsupported::class to 400,
-            ServiceException.MalformedJson::class to 400
+            UNAUTHORIZED to 401,
+            NOT_FOUND to 404,
+            CONFLICT to 409,
+            UNSUPPORTED to 400,
+            UNSUPPORTED to 400
         )
 
         private fun requireAccessToken(

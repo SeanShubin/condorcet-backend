@@ -7,9 +7,9 @@ class PasswordUtil(
     fun createSaltAndHash(password: String): SaltAndHash =
         SaltAndHash.fromPassword(password, uniqueIdGenerator, oneWayHash)
 
-    fun validatePassword(password: String, saltAndHash: SaltAndHash): Boolean =
+    fun passwordMatches(password: String, saltAndHash: SaltAndHash): Boolean =
         SaltAndHash.validate(password, saltAndHash, oneWayHash)
 
-    fun validatePassword(password: String, salt: String, hash: String): Boolean =
+    fun passwordMatches(password: String, salt: String, hash: String): Boolean =
         SaltAndHash.validate(password, SaltAndHash(salt, hash), oneWayHash)
 }

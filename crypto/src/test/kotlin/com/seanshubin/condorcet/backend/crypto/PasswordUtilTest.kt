@@ -15,7 +15,7 @@ class PasswordUtilTest {
         val saltAndHash = passwordUtil.createSaltAndHash(password)
 
         // when
-        val result = passwordUtil.validatePassword("foo", saltAndHash)
+        val result = passwordUtil.passwordMatches("foo", saltAndHash)
 
         // then
         assertTrue(result)
@@ -31,7 +31,7 @@ class PasswordUtilTest {
         val saltAndHash = passwordUtil.createSaltAndHash(password)
 
         // when
-        val result = passwordUtil.validatePassword("bar", saltAndHash)
+        val result = passwordUtil.passwordMatches("bar", saltAndHash)
 
         // then
         assertFalse(result)
