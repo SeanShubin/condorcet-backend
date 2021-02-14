@@ -25,7 +25,9 @@ class ApiService(
         return Tokens(refreshToken, accessToken)
     }
 
-    override fun register(name: String, email: String, password: String): Tokens {
+    override fun register(rawName: String, email: String, password: String): Tokens {
+        val name = collapseWhitespace(rawName)
+        failIf(name.isBlank(), UNSUPPORTED, "User name must not be blank")
         failIf(nameExists(name), CONFLICT, "User with name '$name' already exists")
         failIf(emailExists(email), CONFLICT, "User with email '$email' already exists")
         val role = if (stateDbQueries.countUsers() == 0) {
@@ -143,5 +145,11 @@ class ApiService(
         val refreshToken = RefreshToken(userRow.name)
         val accessToken = AccessToken(userRow.name, userRow.role)
         return Tokens(refreshToken, accessToken)
+    }
+
+    private fun collapseWhitespace(s: String): String = s.trim().replace(whitespaceBlock, " ")
+
+    companion object {
+        val whitespaceBlock = Regex("""\s+""")
     }
 }

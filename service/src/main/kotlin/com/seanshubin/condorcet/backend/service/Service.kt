@@ -5,7 +5,7 @@ import com.seanshubin.condorcet.backend.domain.UserNameRole
 
 interface Service {
     fun refresh(refreshToken: RefreshToken): Tokens
-    fun register(name: String, email: String, password: String): Tokens
+    fun register(rawName: String, email: String, password: String): Tokens
     fun authenticate(nameOrEmail: String, password: String): Tokens
     fun setRole(accessToken: AccessToken, name: String, role: Role)
     fun removeUser(accessToken: AccessToken, name: String)
