@@ -74,7 +74,10 @@ class ApiService(
             hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
             "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
         )
-        failIf(isSelf(accessToken, userRow), UNAUTHORIZED, "Not allowed to remove self")
+        failIf(
+            isSelf(accessToken, userRow) && stateDbQueries.countUsers() > 1, UNAUTHORIZED,
+            "Not allowed to remove self unless you are the only user"
+        )
         failUnless(roleIsGreater(accessToken, userRow), UNAUTHORIZED, "Must have greater role than target")
         stateDbCommands.removeUser(accessToken.userName, name)
     }
