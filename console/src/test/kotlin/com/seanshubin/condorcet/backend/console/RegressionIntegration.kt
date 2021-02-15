@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.console
 
+import com.seanshubin.condorcet.backend.console.RegressionNotifications.Phase
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.crypto.Uuid4
 import com.seanshubin.condorcet.backend.dependencies.Integration
@@ -11,7 +12,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.Clock
 
-class RegressionIntegration(phase: String) : Integration {
+class RegressionIntegration(phase: Phase) : Integration {
     val regressionSnapshotDir = Paths.get("src", "test", "resources")
     val clockPath = regressionSnapshotDir.resolve("deterministic-clock.txt")
     val realClock = Clock.systemUTC()

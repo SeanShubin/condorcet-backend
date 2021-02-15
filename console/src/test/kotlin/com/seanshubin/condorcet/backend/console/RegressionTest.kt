@@ -1,10 +1,12 @@
 package com.seanshubin.condorcet.backend.console
 
+import com.seanshubin.condorcet.backend.console.RegressionNotifications.Phase.ACTUAL
+import com.seanshubin.condorcet.backend.console.RegressionNotifications.Phase.EXPECTED
 import com.seanshubin.condorcet.backend.dependencies.DeterministicDependencies
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand.*
-import org.junit.Test
+import kotlin.test.Test
 
 class RegressionTest {
     @Test
@@ -50,13 +52,13 @@ class RegressionTest {
 
     class Tester {
         fun generateMissingExpectations(commands: List<ServiceCommand>) {
-            val dependencies = DeterministicDependencies(RegressionIntegration("expect"))
+            val dependencies = DeterministicDependencies(RegressionIntegration(EXPECTED))
             val regressionTestRunner = RegressionTestRunner(dependencies, commands)
             regressionTestRunner.run()
         }
 
         fun generateActual(commands: List<ServiceCommand>) {
-            val dependencies = DeterministicDependencies(RegressionIntegration("actual"))
+            val dependencies = DeterministicDependencies(RegressionIntegration(ACTUAL))
             val regressionTestRunner = RegressionTestRunner(dependencies, commands)
             regressionTestRunner.run()
         }
