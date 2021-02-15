@@ -5,7 +5,8 @@ class SchemaInitializer(
     private val schemaName: String,
     private val schema: Schema,
     private val queryLoader: QueryLoader,
-    private val afterInitialize: () -> Unit
+    private val afterInitialize: () -> Unit,
+    private val listTableEvent: (GenericTable) -> Unit
 ) : Initializer {
     override fun purgeAllData() {
         getConnection().update("drop database if exists $schemaName")
@@ -21,6 +22,13 @@ class SchemaInitializer(
             useDatabase()
         }
         afterInitialize()
+    }
+
+    override fun listAllData() {
+        schema.tables.forEach {
+            val tableData = getConnection().queryGenericTable("select * from ${it.name}")
+            listTableEvent(tableData)
+        }
     }
 
     private fun needsInitialize(): Boolean {

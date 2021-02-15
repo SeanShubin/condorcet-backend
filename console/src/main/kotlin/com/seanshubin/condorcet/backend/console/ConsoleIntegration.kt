@@ -3,6 +3,7 @@ package com.seanshubin.condorcet.backend.console
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.crypto.Uuid4
 import com.seanshubin.condorcet.backend.dependencies.Integration
+import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.server.LoggingNotifications
@@ -22,6 +23,8 @@ class ConsoleIntegration : Integration {
     override val stateSchemaName: String = "condorcet_development_state"
     override val eventDatabaseEvent: (String) -> Unit = notifications::eventDatabaseEvent
     override val stateDatabaseEvent: (String) -> Unit = notifications::stateDatabaseEvent
+    override val eventTableEvent: (GenericTable) -> Unit = notifications::eventTableEvent
+    override val stateTableEvent: (GenericTable) -> Unit = notifications::stateTableEvent
     override val requestEvent: (RequestValue) -> Unit = notifications::requestEvent
     override val responseEvent: (ResponseValue) -> Unit = notifications::responseEvent
     override val uniqueIdGenerator: UniqueIdGenerator = Uuid4()

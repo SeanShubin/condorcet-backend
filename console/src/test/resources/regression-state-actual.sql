@@ -223,3 +223,21 @@ where name = 'Carol';
 update int_variable
 set value = 5
 where name = 'last-synced';
+select *
+from int_variable;
+select *
+from role_permission;
+select *
+from user;
+select *
+from election;
+select *
+from candidate;
+select *
+from voter;
+select *
+from ballot;
+select *
+from ranking;
+select *
+from tally;

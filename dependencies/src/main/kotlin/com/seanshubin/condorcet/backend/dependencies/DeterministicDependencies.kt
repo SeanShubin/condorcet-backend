@@ -42,6 +42,8 @@ class DeterministicDependencies(
 
     private val eventDatabaseEvent: (String) -> Unit = integration.eventDatabaseEvent
     private val stateDatabaseEvent: (String) -> Unit = integration.stateDatabaseEvent
+    private val eventTableEvent: (GenericTable) -> Unit = integration.eventTableEvent
+    private val stateTableEvent: (GenericTable) -> Unit = integration.stateTableEvent
     private val requestEvent: (RequestValue) -> Unit = integration.requestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.responseEvent
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
@@ -88,14 +90,22 @@ class DeterministicDependencies(
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
     private val nop: () -> Unit = {}
     private val eventInitializer: Initializer =
-        SchemaInitializer(lifecycles::eventConnection, eventSchemaName, EventSchema, queryLoader, nop)
+        SchemaInitializer(
+            lifecycles::eventConnection,
+            eventSchemaName,
+            EventSchema,
+            queryLoader,
+            nop,
+            eventTableEvent
+        )
     private val stateInitializer: Initializer =
         SchemaInitializer(
             lifecycles::stateConnection,
             stateSchemaName,
             StateSchema,
             queryLoader,
-            synchronizer::synchronize
+            synchronizer::synchronize,
+            stateTableEvent
         )
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)

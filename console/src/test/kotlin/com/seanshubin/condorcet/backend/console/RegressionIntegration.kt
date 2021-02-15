@@ -1,9 +1,9 @@
 package com.seanshubin.condorcet.backend.console
 
-import com.seanshubin.condorcet.backend.console.RegressionFile.*
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.crypto.Uuid4
 import com.seanshubin.condorcet.backend.dependencies.Integration
+import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import java.nio.charset.Charset
@@ -19,11 +19,10 @@ class RegressionIntegration(phase: Phase) : Integration {
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
     val uniqueIdGeneratorPath = regressionSnapshotDir.resolve("deterministic-unique-id.txt")
     val charset: Charset = StandardCharsets.UTF_8
-    val regressionFileMap: Map<RegressionFile, RegressionInfoFile> = mapOf(
-        EVENT to EVENT.toRegressionInfoFile(regressionSnapshotDir, charset, phase),
-        STATE to STATE.toRegressionInfoFile(regressionSnapshotDir, charset, phase),
-        HTTP to HTTP.toRegressionInfoFile(regressionSnapshotDir, charset, phase)
-    )
+    val regressionFileMap: Map<RegressionFile, RegressionInfoFile> =
+        RegressionFile.values().map {
+            it to it.toRegressionInfoFile(regressionSnapshotDir, charset, phase)
+        }.toMap()
 
     val regressionNotifications = RegressionNotifications(regressionFileMap)
 
@@ -36,6 +35,8 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val stateDatabaseEvent: (String) -> Unit = regressionNotifications::stateDatabaseEvent
     override val requestEvent: (RequestValue) -> Unit = regressionNotifications::requestEvent
     override val responseEvent: (ResponseValue) -> Unit = regressionNotifications::responseEvent
+    override val eventTableEvent: (GenericTable) -> Unit = regressionNotifications::eventTableEvent
+    override val stateTableEvent: (GenericTable) -> Unit = regressionNotifications::stateTableEvent
     override val uniqueIdGenerator: UniqueIdGenerator =
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)

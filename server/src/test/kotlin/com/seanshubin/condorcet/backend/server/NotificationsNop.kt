@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.server
 
+import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 
@@ -14,5 +15,11 @@ class NotificationsNop : Notifications {
     }
 
     override fun responseEvent(response: ResponseValue) {
+    }
+
+    override fun eventTableEvent(table: GenericTable) {
+    }
+
+    override fun stateTableEvent(table: GenericTable) {
     }
 }

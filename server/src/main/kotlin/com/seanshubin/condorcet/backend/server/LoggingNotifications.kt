@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.server
 
+import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.logger.LogGroup
@@ -11,6 +12,8 @@ class LoggingNotifications(logDir: Path) : Notifications {
     private val logGroup: LogGroup = LoggerFactory.instanceDefaultZone.createLogGroup(logDir)
     private val eventDatabaseLogger: Logger = logGroup.create("event", "sql")
     private val stateDatabaseLogger: Logger = logGroup.create("state", "sql")
+    private val eventTableLogger: Logger = logGroup.create("event-snapshot", "sql")
+    private val stateTableLogger: Logger = logGroup.create("state-snapshot", "sql")
     private val httpLogger: Logger = logGroup.create("http")
     override fun eventDatabaseEvent(statement: String) {
         eventDatabaseLogger.log("${statement.trim()};")
@@ -18,6 +21,14 @@ class LoggingNotifications(logDir: Path) : Notifications {
 
     override fun stateDatabaseEvent(statement: String) {
         stateDatabaseLogger.log("${statement.trim()};")
+    }
+
+    override fun eventTableEvent(table: GenericTable) {
+        table.toLines().forEach(eventTableLogger::log)
+    }
+
+    override fun stateTableEvent(table: GenericTable) {
+        table.toLines().forEach(stateTableLogger::log)
     }
 
     override fun requestEvent(request: RequestValue) {

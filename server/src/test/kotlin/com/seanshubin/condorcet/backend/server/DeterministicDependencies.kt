@@ -50,6 +50,8 @@ class DeterministicDependencies(
     val notifications: Notifications = NotificationsNop()
     val requestEvent: (RequestValue) -> Unit = notifications::requestEvent
     val responseEvent: (ResponseValue) -> Unit = notifications::responseEvent
+    val eventTableEvent: (GenericTable) -> Unit = notifications::eventTableEvent
+    val stateTableEvent: (GenericTable) -> Unit = notifications::stateTableEvent
     val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         ConnectionLifecycle(host, user, password, logSqlEvent)
     val eventDatabase = Database(EventSchema, eventConnectionLifecycle)
@@ -89,14 +91,22 @@ class DeterministicDependencies(
     )
     val nop: () -> Unit = {}
     val eventInitializer: Initializer =
-        SchemaInitializer(lifecycles::eventConnection, eventSchemaName, EventSchema, queryLoader, nop)
+        SchemaInitializer(
+            lifecycles::eventConnection,
+            eventSchemaName,
+            EventSchema,
+            queryLoader,
+            nop,
+            eventTableEvent
+        )
     val stateInitializer: Initializer =
         SchemaInitializer(
             lifecycles::stateConnection,
             stateSchemaName,
             StateSchema,
             queryLoader,
-            synchronizer::synchronize
+            synchronizer::synchronize,
+            stateTableEvent
         )
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()

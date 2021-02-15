@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.dependencies
 
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
+import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import java.nio.file.Path
@@ -14,6 +15,8 @@ interface Integration {
     val stateSchemaName: String
     val eventDatabaseEvent: (String) -> Unit
     val stateDatabaseEvent: (String) -> Unit
+    val eventTableEvent: (GenericTable) -> Unit
+    val stateTableEvent: (GenericTable) -> Unit
     val requestEvent: (RequestValue) -> Unit
     val responseEvent: (ResponseValue) -> Unit
     val uniqueIdGenerator: UniqueIdGenerator

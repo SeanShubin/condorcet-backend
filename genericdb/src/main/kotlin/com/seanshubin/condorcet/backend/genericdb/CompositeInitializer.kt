@@ -8,4 +8,8 @@ class CompositeInitializer(private vararg val initializers: Initializer) : Initi
     override fun initialize() {
         initializers.forEach { it.initialize() }
     }
+
+    override fun listAllData() {
+        initializers.forEach { it.listAllData() }
+    }
 }

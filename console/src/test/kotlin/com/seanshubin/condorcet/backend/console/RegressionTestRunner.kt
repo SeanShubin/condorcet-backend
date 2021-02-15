@@ -16,8 +16,8 @@ class RegressionTestRunner(
             commands.forEach { command ->
                 handleCommand(fakeBrowser, command)
             }
+            dependencies.initializer.listAllData()
         }
-
     }
 
     fun handleCommand(fakeBrowser: FakeBrowser, command: ServiceCommand) {

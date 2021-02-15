@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.console
 
 import com.seanshubin.condorcet.backend.console.RegressionFile.*
+import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.server.Notifications
@@ -11,6 +12,8 @@ class RegressionNotifications(
 
     val event = regressionFileMap.getValue(EVENT)
     val state = regressionFileMap.getValue(STATE)
+    val eventTable = regressionFileMap.getValue(EVENT_TABLE)
+    val stateTable = regressionFileMap.getValue(STATE_TABLE)
     val http = regressionFileMap.getValue(HTTP)
 
     init {
@@ -23,6 +26,14 @@ class RegressionNotifications(
 
     override fun stateDatabaseEvent(statement: String) {
         state.println(formatStatement(statement))
+    }
+
+    override fun eventTableEvent(table: GenericTable) {
+        table.toLines().forEach(eventTable::println)
+    }
+
+    override fun stateTableEvent(table: GenericTable) {
+        table.toLines().forEach(stateTable::println)
     }
 
     override fun requestEvent(request: RequestValue) {

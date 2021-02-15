@@ -5,7 +5,9 @@ import java.nio.file.Path
 
 enum class RegressionFile(val fileName: String, val extension: String) {
     EVENT("event", "sql"),
+    EVENT_TABLE("event-table", "txt"),
     STATE("state", "sql"),
+    STATE_TABLE("state-table", "txt"),
     HTTP("http", "txt");
 
     fun toRegressionInfoFile(baseDir: Path, charset: Charset, phase: Phase): RegressionInfoFile =
