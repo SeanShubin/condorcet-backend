@@ -47,7 +47,7 @@ class DeterministicDependencies(
         ConnectionLifecycle(host, user, password, databaseEvent)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         ConnectionLifecycle(host, user, password, databaseEvent)
-    private val lifecycles: Lifecycles = ServiceLifecycles(
+    val lifecycles: Lifecycles = ServiceLifecycles(
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle
     )
@@ -96,7 +96,7 @@ class DeterministicDependencies(
             queryLoader,
             synchronizer::synchronize
         )
-    private val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
+    val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
     private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val files: FilesContract = FilesDelegate
@@ -104,7 +104,7 @@ class DeterministicDependencies(
     private val whereKeysAreStored: Path = integration.whereKeysAreStored
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, whereKeysAreStored)
     private val cipher: Cipher = CipherImpl(algorithmFactory)
-    private val handler: Handler = ApiHandler(
+    val handler: Handler = ApiHandler(
         serviceCommandParser,
         service,
         cipher,
