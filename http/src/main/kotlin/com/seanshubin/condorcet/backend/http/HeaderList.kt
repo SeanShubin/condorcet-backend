@@ -26,12 +26,14 @@ data class HeaderList(val list: List<Header>) {
         return CookieList(list)
     }
 
-    fun toPairs():List<Pair<String, String>> =
-        list.map{header -> Pair(header.name, header.value)}
+    fun toPairs(): List<Pair<String, String>> =
+        list.map { header -> Pair(header.name, header.value) }
+
+    fun toLines(): List<String> = list.map { it.toLine() }
 
     companion object {
         val bearerTokenPattern = Regex("""^ *Bearer +(.*) *$""", RegexOption.IGNORE_CASE)
-        fun fromPairs(pairs:List<Pair<String, String>>):HeaderList =
-            HeaderList(pairs.map{Header.fromPair(it)})
+        fun fromPairs(pairs: List<Pair<String, String>>): HeaderList =
+            HeaderList(pairs.map { Header.fromPair(it) })
     }
 }

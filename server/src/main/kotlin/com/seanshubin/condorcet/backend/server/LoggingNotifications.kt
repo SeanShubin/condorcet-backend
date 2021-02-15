@@ -16,21 +16,10 @@ class LoggingNotifications(logDir: Path) : Notifications {
     }
 
     override fun requestEvent(requestValue: RequestValue) {
-        httpLogger.log("target = '${requestValue.target}'")
-        requestValue.headers.list.forEach{ (name, value) ->
-            httpLogger.log("$name -> $value")
-        }
-        httpLogger.log(requestValue.body)
+        requestValue.toLines().forEach(httpLogger::log)
     }
 
     override fun responseEvent(responseValue: ResponseValue) {
-        httpLogger.log("status = ${responseValue.status}")
-        responseValue.headers.list.forEach{ (name, value) ->
-            httpLogger.log("$name -> $value")
-        }
-        val body = responseValue.body
-        if(body != null){
-            httpLogger.log(body)
-        }
+        responseValue.toLines().forEach(httpLogger::log)
     }
 }

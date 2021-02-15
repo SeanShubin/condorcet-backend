@@ -9,4 +9,5 @@ data class RequestValue(
     fun cookies(): CookieList = headers.cookies()
     fun cookieValue(name: String): String? = headers.cookieValue(name)
     fun bearerToken(): String? = headers.bearerToken()
+    fun toLines(): List<String> = listOf(target, body) + headers.toLines()
 }
