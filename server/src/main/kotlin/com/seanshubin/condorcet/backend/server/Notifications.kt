@@ -4,7 +4,8 @@ import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 
 interface Notifications {
-    fun databaseEvent(databaseCommand: String)
-    fun requestEvent(requestValue: RequestValue)
-    fun responseEvent(responseValue: ResponseValue)
+    fun eventDatabaseEvent(statement: String)
+    fun stateDatabaseEvent(statement: String)
+    fun requestEvent(request: RequestValue)
+    fun responseEvent(response: ResponseValue)
 }

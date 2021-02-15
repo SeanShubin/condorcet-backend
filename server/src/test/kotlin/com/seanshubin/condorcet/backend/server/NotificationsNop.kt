@@ -4,12 +4,15 @@ import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 
 class NotificationsNop : Notifications {
-    override fun databaseEvent(databaseCommand: String) {
+    override fun eventDatabaseEvent(statement: String) {
     }
 
-    override fun requestEvent(requestValue: RequestValue) {
+    override fun stateDatabaseEvent(statement: String) {
     }
 
-    override fun responseEvent(responseValue: ResponseValue) {
+    override fun requestEvent(request: RequestValue) {
+    }
+
+    override fun responseEvent(response: ResponseValue) {
     }
 }

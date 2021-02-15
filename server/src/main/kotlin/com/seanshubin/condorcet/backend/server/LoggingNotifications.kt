@@ -9,17 +9,22 @@ import java.nio.file.Path
 
 class LoggingNotifications(logDir: Path) : Notifications {
     private val logGroup: LogGroup = LoggerFactory.instanceDefaultZone.createLogGroup(logDir)
-    private val databaseLogger: Logger = logGroup.create("sql")
+    private val eventDatabaseLogger: Logger = logGroup.create("event", "sql")
+    private val stateDatabaseLogger: Logger = logGroup.create("state", "sql")
     private val httpLogger: Logger = logGroup.create("http")
-    override fun databaseEvent(databaseCommand: String) {
-        databaseLogger.log("${databaseCommand.trim()};")
+    override fun eventDatabaseEvent(statement: String) {
+        eventDatabaseLogger.log("${statement.trim()};")
     }
 
-    override fun requestEvent(requestValue: RequestValue) {
-        requestValue.toLines().forEach(httpLogger::log)
+    override fun stateDatabaseEvent(statement: String) {
+        stateDatabaseLogger.log("${statement.trim()};")
     }
 
-    override fun responseEvent(responseValue: ResponseValue) {
-        responseValue.toLines().forEach(httpLogger::log)
+    override fun requestEvent(request: RequestValue) {
+        request.toLines().forEach(httpLogger::log)
+    }
+
+    override fun responseEvent(response: ResponseValue) {
+        response.toLines().forEach(httpLogger::log)
     }
 }

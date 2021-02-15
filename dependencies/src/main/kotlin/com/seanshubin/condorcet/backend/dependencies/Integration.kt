@@ -12,7 +12,8 @@ interface Integration {
     val password: String
     val eventSchemaName: String
     val stateSchemaName: String
-    val databaseEvent: (String) -> Unit
+    val eventDatabaseEvent: (String) -> Unit
+    val stateDatabaseEvent: (String) -> Unit
     val requestEvent: (RequestValue) -> Unit
     val responseEvent: (ResponseValue) -> Unit
     val uniqueIdGenerator: UniqueIdGenerator

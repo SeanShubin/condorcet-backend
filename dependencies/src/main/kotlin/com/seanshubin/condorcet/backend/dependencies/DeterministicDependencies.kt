@@ -40,13 +40,14 @@ class DeterministicDependencies(
     private val eventSchemaName: String = integration.eventSchemaName
     private val stateSchemaName: String = integration.stateSchemaName
 
-    private val databaseEvent: (String) -> Unit = integration.databaseEvent
+    private val eventDatabaseEvent: (String) -> Unit = integration.eventDatabaseEvent
+    private val stateDatabaseEvent: (String) -> Unit = integration.stateDatabaseEvent
     private val requestEvent: (RequestValue) -> Unit = integration.requestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.responseEvent
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, databaseEvent)
+        ConnectionLifecycle(host, user, password, eventDatabaseEvent)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, databaseEvent)
+        ConnectionLifecycle(host, user, password, stateDatabaseEvent)
     val lifecycles: Lifecycles = ServiceLifecycles(
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle

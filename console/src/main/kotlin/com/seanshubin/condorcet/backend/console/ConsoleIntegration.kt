@@ -20,7 +20,8 @@ class ConsoleIntegration : Integration {
     override val password: String = "insecure"
     override val eventSchemaName: String = "condorcet_development_event"
     override val stateSchemaName: String = "condorcet_development_state"
-    override val databaseEvent: (String) -> Unit = notifications::databaseEvent
+    override val eventDatabaseEvent: (String) -> Unit = notifications::eventDatabaseEvent
+    override val stateDatabaseEvent: (String) -> Unit = notifications::stateDatabaseEvent
     override val requestEvent: (RequestValue) -> Unit = notifications::requestEvent
     override val responseEvent: (ResponseValue) -> Unit = notifications::responseEvent
     override val uniqueIdGenerator: UniqueIdGenerator = Uuid4()

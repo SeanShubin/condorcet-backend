@@ -41,7 +41,7 @@ class ApiHandler(
         baseRequest.isHandled = true
     }
 
-    fun exec(
+    private fun exec(
         serviceCommand: ServiceCommand,
         environment: ServiceEnvironment,
         requestValue: RequestValue
