@@ -1,25 +1,20 @@
 package com.seanshubin.condorcet.backend.console
 
+import com.seanshubin.condorcet.backend.console.RegressionFile.*
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.server.Notifications
-import java.nio.charset.Charset
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.StandardOpenOption
 
 class RegressionNotifications(
-    private val baseDir: Path,
-    private val charset: Charset,
-    private val phase: Phase
+    regressionFileMap: Map<RegressionFile, RegressionInfoFile>
 ) : Notifications {
-    val event = RegressionInfoFile(phase, "event.sql")
-    val state = RegressionInfoFile(phase, "state.sql")
-    val http = RegressionInfoFile(phase, "http.txt")
-    val list = listOf(event, state, http)
+
+    val event = regressionFileMap.getValue(EVENT)
+    val state = regressionFileMap.getValue(STATE)
+    val http = regressionFileMap.getValue(HTTP)
 
     init {
-        Files.createDirectories(baseDir)
+        regressionFileMap.values.forEach { it.initialize() }
     }
 
     override fun eventDatabaseEvent(statement: String) {
@@ -45,29 +40,6 @@ class RegressionNotifications(
 
     fun formatStatement(statement: String): String = statement.trim().replace(whitespace, " ") + ";"
 
-    enum class Phase {
-        EXPECTED,
-        ACTUAL;
-    }
-
-    inner class RegressionInfoFile(phase: Phase, name: String) {
-        val path = baseDir.resolve("regression-${phase.name.toLowerCase()}-$name")
-        val active: Boolean = when (phase) {
-            Phase.EXPECTED -> {
-                !Files.exists(path)
-            }
-            Phase.ACTUAL -> {
-                Files.deleteIfExists(path)
-                true
-            }
-        }
-
-        fun println(line: String) {
-            if (active) {
-                Files.writeString(path, line + "\n", charset, StandardOpenOption.APPEND, StandardOpenOption.CREATE)
-            }
-        }
-    }
 
     companion object {
         val whitespace = Regex("""\s+""")

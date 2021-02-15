@@ -1,12 +1,13 @@
 package com.seanshubin.condorcet.backend.console
 
-import com.seanshubin.condorcet.backend.console.RegressionNotifications.Phase.ACTUAL
-import com.seanshubin.condorcet.backend.console.RegressionNotifications.Phase.EXPECTED
+import com.seanshubin.condorcet.backend.console.Phase.ACTUAL
+import com.seanshubin.condorcet.backend.console.Phase.EXPECTED
 import com.seanshubin.condorcet.backend.dependencies.DeterministicDependencies
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand.*
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class RegressionTest {
     @Test
@@ -51,20 +52,26 @@ class RegressionTest {
     }
 
     class Tester {
+        val regressionIntegrationExpected = RegressionIntegration(EXPECTED)
+        val regressionIntegrationActual = RegressionIntegration(ACTUAL)
         fun generateMissingExpectations(commands: List<ServiceCommand>) {
-            val dependencies = DeterministicDependencies(RegressionIntegration(EXPECTED))
+            val dependencies = DeterministicDependencies(regressionIntegrationExpected)
             val regressionTestRunner = RegressionTestRunner(dependencies, commands)
             regressionTestRunner.run()
         }
 
         fun generateActual(commands: List<ServiceCommand>) {
-            val dependencies = DeterministicDependencies(RegressionIntegration(ACTUAL))
+            val dependencies = DeterministicDependencies(regressionIntegrationActual)
             val regressionTestRunner = RegressionTestRunner(dependencies, commands)
             regressionTestRunner.run()
         }
 
         fun compareActualWithExpected() {
-
+            RegressionFile.values().forEach {
+                val expected = regressionIntegrationExpected.regressionFileMap.getValue(it).load()
+                val actual = regressionIntegrationActual.regressionFileMap.getValue(it).load()
+                assertEquals(expected, actual)
+            }
         }
     }
 }

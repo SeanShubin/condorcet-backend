@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.console
 
-import com.seanshubin.condorcet.backend.console.RegressionNotifications.Phase
+import com.seanshubin.condorcet.backend.console.RegressionFile.*
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.crypto.Uuid4
 import com.seanshubin.condorcet.backend.dependencies.Integration
@@ -19,7 +19,13 @@ class RegressionIntegration(phase: Phase) : Integration {
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
     val uniqueIdGeneratorPath = regressionSnapshotDir.resolve("deterministic-unique-id.txt")
     val charset: Charset = StandardCharsets.UTF_8
-    val regressionNotifications = RegressionNotifications(regressionSnapshotDir, charset, phase)
+    val regressionFileMap: Map<RegressionFile, RegressionInfoFile> = mapOf(
+        EVENT to EVENT.toRegressionInfoFile(regressionSnapshotDir, charset, phase),
+        STATE to STATE.toRegressionInfoFile(regressionSnapshotDir, charset, phase),
+        HTTP to HTTP.toRegressionInfoFile(regressionSnapshotDir, charset, phase)
+    )
+
+    val regressionNotifications = RegressionNotifications(regressionFileMap)
 
     override val host: String = "localhost"
     override val user: String = "root"
