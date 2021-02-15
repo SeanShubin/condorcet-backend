@@ -18,16 +18,16 @@ class RegressionIntegration(phase: String) : Integration {
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
     val uniqueIdGeneratorPath = regressionSnapshotDir.resolve("deterministic-unique-id.txt")
     val charset: Charset = StandardCharsets.UTF_8
-    val regressionNotifications = RegressionNotifications(regressionSnapshotDir, charset)
+    val regressionNotifications = RegressionNotifications(regressionSnapshotDir, charset, phase)
 
     override val host: String = "localhost"
     override val user: String = "root"
     override val password: String = "insecure"
     override val eventSchemaName: String = "condorcet_regression_test_event"
     override val stateSchemaName: String = "condorcet_regression_test_state"
-    override val databaseEvent: (String) -> Unit = regressionNotifications.regressionEvent(phase, "database")
-    override val requestEvent: (RequestValue) -> Unit = regressionNotifications.regressionEvent(phase, "http")
-    override val responseEvent: (ResponseValue) -> Unit = regressionNotifications.regressionEvent(phase, "http")
+    override val databaseEvent: (String) -> Unit = regressionNotifications::databaseEvent
+    override val requestEvent: (RequestValue) -> Unit = regressionNotifications::requestEvent
+    override val responseEvent: (ResponseValue) -> Unit = regressionNotifications::responseEvent
     override val uniqueIdGenerator: UniqueIdGenerator =
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)

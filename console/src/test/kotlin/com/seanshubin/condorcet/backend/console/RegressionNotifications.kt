@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.console
 
-import com.seanshubin.condorcet.backend.json.JsonMappers
+import com.seanshubin.condorcet.backend.http.RequestValue
+import com.seanshubin.condorcet.backend.http.ResponseValue
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Path
@@ -8,18 +9,37 @@ import java.nio.file.StandardOpenOption
 
 class RegressionNotifications(
     private val baseDir: Path,
-    private val charset: Charset
+    private val charset: Charset,
+    private val phase: String
 ) {
     init {
         Files.createDirectories(baseDir)
     }
 
-    fun <T> regressionEvent(phase: String, type: String): (T) -> Unit {
-        fun <T> recordEvent(event: T) {
-            val asString = JsonMappers.pretty.writeValueAsString(event)
-            val path = baseDir.resolve("regression-$phase-$type.txt")
-            Files.writeString(path, asString + "\n", charset, StandardOpenOption.APPEND, StandardOpenOption.CREATE)
+    fun databaseEvent(statement: String) {
+        val conciseStatement = statement.replace(whitespace, " ")
+        emitLine("regression-$phase-database.txt", "$conciseStatement;")
+    }
+
+    fun requestEvent(request: RequestValue) {
+        request.toLines().forEach {
+            emitLine("regression-$phase-http.txt", it)
         }
-        return ::recordEvent
+    }
+
+    fun responseEvent(response: ResponseValue) {
+        response.toLines().forEach {
+            emitLine("regression-$phase-http.txt", it)
+        }
+        emitLine("regression-$phase-http.txt", "")
+    }
+
+    fun emitLine(fileName: String, line: String) {
+        val path = baseDir.resolve(fileName)
+        Files.writeString(path, line + "\n", charset, StandardOpenOption.APPEND, StandardOpenOption.CREATE)
+    }
+
+    companion object {
+        val whitespace = Regex("""\s+""")
     }
 }

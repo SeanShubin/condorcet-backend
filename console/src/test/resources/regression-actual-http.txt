@@ -1,1679 +1,226 @@
+/Register
 {
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 409,
-  "body" : "{\n  \"userSafeMessage\" : \"User with name 'Alice' already exists\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 409,
-  "body" : "{\n  \"userSafeMessage\" : \"User with name 'Bob' already exists\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 409,
-  "body" : "{\n  \"userSafeMessage\" : \"User with name 'Carol' already exists\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid refresh token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 409,
-  "body" : "{\n  \"userSafeMessage\" : \"User with name 'Alice' already exists\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 409,
-  "body" : "{\n  \"userSafeMessage\" : \"User with name 'Bob' already exists\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 409,
-  "body" : "{\n  \"userSafeMessage\" : \"User with name 'Carol' already exists\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid refresh token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid refresh token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid refresh token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 401,
-  "body" : "{\n  \"userSafeMessage\" : \"No valid access token\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : null,
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : null,
-  "headers" : {
-    "list" : [ ]
-  }
-}{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}{
-  "status" : 200,
-  "body" : "{\n  \"users\" : [ {\n    \"name\" : \"Alice\",\n    \"role\" : \"OWNER\",\n    \"allowedRoles\" : [ \"OWNER\" ]\n  }, {\n    \"name\" : \"Bob\",\n    \"role\" : \"USER\",\n    \"allowedRoles\" : [ \"AUDITOR\", \"ADMIN\", \"USER\", \"OBSERVER\", \"UNASSIGNED\" ]\n  } ]\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}{
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
+  "name" : "Alice",
+  "email" : "alice@email.com",
+  "password" : "alice-password"
 }
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+
+/Register
 {
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
+  "name" : "Bob",
+  "email" : "bob@email.com",
+  "password" : "bob-password"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw",
+  "userName" : "Bob",
+  "role" : "UNASSIGNED"
 }
+
+/Register
 {
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE"
-    } ]
-  }
+  "name" : "Carol",
+  "email" : "carol@email.com",
+  "password" : "carol-password"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c",
+  "userName" : "Carol",
+  "role" : "UNASSIGNED"
 }
+
+/Authenticate
 {
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs"
-    } ]
-  }
+  "nameOrEmail" : "Alice",
+  "password" : "alice-password"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+
+/Refresh
+{ }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
 {
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+
+/SetRole
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
+  "name" : "Bob",
+  "role" : "USER"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/RemoveUser
 {
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
+  "name" : "Carol"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/ListUsers
+{ }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
 {
-  "status" : 200,
-  "body" : null,
-  "headers" : {
-    "list" : [ ]
-  }
+  "users" : [ {
+    "name" : "Alice",
+    "role" : "OWNER",
+    "allowedRoles" : [ "OWNER" ]
+  }, {
+    "name" : "Bob",
+    "role" : "USER",
+    "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  } ]
 }
+
+/Register
 {
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
+  "name" : "Alice",
+  "email" : "alice@email.com",
+  "password" : "alice-password"
 }
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
 {
-  "status" : 200,
-  "body" : null,
-  "headers" : {
-    "list" : [ ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+
+/Register
 {
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
+  "name" : "Bob",
+  "email" : "bob@email.com",
+  "password" : "bob-password"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly
 {
-  "status" : 200,
-  "body" : "{\n  \"users\" : [ {\n    \"name\" : \"Alice\",\n    \"role\" : \"OWNER\",\n    \"allowedRoles\" : [ \"OWNER\" ]\n  }, {\n    \"name\" : \"Bob\",\n    \"role\" : \"USER\",\n    \"allowedRoles\" : [ \"AUDITOR\", \"ADMIN\", \"USER\", \"OBSERVER\", \"UNASSIGNED\" ]\n  } ]\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw",
+  "userName" : "Bob",
+  "role" : "UNASSIGNED"
 }
+
+/Register
 {
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Alice\",\n  \"email\" : \"alice@email.com\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ ]
-  }
+  "name" : "Carol",
+  "email" : "carol@email.com",
+  "password" : "carol-password"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c",
+  "userName" : "Carol",
+  "role" : "UNASSIGNED"
 }
+
+/Authenticate
 {
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"email\" : \"bob@email.com\",\n  \"password\" : \"bob-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
+  "nameOrEmail" : "Alice",
+  "password" : "alice-password"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw\",\n  \"userName\" : \"Bob\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+
+/Refresh
+{ }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
 {
-  "target" : "/Register",
-  "body" : "{\n  \"name\" : \"Carol\",\n  \"email\" : \"carol@email.com\",\n  \"password\" : \"carol-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE"
-    } ]
-  }
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
 }
+
+/SetRole
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c\",\n  \"userName\" : \"Carol\",\n  \"role\" : \"UNASSIGNED\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly"
-    } ]
-  }
+  "name" : "Bob",
+  "role" : "USER"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/RemoveUser
 {
-  "target" : "/Authenticate",
-  "body" : "{\n  \"nameOrEmail\" : \"Alice\",\n  \"password\" : \"alice-password\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs"
-    } ]
-  }
+  "name" : "Carol"
 }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/ListUsers
+{ }
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
 {
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
+  "users" : [ {
+    "name" : "Alice",
+    "role" : "OWNER",
+    "allowedRoles" : [ "OWNER" ]
+  }, {
+    "name" : "Bob",
+    "role" : "USER",
+    "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  } ]
 }
-{
-  "target" : "/Refresh",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}
-{
-  "status" : 200,
-  "body" : "{\n  \"accessToken\" : \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA\",\n  \"userName\" : \"Alice\",\n  \"role\" : \"OWNER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    }, {
-      "name" : "Set-Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly"
-    } ]
-  }
-}
-{
-  "target" : "/SetRole",
-  "body" : "{\n  \"name\" : \"Bob\",\n  \"role\" : \"USER\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}
-{
-  "status" : 200,
-  "body" : null,
-  "headers" : {
-    "list" : [ ]
-  }
-}
-{
-  "target" : "/RemoveUser",
-  "body" : "{\n  \"name\" : \"Carol\"\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}
-{
-  "status" : 200,
-  "body" : null,
-  "headers" : {
-    "list" : [ ]
-  }
-}
-{
-  "target" : "/ListUsers",
-  "body" : "{ }",
-  "headers" : {
-    "list" : [ {
-      "name" : "Authorization",
-      "value" : "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA"
-    }, {
-      "name" : "Cookie",
-      "value" : "Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y"
-    } ]
-  }
-}
-{
-  "status" : 200,
-  "body" : "{\n  \"users\" : [ {\n    \"name\" : \"Alice\",\n    \"role\" : \"OWNER\",\n    \"allowedRoles\" : [ \"OWNER\" ]\n  }, {\n    \"name\" : \"Bob\",\n    \"role\" : \"USER\",\n    \"allowedRoles\" : [ \"AUDITOR\", \"ADMIN\", \"USER\", \"OBSERVER\", \"UNASSIGNED\" ]\n  } ]\n}",
-  "headers" : {
-    "list" : [ {
-      "name" : "Content-Type",
-      "value" : "application/json"
-    } ]
-  }
-}
+
