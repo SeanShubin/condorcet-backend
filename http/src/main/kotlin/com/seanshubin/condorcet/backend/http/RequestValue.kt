@@ -9,5 +9,8 @@ data class RequestValue(
     fun cookies(): CookieList = headers.cookies()
     fun cookieValue(name: String): String? = headers.cookieValue(name)
     fun bearerToken(): String? = headers.bearerToken()
-    fun toLines(): List<String> = listOf(target, body) + headers.toLines()
+    fun toLines(): List<String> {
+        val maybeBody = if (body.isBlank()) emptyList() else listOf(body)
+        return listOf(target) + maybeBody + headers.toLines()
+    }
 }

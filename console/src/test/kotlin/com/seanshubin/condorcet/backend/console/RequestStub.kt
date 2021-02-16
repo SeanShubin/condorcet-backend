@@ -14,7 +14,8 @@ class RequestStub(fakeBrowser: FakeBrowser, val target: String, command: Service
     val headers: List<Pair<String, String>>
 
     init {
-        requestBody = JsonMappers.pretty.writeValueAsString(command)
+        val asJson = JsonMappers.pretty.writeValueAsString(command)
+        requestBody = if (asJson == "{ }") "" else asJson
         stringReader = StringReader(requestBody)
         bufferedReader = BufferedReader(stringReader)
         headers = headersFromCommand(command) + fakeBrowser.requestHeaders()
