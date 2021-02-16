@@ -25,10 +25,7 @@ class RegressionTestRunner(
         val baseRequest = Request(null, null)
         val request = RequestStub(fakeBrowser, target, command)
         val response = ResponseStub()
-        request.toLines().forEach(::println)
         dependencies.handler.handle(target, baseRequest, request, response)
-        response.toLines().forEach(::println)
-        println()
         fakeBrowser.handleResponse(response)
     }
 
