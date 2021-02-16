@@ -15,6 +15,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
         return when (name) {
             "Refresh" -> ServiceCommand.Refresh
             "Register" -> JsonMappers.parse<ServiceCommand.Register>(json)
+            "Logout" -> ServiceCommand.Logout
             "Authenticate" -> JsonMappers.parse<ServiceCommand.Authenticate>(json)
             "SetRole" -> JsonMappers.parse<ServiceCommand.SetRole>(json)
             "RemoveUser" -> JsonMappers.parse<ServiceCommand.RemoveUser>(json)

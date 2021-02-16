@@ -40,6 +40,12 @@ interface ServiceCommand {
         }
     }
 
+    object Logout : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
+            return responseBuilder().clearRefreshToken().build()
+        }
+    }
+
     data class SetRole(val name: String, val role: Role) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
@@ -88,7 +94,8 @@ interface ServiceCommand {
         val status: Int? = null,
         val refreshTokenString: String? = null,
         val contentType: String? = null,
-        val body: String? = null
+        val body: String? = null,
+        val shouldClearRefreshToken: Boolean = false
     ) {
         fun refreshToken(refreshTokenString: String): ResponseBuilder {
             if (this.refreshTokenString != null) throw RuntimeException("refreshToken already set")
@@ -108,9 +115,17 @@ interface ServiceCommand {
             return status(400).userSafeMessage(message)
         }
 
+        fun clearRefreshToken(): ResponseBuilder {
+            return copy(shouldClearRefreshToken = true)
+        }
+
         fun build(): ResponseValue {
             val status = this.status ?: 200
-            val refreshTokenCookieList = createRefreshTokenCookieList(refreshTokenString)
+            val refreshTokenCookieList = if (shouldClearRefreshToken) {
+                createRefreshTokenCookieList("")
+            } else {
+                createRefreshTokenCookieList(refreshTokenString)
+            }
             val contentTypeHeaderList = createContentTypeHeaderList(contentType)
             val headers = HeaderList(contentTypeHeaderList + refreshTokenCookieList.map { it.toHeader() })
             return ResponseValue(status, body, headers)
@@ -151,6 +166,7 @@ interface ServiceCommand {
     companion object {
         private fun RequestValue.refreshToken(cipher: Cipher): RefreshToken? {
             val refreshTokenString = cookieValue("Refresh") ?: return null
+            if (refreshTokenString.isBlank()) return null
             val decoded = cipher.decode(refreshTokenString)
             val userName = decoded.claims["userName"]?.asString() ?: return null
             return RefreshToken(userName)
