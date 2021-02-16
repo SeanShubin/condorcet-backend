@@ -55,18 +55,42 @@ select value from int_variable where name = 'last-synced';
 insert into user (name, email, salt, hash, role) values ('Carol', 'carol@email.com', '9c24ff2a-9f85-45cc-8f83-50974f93bc80', '1F7CAB856AEE2DF4AE89369F2CF3C6B51856655B16E945BBB1E39D81CABB37E9', 'UNASSIGNED');
 update int_variable set value = 3 where name = 'last-synced';
 select name, email, salt, hash, role from user where name = 'Carol';
-select name, email, salt, hash, role from user where name = 'Alice';
-select name, email, salt, hash, role from user where name = 'Alice';
-select name, email, salt, hash, role from user where name = 'Bob';
-select value from int_variable where name = 'last-synced';
-update user set role='USER' where name = 'Bob';
-update int_variable set value = 4 where name = 'last-synced';
-select name, email, salt, hash, role from user where name = 'Carol';
-select value from int_variable where name = 'last-synced';
-delete from user where name = 'Carol';
-update int_variable set value = 5 where name = 'last-synced';
-select * from int_variable;
-select * from role_permission;
+select name, email, salt, hash, role
+from user
+where name = 'Alice';
+select name, email, salt, hash, role
+from user
+where name = 'Alice';
+select name, email, salt, hash, role
+from user
+where name = 'Bob';
+select value
+from int_variable
+where name = 'last-synced';
+update user
+set role='USER'
+where name = 'Bob';
+update int_variable
+set value = 4
+where name = 'last-synced';
+select name, email, salt, hash, role
+from user
+where name = 'Carol';
+select value
+from int_variable
+where name = 'last-synced';
+delete
+from user
+where name = 'Carol';
+update int_variable
+set value = 5
+where name = 'last-synced';
+select *
+from user;
+select *
+from int_variable;
+select *
+from role_permission;
 select * from user;
 select * from election;
 select * from candidate;

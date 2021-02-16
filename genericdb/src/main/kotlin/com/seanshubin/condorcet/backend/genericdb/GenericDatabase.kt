@@ -26,6 +26,11 @@ interface GenericDatabase {
         vararg parameters: Any?
     ): List<T>
 
+    fun queryUntyped(
+        query: String,
+        vararg parameters: Any?
+    ): GenericTable
+
     fun queryExactlyOneInt(queryPath: String, vararg parameters: Any?): Int
     fun queryZeroOrOneInt(queryPath: String, vararg parameters: Any?): Int?
     fun update(queryPath: String, vararg parameters: Any?): Int

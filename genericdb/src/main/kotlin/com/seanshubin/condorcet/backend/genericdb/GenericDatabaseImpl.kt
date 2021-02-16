@@ -39,6 +39,9 @@ class GenericDatabaseImpl(
         return getConnection().queryList(query, *parameters) { createFunction(it) }
     }
 
+    override fun queryUntyped(query: String, vararg parameters: Any?): GenericTable =
+        getConnection().queryGenericTable(query)
+
     override fun queryExactlyOneInt(queryPath: String, vararg parameters: Any?): Int =
         queryExactlyOneRow(::createInt, queryPath, *parameters)
 

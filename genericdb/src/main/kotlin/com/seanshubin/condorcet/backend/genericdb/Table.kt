@@ -15,6 +15,8 @@ data class Table(
         return listOf<String>() + createTableSql + uniqueLines
     }
 
+    fun toSelectAllStatement(): String = "select * from $name"
+
     private fun toCreateTableSql(): String {
         val firstLine = "create table $name ("
         val middleLines = toMiddleSql().map(::indent)

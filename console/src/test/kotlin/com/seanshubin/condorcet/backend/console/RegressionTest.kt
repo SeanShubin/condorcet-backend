@@ -29,6 +29,7 @@ class RegressionTest {
                 email = "carol@email.com",
                 password = "carol-password"
             ),
+            Logout,
             Authenticate(
                 nameOrEmail = "Alice",
                 password = "alice-password"
@@ -39,7 +40,9 @@ class RegressionTest {
                 role = Role.USER
             ),
             RemoveUser(name = "Carol"),
-            ListUsers
+            ListUsers,
+            ListTables,
+            TableData("user")
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

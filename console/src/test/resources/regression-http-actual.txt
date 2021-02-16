@@ -47,13 +47,19 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9
   "role" : "UNASSIGNED"
 }
 
+/Logout
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs
+200
+Set-Cookie: Refresh=; HttpOnly
+
 /Authenticate
 {
   "nameOrEmail" : "Alice",
   "password" : "alice-password"
 }
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c
-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs
+Cookie: Refresh=
 200
 Content-Type: application/json
 Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
@@ -107,5 +113,29 @@ Content-Type: application/json
     "role" : "USER",
     "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
   } ]
+}
+
+/ListTables
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "tableNames" : [ "int_variable", "role_permission", "user", "election", "candidate", "voter", "ballot", "ranking", "tally" ]
+}
+
+/TableData
+{
+  "name" : "user"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "table" : {
+    "columnNames" : [ "id", "name", "email", "salt", "hash", "role" ],
+    "rows" : [ [ "1", "Alice", "alice@email.com", "8d027cff-d538-4078-8de9-b15c0c46d383", "972A59B9F4F03166E3023CFE496F179F1AEACBAC0D8BEA2A5E28676D384A2BC4", "OWNER" ], [ "2", "Bob", "bob@email.com", "9cfdf833-a1cb-487a-bf8e-a2efd8b209a4", "7961966BF84F86F943E0B56DB8CF66075CB7B160811FF2995107F7715D4F9D6C", "USER" ] ]
+  }
 }
 

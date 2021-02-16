@@ -6,16 +6,21 @@ import com.seanshubin.condorcet.backend.database.StateDbQueries
 import com.seanshubin.condorcet.backend.database.UserRow
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Permission.MANAGE_USERS
+import com.seanshubin.condorcet.backend.domain.Permission.VIEW_SECRETS
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.domain.Role.OWNER
 import com.seanshubin.condorcet.backend.domain.Role.UNASSIGNED
+import com.seanshubin.condorcet.backend.domain.TableData
 import com.seanshubin.condorcet.backend.domain.UserNameRole
+import com.seanshubin.condorcet.backend.genericdb.GenericTable
+import com.seanshubin.condorcet.backend.genericdb.GenericTableViewer
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 
 class ApiService(
     private val passwordUtil: PasswordUtil,
     private val stateDbCommands: StateDbCommands,
-    private val stateDbQueries: StateDbQueries
+    private val stateDbQueries: StateDbQueries,
+    private val genericTableViewer: GenericTableViewer
 ) : Service {
     override fun refresh(refreshToken: RefreshToken): Tokens {
         val userRow = searchUserByName(refreshToken.userName)
@@ -100,6 +105,25 @@ class ApiService(
         return list
     }
 
+    override fun listTables(accessToken: AccessToken): List<String> {
+        val permissionNeeded = VIEW_SECRETS
+        failUnless(
+            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
+            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
+        )
+        return genericTableViewer.tableNames()
+    }
+
+    override fun tableData(accessToken: AccessToken, name: String): TableData {
+        val permissionNeeded = VIEW_SECRETS
+        failUnless(
+            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
+            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
+        )
+        val genericTable = genericTableViewer.tableData(name)
+        return genericTable.toTableData()
+    }
+
     private fun nameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
     private fun emailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
     private fun roleIsGreater(accessToken: AccessToken, userRow: UserRow): Boolean =
@@ -148,6 +172,11 @@ class ApiService(
     }
 
     private fun collapseWhitespace(s: String): String = s.trim().replace(whitespaceBlock, " ")
+    private fun GenericTable.toTableData(): TableData {
+        val columnNames = this.columnNames
+        val rows = this.rows
+        return TableData(columnNames, rows)
+    }
 
     companion object {
         val whitespaceBlock = Regex("""\s+""")

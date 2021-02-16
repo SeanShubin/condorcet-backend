@@ -71,6 +71,24 @@ interface ServiceCommand {
             }
     }
 
+    object ListTables : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val tables = environment.service.listTables(accessToken)
+                val value = mapOf("tableNames" to tables)
+                responseBuilder().json(value).build()
+            }
+    }
+
+    data class TableData(val name: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val tableData = environment.service.tableData(accessToken, name)
+                val value = mapOf("table" to tableData)
+                responseBuilder().json(value).build()
+            }
+    }
+
     data class Unsupported(val name: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             return responseBuilder().unsupported("Unsupported command '$name'\n$content").build()
