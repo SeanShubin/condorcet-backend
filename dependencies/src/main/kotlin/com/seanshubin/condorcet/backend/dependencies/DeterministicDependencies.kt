@@ -108,7 +108,7 @@ class DeterministicDependencies(
             stateTableEvent
         )
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
-    private val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
+    val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries)
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val files: FilesContract = FilesDelegate
     private val charset: Charset = StandardCharsets.UTF_8
