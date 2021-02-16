@@ -3,11 +3,11 @@ package com.seanshubin.condorcet.backend.service.http
 import com.seanshubin.condorcet.backend.json.JsonMappers
 
 class ServiceCommandParserImpl : ServiceCommandParser {
-    override fun parse(name: String, content: String): ServiceCommand {
+    override fun parse(name: String, content: String?): ServiceCommand {
         return try {
-            parseJson(name, content)
+            parseJson(name, content ?: "")
         } catch (ex: Exception) {
-            return ServiceCommand.Malformed(name, content);
+            return ServiceCommand.Malformed(name, content ?: "");
         }
     }
 

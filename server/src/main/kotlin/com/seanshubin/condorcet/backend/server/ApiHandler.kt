@@ -53,7 +53,8 @@ class ApiHandler(
         }
 
     private fun HttpServletRequest.toRequestValue(target: String): RequestValue {
-        val body = reader.consumeString()
+        val bodyString = reader.consumeString()
+        val body = if (bodyString.isBlank()) null else bodyString
         val headerList = headerNames.toList().map { name ->
             val value = getHeader(name)
             Header(name, value)
