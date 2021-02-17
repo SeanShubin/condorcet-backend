@@ -6,13 +6,14 @@ class ConnectionLifecycle(
     private val host: String,
     private val user: String,
     private val password: String,
-    private val sqlEvent: (String) -> Unit
+    private val sqlEvent: (String) -> Unit,
+    private val schema:Schema
 ) : Lifecycle<ConnectionWrapper> {
     private lateinit var connectionWrapper: ConnectionWrapper
     override fun open() {
         val url = "jdbc:mysql://$host?serverTimezone=UTC"
         val connection = DriverManager.getConnection(url, user, password)
-        connectionWrapper = ConnectionWrapper(connection, sqlEvent)
+        connectionWrapper = ConnectionWrapper(connection, sqlEvent, schema)
     }
 
     override fun getValue(): ConnectionWrapper {

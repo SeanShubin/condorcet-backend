@@ -6,7 +6,8 @@ import java.time.Instant
 
 class ConnectionWrapper(
     private val connection: Connection,
-    private val sqlEvent: (String) -> Unit
+    private val sqlEvent: (String) -> Unit,
+    private val schema:Schema
 ) : AutoCloseable {
     fun <T> query(sql: String, vararg parameters: Any?, f: (ResultSet) -> T): T {
         val statement = connection.prepareStatement(sql) as ClientPreparedStatement
@@ -91,6 +92,14 @@ class ConnectionWrapper(
             sqlEvent(statement.asSql())
             executeUpdate(sql, statement)
         }
+    }
+
+    fun tableNames(): List<String> =
+        schema.tables.map { it.name }
+
+    fun tableData(name: String): GenericTable {
+        val table = schema.tables.find { it.name == name }!!
+        return queryGenericTable(table.toSelectAllStatement())
     }
 
     override fun close() {

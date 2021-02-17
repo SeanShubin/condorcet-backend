@@ -47,9 +47,9 @@ class DeterministicDependencies(
     private val requestEvent: (RequestValue) -> Unit = integration.requestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.responseEvent
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, eventDatabaseEvent)
+        ConnectionLifecycle(host, user, password, eventDatabaseEvent, EventSchema)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, stateDatabaseEvent)
+        ConnectionLifecycle(host, user, password, stateDatabaseEvent, StateSchema)
     val lifecycles: Lifecycles = ServiceLifecycles(
         eventConnectionLifecycle = eventConnectionLifecycle,
         stateConnectionLifecycle = stateConnectionLifecycle
@@ -108,8 +108,13 @@ class DeterministicDependencies(
             stateTableEvent
         )
     val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
-    private val stateGenericTableViewer: GenericTableViewer = GenericTableViewerImpl(StateSchema, stateGenericDatabase)
-    val service: Service = ApiService(passwordUtil, syncDbCommands, stateDbQueries, stateGenericTableViewer)
+    val service: Service = ApiService(
+        passwordUtil,
+        syncDbCommands,
+        stateDbQueries,
+        stateConnectionLifecycle::getValue,
+        eventConnectionLifecycle::getValue
+    )
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val files: FilesContract = FilesDelegate
     private val charset: Charset = StandardCharsets.UTF_8

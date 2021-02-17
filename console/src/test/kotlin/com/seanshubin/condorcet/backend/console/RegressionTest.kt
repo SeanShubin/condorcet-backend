@@ -42,7 +42,8 @@ class RegressionTest {
             RemoveUser(name = "Carol"),
             ListUsers,
             ListTables,
-            TableData("user")
+            TableData("user"),
+            EventData
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

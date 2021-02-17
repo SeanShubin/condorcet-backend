@@ -4,7 +4,7 @@ create database condorcet_regression_test_state;
 use condorcet_regression_test_state;
 create table int_variable ( id int not null auto_increment, name varchar(255) not null unique, value int not null, primary key(id) );
 create table role_permission ( id int not null auto_increment, role ENUM('OWNER','AUDITOR','ADMIN','USER','OBSERVER','UNASSIGNED') not null, permission ENUM('TRANSFER_OWNER','VIEW_SECRETS','MANAGE_USERS','USE_APPLICATION','VIEW_APPLICATION') not null, primary key(id) );
-create table user ( id int not null auto_increment, name varchar(255) not null unique, email varchar(255) not null unique, salt varchar(255) not null, hash varchar(255) not null, role ENUM('OWNER','AUDITOR','ADMIN','USER','OBSERVER','UNASSIGNED') not null, primary key(id) );
+create table user ( id int not null auto_increment, name varchar(255) not null unique, email varchar(255) not null unique, role ENUM('OWNER','AUDITOR','ADMIN','USER','OBSERVER','UNASSIGNED') not null, salt varchar(255) not null, hash varchar(255) not null, primary key(id) );
 create table election ( id int not null auto_increment, owner_id int not null, foreign key fk_owner(owner_id) references user(id), name varchar(255) not null unique, end datetime(6), secret boolean not null, status ENUM('EDITING','LIVE','COMPLETE') not null, primary key(id) );
 create table candidate ( id int not null auto_increment, election_id int not null, foreign key fk_election(election_id) references election(id), name varchar(255) not null, primary key(id) );
 alter table candidate add unique unique_candidate(election_id, name);
@@ -55,42 +55,19 @@ select value from int_variable where name = 'last-synced';
 insert into user (name, email, salt, hash, role) values ('Carol', 'carol@email.com', '9c24ff2a-9f85-45cc-8f83-50974f93bc80', '1F7CAB856AEE2DF4AE89369F2CF3C6B51856655B16E945BBB1E39D81CABB37E9', 'UNASSIGNED');
 update int_variable set value = 3 where name = 'last-synced';
 select name, email, salt, hash, role from user where name = 'Carol';
-select name, email, salt, hash, role
-from user
-where name = 'Alice';
-select name, email, salt, hash, role
-from user
-where name = 'Alice';
-select name, email, salt, hash, role
-from user
-where name = 'Bob';
-select value
-from int_variable
-where name = 'last-synced';
-update user
-set role='USER'
-where name = 'Bob';
-update int_variable
-set value = 4
-where name = 'last-synced';
-select name, email, salt, hash, role
-from user
-where name = 'Carol';
-select value
-from int_variable
-where name = 'last-synced';
-delete
-from user
-where name = 'Carol';
-update int_variable
-set value = 5
-where name = 'last-synced';
-select *
-from user;
-select *
-from int_variable;
-select *
-from role_permission;
+select name, email, salt, hash, role from user where name = 'Alice';
+select name, email, salt, hash, role from user where name = 'Alice';
+select name, email, salt, hash, role from user where name = 'Bob';
+select value from int_variable where name = 'last-synced';
+update user set role='USER' where name = 'Bob';
+update int_variable set value = 4 where name = 'last-synced';
+select name, email, salt, hash, role from user where name = 'Carol';
+select value from int_variable where name = 'last-synced';
+delete from user where name = 'Carol';
+update int_variable set value = 5 where name = 'last-synced';
+select * from user;
+select * from int_variable;
+select * from role_permission;
 select * from user;
 select * from election;
 select * from candidate;

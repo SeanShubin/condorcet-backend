@@ -89,6 +89,15 @@ interface ServiceCommand {
             }
     }
 
+    object EventData : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val eventData = environment.service.eventData(accessToken)
+                val value = mapOf("events" to eventData)
+                responseBuilder().json(value).build()
+            }
+    }
+
     data class Unsupported(val name: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             return responseBuilder().unsupported("Unsupported command '$name'\n$content").build()

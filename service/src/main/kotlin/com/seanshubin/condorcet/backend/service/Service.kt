@@ -13,4 +13,5 @@ interface Service {
     fun listUsers(accessToken: AccessToken): List<UserNameRole>
     fun listTables(accessToken: AccessToken): List<String>
     fun tableData(accessToken: AccessToken, name: String): TableData
+    fun eventData(accessToken:AccessToken):TableData
 }
