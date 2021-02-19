@@ -21,6 +21,7 @@ class ConsoleIntegration : Integration {
     override val password: String = "insecure"
     override val eventSchemaName: String = "condorcet_development_event"
     override val stateSchemaName: String = "condorcet_development_state"
+    override val rootDatabaseEvent: (String) -> Unit = notifications::rootDatabaseEvent
     override val eventDatabaseEvent: (String) -> Unit = notifications::eventDatabaseEvent
     override val stateDatabaseEvent: (String) -> Unit = notifications::stateDatabaseEvent
     override val eventTableEvent: (GenericTable) -> Unit = notifications::eventTableEvent

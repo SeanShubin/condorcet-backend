@@ -1,9 +1,7 @@
 package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
-import com.seanshubin.condorcet.backend.database.StateDbCommands
-import com.seanshubin.condorcet.backend.database.StateDbQueries
-import com.seanshubin.condorcet.backend.database.UserRow
+import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Permission.MANAGE_USERS
 import com.seanshubin.condorcet.backend.domain.Permission.VIEW_SECRETS
@@ -20,8 +18,8 @@ class ApiService(
     private val passwordUtil: PasswordUtil,
     private val stateDbCommands: StateDbCommands,
     private val stateDbQueries: StateDbQueries,
-    private val stateDbConnection: () -> ConnectionWrapper,
-    private val eventDbConnection: () -> ConnectionWrapper
+    private val stateDbConnection: ConnectionWrapper,
+    private val eventDbConnection: ConnectionWrapper
 ) : Service {
     override fun refresh(refreshToken: RefreshToken): Tokens {
         val userRow = searchUserByName(refreshToken.userName)
@@ -112,7 +110,7 @@ class ApiService(
             hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
             "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
         )
-        return stateDbConnection().tableNames()
+        return stateDbConnection.tableNames(StateSchema)
     }
 
     override fun tableData(accessToken: AccessToken, name: String): TableData {
@@ -121,7 +119,7 @@ class ApiService(
             hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
             "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
         )
-        val genericTable = stateDbConnection().tableData(name)
+        val genericTable = stateDbConnection.tableData(StateSchema, name)
         return genericTable.toTableData()
     }
 
@@ -131,7 +129,7 @@ class ApiService(
             hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
             "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
         )
-        val genericTable = eventDbConnection().tableData("event")
+        val genericTable = eventDbConnection.tableData(EventSchema, "event")
         return genericTable.toTableData()
     }
 

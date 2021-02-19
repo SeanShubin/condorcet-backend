@@ -4,6 +4,7 @@ import java.nio.charset.Charset
 import java.nio.file.Path
 
 enum class RegressionFile(val fileName: String, val extension: String) {
+    ROOT("root", "sql"),
     EVENT("event", "sql"),
     EVENT_TABLE("event-table", "txt"),
     STATE("state", "sql"),

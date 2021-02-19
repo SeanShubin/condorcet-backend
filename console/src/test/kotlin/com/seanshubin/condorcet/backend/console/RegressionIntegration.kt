@@ -31,6 +31,7 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val password: String = "insecure"
     override val eventSchemaName: String = "condorcet_regression_test_event"
     override val stateSchemaName: String = "condorcet_regression_test_state"
+    override val rootDatabaseEvent: (String) -> Unit = regressionNotifications::rootDatabaseEvent
     override val eventDatabaseEvent: (String) -> Unit = regressionNotifications::eventDatabaseEvent
     override val stateDatabaseEvent: (String) -> Unit = regressionNotifications::stateDatabaseEvent
     override val requestEvent: (RequestValue) -> Unit = regressionNotifications::requestEvent

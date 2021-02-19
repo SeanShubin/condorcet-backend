@@ -5,6 +5,7 @@ import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 
 interface Notifications {
+    fun rootDatabaseEvent(statement: String)
     fun eventDatabaseEvent(statement: String)
     fun stateDatabaseEvent(statement: String)
     fun eventTableEvent(table: GenericTable)

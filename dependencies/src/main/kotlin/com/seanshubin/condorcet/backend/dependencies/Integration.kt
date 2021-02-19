@@ -13,6 +13,7 @@ interface Integration {
     val password: String
     val eventSchemaName: String
     val stateSchemaName: String
+    val rootDatabaseEvent: (String) -> Unit
     val eventDatabaseEvent: (String) -> Unit
     val stateDatabaseEvent: (String) -> Unit
     val eventTableEvent: (GenericTable) -> Unit

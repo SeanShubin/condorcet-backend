@@ -1,15 +1,14 @@
 package com.seanshubin.condorcet.backend.genericdb
 
 class SchemaInitializer(
-    private val getConnection: () -> ConnectionWrapper,
+    private val connection: ConnectionWrapper,
     private val schemaName: String,
     private val schema: Schema,
     private val queryLoader: QueryLoader,
-    private val afterInitialize: () -> Unit,
     private val listTableEvent: (GenericTable) -> Unit
 ) : Initializer {
     override fun purgeAllData() {
-        getConnection().update("drop database if exists $schemaName")
+        connection.update("drop database if exists $schemaName")
     }
 
     override fun initialize() {
@@ -21,33 +20,33 @@ class SchemaInitializer(
         } else {
             useDatabase()
         }
-        afterInitialize()
     }
 
     override fun listAllData() {
+        useDatabase()
         schema.tables.forEach {
-            val tableData = getConnection().queryGenericTable("select * from ${it.name}")
+            val tableData = connection.queryGenericTable("select * from ${it.name}")
             listTableEvent(tableData)
         }
     }
 
     private fun needsInitialize(): Boolean {
         val hasSchema = "select count(*) from information_schema.schemata where schema_name = ?"
-        return getConnection().queryExactlyOneInt(hasSchema, schemaName) == 0
+        return connection.queryExactlyOneInt(hasSchema, schemaName) == 0
     }
 
     private fun createDatabase() {
-        getConnection().update("create database $schemaName")
+        connection.update("create database $schemaName")
     }
 
     private fun useDatabase() {
-        getConnection().update("use $schemaName")
+        connection.update("use $schemaName")
     }
 
     private fun createSchema() {
         val createTableStatements = schema.tables.flatMap { it.toCreateTableStatements() }
         createTableStatements.forEach {
-            getConnection().update(it)
+            connection.update(it)
         }
     }
 
@@ -57,7 +56,7 @@ class SchemaInitializer(
             val initializeQuery = queryLoader.load(initializeQueryName)
             val statements = initializeQuery.split(';').map(String::trim).filter(String::isNotBlank)
             statements.forEach {
-                getConnection().update(it)
+                connection.update(it)
             }
         }
     }

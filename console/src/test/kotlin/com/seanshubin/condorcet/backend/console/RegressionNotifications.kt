@@ -10,6 +10,7 @@ class RegressionNotifications(
     regressionFileMap: Map<RegressionFile, RegressionInfoFile>
 ) : Notifications {
 
+    val root = regressionFileMap.getValue(ROOT)
     val event = regressionFileMap.getValue(EVENT)
     val state = regressionFileMap.getValue(STATE)
     val eventTable = regressionFileMap.getValue(EVENT_TABLE)
@@ -18,6 +19,10 @@ class RegressionNotifications(
 
     init {
         regressionFileMap.values.forEach { it.initialize() }
+    }
+
+    override fun rootDatabaseEvent(statement: String) {
+        root.println(formatStatement(statement))
     }
 
     override fun eventDatabaseEvent(statement: String) {
