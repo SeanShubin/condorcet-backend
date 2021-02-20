@@ -25,7 +25,7 @@ class SchemaInitializer(
     override fun listAllData() {
         useDatabase()
         schema.tables.forEach {
-            val tableData = connection.queryGenericTable("select * from ${it.name}")
+            val tableData = connection.queryGenericTable(it.name, "select * from ${it.name}")
             listTableEvent(tableData)
         }
     }

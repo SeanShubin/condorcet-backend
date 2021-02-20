@@ -2,7 +2,6 @@ package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Role
-import com.seanshubin.condorcet.backend.domain.Status
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.genericdb.FieldType.*
 
@@ -21,16 +20,31 @@ object StateSchema : Schema {
     val user = Table("user", userName, userEmail, userRole, userSalt, userHash)
     val electionOwner = ForeignKey("owner", user)
     val electionName = Field("name", STRING, unique = true)
+    val electionStart = Field("start", DATE, allowNull = true)
     val electionEnd = Field("end", DATE, allowNull = true)
-    val electionSecret = Field("secret", BOOLEAN)
-    val electionStatus = DbEnum("status", Status.values().toList())
+    val electionSecret = Field("secret", BOOLEAN, default = "false")
+    val electionDoneConfiguring = Field("done_configuring", DATE, allowNull = true)
+    val electionTemplate = Field("template", BOOLEAN, default = "false")
+    val electionStarted = Field("started", BOOLEAN, default = "false")
+    val electionFinished = Field("finished", BOOLEAN, default = "false")
+    val electionCanChangeCandidatesAfterDoneConfiguring =
+        Field("can_change_candidates_after_done_configuring", BOOLEAN, default = "false")
+    val electionOwnerCanDeleteBallots = Field("owner_can_delete_ballots", BOOLEAN, default = "false")
+    val electionAuditorCanDeleteBallots = Field("auditor_can_delete_ballots", BOOLEAN, default = "false")
     val election = Table(
         "election",
         electionOwner,
         electionName,
+        electionStart,
         electionEnd,
         electionSecret,
-        electionStatus
+        electionDoneConfiguring,
+        electionTemplate,
+        electionStarted,
+        electionFinished,
+        electionCanChangeCandidatesAfterDoneConfiguring,
+        electionOwnerCanDeleteBallots,
+        electionAuditorCanDeleteBallots
     )
     val candidateElection = ForeignKey("election", election)
     val candidateName = Field("name", STRING)

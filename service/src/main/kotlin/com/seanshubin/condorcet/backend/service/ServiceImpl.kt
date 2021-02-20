@@ -3,8 +3,7 @@ package com.seanshubin.condorcet.backend.service
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.domain.Permission
-import com.seanshubin.condorcet.backend.domain.Permission.MANAGE_USERS
-import com.seanshubin.condorcet.backend.domain.Permission.VIEW_SECRETS
+import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.domain.Role.OWNER
 import com.seanshubin.condorcet.backend.domain.Role.UNASSIGNED
@@ -30,8 +29,8 @@ class ServiceImpl(
     override fun register(rawName: String, email: String, password: String): Tokens {
         val name = collapseWhitespace(rawName)
         failIf(name.isBlank(), UNSUPPORTED, "User name must not be blank")
-        failIf(nameExists(name), CONFLICT, "User with name '$name' already exists")
-        failIf(emailExists(email), CONFLICT, "User with email '$email' already exists")
+        failIf(userNameExists(name), CONFLICT, "User with name '$name' already exists")
+        failIf(userEmailExists(email), CONFLICT, "User with email '$email' already exists")
         val role = if (stateDbQueries.countUsers() == 0) {
             OWNER
         } else {
@@ -102,6 +101,16 @@ class ServiceImpl(
         return list
     }
 
+    override fun addElection(accessToken: AccessToken, owner: String, name: String) {
+        val permissionNeeded = USE_APPLICATION
+        failUnless(
+            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
+            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
+        )
+        failIf(electionNameExists(name), CONFLICT, "Election with name '$name' already exists")
+        stateDbCommands.addElection(accessToken.userName, owner, name)
+    }
+
     override fun listTables(accessToken: AccessToken): List<String> {
         val permissionNeeded = VIEW_SECRETS
         failUnless(
@@ -131,8 +140,9 @@ class ServiceImpl(
         return genericTable.toTableData()
     }
 
-    private fun nameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
-    private fun emailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
+    private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
+    private fun userEmailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
+    private fun electionNameExists(name: String): Boolean = stateDbQueries.searchElectionByName(name) != null
     private fun roleIsGreater(accessToken: AccessToken, userRow: UserRow): Boolean =
         roleIsGreater(accessToken.role, userRow.role)
 

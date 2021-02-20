@@ -41,6 +41,7 @@ class RegressionTest {
             ),
             RemoveUser(name = "Carol"),
             ListUsers,
+            AddElection(owner = "Alice", name = "Favorite Ice Cream Flavor"),
             ListTables,
             TableData("user"),
             EventData

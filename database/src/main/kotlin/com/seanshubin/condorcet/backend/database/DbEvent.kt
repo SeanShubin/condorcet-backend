@@ -22,4 +22,11 @@ interface DbEvent {
             stateDbCommands.removeUser(authority, name)
         }
     }
+
+    data class AddElection(val owner: String, val name: String) :
+        DbEvent {
+        override fun exec(authority: String, stateDbCommands: StateDbCommands) {
+            stateDbCommands.addElection(authority, owner, name)
+        }
+    }
 }

@@ -13,7 +13,7 @@ class ConnectionWrapper(
         updateParameters(parameters, statement)
         return statement.use {
             sqlEvent(statement.asSql())
-            f(executeQuery(code, statement))
+            f(executeQuery(name, code, statement))
         }
     }
 
@@ -22,7 +22,7 @@ class ConnectionWrapper(
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(parameters, statement)
         statement.use {
-            val resultSet = executeQuery(code, statement)
+            val resultSet = executeQuery(name, code, statement)
             while (resultSet.next()) {
                 list.add(f(resultSet))
             }
@@ -34,21 +34,21 @@ class ConnectionWrapper(
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(parameters, statement)
         statement.use {
-            val resultSet = executeQuery(code, statement)
+            val resultSet = executeQuery(name, code, statement)
             return resultSet.next()
         }
     }
 
-    fun queryGenericTable(sql: String, vararg parameters: Any?): GenericTable {
-        val statement = connection.prepareStatement(sql) as ClientPreparedStatement
+    fun queryGenericTable(name: String, code: String, vararg parameters: Any?): GenericTable {
+        val statement = connection.prepareStatement(code) as ClientPreparedStatement
         sqlEvent(statement.asSql())
         updateParameters(parameters, statement)
         return statement.use {
-            val resultSet = executeQuery(sql, statement)
+            val resultSet = executeQuery(name, code, statement)
             val iterator = ResultSetIterator.consume(resultSet)
             val columnNames = iterator.columnNames
             val rows = iterator.consumeRemainingToTable()
-            GenericTable(sql, columnNames, rows)
+            GenericTable(code, columnNames, rows)
         }
     }
 
@@ -89,7 +89,7 @@ class ConnectionWrapper(
         updateParameters(parameters, statement)
         return statement.use {
             sqlEvent(statement.asSql())
-            executeUpdate(code, statement)
+            executeUpdate(name, code, statement)
         }
     }
 
@@ -98,7 +98,7 @@ class ConnectionWrapper(
 
     fun tableData(schema: Schema, name: String): GenericTable {
         val table = schema.tables.find { it.name == name }!!
-        return queryGenericTable(table.toSelectAllStatement())
+        return queryGenericTable(name, table.toSelectAllStatement())
     }
 
     override fun close() {
@@ -120,19 +120,19 @@ class ConnectionWrapper(
         }
     }
 
-    private fun executeUpdate(sql: String, statement: PreparedStatement): Int {
+    private fun executeUpdate(name: String, code: String, statement: PreparedStatement): Int {
         try {
             return statement.executeUpdate()
         } catch (ex: SQLException) {
-            throw SQLException("$sql\n${ex.message}", ex)
+            throw SQLException("$name\n$code\n${ex.message}", ex)
         }
     }
 
-    private fun executeQuery(sql: String, statement: PreparedStatement): ResultSet {
+    private fun executeQuery(name: String, code: String, statement: PreparedStatement): ResultSet {
         try {
             return statement.executeQuery()
         } catch (ex: SQLException) {
-            throw SQLException("$sql\n${ex.message}", ex)
+            throw SQLException("$name\n$code\n${ex.message}", ex)
         }
     }
 

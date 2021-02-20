@@ -5,35 +5,36 @@ import java.sql.ResultSet
 interface GenericDatabase {
     fun <T> queryExactlyOneRow(
         createFunction: (ResultSet) -> T,
-        queryPath: String,
+        name: String,
         vararg parameters: Any?
     ): T
 
     fun <T> queryZeroOrOneRow(
         createFunction: (ResultSet) -> T,
-        queryPath: String,
+        name: String,
         vararg parameters: Any?
     ): T?
 
     fun queryExists(
-        queryPath: String,
+        name: String,
         vararg parameters: Any?
     ): Boolean
 
     fun <T> query(
         createFunction: (ResultSet) -> T,
-        queryPath: String,
+        name: String,
         vararg parameters: Any?
     ): List<T>
 
     fun queryUntyped(
-        query: String,
+        name: String,
+        code: String,
         vararg parameters: Any?
     ): GenericTable
 
-    fun queryExactlyOneInt(queryPath: String, vararg parameters: Any?): Int
-    fun queryZeroOrOneInt(queryPath: String, vararg parameters: Any?): Int?
-    fun update(queryPath: String, vararg parameters: Any?): Int
+    fun queryExactlyOneInt(name: String, vararg parameters: Any?): Int
+    fun queryZeroOrOneInt(name: String, vararg parameters: Any?): Int?
+    fun update(name: String, vararg parameters: Any?): Int
     fun tableNames(schema: Schema): List<String>
     fun tableData(schema: Schema, name: String): GenericTable
 }

@@ -62,6 +62,14 @@ interface ServiceCommand {
             }
     }
 
+    data class AddElection(val owner: String, val name: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                environment.service.addElection(accessToken, owner, name)
+                responseBuilder().build()
+            }
+    }
+
     object ListUsers : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->

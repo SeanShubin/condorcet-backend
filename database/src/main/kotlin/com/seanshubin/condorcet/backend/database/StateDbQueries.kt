@@ -12,4 +12,5 @@ interface StateDbQueries : GenericDatabase {
     fun listUsers(): List<UserRow>
     fun roleHasPermission(role: Role, permission: Permission): Boolean
     fun lastSynced(): Int?
+    fun searchElectionByName(name: String): ElectionRow?
 }

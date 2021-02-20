@@ -4,7 +4,8 @@ data class Field(
     val name: String,
     val type: FieldType,
     val allowNull: Boolean = false,
-    val unique: Boolean = false
+    val unique: Boolean = false,
+    val default: String? = null
 ) : Column {
     override fun toSql(): List<String> {
         val parts = mutableListOf<String>()
@@ -15,6 +16,9 @@ data class Field(
         }
         if (unique) {
             parts.add("unique")
+        }
+        if (default != null) {
+            parts.add("default $default")
         }
         return listOf(parts.joinToString(" ") + ",")
     }

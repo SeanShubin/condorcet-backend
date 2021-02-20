@@ -20,6 +20,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "SetRole" -> JsonMappers.parse<ServiceCommand.SetRole>(json)
             "RemoveUser" -> JsonMappers.parse<ServiceCommand.RemoveUser>(json)
             "ListUsers" -> ServiceCommand.ListUsers
+            "AddElection" -> JsonMappers.parse<ServiceCommand.AddElection>(json)
             "ListTables" -> ServiceCommand.ListTables
             "TableData" -> JsonMappers.parse<ServiceCommand.TableData>(json)
             "EventData" -> ServiceCommand.EventData

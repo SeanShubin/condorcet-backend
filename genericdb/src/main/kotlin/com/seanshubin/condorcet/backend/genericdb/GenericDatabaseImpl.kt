@@ -39,14 +39,14 @@ class GenericDatabaseImpl(
         return connection.queryList(name, code, *parameters) { createFunction(it) }
     }
 
-    override fun queryUntyped(query: String, vararg parameters: Any?): GenericTable =
-        connection.queryGenericTable(query)
+    override fun queryUntyped(name: String, code: String, vararg parameters: Any?): GenericTable =
+        connection.queryGenericTable(name, code)
 
-    override fun queryExactlyOneInt(queryPath: String, vararg parameters: Any?): Int =
-        queryExactlyOneRow(::createInt, queryPath, *parameters)
+    override fun queryExactlyOneInt(name: String, vararg parameters: Any?): Int =
+        queryExactlyOneRow(::createInt, name, *parameters)
 
-    override fun queryZeroOrOneInt(queryPath: String, vararg parameters: Any?): Int? =
-        queryZeroOrOneRow(::createInt, queryPath, *parameters)
+    override fun queryZeroOrOneInt(name: String, vararg parameters: Any?): Int? =
+        queryZeroOrOneRow(::createInt, name, *parameters)
 
     override fun update(name: String, vararg parameters: Any?): Int {
         val code = queryLoader.load(name)
@@ -58,6 +58,6 @@ class GenericDatabaseImpl(
 
     override fun tableData(schema: Schema, name: String): GenericTable {
         val table = schema.tables.find { it.name == name }!!
-        return connection.queryGenericTable(table.toSelectAllStatement())
+        return connection.queryGenericTable(name, table.toSelectAllStatement())
     }
 }

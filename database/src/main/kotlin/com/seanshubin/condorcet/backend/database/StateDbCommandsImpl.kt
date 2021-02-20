@@ -23,4 +23,8 @@ class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, G
     override fun removeUser(authority: String, name: String) {
         update("delete-user", name)
     }
+
+    override fun addElection(authority: String, owner: String, name: String) {
+        update("add-election", owner, name)
+    }
 }

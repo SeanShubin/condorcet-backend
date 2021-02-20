@@ -24,6 +24,10 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
         processEvent(authority, DbEvent.RemoveUser(name))
     }
 
+    override fun addElection(authority: String, owner: String, name: String) {
+        processEvent(authority, DbEvent.AddElection(owner, name))
+    }
+
     private fun processEvent(authority: String, dbEvent: DbEvent) {
         eventDbCommands.addEvent(
             authority,
