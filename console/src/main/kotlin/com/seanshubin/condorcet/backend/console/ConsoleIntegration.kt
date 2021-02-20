@@ -19,8 +19,8 @@ class ConsoleIntegration : Integration {
     override val host: String = "localhost"
     override val user: String = "root"
     override val password: String = "insecure"
-    override val eventSchemaName: String = "condorcet_development_event"
-    override val stateSchemaName: String = "condorcet_development_state"
+    override val eventSchemaName: String = "condorcet_development_event_can_be_purged"
+    override val stateSchemaName: String = "condorcet_development_state_can_be_purged"
     override val rootDatabaseEvent: (String) -> Unit = notifications::rootDatabaseEvent
     override val eventDatabaseEvent: (String) -> Unit = notifications::eventDatabaseEvent
     override val stateDatabaseEvent: (String) -> Unit = notifications::stateDatabaseEvent

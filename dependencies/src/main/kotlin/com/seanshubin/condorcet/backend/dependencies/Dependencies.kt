@@ -65,11 +65,12 @@ class Dependencies(
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, whereKeysAreStored)
     private val cipher: Cipher = CipherImpl(algorithmFactory)
     val handler: Handler = ApiHandler(
+        schemaCreator,
         serviceCommandParser,
         service,
         cipher,
         requestEvent,
         responseEvent
     )
-    val runner: Runnable = ServerRunner(schemaCreator, serverContract, handler, service)
+    val runner: Runnable = ServerRunner(serverContract, handler)
 }

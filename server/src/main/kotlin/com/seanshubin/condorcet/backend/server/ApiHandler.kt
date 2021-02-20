@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.server
 
+import com.seanshubin.condorcet.backend.genericdb.SchemaCreator
 import com.seanshubin.condorcet.backend.http.Header
 import com.seanshubin.condorcet.backend.http.HeaderList
 import com.seanshubin.condorcet.backend.http.RequestValue
@@ -16,8 +17,10 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.handler.AbstractHandler
+import java.sql.SQLException
 
 class ApiHandler(
+    private val schemaCreator: SchemaCreator,
     private val serviceCommandParser: ServiceCommandParser,
     private val service: Service,
     private val cipher: Cipher,
@@ -50,6 +53,18 @@ class ApiHandler(
             serviceCommand.exec(environment, requestValue)
         } catch (ex: ServiceException) {
             ServiceCommand.ServiceExceptionCommand(ex).exec(environment, requestValue)
+        } catch(ex:SQLException){
+            if(ex.message?.contains("Unknown database", ignoreCase = true) == true){
+                schemaCreator.initialize()
+                service.synchronize()
+                try {
+                    serviceCommand.exec(environment, requestValue)
+                } catch (ex: ServiceException) {
+                    ServiceCommand.ServiceExceptionCommand(ex).exec(environment, requestValue)
+                }
+            } else {
+                throw ex
+            }
         }
 
     private fun HttpServletRequest.toRequestValue(target: String): RequestValue {
