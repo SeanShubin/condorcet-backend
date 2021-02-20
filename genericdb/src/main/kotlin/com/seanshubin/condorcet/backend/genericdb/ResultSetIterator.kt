@@ -10,7 +10,7 @@ class ResultSetIterator(
     override fun hasNext(): Boolean = resultSetNext
 
     override fun next(): List<Any> {
-        val rowCells = columnNames.map { resultSet.getString(it) }
+        val rowCells = columnNames.map { resultSet.getObject(it) }
         resultSetNext = resultSet.next()
         return rowCells
     }
