@@ -3,4 +3,5 @@ insert into event (`when`, authority, type, text) values ('2021-02-15 07:56:19.8
 insert into event (`when`, authority, type, text) values ('2021-02-15 07:56:19.907919', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"9c24ff2a-9f85-45cc-8f83-50974f93bc80","hash":"1F7CAB856AEE2DF4AE89369F2CF3C6B51856655B16E945BBB1E39D81CABB37E9","role":"UNASSIGNED"}');
 insert into event (`when`, authority, type, text) values ('2021-02-15 08:47:44.946811', 'Alice', 'SetRole', '{"name":"Bob","role":"USER"}');
 insert into event (`when`, authority, type, text) values ('2021-02-15 08:49:06.420277', 'Alice', 'RemoveUser', '{"name":"Carol"}');
+insert into event (`when`, authority, type, text) values ('2021-02-20 06:26:30.148351', 'Alice', 'AddElection', '{"owner":"Alice","name":"Favorite Ice Cream Flavor"}');
 select * from event;
