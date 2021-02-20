@@ -11,7 +11,7 @@ interface Service {
     fun setRole(accessToken: AccessToken, name: String, role: Role)
     fun removeUser(accessToken: AccessToken, name: String)
     fun listUsers(accessToken: AccessToken): List<UserNameRole>
-    fun addElection(accessToken: AccessToken, owner: String, name: String)
+    fun addElection(accessToken: AccessToken, name: String)
     fun listTables(accessToken: AccessToken): List<String>
     fun tableData(accessToken: AccessToken, name: String): TableData
     fun eventData(accessToken:AccessToken):TableData

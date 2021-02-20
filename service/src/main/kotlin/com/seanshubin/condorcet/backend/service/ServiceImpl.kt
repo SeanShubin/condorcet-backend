@@ -101,14 +101,14 @@ class ServiceImpl(
         return list
     }
 
-    override fun addElection(accessToken: AccessToken, owner: String, name: String) {
+    override fun addElection(accessToken: AccessToken, name: String) {
         val permissionNeeded = USE_APPLICATION
         failUnless(
             hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
             "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
         )
         failIf(electionNameExists(name), CONFLICT, "Election with name '$name' already exists")
-        stateDbCommands.addElection(accessToken.userName, owner, name)
+        stateDbCommands.addElection(accessToken.userName, accessToken.userName, name)
     }
 
     override fun listTables(accessToken: AccessToken): List<String> {

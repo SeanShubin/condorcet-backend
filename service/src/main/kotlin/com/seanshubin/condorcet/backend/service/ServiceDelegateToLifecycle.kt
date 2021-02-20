@@ -31,8 +31,8 @@ class ServiceDelegateToLifecycle(
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> =
         withService { it.listUsers(accessToken) }
 
-    override fun addElection(accessToken: AccessToken, owner: String, name: String) {
-        withService { it.addElection(accessToken, owner, name) }
+    override fun addElection(accessToken: AccessToken, name: String) {
+        withService { it.addElection(accessToken, name) }
     }
 
     override fun listTables(accessToken: AccessToken): List<String> =
