@@ -8,7 +8,7 @@ class SchemaInitializer(
     private val listTableEvent: (GenericTable) -> Unit
 ) : Initializer {
     override fun purgeAllData() {
-        connection.update("drop database if exists $schemaName")
+        connection.update("purgeAllData()", "drop database if exists $schemaName")
     }
 
     override fun initialize() {
@@ -32,21 +32,21 @@ class SchemaInitializer(
 
     private fun needsInitialize(): Boolean {
         val hasSchema = "select count(*) from information_schema.schemata where schema_name = ?"
-        return connection.queryExactlyOneInt(hasSchema, schemaName) == 0
+        return connection.queryExactlyOneInt("needsInitialize()", hasSchema, schemaName) == 0
     }
 
     private fun createDatabase() {
-        connection.update("create database $schemaName")
+        connection.update("createDatabase()", "create database $schemaName")
     }
 
     private fun useDatabase() {
-        connection.update("use $schemaName")
+        connection.update("useDatabase()", "use $schemaName")
     }
 
     private fun createSchema() {
         val createTableStatements = schema.tables.flatMap { it.toCreateTableStatements() }
         createTableStatements.forEach {
-            connection.update(it)
+            connection.update("createSchema()", it)
         }
     }
 
@@ -56,7 +56,7 @@ class SchemaInitializer(
             val initializeQuery = queryLoader.load(initializeQueryName)
             val statements = initializeQuery.split(';').map(String::trim).filter(String::isNotBlank)
             statements.forEach {
-                connection.update(it)
+                connection.update("staticData()", it)
             }
         }
     }

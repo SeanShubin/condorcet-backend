@@ -8,21 +8,21 @@ class ConnectionWrapper(
     private val connection: Connection,
     private val sqlEvent: (String) -> Unit
 ) : AutoCloseable {
-    fun <T> query(sql: String, vararg parameters: Any?, f: (ResultSet) -> T): T {
-        val statement = connection.prepareStatement(sql) as ClientPreparedStatement
+    fun <T> query(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> T): T {
+        val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(parameters, statement)
         return statement.use {
             sqlEvent(statement.asSql())
-            f(executeQuery(sql, statement))
+            f(executeQuery(code, statement))
         }
     }
 
-    fun <T> queryList(sql: String, vararg parameters: Any?, f: (ResultSet) -> T): List<T> {
+    fun <T> queryList(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> T): List<T> {
         val list = mutableListOf<T>()
-        val statement = connection.prepareStatement(sql) as ClientPreparedStatement
+        val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(parameters, statement)
         statement.use {
-            val resultSet = executeQuery(sql, statement)
+            val resultSet = executeQuery(code, statement)
             while (resultSet.next()) {
                 list.add(f(resultSet))
             }
@@ -30,11 +30,11 @@ class ConnectionWrapper(
         return list
     }
 
-    fun queryExists(sql: String, vararg parameters: Any?): Boolean {
-        val statement = connection.prepareStatement(sql) as ClientPreparedStatement
+    fun queryExists(name: String, code: String, vararg parameters: Any?): Boolean {
+        val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(parameters, statement)
         statement.use {
-            val resultSet = executeQuery(sql, statement)
+            val resultSet = executeQuery(code, statement)
             return resultSet.next()
         }
     }
@@ -52,25 +52,25 @@ class ConnectionWrapper(
         }
     }
 
-    fun <T> queryExactlyOneRow(sql: String, vararg parameters: Any?, f: (ResultSet) -> T): T =
-        query(sql, *parameters) { resultSet ->
+    fun <T> queryExactlyOneRow(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> T): T =
+        query(name, code, *parameters) { resultSet ->
             if (resultSet.next()) {
                 val result = f(resultSet)
                 if (resultSet.next()) {
-                    throw RuntimeException("No more than 1 row expected for '$sql'")
+                    throw RuntimeException("No more than 1 row expected for '$name'\n$code")
                 }
                 result
             } else {
-                throw RuntimeException("Exactly 1 row expected for '$sql', got none")
+                throw RuntimeException("Exactly 1 row expected for '$name', got none\n$code")
             }
         }
 
-    fun <T> queryZeroOrOneRow(sql: String, vararg parameters: Any?, f: (ResultSet) -> T): T? =
-        query(sql, *parameters) { resultSet ->
+    fun <T> queryZeroOrOneRow(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> T): T? =
+        query(name, code, *parameters) { resultSet ->
             if (resultSet.next()) {
                 val result = f(resultSet)
                 if (resultSet.next()) {
-                    throw RuntimeException("No more than 1 row expected for '$sql'")
+                    throw RuntimeException("No more than 1 row expected for '$name'\n$code")
                 }
                 result
             } else {
@@ -78,18 +78,18 @@ class ConnectionWrapper(
             }
         }
 
-    fun queryExactlyOneInt(sql: String, vararg parameters: Any?): Int =
-        queryExactlyOneRow(sql, *parameters) { createInt(it) }
+    fun queryExactlyOneInt(name: String, code: String, vararg parameters: Any?): Int =
+        queryExactlyOneRow(name, code, *parameters) { createInt(it) }
 
-    fun queryZeroOrOneInt(sql: String, vararg parameters: Any?): Int? =
-        queryZeroOrOneRow(sql, *parameters) { createInt(it) }
+    fun queryZeroOrOneInt(name: String, code: String, vararg parameters: Any?): Int? =
+        queryZeroOrOneRow(name, code, *parameters) { createInt(it) }
 
-    fun update(sql: String, vararg parameters: Any?): Int {
-        val statement = connection.prepareStatement(sql) as ClientPreparedStatement
+    fun update(name: String, code: String, vararg parameters: Any?): Int {
+        val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(parameters, statement)
         return statement.use {
             sqlEvent(statement.asSql())
-            executeUpdate(sql, statement)
+            executeUpdate(code, statement)
         }
     }
 

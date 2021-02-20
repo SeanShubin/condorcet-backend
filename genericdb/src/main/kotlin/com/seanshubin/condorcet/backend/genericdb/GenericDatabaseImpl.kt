@@ -9,34 +9,34 @@ class GenericDatabaseImpl(
 ) : GenericDatabase {
     override fun <T> queryExactlyOneRow(
         createFunction: (ResultSet) -> T,
-        queryPath: String,
+        name: String,
         vararg parameters: Any?
     ): T {
-        val query = queryLoader.load(queryPath)
-        return connection.queryExactlyOneRow(query, *parameters) { createFunction(it) }
+        val code = queryLoader.load(name)
+        return connection.queryExactlyOneRow(name, code, *parameters) { createFunction(it) }
     }
 
     override fun <T> queryZeroOrOneRow(
         createFunction: (ResultSet) -> T,
-        queryPath: String,
+        name: String,
         vararg parameters: Any?
     ): T? {
-        val query = queryLoader.load(queryPath)
-        return connection.queryZeroOrOneRow(query, *parameters) { createFunction(it) }
+        val code = queryLoader.load(name)
+        return connection.queryZeroOrOneRow(name, code, *parameters) { createFunction(it) }
     }
 
-    override fun queryExists(queryPath: String, vararg parameters: Any?): Boolean {
-        val query = queryLoader.load(queryPath)
-        return connection.queryExists(query, *parameters)
+    override fun queryExists(name: String, vararg parameters: Any?): Boolean {
+        val code = queryLoader.load(name)
+        return connection.queryExists(name, code, *parameters)
     }
 
     override fun <T> query(
         createFunction: (ResultSet) -> T,
-        queryPath: String,
+        name: String,
         vararg parameters: Any?
     ): List<T> {
-        val query = queryLoader.load(queryPath)
-        return connection.queryList(query, *parameters) { createFunction(it) }
+        val code = queryLoader.load(name)
+        return connection.queryList(name, code, *parameters) { createFunction(it) }
     }
 
     override fun queryUntyped(query: String, vararg parameters: Any?): GenericTable =
@@ -48,9 +48,9 @@ class GenericDatabaseImpl(
     override fun queryZeroOrOneInt(queryPath: String, vararg parameters: Any?): Int? =
         queryZeroOrOneRow(::createInt, queryPath, *parameters)
 
-    override fun update(queryPath: String, vararg parameters: Any?): Int {
-        val query = queryLoader.load(queryPath)
-        return connection.update(query, *parameters)
+    override fun update(name: String, vararg parameters: Any?): Int {
+        val code = queryLoader.load(name)
+        return connection.update(name, code, *parameters)
     }
 
     override fun tableNames(schema: Schema): List<String> =
