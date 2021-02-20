@@ -2,8 +2,9 @@ package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 
-interface StateDbQueries {
+interface StateDbQueries : GenericDatabase {
     fun findUserByName(name: String): UserRow
     fun searchUserByName(name: String): UserRow?
     fun searchUserByEmail(email: String): UserRow?

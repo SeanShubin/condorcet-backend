@@ -34,4 +34,6 @@ interface GenericDatabase {
     fun queryExactlyOneInt(queryPath: String, vararg parameters: Any?): Int
     fun queryZeroOrOneInt(queryPath: String, vararg parameters: Any?): Int?
     fun update(queryPath: String, vararg parameters: Any?): Int
+    fun tableNames(schema: Schema): List<String>
+    fun tableData(schema: Schema, name: String): GenericTable
 }

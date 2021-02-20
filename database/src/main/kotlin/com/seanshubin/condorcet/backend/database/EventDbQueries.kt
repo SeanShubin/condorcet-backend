@@ -1,5 +1,7 @@
 package com.seanshubin.condorcet.backend.database
 
-interface EventDbQueries {
+import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
+
+interface EventDbQueries : GenericDatabase {
     fun eventsToSync(lastEventSynced: Int): List<EventRow>
 }

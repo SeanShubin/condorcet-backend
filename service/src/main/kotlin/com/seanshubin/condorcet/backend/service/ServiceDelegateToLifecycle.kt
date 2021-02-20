@@ -6,7 +6,7 @@ import com.seanshubin.condorcet.backend.domain.UserNameRole
 import com.seanshubin.condorcet.backend.genericdb.ConnectionWrapper
 import com.seanshubin.condorcet.backend.genericdb.Lifecycle
 
-class ApiServiceDelegateToLifecycle(
+class ServiceDelegateToLifecycle(
     private val createService: (ConnectionWrapper, ConnectionWrapper) -> Service,
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper>,
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper>

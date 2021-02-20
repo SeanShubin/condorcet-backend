@@ -52,4 +52,12 @@ class GenericDatabaseImpl(
         val query = queryLoader.load(queryPath)
         return connection.update(query, *parameters)
     }
+
+    override fun tableNames(schema: Schema): List<String> =
+        schema.tables.map { it.name }
+
+    override fun tableData(schema: Schema, name: String): GenericTable {
+        val table = schema.tables.find { it.name == name }!!
+        return connection.queryGenericTable(table.toSelectAllStatement())
+    }
 }

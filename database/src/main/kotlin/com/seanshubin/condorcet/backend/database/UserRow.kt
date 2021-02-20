@@ -3,7 +3,7 @@ package com.seanshubin.condorcet.backend.database
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.DbRow
 
-class UserRow(
+data class UserRow(
     val name: String,
     val email: String,
     val salt: String,

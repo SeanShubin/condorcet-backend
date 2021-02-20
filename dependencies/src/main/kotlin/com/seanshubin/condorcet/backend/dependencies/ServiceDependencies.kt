@@ -6,8 +6,8 @@ import com.seanshubin.condorcet.backend.crypto.Sha256Hash
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
-import com.seanshubin.condorcet.backend.service.ApiService
 import com.seanshubin.condorcet.backend.service.Service
+import com.seanshubin.condorcet.backend.service.ServiceImpl
 import java.time.Clock
 
 class ServiceDependencies(
@@ -46,11 +46,10 @@ class ServiceDependencies(
         clock
     )
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
-    val service: Service = ApiService(
+    val service: Service = ServiceImpl(
         passwordUtil,
-        syncDbCommands,
+        eventDbQueries,
         stateDbQueries,
-        stateConnection,
-        eventConnection
+        syncDbCommands
     )
 }

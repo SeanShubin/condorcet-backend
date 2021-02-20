@@ -13,8 +13,8 @@ import com.seanshubin.condorcet.backend.server.ApiHandler
 import com.seanshubin.condorcet.backend.server.JettyServer
 import com.seanshubin.condorcet.backend.server.ServerContract
 import com.seanshubin.condorcet.backend.server.ServerRunner
-import com.seanshubin.condorcet.backend.service.ApiServiceDelegateToLifecycle
 import com.seanshubin.condorcet.backend.service.Service
+import com.seanshubin.condorcet.backend.service.ServiceDelegateToLifecycle
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParserImpl
 import org.eclipse.jetty.server.Handler
@@ -52,7 +52,7 @@ class Dependencies(
         InitializerDependencies(integration, connection).initializer
     }
     val initializer: Initializer = SchemaInitializerDelegateToLifecycle(createInitializer, rootConnectionLifecycle)
-    val service: Service = ApiServiceDelegateToLifecycle(
+    val service: Service = ServiceDelegateToLifecycle(
         createService,
         eventConnectionLifecycle,
         stateConnectionLifecycle
