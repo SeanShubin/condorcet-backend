@@ -15,21 +15,21 @@ class InitializerDependencies(
     private val eventTableEvent: (GenericTable) -> Unit = integration.eventTableEvent
     private val stateTableEvent: (GenericTable) -> Unit = integration.stateTableEvent
     private val queryLoader: QueryLoader = QueryLoaderFromResource()
-    private val eventInitializer: Initializer =
-        SchemaInitializer(
+    private val eventSchemaCreator: SchemaCreator =
+        SchemaCreatorImpl(
             connection,
             eventSchemaName,
             EventSchema,
             queryLoader,
             eventTableEvent
         )
-    private val stateInitializer: Initializer =
-        SchemaInitializer(
+    private val stateSchemaCreator: SchemaCreator =
+        SchemaCreatorImpl(
             connection,
             stateSchemaName,
             StateSchema,
             queryLoader,
             stateTableEvent
         )
-    val initializer: Initializer = CompositeInitializer(eventInitializer, stateInitializer)
+    val schemaCreator: SchemaCreator = CompositeSchemaCreator(eventSchemaCreator, stateSchemaCreator)
 }

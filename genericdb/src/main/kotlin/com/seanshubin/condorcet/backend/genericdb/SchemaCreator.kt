@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.genericdb
 
-interface Initializer {
+interface SchemaCreator {
     fun purgeAllData()
     fun initialize()
     fun listAllData()

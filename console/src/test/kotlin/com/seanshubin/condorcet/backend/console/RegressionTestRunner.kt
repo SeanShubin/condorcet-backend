@@ -9,13 +9,13 @@ class RegressionTestRunner(
     private val commands: List<ServiceCommand>
 ) {
     fun run() {
-        dependencies.initializer.purgeAllData()
-        dependencies.initializer.initialize()
+        dependencies.schemaCreator.purgeAllData()
+        dependencies.schemaCreator.initialize()
         val fakeBrowser = FakeBrowser()
         commands.forEach { command ->
             handleCommand(fakeBrowser, command)
         }
-        dependencies.initializer.listAllData()
+        dependencies.schemaCreator.listAllData()
     }
 
     fun handleCommand(fakeBrowser: FakeBrowser, command: ServiceCommand) {

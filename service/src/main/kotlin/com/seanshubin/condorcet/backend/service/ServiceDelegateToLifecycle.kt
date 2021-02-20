@@ -11,6 +11,10 @@ class ServiceDelegateToLifecycle(
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper>,
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper>
 ) : Service {
+    override fun synchronize() {
+        withService { it.synchronize() }
+    }
+
     override fun refresh(refreshToken: RefreshToken): Tokens =
         withService { it.refresh(refreshToken) }
 

@@ -1,12 +1,12 @@
 package com.seanshubin.condorcet.backend.genericdb
 
-class SchemaInitializer(
+class SchemaCreatorImpl(
     private val connection: ConnectionWrapper,
     private val schemaName: String,
     private val schema: Schema,
     private val queryLoader: QueryLoader,
     private val listTableEvent: (GenericTable) -> Unit
-) : Initializer {
+) : SchemaCreator {
     override fun purgeAllData() {
         connection.update("purgeAllData()", "drop database if exists $schemaName")
     }

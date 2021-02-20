@@ -16,8 +16,13 @@ class ServiceImpl(
     private val passwordUtil: PasswordUtil,
     private val eventDbQueries: EventDbQueries,
     private val stateDbQueries: StateDbQueries,
-    private val stateDbCommands: StateDbCommands
+    private val stateDbCommands: StateDbCommands,
+    private val synchronizer: Synchronizer
 ) : Service {
+    override fun synchronize() {
+        synchronizer.synchronize()
+    }
+
     override fun refresh(refreshToken: RefreshToken): Tokens {
         val userRow = searchUserByName(refreshToken.userName)
         failIf(userRow == null, NOT_FOUND, "User with name '${refreshToken.userName}' not found")

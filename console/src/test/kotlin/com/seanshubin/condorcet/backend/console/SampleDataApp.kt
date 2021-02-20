@@ -7,7 +7,7 @@ object SampleDataApp {
     @JvmStatic
     fun main(args: Array<String>) {
         val dependencies = Dependencies(ConsoleIntegration())
-        val initializer = dependencies.initializer
+        val initializer = dependencies.schemaCreator
         val service = dependencies.service
         initializer.purgeAllData()
         initializer.initialize()

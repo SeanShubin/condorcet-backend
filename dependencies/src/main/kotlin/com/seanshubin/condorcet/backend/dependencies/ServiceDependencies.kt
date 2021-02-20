@@ -50,6 +50,7 @@ class ServiceDependencies(
         passwordUtil,
         eventDbQueries,
         stateDbQueries,
-        syncDbCommands
+        syncDbCommands,
+        synchronizer
     )
 }

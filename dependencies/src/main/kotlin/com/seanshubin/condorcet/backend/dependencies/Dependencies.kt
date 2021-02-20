@@ -48,10 +48,11 @@ class Dependencies(
     private val createService: (ConnectionWrapper, ConnectionWrapper) -> Service = { eventConnection, stateConnection ->
         ServiceDependencies(integration, eventConnection, stateConnection).service
     }
-    private val createInitializer: (ConnectionWrapper) -> Initializer = { connection ->
-        InitializerDependencies(integration, connection).initializer
+    private val createSchemaCreator: (ConnectionWrapper) -> SchemaCreator = { connection ->
+        InitializerDependencies(integration, connection).schemaCreator
     }
-    val initializer: Initializer = SchemaInitializerDelegateToLifecycle(createInitializer, rootConnectionLifecycle)
+    val schemaCreator: SchemaCreator =
+        SchemaSchemaCreatorDelegateToLifecycle(createSchemaCreator, rootConnectionLifecycle)
     val service: Service = ServiceDelegateToLifecycle(
         createService,
         eventConnectionLifecycle,
@@ -70,5 +71,5 @@ class Dependencies(
         requestEvent,
         responseEvent
     )
-    val runner: Runnable = ServerRunner(initializer, serverContract, handler)
+    val runner: Runnable = ServerRunner(schemaCreator, serverContract, handler, service)
 }

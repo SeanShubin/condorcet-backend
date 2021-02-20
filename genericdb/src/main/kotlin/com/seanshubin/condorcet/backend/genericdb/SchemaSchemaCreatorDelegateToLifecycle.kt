@@ -1,9 +1,9 @@
 package com.seanshubin.condorcet.backend.genericdb
 
-class SchemaInitializerDelegateToLifecycle(
-    private val createInitializer: (ConnectionWrapper) -> Initializer,
+class SchemaSchemaCreatorDelegateToLifecycle(
+    private val createSchemaCreator: (ConnectionWrapper) -> SchemaCreator,
     private val connectionLifecycle: Lifecycle<ConnectionWrapper>,
-) : Initializer {
+) : SchemaCreator {
     override fun purgeAllData() {
         withInitializer { it.purgeAllData() }
     }
@@ -16,9 +16,9 @@ class SchemaInitializerDelegateToLifecycle(
         withInitializer { it.listAllData() }
     }
 
-    private fun <T> withInitializer(f: (Initializer) -> T): T =
+    private fun <T> withInitializer(f: (SchemaCreator) -> T): T =
         connectionLifecycle.withValue { connection ->
-            val initializer = createInitializer(connection)
+            val initializer = createSchemaCreator(connection)
             f(initializer)
         }
 }

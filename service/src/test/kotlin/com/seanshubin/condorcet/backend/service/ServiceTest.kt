@@ -82,11 +82,13 @@ class ServiceTest {
         private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
         private val eventDbFake = EventDbFake()
         val stateDbFake = StateDbFake()
+        private val synchronizer = SynchronizerStub()
         val service: Service = ServiceImpl(
             passwordUtil,
             eventDbFake,
             stateDbFake,
-            stateDbFake
+            stateDbFake,
+            synchronizer
         )
     }
 }
