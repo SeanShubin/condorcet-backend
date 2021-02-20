@@ -2,29 +2,29 @@ select * from int_variable
 ╔══╤═══════════╤═════╗
 ║id│name       │value║
 ╟──┼───────────┼─────╢
-║1 │last-synced│6    ║
+║ 1│last-synced│    6║
 ╚══╧═══════════╧═════╝
 select * from role_permission
 ╔══╤════════╤════════════════╗
 ║id│role    │permission      ║
 ╟──┼────────┼────────────────╢
-║1 │OWNER   │TRANSFER_OWNER  ║
+║ 1│OWNER   │TRANSFER_OWNER  ║
 ╟──┼────────┼────────────────╢
-║2 │OWNER   │VIEW_SECRETS    ║
+║ 2│OWNER   │VIEW_SECRETS    ║
 ╟──┼────────┼────────────────╢
-║3 │OWNER   │MANAGE_USERS    ║
+║ 3│OWNER   │MANAGE_USERS    ║
 ╟──┼────────┼────────────────╢
-║4 │OWNER   │USE_APPLICATION ║
+║ 4│OWNER   │USE_APPLICATION ║
 ╟──┼────────┼────────────────╢
-║5 │OWNER   │VIEW_APPLICATION║
+║ 5│OWNER   │VIEW_APPLICATION║
 ╟──┼────────┼────────────────╢
-║6 │AUDITOR │VIEW_SECRETS    ║
+║ 6│AUDITOR │VIEW_SECRETS    ║
 ╟──┼────────┼────────────────╢
-║7 │AUDITOR │MANAGE_USERS    ║
+║ 7│AUDITOR │MANAGE_USERS    ║
 ╟──┼────────┼────────────────╢
-║8 │AUDITOR │USE_APPLICATION ║
+║ 8│AUDITOR │USE_APPLICATION ║
 ╟──┼────────┼────────────────╢
-║9 │AUDITOR │VIEW_APPLICATION║
+║ 9│AUDITOR │VIEW_APPLICATION║
 ╟──┼────────┼────────────────╢
 ║10│ADMIN   │MANAGE_USERS    ║
 ╟──┼────────┼────────────────╢
@@ -42,15 +42,15 @@ select * from user
 ╔══╤═════╤═══════════════╤═════╤════════════════════════════════════╤════════════════════════════════════════════════════════════════╗
 ║id│name │email          │role │salt                                │hash                                                            ║
 ╟──┼─────┼───────────────┼─────┼────────────────────────────────────┼────────────────────────────────────────────────────────────────╢
-║1 │Alice│alice@email.com│OWNER│8d027cff-d538-4078-8de9-b15c0c46d383│972A59B9F4F03166E3023CFE496F179F1AEACBAC0D8BEA2A5E28676D384A2BC4║
+║ 1│Alice│alice@email.com│OWNER│8d027cff-d538-4078-8de9-b15c0c46d383│972A59B9F4F03166E3023CFE496F179F1AEACBAC0D8BEA2A5E28676D384A2BC4║
 ╟──┼─────┼───────────────┼─────┼────────────────────────────────────┼────────────────────────────────────────────────────────────────╢
-║2 │Bob  │bob@email.com  │USER │9cfdf833-a1cb-487a-bf8e-a2efd8b209a4│7961966BF84F86F943E0B56DB8CF66075CB7B160811FF2995107F7715D4F9D6C║
+║ 2│Bob  │bob@email.com  │USER │9cfdf833-a1cb-487a-bf8e-a2efd8b209a4│7961966BF84F86F943E0B56DB8CF66075CB7B160811FF2995107F7715D4F9D6C║
 ╚══╧═════╧═══════════════╧═════╧════════════════════════════════════╧════════════════════════════════════════════════════════════════╝
 select * from election
 ╔══╤════════╤═════════════════════════╤══════╤══════╤══════╤════════════════╤════════╤═══════╤════════╤════════════════════════════════════════════╤════════════════════════╤══════════════════════════╗
 ║id│owner_id│name                     │start │end   │secret│done_configuring│template│started│finished│can_change_candidates_after_done_configuring│owner_can_delete_ballots│auditor_can_delete_ballots║
 ╟──┼────────┼─────────────────────────┼──────┼──────┼──────┼────────────────┼────────┼───────┼────────┼────────────────────────────────────────────┼────────────────────────┼──────────────────────────╢
-║1 │1       │Favorite Ice Cream Flavor│<null>│<null>│0     │          <null>│0       │0      │0       │0                                           │0                       │0                         ║
+║ 1│       1│Favorite Ice Cream Flavor│<null>│<null>│ false│          <null>│   false│  false│   false│                                       false│                   false│                     false║
 ╚══╧════════╧═════════════════════════╧══════╧══════╧══════╧════════════════╧════════╧═══════╧════════╧════════════════════════════════════════════╧════════════════════════╧══════════════════════════╝
 select * from candidate
 ╔══╤═══════════╤════╗
