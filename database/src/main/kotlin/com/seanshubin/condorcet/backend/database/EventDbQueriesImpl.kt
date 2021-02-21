@@ -7,6 +7,9 @@ class EventDbQueriesImpl(genericDatabase: GenericDatabase) : EventDbQueries, Gen
     override fun eventsToSync(lastEventSynced: Int): List<EventRow> =
         query(::createEvent, "list-unsynced-events", lastEventSynced)
 
+    override fun eventCount(): Int =
+        queryExactlyOneInt("count-events")
+
     private fun createEvent(resultSet: ResultSet): EventRow {
         val id = resultSet.getInt("id")
         val whenHappened = resultSet.getTimestamp("when").toInstant()

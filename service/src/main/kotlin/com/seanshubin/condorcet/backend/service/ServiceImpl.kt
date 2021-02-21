@@ -36,7 +36,7 @@ class ServiceImpl(
         failIf(name.isBlank(), UNSUPPORTED, "User name must not be blank")
         failIf(userNameExists(name), CONFLICT, "User with name '$name' already exists")
         failIf(userEmailExists(email), CONFLICT, "User with email '$email' already exists")
-        val role = if (stateDbQueries.countUsers() == 0) {
+        val role = if (stateDbQueries.userCount() == 0) {
             OWNER
         } else {
             UNASSIGNED
@@ -61,11 +61,7 @@ class ServiceImpl(
         val userRow = searchUserByName(name)
         failIf(userRow == null, NOT_FOUND, "User with name '$name' does not exist")
         userRow!!
-        val permissionNeeded = MANAGE_USERS
-        failUnless(
-            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
-            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
-        )
+        failUnlessPermission(accessToken, MANAGE_USERS)
         val isChangingSelfRole = isSelf(accessToken, userRow) && accessToken.role != role
         failIf(isChangingSelfRole, UNAUTHORIZED, "Not allowed to change role for self")
         failUnless(roleIsGreater(accessToken, userRow), UNAUTHORIZED, "Must have greater role than target")
@@ -77,13 +73,9 @@ class ServiceImpl(
         val userRow = searchUserByName(name)
         failIf(userRow == null, NOT_FOUND, "User with name '$name' does not exist")
         userRow!!
-        val permissionNeeded = MANAGE_USERS
-        failUnless(
-            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
-            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
-        )
+        failUnlessPermission(accessToken, MANAGE_USERS)
         failIf(
-            isSelf(accessToken, userRow) && stateDbQueries.countUsers() > 1, UNAUTHORIZED,
+            isSelf(accessToken, userRow) && stateDbQueries.tableCount() > 1, UNAUTHORIZED,
             "Not allowed to remove self unless you are the only user"
         )
         failUnless(roleIsGreater(accessToken, userRow), UNAUTHORIZED, "Must have greater role than target")
@@ -91,11 +83,7 @@ class ServiceImpl(
     }
 
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> {
-        val permissionNeeded = MANAGE_USERS
-        failUnless(
-            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
-            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
-        )
+        failUnlessPermission(accessToken, MANAGE_USERS)
         val userRows = stateDbQueries.listUsers()
         val list = userRows.map { row ->
             val allowedRoles = Role.values().filter {
@@ -107,40 +95,44 @@ class ServiceImpl(
     }
 
     override fun addElection(accessToken: AccessToken, name: String) {
-        val permissionNeeded = USE_APPLICATION
-        failUnless(
-            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
-            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
-        )
+        failUnlessPermission(accessToken, USE_APPLICATION)
         failIf(electionNameExists(name), CONFLICT, "Election with name '$name' already exists")
         stateDbCommands.addElection(accessToken.userName, accessToken.userName, name)
     }
 
     override fun listTables(accessToken: AccessToken): List<String> {
-        val permissionNeeded = VIEW_SECRETS
-        failUnless(
-            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
-            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
-        )
+        failUnlessPermission(accessToken, VIEW_SECRETS)
         return stateDbQueries.tableNames(StateSchema)
     }
 
+    override fun userCount(accessToken: AccessToken): Int {
+        failUnlessPermission(accessToken, VIEW_APPLICATION)
+        return stateDbQueries.userCount()
+    }
+
+    override fun electionCount(accessToken: AccessToken): Int {
+        failUnlessPermission(accessToken, VIEW_APPLICATION)
+        return stateDbQueries.electionCount()
+    }
+
+    override fun tableCount(accessToken: AccessToken): Int {
+        failUnlessPermission(accessToken, VIEW_APPLICATION)
+        return stateDbQueries.tableCount()
+    }
+
+    override fun eventCount(accessToken: AccessToken): Int {
+        failUnlessPermission(accessToken, VIEW_APPLICATION)
+        return eventDbQueries.eventCount()
+    }
+
     override fun tableData(accessToken: AccessToken, name: String): TableData {
-        val permissionNeeded = VIEW_SECRETS
-        failUnless(
-            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
-            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
-        )
+        failUnlessPermission(accessToken, VIEW_SECRETS)
         val genericTable = stateDbQueries.tableData(StateSchema, name)
         return genericTable.toTableData()
     }
 
     override fun eventData(accessToken: AccessToken): TableData {
-        val permissionNeeded = VIEW_SECRETS
-        failUnless(
-            hasPermission(accessToken, permissionNeeded), UNAUTHORIZED,
-            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permissionNeeded"
-        )
+        failUnlessPermission(accessToken, VIEW_SECRETS)
         val genericTable = eventDbQueries.tableData(EventSchema, "event")
         return genericTable.toTableData()
     }
@@ -167,6 +159,14 @@ class ServiceImpl(
 
     private fun failUnless(shouldNotFail: Boolean, category: ServiceException.Category, message: String) {
         failIf(!shouldNotFail, category, message)
+    }
+
+    private fun failUnlessPermission(accessToken: AccessToken, permission: Permission) {
+        failUnless(
+            hasPermission(accessToken, permission), UNAUTHORIZED,
+            "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permission"
+        )
+
     }
 
     private fun allowedToChangeRoleTo(accessToken: AccessToken, userRow: UserRow, role: Role): Boolean {

@@ -48,6 +48,18 @@ class ServiceDelegateToLifecycle(
     override fun eventData(accessToken: AccessToken): TableData =
         withService { it.eventData(accessToken) }
 
+    override fun userCount(accessToken: AccessToken): Int =
+        withService { it.userCount(accessToken) }
+
+    override fun electionCount(accessToken: AccessToken): Int =
+        withService { it.electionCount(accessToken) }
+
+    override fun tableCount(accessToken: AccessToken): Int =
+        withService { it.tableCount(accessToken) }
+
+    override fun eventCount(accessToken: AccessToken): Int =
+        withService { it.eventCount(accessToken) }
+
     private fun <T> withService(f: (Service) -> T): T =
         eventConnectionLifecycle.withValue { eventConnection ->
             stateConnectionLifecycle.withValue { stateConnection ->

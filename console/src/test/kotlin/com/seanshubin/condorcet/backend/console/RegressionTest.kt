@@ -43,6 +43,10 @@ class RegressionTest {
             ListUsers,
             AddElection(owner = "Alice", name = "Favorite Ice Cream Flavor"),
             ListTables,
+            UserCount,
+            ElectionCount,
+            TableCount,
+            EventCount,
             TableData("user"),
             EventData
         )

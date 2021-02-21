@@ -16,6 +16,10 @@ interface EventDbNotImplemented : EventDbQueries, EventDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
+    override fun eventCount(): Int {
+        throw UnsupportedOperationException("not implemented")
+    }
+
     override fun <T> queryExactlyOneRow(createFunction: (ResultSet) -> T, name: String, vararg parameters: Any?): T {
         throw UnsupportedOperationException("not implemented")
     }

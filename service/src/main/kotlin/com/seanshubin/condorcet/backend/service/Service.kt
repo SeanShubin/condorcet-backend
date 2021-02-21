@@ -14,6 +14,10 @@ interface Service {
     fun listUsers(accessToken: AccessToken): List<UserNameRole>
     fun addElection(accessToken: AccessToken, name: String)
     fun listTables(accessToken: AccessToken): List<String>
+    fun userCount(accessToken: AccessToken): Int
+    fun electionCount(accessToken: AccessToken): Int
+    fun tableCount(accessToken: AccessToken): Int
+    fun eventCount(accessToken: AccessToken): Int
     fun tableData(accessToken: AccessToken, name: String): TableData
-    fun eventData(accessToken:AccessToken):TableData
+    fun eventData(accessToken: AccessToken): TableData
 }

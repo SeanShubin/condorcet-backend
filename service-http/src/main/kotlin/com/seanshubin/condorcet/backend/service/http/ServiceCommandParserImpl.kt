@@ -22,6 +22,10 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "ListUsers" -> ServiceCommand.ListUsers
             "AddElection" -> JsonMappers.parse<ServiceCommand.AddElection>(json)
             "ListTables" -> ServiceCommand.ListTables
+            "UserCount" -> ServiceCommand.UserCount
+            "ElectionCount" -> ServiceCommand.ElectionCount
+            "TableCount" -> ServiceCommand.TableCount
+            "EventCount" -> ServiceCommand.EventCount
             "TableData" -> JsonMappers.parse<ServiceCommand.TableData>(json)
             "EventData" -> ServiceCommand.EventData
             else -> ServiceCommand.Unsupported(name, json)

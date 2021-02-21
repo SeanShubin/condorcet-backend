@@ -29,8 +29,13 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
             email
         )
 
-    override fun countUsers(): Int =
+    override fun tableCount(): Int = StateSchema.tables.size
+
+    override fun userCount(): Int =
         queryExactlyOneInt("count-users")
+
+    override fun electionCount(): Int =
+        queryExactlyOneInt("count-elections")
 
     override fun listUsers(): List<UserRow> =
         query(::createUser, "list-users")

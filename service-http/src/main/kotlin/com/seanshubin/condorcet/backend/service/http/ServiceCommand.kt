@@ -79,6 +79,42 @@ interface ServiceCommand {
             }
     }
 
+    object UserCount : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val userCount = environment.service.userCount(accessToken)
+                val value = mapOf("userCount" to userCount)
+                responseBuilder().json(value).build()
+            }
+    }
+
+    object ElectionCount : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val userCount = environment.service.electionCount(accessToken)
+                val value = mapOf("electionCount" to userCount)
+                responseBuilder().json(value).build()
+            }
+    }
+
+    object TableCount : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val userCount = environment.service.tableCount(accessToken)
+                val value = mapOf("tableCount" to userCount)
+                responseBuilder().json(value).build()
+            }
+    }
+
+    object EventCount : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val userCount = environment.service.eventCount(accessToken)
+                val value = mapOf("eventCount" to userCount)
+                responseBuilder().json(value).build()
+            }
+    }
+
     object ListTables : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
