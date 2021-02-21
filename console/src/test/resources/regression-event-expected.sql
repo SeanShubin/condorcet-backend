@@ -4,4 +4,5 @@ insert into event (`when`, authority, type, text) values ('2021-02-15 07:56:19.9
 insert into event (`when`, authority, type, text) values ('2021-02-15 08:47:44.946811', 'Alice', 'SetRole', '{"name":"Bob","role":"USER"}');
 insert into event (`when`, authority, type, text) values ('2021-02-15 08:49:06.420277', 'Alice', 'RemoveUser', '{"name":"Carol"}');
 insert into event (`when`, authority, type, text) values ('2021-02-20 06:26:30.148351', 'Alice', 'AddElection', '{"owner":"Alice","name":"Favorite Ice Cream Flavor"}');
+select count(id) from event;
 select * from event;

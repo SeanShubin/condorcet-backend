@@ -35,4 +35,6 @@ select user.name as owner, election.name, election.start, election.end, election
 select value from int_variable where name = 'last-synced';
 insert into election (owner_id, name) values ((select id from user where name = 'Alice'), 'Favorite Ice Cream Flavor');
 update int_variable set value = 6 where name = 'last-synced';
+select count(id) from user;
+select count(id) from election;
 select * from user;
