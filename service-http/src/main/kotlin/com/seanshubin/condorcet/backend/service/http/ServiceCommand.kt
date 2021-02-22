@@ -70,6 +70,15 @@ interface ServiceCommand {
             }
     }
 
+    object ListElections : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val elections = environment.service.listElections(accessToken)
+                val values = mapOf("elections" to elections)
+                responseBuilder().json(values).build()
+            }
+    }
+
     object ListUsers : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->

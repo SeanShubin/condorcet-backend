@@ -40,6 +40,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun listUsers(): List<UserRow> =
         query(::createUser, "list-users")
 
+    override fun listElections(): List<ElectionRow> =
+        query(::createElection, "list-elections")
+
     override fun roleHasPermission(role: Role, permission: Permission): Boolean {
         return queryExists("role-has-permission", role.name, permission.name)
     }
@@ -62,10 +65,10 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     private fun createElection(resultSet: ResultSet): ElectionRow {
         val owner = resultSet.getString("owner")
         val name: String = resultSet.getString("name")
-        val start: Instant? = resultSet.getTimestamp("start").toInstant()
-        val end: Instant? = resultSet.getTimestamp("end").toInstant()
+        val start: Instant? = resultSet.getTimestamp("start")?.toInstant()
+        val end: Instant? = resultSet.getTimestamp("end")?.toInstant()
         val secret: Boolean = resultSet.getBoolean("secret")
-        val doneConfiguring: Instant? = resultSet.getTimestamp("done_configuring").toInstant()
+        val doneConfiguring: Instant? = resultSet.getTimestamp("done_configuring")?.toInstant()
         val template: Boolean = resultSet.getBoolean("template")
         val started: Boolean = resultSet.getBoolean("started")
         val finished: Boolean = resultSet.getBoolean("finished")

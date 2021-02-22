@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.service
 
+import com.seanshubin.condorcet.backend.domain.Election
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.domain.TableData
 import com.seanshubin.condorcet.backend.domain.UserNameRole
@@ -38,6 +39,9 @@ class ServiceDelegateToLifecycle(
     override fun addElection(accessToken: AccessToken, name: String) {
         withService { it.addElection(accessToken, name) }
     }
+
+    override fun listElections(accessToken: AccessToken): List<Election> =
+        withService { it.listElections(accessToken) }
 
     override fun listTables(accessToken: AccessToken): List<String> =
         withService { it.listTables(accessToken) }

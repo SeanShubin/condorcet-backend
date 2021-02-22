@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.service
 
+import com.seanshubin.condorcet.backend.domain.Election
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.domain.TableData
 import com.seanshubin.condorcet.backend.domain.UserNameRole
@@ -13,6 +14,7 @@ interface Service {
     fun removeUser(accessToken: AccessToken, name: String)
     fun listUsers(accessToken: AccessToken): List<UserNameRole>
     fun addElection(accessToken: AccessToken, name: String)
+    fun listElections(accessToken: AccessToken): List<Election>
     fun listTables(accessToken: AccessToken): List<String>
     fun userCount(accessToken: AccessToken): Int
     fun electionCount(accessToken: AccessToken): Int

@@ -2,14 +2,12 @@ package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.database.*
-import com.seanshubin.condorcet.backend.domain.Permission
+import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Permission.*
-import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.domain.Role.OWNER
 import com.seanshubin.condorcet.backend.domain.Role.UNASSIGNED
-import com.seanshubin.condorcet.backend.domain.TableData
-import com.seanshubin.condorcet.backend.domain.UserNameRole
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
+import com.seanshubin.condorcet.backend.service.DataTransfer.toDomain
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 
 class ServiceImpl(
@@ -98,6 +96,13 @@ class ServiceImpl(
         failUnlessPermission(accessToken, USE_APPLICATION)
         failIf(electionNameExists(name), CONFLICT, "Election with name '$name' already exists")
         stateDbCommands.addElection(accessToken.userName, accessToken.userName, name)
+    }
+
+    override fun listElections(accessToken: AccessToken): List<Election> {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val rows = stateDbQueries.listElections()
+        val list = rows.map { it.toDomain() }
+        return list
     }
 
     override fun listTables(accessToken: AccessToken): List<String> {

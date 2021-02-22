@@ -42,6 +42,7 @@ class RegressionTest {
             RemoveUser(name = "Carol"),
             ListUsers,
             AddElection(name = "Favorite Ice Cream Flavor"),
+            ListElections,
             ListTables,
             UserCount,
             ElectionCount,

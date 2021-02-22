@@ -35,6 +35,10 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
+    override fun listElections(): List<ElectionRow> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
     override fun findUserByName(name: String): UserRow {
         throw UnsupportedOperationException("not implemented")
     }

@@ -123,6 +123,28 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiL
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
 200
 
+/ListElections
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "elections" : [ {
+    "ownerName" : "Alice",
+    "name" : "Favorite Ice Cream Flavor",
+    "startTime" : null,
+    "endTime" : null,
+    "secretBallot" : false,
+    "whenDoneConfiguring" : null,
+    "isTemplate" : false,
+    "isStarted" : false,
+    "isFinished" : false,
+    "canChangeCandidatesAfterDoneConfiguring" : false,
+    "creatorCanDeleteBallots" : false,
+    "auditorCanDeleteBallots" : false
+  } ]
+}
+
 /ListTables
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
