@@ -117,7 +117,6 @@ Content-Type: application/json
 
 /AddElection
 {
-  "owner" : "Alice",
   "name" : "Favorite Ice Cream Flavor"
 }
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
