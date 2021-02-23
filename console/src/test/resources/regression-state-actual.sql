@@ -28,57 +28,14 @@ select value from int_variable where name = 'last-synced';
 update user set role='USER' where name = 'Bob';
 update int_variable set value = 4 where name = 'last-synced';
 select name, email, salt, hash, role from user where name = 'Carol';
-select value
-from int_variable
-where name = 'last-synced';
-delete
-from user
-where name = 'Carol';
-update int_variable
-set value = 5
-where name = 'last-synced';
-select user.name as owner,
-       election.name,
-       election.start,
-       election.end,
-       election.secret,
-       election.done_configuring,
-       election.template,
-       election.started,
-       election.finished,
-       election.can_change_candidates_after_done_configuring,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots
-from election
-         inner join user on election.owner_id = user.id
-where election.name = 'Favorite Ice Cream Flavor';
-select value
-from int_variable
-where name = 'last-synced';
-insert into election (owner_id, name)
-values ((select id from user where name = 'Alice'), 'Favorite Ice Cream Flavor');
-update int_variable
-set value = 6
-where name = 'last-synced';
-select count(id)
-from user;
-select count(id)
-from election;
-select *
-from user;
-select election.id,
-       election.owner_id,
-       user.name owner,
-       election.name,
-       election.start,
-       election.end,
-       election.secret,
-       election.done_configuring,
-       election.template,
-       election.started,
-       election.finished,
-       election.can_change_candidates_after_done_configuring,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots
-from election
-         inner join user on election.owner_id = user.id;
+select value from int_variable where name = 'last-synced';
+delete from user where name = 'Carol';
+update int_variable set value = 5 where name = 'last-synced';
+select user.name as owner, election.name, election.start, election.end, election.secret, election.done_configuring, election.template, election.started, election.finished, election.can_change_candidates_after_done_configuring, election.owner_can_delete_ballots, election.auditor_can_delete_ballots from election inner join user on election.owner_id = user.id where election.name = 'Favorite Ice Cream Flavor';
+select value from int_variable where name = 'last-synced';
+insert into election (owner_id, name) values ((select id from user where name = 'Alice'), 'Favorite Ice Cream Flavor');
+update int_variable set value = 6 where name = 'last-synced';
+select count(id) from user;
+select count(id) from election;
+select * from user;
+select election.id, election.owner_id, user.name owner, election.name, election.start, election.end, election.secret, election.done_configuring, election.template, election.started, election.finished, election.can_change_candidates_after_done_configuring, election.owner_can_delete_ballots, election.auditor_can_delete_ballots from election inner join user on election.owner_id = user.id;
