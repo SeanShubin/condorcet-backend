@@ -136,6 +136,12 @@ class ServiceImpl(
         return genericTable.toTableData()
     }
 
+    override fun debugTableData(accessToken: AccessToken, name: String): TableData {
+        failUnlessPermission(accessToken, VIEW_SECRETS)
+        val genericTable = stateDbQueries.debugTableData(StateSchema, name)
+        return genericTable.toTableData()
+    }
+
     override fun eventData(accessToken: AccessToken): TableData {
         failUnlessPermission(accessToken, VIEW_SECRETS)
         val genericTable = eventDbQueries.tableData(EventSchema, "event")

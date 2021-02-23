@@ -59,4 +59,8 @@ interface EventDbNotImplemented : EventDbQueries, EventDbCommands {
     override fun tableData(schema: Schema, name: String): GenericTable {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun debugTableData(schema: Schema, name: String): GenericTable {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

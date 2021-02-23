@@ -142,6 +142,15 @@ interface ServiceCommand {
             }
     }
 
+    data class DebugTableData(val name: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val tableData = environment.service.debugTableData(accessToken, name)
+                val value = mapOf("table" to tableData)
+                responseBuilder().json(value).build()
+            }
+    }
+
     object EventData : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->

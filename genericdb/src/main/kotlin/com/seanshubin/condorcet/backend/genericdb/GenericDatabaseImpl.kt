@@ -60,4 +60,9 @@ class GenericDatabaseImpl(
         val table = schema.tables.find { it.name == name }!!
         return connection.queryGenericTable(name, table.toSelectAllStatement())
     }
+
+    override fun debugTableData(schema: Schema, name: String): GenericTable {
+        val code = queryLoader.load("debug-$name")
+        return connection.queryGenericTable(name, code)
+    }
 }

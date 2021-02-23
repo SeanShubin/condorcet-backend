@@ -21,5 +21,6 @@ interface Service {
     fun tableCount(accessToken: AccessToken): Int
     fun eventCount(accessToken: AccessToken): Int
     fun tableData(accessToken: AccessToken, name: String): TableData
+    fun debugTableData(accessToken: AccessToken, name: String): TableData
     fun eventData(accessToken: AccessToken): TableData
 }

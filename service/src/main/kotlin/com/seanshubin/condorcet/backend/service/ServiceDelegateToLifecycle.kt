@@ -49,6 +49,9 @@ class ServiceDelegateToLifecycle(
     override fun tableData(accessToken: AccessToken, name: String): TableData =
         withService { it.tableData(accessToken, name) }
 
+    override fun debugTableData(accessToken: AccessToken, name: String): TableData =
+        withService { it.debugTableData(accessToken, name) }
+
     override fun eventData(accessToken: AccessToken): TableData =
         withService { it.eventData(accessToken) }
 

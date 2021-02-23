@@ -49,6 +49,7 @@ class RegressionTest {
             TableCount,
             EventCount,
             TableData("user"),
+            DebugTableData("election"),
             EventData
         )
         val tester = Tester()
