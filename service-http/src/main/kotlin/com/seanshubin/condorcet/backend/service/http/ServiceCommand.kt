@@ -106,6 +106,14 @@ interface ServiceCommand {
             }
     }
 
+    data class DeleteElection(val name: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                environment.service.deleteElection(accessToken, name)
+                responseBuilder().build()
+            }
+    }
+
     object ListElections : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->

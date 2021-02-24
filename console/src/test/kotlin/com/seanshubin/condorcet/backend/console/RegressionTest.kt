@@ -45,6 +45,7 @@ class RegressionTest {
             ),
             RemoveUser(name = "Carol"),
             ListUsers,
+            AddElection(name = "Delete Me"),
             AddElection(name = "Favorite Ice Cream Flavor"),
             UpdateElection(
                 name = "Favorite Ice Cream Flavor",
@@ -76,6 +77,7 @@ class RegressionTest {
                 auditorCanDeleteBallots = true
             ),
             GetElection(name = "Favorite Ice Cream Flavor"),
+            DeleteElection(name = "Delete Me"),
             ListElections,
             ListTables,
             UserCount,

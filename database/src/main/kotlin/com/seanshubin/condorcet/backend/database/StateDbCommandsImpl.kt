@@ -64,4 +64,8 @@ class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, G
             update("set-election-auditor-can-delete-ballots", updates.auditorCanDeleteBallots, name)
         }
     }
+
+    override fun deleteElection(authority: String, name: String) {
+        update("delete-election", name)
+    }
 }

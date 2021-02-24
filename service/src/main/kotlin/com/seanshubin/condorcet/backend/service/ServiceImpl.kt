@@ -115,6 +115,15 @@ class ServiceImpl(
         return electionRow.toDomain()
     }
 
+    override fun deleteElection(accessToken: AccessToken, name: String) {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val electionRow = stateDbQueries.searchElectionByName(name)
+        failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
+        electionRow!!
+        failIf(accessToken.userName != electionRow.owner, UNAUTHORIZED, "User '${accessToken.userName}' is not allowed to delete election '$name' owned by user '${electionRow.owner}'")
+        stateDbCommands.deleteElection(accessToken.userName, name)
+    }
+
     override fun listElections(accessToken: AccessToken): List<Election> {
         failUnlessPermission(accessToken, USE_APPLICATION)
         val rows = stateDbQueries.listElections()

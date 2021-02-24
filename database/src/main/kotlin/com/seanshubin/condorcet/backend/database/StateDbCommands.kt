@@ -24,4 +24,6 @@ interface StateDbCommands {
     fun addElection(authority: String, owner: String, name: String)
 
     fun updateElection(authority:String, name:String, updates:ElectionUpdates)
+
+    fun deleteElection(authority: String, name: String)
 }

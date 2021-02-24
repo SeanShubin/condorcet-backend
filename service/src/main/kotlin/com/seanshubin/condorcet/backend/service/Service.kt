@@ -13,6 +13,7 @@ interface Service {
     fun addElection(accessToken: AccessToken, name: String)
     fun updateElection(accessToken:AccessToken, name:String, electionUpdates: ElectionUpdates)
     fun getElection(accessToken:AccessToken, name:String) :Election
+    fun deleteElection(accessToken:AccessToken, name:String)
     fun listElections(accessToken: AccessToken): List<Election>
     fun listTables(accessToken: AccessToken): List<String>
     fun userCount(accessToken: AccessToken): Int
