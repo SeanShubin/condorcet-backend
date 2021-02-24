@@ -9,6 +9,7 @@ class DbEventParserImpl : DbEventParser {
             "SetRole" -> JsonMappers.parse<DbEvent.SetRole>(content)
             "RemoveUser" -> JsonMappers.parse<DbEvent.RemoveUser>(content)
             "AddElection" -> JsonMappers.parse<DbEvent.AddElection>(content)
+            "UpdateElection" -> JsonMappers.parse<DbEvent.UpdateElection>(content)
             else -> throw RuntimeException("Unsupported database operation '$name'")
         }
     }

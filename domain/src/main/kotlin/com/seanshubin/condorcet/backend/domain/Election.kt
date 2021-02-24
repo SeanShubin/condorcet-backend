@@ -8,6 +8,7 @@ data class Election(
     val startTime: Instant? = null,
     val endTime: Instant? = null,
     val secretBallot: Boolean = true,
+    val restrictedToVoterList: Boolean = false,
     val whenDoneConfiguring: Instant?,
     val isTemplate: Boolean = false,
     val isStarted: Boolean = false,

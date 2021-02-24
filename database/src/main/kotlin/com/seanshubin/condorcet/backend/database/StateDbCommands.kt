@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Role
 
 interface StateDbCommands {
@@ -21,4 +22,6 @@ interface StateDbCommands {
     fun removeUser(authority: String, name: String)
 
     fun addElection(authority: String, owner: String, name: String)
+
+    fun updateElection(authority:String, name:String, updates:ElectionUpdates)
 }

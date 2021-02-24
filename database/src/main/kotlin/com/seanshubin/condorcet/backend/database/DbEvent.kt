@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Role
 
 interface DbEvent {
@@ -27,6 +28,13 @@ interface DbEvent {
         DbEvent {
         override fun exec(authority: String, stateDbCommands: StateDbCommands) {
             stateDbCommands.addElection(authority, owner, name)
+        }
+    }
+
+    data class UpdateElection(val name: String, val updates:ElectionUpdates) :
+        DbEvent {
+        override fun exec(authority: String, stateDbCommands: StateDbCommands) {
+            stateDbCommands.updateElection(authority, name, updates)
         }
     }
 }

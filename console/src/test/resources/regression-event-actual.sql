@@ -4,5 +4,6 @@ insert into event (`when`, authority, type, text) values ('2021-02-15 07:56:19.9
 insert into event (`when`, authority, type, text) values ('2021-02-15 08:47:44.946811', 'Alice', 'SetRole', '{"name":"Bob","role":"USER"}');
 insert into event (`when`, authority, type, text) values ('2021-02-15 08:49:06.420277', 'Alice', 'RemoveUser', '{"name":"Carol"}');
 insert into event (`when`, authority, type, text) values ('2021-02-20 06:26:30.148351', 'Alice', 'AddElection', '{"owner":"Alice","name":"Favorite Ice Cream Flavor"}');
+insert into event (`when`, authority, type, text) values ('2021-02-24 00:11:35.648172', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"restrictedToVoterList":true,"shouldSetStartTime":true,"startTime":"2021-02-03T04:55:30Z","shouldSetEndTime":true,"endTime":"2022-02-03T04:55:30Z","secretBallot":true,"shouldSetWhenDoneConfiguring":true,"whenDoneConfiguring":"2020-02-03T04:55:30Z","isTemplate":true,"isStarted":true,"isFinished":true,"canChangeCandidatesAfterDoneConfiguring":true,"ownerCanDeleteBallots":true,"auditorCanDeleteBallots":true}}');
 select count(id) from event;
 select * from event;

@@ -68,6 +68,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val start: Instant? = resultSet.getTimestamp("start")?.toInstant()
         val end: Instant? = resultSet.getTimestamp("end")?.toInstant()
         val secret: Boolean = resultSet.getBoolean("secret")
+        val restrictedToVoterList:Boolean = resultSet.getBoolean("restricted_to_voter_list")
         val doneConfiguring: Instant? = resultSet.getTimestamp("done_configuring")?.toInstant()
         val template: Boolean = resultSet.getBoolean("template")
         val started: Boolean = resultSet.getBoolean("started")
@@ -77,7 +78,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val ownerCanDeleteBallots: Boolean = resultSet.getBoolean("owner_can_delete_ballots")
         val auditorCanDeleteBallots: Boolean = resultSet.getBoolean("auditor_can_delete_ballots")
         return ElectionRow(
-            owner, name, start, end, secret, doneConfiguring, template, started, finished,
+            owner, name, start, end, secret, restrictedToVoterList, doneConfiguring, template, started, finished,
             canChangeCandidatesAfterDoneConfiguring, ownerCanDeleteBallots, auditorCanDeleteBallots
         )
     }

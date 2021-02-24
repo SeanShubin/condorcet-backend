@@ -23,6 +23,7 @@ object StateSchema : Schema {
     val electionStart = Field("start", DATE, allowNull = true)
     val electionEnd = Field("end", DATE, allowNull = true)
     val electionSecret = Field("secret", BOOLEAN, default = "false")
+    val electionRestrictedToVoterList = Field("restricted_to_voter_list", BOOLEAN, default = "false")
     val electionDoneConfiguring = Field("done_configuring", DATE, allowNull = true)
     val electionTemplate = Field("template", BOOLEAN, default = "false")
     val electionStarted = Field("started", BOOLEAN, default = "false")
@@ -38,6 +39,7 @@ object StateSchema : Schema {
         electionStart,
         electionEnd,
         electionSecret,
+        electionRestrictedToVoterList,
         electionDoneConfiguring,
         electionTemplate,
         electionStarted,

@@ -9,6 +9,7 @@ data class ElectionRow(
     val start: Instant? = null,
     val end: Instant? = null,
     val secret: Boolean = true,
+    val restrictedToVoterList:Boolean = false,
     val doneConfiguring: Instant?,
     val template: Boolean = false,
     val started: Boolean = false,

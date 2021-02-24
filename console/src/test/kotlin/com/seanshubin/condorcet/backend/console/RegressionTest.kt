@@ -6,6 +6,10 @@ import com.seanshubin.condorcet.backend.dependencies.Dependencies
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand.*
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -42,6 +46,35 @@ class RegressionTest {
             RemoveUser(name = "Carol"),
             ListUsers,
             AddElection(name = "Favorite Ice Cream Flavor"),
+            UpdateElection(
+                name = "Favorite Ice Cream Flavor",
+                restrictedToVoterList = true,
+                shouldSetStartTime = true,
+                startTime = ZonedDateTime.of(
+                    LocalDate.of(2021, 2, 3),
+                    LocalTime.of(4, 55, 30),
+                    ZoneId.of("UTC")
+                ).toInstant(),
+                shouldSetEndTime = true,
+                endTime = ZonedDateTime.of(
+                    LocalDate.of(2022, 2, 3),
+                    LocalTime.of(4, 55, 30),
+                    ZoneId.of("UTC")
+                ).toInstant(),
+                secretBallot = true,
+                shouldSetWhenDoneConfiguring = true,
+                whenDoneConfiguring = ZonedDateTime.of(
+                    LocalDate.of(2020, 2, 3),
+                    LocalTime.of(4, 55, 30),
+                    ZoneId.of("UTC")
+                ).toInstant(),
+                isTemplate = true,
+                isStarted = true,
+                isFinished = true,
+                canChangeCandidatesAfterDoneConfiguring = true,
+                ownerCanDeleteBallots = true,
+                auditorCanDeleteBallots = true
+            ),
             ListElections,
             ListTables,
             UserCount,

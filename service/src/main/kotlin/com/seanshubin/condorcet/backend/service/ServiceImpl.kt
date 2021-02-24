@@ -98,6 +98,15 @@ class ServiceImpl(
         stateDbCommands.addElection(accessToken.userName, accessToken.userName, name)
     }
 
+    override fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates) {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val electionRow = stateDbQueries.searchElectionByName(name)
+        failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
+        electionRow!!
+        failIf(accessToken.userName != electionRow.owner, UNAUTHORIZED, "User '${accessToken.userName}' is not allowed to modify election '$name' owned by user '${electionRow.owner}'")
+        stateDbCommands.updateElection(accessToken.userName, name, electionUpdates)
+    }
+
     override fun listElections(accessToken: AccessToken): List<Election> {
         failUnlessPermission(accessToken, USE_APPLICATION)
         val rows = stateDbQueries.listElections()

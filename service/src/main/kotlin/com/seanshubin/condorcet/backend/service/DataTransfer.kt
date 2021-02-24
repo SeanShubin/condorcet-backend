@@ -11,6 +11,7 @@ object DataTransfer {
             start,
             end,
             secret,
+            restrictedToVoterList,
             doneConfiguring,
             template,
             started,

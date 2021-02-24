@@ -10,6 +10,8 @@ import com.seanshubin.condorcet.backend.service.RefreshToken
 import com.seanshubin.condorcet.backend.service.ServiceException
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import com.seanshubin.condorcet.backend.service.Tokens
+import com.seanshubin.condorcet.backend.service.http.DataTransfer.toElectionConfig
+import java.time.Instant
 
 interface ServiceCommand {
     fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue
@@ -66,6 +68,31 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 environment.service.addElection(accessToken, name)
+                responseBuilder().build()
+            }
+    }
+
+    data class UpdateElection(
+        val name: String,
+        val restrictedToVoterList: Boolean? = null,
+        val shouldSetStartTime: Boolean? = null,
+        val startTime: Instant? = null,
+        val shouldSetEndTime: Boolean? = null,
+        val endTime: Instant? = null,
+        val secretBallot: Boolean? = null,
+        val shouldSetWhenDoneConfiguring: Boolean? = null,
+        val whenDoneConfiguring: Instant?,
+        val isTemplate: Boolean? = null,
+        val isStarted: Boolean? = null,
+        val isFinished: Boolean? = null,
+        val canChangeCandidatesAfterDoneConfiguring: Boolean? = null,
+        val ownerCanDeleteBallots: Boolean? = null,
+        val auditorCanDeleteBallots: Boolean? = null
+    ) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val electionConfig = toElectionConfig()
+                environment.service.updateElection(accessToken, name, electionConfig)
                 responseBuilder().build()
             }
     }

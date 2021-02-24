@@ -4,6 +4,7 @@ import com.seanshubin.condorcet.backend.database.ElectionRow
 import com.seanshubin.condorcet.backend.database.StateDbCommands
 import com.seanshubin.condorcet.backend.database.StateDbQueries
 import com.seanshubin.condorcet.backend.database.UserRow
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
@@ -36,6 +37,10 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     }
 
     override fun listElections(): List<ElectionRow> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
         throw UnsupportedOperationException("not implemented")
     }
 
