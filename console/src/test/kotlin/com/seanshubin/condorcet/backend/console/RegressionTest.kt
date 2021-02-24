@@ -75,6 +75,7 @@ class RegressionTest {
                 ownerCanDeleteBallots = true,
                 auditorCanDeleteBallots = true
             ),
+            GetElection(name = "Favorite Ice Cream Flavor"),
             ListElections,
             ListTables,
             UserCount,

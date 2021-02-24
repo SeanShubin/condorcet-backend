@@ -49,6 +49,7 @@ update election set can_change_candidates_after_done_configuring = 1 where name 
 update election set owner_can_delete_ballots = 1 where name = 'Favorite Ice Cream Flavor';
 update election set auditor_can_delete_ballots = 1 where name = 'Favorite Ice Cream Flavor';
 update int_variable set value = 7 where name = 'last-synced';
+select user.name as owner, election.name, election.start, election.end, election.secret, election.restricted_to_voter_list, election.done_configuring, election.template, election.started, election.finished, election.can_change_candidates_after_done_configuring, election.owner_can_delete_ballots, election.auditor_can_delete_ballots from election inner join user on election.owner_id = user.id where election.name = 'Favorite Ice Cream Flavor';
 select count(id) from user;
 select count(id) from election;
 select * from user;

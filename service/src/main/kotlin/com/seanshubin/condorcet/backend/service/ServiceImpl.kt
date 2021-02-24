@@ -107,6 +107,14 @@ class ServiceImpl(
         stateDbCommands.updateElection(accessToken.userName, name, electionUpdates)
     }
 
+    override fun getElection(accessToken: AccessToken, name: String): Election {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val electionRow = stateDbQueries.searchElectionByName(name)
+        failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
+        electionRow!!
+        return electionRow.toDomain()
+    }
+
     override fun listElections(accessToken: AccessToken): List<Election> {
         failUnlessPermission(accessToken, USE_APPLICATION)
         val rows = stateDbQueries.listElections()
