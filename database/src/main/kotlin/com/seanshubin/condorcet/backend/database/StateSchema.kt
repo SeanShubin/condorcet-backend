@@ -20,33 +20,28 @@ object StateSchema : Schema {
     val user = Table("user", userName, userEmail, userRole, userSalt, userHash)
     val electionOwner = ForeignKey("owner", user)
     val electionName = Field("name", STRING, unique = true)
-    val electionStart = Field("start", DATE, allowNull = true)
-    val electionEnd = Field("end", DATE, allowNull = true)
-    val electionSecret = Field("secret", BOOLEAN, default = "false")
-    val electionRestrictedToVoterList = Field("restricted_to_voter_list", BOOLEAN, default = "false")
-    val electionDoneConfiguring = Field("done_configuring", DATE, allowNull = true)
-    val electionTemplate = Field("template", BOOLEAN, default = "false")
-    val electionStarted = Field("started", BOOLEAN, default = "false")
-    val electionFinished = Field("finished", BOOLEAN, default = "false")
-    val electionCanChangeCandidatesAfterDoneConfiguring =
-        Field("can_change_candidates_after_done_configuring", BOOLEAN, default = "false")
+    val electionSecretBallot = Field("secret_ballot", BOOLEAN, default = "false")
+    val electionScheduledStart = Field("scheduled_start", DATE, allowNull = true)
+    val electionScheduledEnd = Field("scheduled_end", DATE, allowNull = true)
+    val electionRestrictWhoCanVote = Field("restrict_who_can_vote", BOOLEAN, default = "false")
     val electionOwnerCanDeleteBallots = Field("owner_can_delete_ballots", BOOLEAN, default = "false")
     val electionAuditorCanDeleteBallots = Field("auditor_can_delete_ballots", BOOLEAN, default = "false")
+    val electionIsTemplate = Field("is_template", BOOLEAN, default = "false")
+    val electionNoMoreChanges = Field("no_more_changes", BOOLEAN, default = "false")
+    val electionIsOpen = Field("is_open", BOOLEAN, default = "false")
     val election = Table(
         "election",
         electionOwner,
         electionName,
-        electionStart,
-        electionEnd,
-        electionSecret,
-        electionRestrictedToVoterList,
-        electionDoneConfiguring,
-        electionTemplate,
-        electionStarted,
-        electionFinished,
-        electionCanChangeCandidatesAfterDoneConfiguring,
+        electionSecretBallot,
+        electionScheduledStart,
+        electionScheduledEnd,
+        electionRestrictWhoCanVote,
         electionOwnerCanDeleteBallots,
-        electionAuditorCanDeleteBallots
+        electionAuditorCanDeleteBallots,
+        electionIsTemplate,
+        electionNoMoreChanges,
+        electionIsOpen
     )
     val candidateElection = ForeignKey("election", election)
     val candidateName = Field("name", STRING)

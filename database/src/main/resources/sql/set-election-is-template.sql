@@ -1,4 +1,4 @@
 update
     election
-set template = ?
+set is_template = ?
 where name = ?

@@ -1,7 +1,12 @@
 package com.seanshubin.condorcet.backend.console
 
 import com.seanshubin.condorcet.backend.dependencies.Dependencies
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Role
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 object SampleDataApp {
     @JvmStatic
@@ -37,6 +42,32 @@ object SampleDataApp {
         service.setRole(daveAccessToken, "Judy", Role.USER)
         val judyAccessToken = service.authenticate("Judy", "pass").accessToken
         service.addElection(eveAccessToken, "Favorite Ice Cream Flavor")
+        service.updateElection(
+            eveAccessToken, "Favorite Ice Cream Flavor",
+            ElectionUpdates(
+                newName = "Favorite Ice Cream",
+                secretBallot = true,
+                isTemplate = true,
+                ownerCanDeleteBallots = true,
+                auditorCanDeleteBallots = true,
+                restrictWhoCanVote = true,
+                clearScheduledStart = null,
+                scheduledStart = ZonedDateTime.of(
+                    LocalDate.of(2021, 2, 3),
+                    LocalTime.of(4, 55, 30),
+                    ZoneId.of("UTC")
+                ).toInstant(),
+                clearScheduledEnd = null,
+                scheduledEnd = ZonedDateTime.of(
+                    LocalDate.of(2022, 2, 3),
+                    LocalTime.of(4, 55, 30),
+                    ZoneId.of("UTC")
+                ).toInstant(),
+                noMoreChanges = true,
+                isOpen = true
+            ),
+        )
+
         service.addElection(frankAccessToken, "Government")
         service.addElection(frankAccessToken, "Dystopia")
         service.addElection(ivyAccessToken, "Pet")

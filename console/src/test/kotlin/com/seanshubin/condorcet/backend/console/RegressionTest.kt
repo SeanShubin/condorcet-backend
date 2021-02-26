@@ -49,34 +49,28 @@ class RegressionTest {
             AddElection(name = "Favorite Ice Cream Flavor"),
             UpdateElection(
                 name = "Favorite Ice Cream Flavor",
-                restrictedToVoterList = true,
-                shouldSetStartTime = true,
-                startTime = ZonedDateTime.of(
+                newName = "Favorite Ice Cream",
+                secretBallot = true,
+                isTemplate = true,
+                ownerCanDeleteBallots = true,
+                auditorCanDeleteBallots = true,
+                restrictWhoCanVote = true,
+                clearScheduledStart = null,
+                scheduledStart = ZonedDateTime.of(
                     LocalDate.of(2021, 2, 3),
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")
                 ).toInstant(),
-                shouldSetEndTime = true,
-                endTime = ZonedDateTime.of(
+                clearScheduledEnd = null,
+                scheduledEnd = ZonedDateTime.of(
                     LocalDate.of(2022, 2, 3),
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")
                 ).toInstant(),
-                secretBallot = true,
-                shouldSetWhenDoneConfiguring = true,
-                whenDoneConfiguring = ZonedDateTime.of(
-                    LocalDate.of(2020, 2, 3),
-                    LocalTime.of(4, 55, 30),
-                    ZoneId.of("UTC")
-                ).toInstant(),
-                isTemplate = true,
-                isStarted = true,
-                isFinished = true,
-                canChangeCandidatesAfterDoneConfiguring = true,
-                ownerCanDeleteBallots = true,
-                auditorCanDeleteBallots = true
+                noMoreChanges = true,
+                isOpen = true
             ),
-            GetElection(name = "Favorite Ice Cream Flavor"),
+            GetElection(name = "Favorite Ice Cream"),
             DeleteElection(name = "Delete Me"),
             ListElections,
             ListTables,

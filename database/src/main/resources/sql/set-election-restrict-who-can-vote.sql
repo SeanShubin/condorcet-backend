@@ -1,4 +1,4 @@
 update
     election
-set secret_ballot = ?
+set restrict_who_can_vote = ?
 where name = ?

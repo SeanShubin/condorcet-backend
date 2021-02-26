@@ -1,4 +1,4 @@
 update
     election
-set end = ?
+set scheduled_end = ?
 where name = ?

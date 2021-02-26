@@ -1,4 +1,4 @@
 update
     election
-set done_configuring = ?
+set scheduled_start = ?
 where name = ?

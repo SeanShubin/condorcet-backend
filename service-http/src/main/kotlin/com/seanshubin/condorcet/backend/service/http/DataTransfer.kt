@@ -5,19 +5,17 @@ import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 object DataTransfer {
     fun ServiceCommand.UpdateElection.toElectionConfig(): ElectionUpdates =
         ElectionUpdates(
-            restrictedToVoterList,
-            shouldSetStartTime,
-            startTime,
-            shouldSetEndTime,
-            endTime,
+            newName,
             secretBallot,
-            shouldSetWhenDoneConfiguring,
-            whenDoneConfiguring,
-            isTemplate,
-            isStarted,
-            isFinished,
-            canChangeCandidatesAfterDoneConfiguring,
+            clearScheduledStart,
+            scheduledStart,
+            clearScheduledEnd,
+            scheduledEnd,
+            restrictWhoCanVote,
             ownerCanDeleteBallots,
-            auditorCanDeleteBallots
+            auditorCanDeleteBallots,
+            isTemplate,
+            noMoreChanges,
+            isOpen
         )
 }

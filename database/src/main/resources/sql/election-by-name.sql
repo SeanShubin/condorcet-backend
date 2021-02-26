@@ -1,16 +1,14 @@
 select user.name as owner,
        election.name,
-       election.start,
-       election.end,
-       election.secret,
-       election.restricted_to_voter_list,
-       election.done_configuring,
-       election.template,
-       election.started,
-       election.finished,
-       election.can_change_candidates_after_done_configuring,
+       election.secret_ballot,
+       election.scheduled_start,
+       election.scheduled_end,
+       election.restrict_who_can_vote,
        election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots
+       election.auditor_can_delete_ballots,
+       election.is_template,
+       election.no_more_changes,
+       election.is_open
 from election
          inner join user
                     on election.owner_id = user.id

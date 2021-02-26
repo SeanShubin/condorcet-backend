@@ -74,20 +74,18 @@ interface ServiceCommand {
 
     data class UpdateElection(
         val name: String,
-        val restrictedToVoterList: Boolean? = null,
-        val shouldSetStartTime: Boolean? = null,
-        val startTime: Instant? = null,
-        val shouldSetEndTime: Boolean? = null,
-        val endTime: Instant? = null,
-        val secretBallot: Boolean? = null,
-        val shouldSetWhenDoneConfiguring: Boolean? = null,
-        val whenDoneConfiguring: Instant?,
-        val isTemplate: Boolean? = null,
-        val isStarted: Boolean? = null,
-        val isFinished: Boolean? = null,
-        val canChangeCandidatesAfterDoneConfiguring: Boolean? = null,
-        val ownerCanDeleteBallots: Boolean? = null,
-        val auditorCanDeleteBallots: Boolean? = null
+        val newName: String?,
+        val secretBallot: Boolean?,
+        val clearScheduledStart: Boolean?,
+        val scheduledStart: Instant?,
+        val clearScheduledEnd: Boolean?,
+        val scheduledEnd: Instant?,
+        val restrictWhoCanVote: Boolean?,
+        val ownerCanDeleteBallots: Boolean?,
+        val auditorCanDeleteBallots: Boolean?,
+        val isTemplate: Boolean?,
+        val noMoreChanges: Boolean?,
+        val isOpen: Boolean?
     ) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->

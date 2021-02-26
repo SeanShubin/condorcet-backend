@@ -8,16 +8,14 @@ object DataTransfer {
         Election(
             owner,
             name,
-            start,
-            end,
-            secret,
-            restrictedToVoterList,
-            doneConfiguring,
-            template,
-            started,
-            finished,
-            canChangeCandidatesAfterDoneConfiguring,
+            secretBallot,
+            scheduledStart,
+            scheduledEnd,
+            restrictWhoCanVote,
             ownerCanDeleteBallots,
-            auditorCanDeleteBallots
+            auditorCanDeleteBallots,
+            isTemplate,
+            noMoreChanges,
+            isOpen
         )
 }

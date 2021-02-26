@@ -3,18 +3,16 @@ package com.seanshubin.condorcet.backend.domain
 import java.time.Instant
 
 data class ElectionUpdates(
-    val restrictedToVoterList:Boolean? = null,
-    val shouldSetStartTime:Boolean? = null,
-    val startTime: Instant? = null,
-    val shouldSetEndTime:Boolean? = null,
-    val endTime: Instant? = null,
+    val newName: String? = null,
     val secretBallot: Boolean? = null,
-    val shouldSetWhenDoneConfiguring:Boolean? = null,
-    val whenDoneConfiguring: Instant?,
-    val isTemplate: Boolean? = null,
-    val isStarted: Boolean? = null,
-    val isFinished: Boolean? = null,
-    val canChangeCandidatesAfterDoneConfiguring: Boolean? = null,
+    val clearScheduledStart: Boolean? = null,
+    val scheduledStart: Instant? = null,
+    val clearScheduledEnd: Boolean? = null,
+    val scheduledEnd: Instant? = null,
+    val restrictWhoCanVote: Boolean? = null,
     val ownerCanDeleteBallots: Boolean? = null,
-    val auditorCanDeleteBallots: Boolean? = null
+    val auditorCanDeleteBallots: Boolean? = null,
+    val isTemplate: Boolean? = null,
+    val noMoreChanges: Boolean? = null,
+    val isOpen: Boolean? = null,
 )

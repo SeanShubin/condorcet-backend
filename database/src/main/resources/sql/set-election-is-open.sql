@@ -1,4 +1,4 @@
 update
     election
-set start = ?
+set is_open = ?
 where name = ?

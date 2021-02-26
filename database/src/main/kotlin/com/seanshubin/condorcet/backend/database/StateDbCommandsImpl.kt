@@ -30,38 +30,39 @@ class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, G
     }
 
     override fun updateElection(authority: String, name:String, updates: ElectionUpdates) {
-        if(updates.restrictedToVoterList != null){
-            update("set-election-restricted-to-voter-list", updates.restrictedToVoterList, name)
+        if (updates.newName != null) {
+            update("set-election-name", updates.newName, name)
         }
-        if(updates.shouldSetStartTime == true){
-            update("set-election-start", updates.startTime, name)
-        }
-        if(updates.shouldSetEndTime == true){
-            update("set-election-end", updates.endTime, name)
-        }
-        if(updates.secretBallot != null){
+        if (updates.secretBallot != null) {
             update("set-election-secret-ballot", updates.secretBallot, name)
         }
-        if(updates.shouldSetWhenDoneConfiguring == true){
-            update("set-election-done-configuring", updates.whenDoneConfiguring, name)
+        if (updates.clearScheduledStart == true) {
+            update("set-election-scheduled-start", null, name)
+        } else {
+            update("set-election-scheduled-start", updates.scheduledStart, name)
         }
-        if(updates.isTemplate != null){
-            update("set-election-template", updates.isTemplate, name)
+        if (updates.clearScheduledEnd == true) {
+            update("set-election-scheduled-end", null, name)
+        } else {
+            update("set-election-scheduled-end", updates.scheduledEnd, name)
         }
-        if(updates.isStarted != null){
-            update("set-election-started", updates.isStarted, name)
+        if (updates.restrictWhoCanVote != null) {
+            update("set-election-restrict-who-can-vote", updates.restrictWhoCanVote, name)
         }
-        if(updates.isFinished != null){
-            update("set-election-finished", updates.isFinished, name)
-        }
-        if(updates.canChangeCandidatesAfterDoneConfiguring != null){
-            update("set-election-can-change-candidates-after-done-configuring", updates.canChangeCandidatesAfterDoneConfiguring, name)
-        }
-        if(updates.ownerCanDeleteBallots != null){
+        if (updates.ownerCanDeleteBallots != null) {
             update("set-election-owner-can-delete-ballots", updates.ownerCanDeleteBallots, name)
         }
-        if(updates.auditorCanDeleteBallots != null){
+        if (updates.auditorCanDeleteBallots != null) {
             update("set-election-auditor-can-delete-ballots", updates.auditorCanDeleteBallots, name)
+        }
+        if (updates.isTemplate != null) {
+            update("set-election-is-template", updates.isTemplate, name)
+        }
+        if (updates.noMoreChanges != null) {
+            update("set-election-no-more-changes", updates.noMoreChanges, name)
+        }
+        if (updates.isOpen != null) {
+            update("set-election-is-open", updates.isOpen, name)
         }
     }
 

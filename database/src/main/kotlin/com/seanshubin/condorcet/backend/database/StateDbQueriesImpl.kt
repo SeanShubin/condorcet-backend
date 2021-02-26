@@ -65,21 +65,18 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     private fun createElection(resultSet: ResultSet): ElectionRow {
         val owner = resultSet.getString("owner")
         val name: String = resultSet.getString("name")
-        val start: Instant? = resultSet.getTimestamp("start")?.toInstant()
-        val end: Instant? = resultSet.getTimestamp("end")?.toInstant()
-        val secret: Boolean = resultSet.getBoolean("secret")
-        val restrictedToVoterList:Boolean = resultSet.getBoolean("restricted_to_voter_list")
-        val doneConfiguring: Instant? = resultSet.getTimestamp("done_configuring")?.toInstant()
-        val template: Boolean = resultSet.getBoolean("template")
-        val started: Boolean = resultSet.getBoolean("started")
-        val finished: Boolean = resultSet.getBoolean("finished")
-        val canChangeCandidatesAfterDoneConfiguring: Boolean =
-            resultSet.getBoolean("can_change_candidates_after_done_configuring")
+        val secretBallot: Boolean = resultSet.getBoolean("secret_ballot")
+        val scheduledStart: Instant? = resultSet.getTimestamp("scheduled_start")?.toInstant()
+        val scheduledEnd: Instant? = resultSet.getTimestamp("scheduled_end")?.toInstant()
+        val restrictWhoCanVote: Boolean = resultSet.getBoolean("restrict_who_can_vote")
         val ownerCanDeleteBallots: Boolean = resultSet.getBoolean("owner_can_delete_ballots")
         val auditorCanDeleteBallots: Boolean = resultSet.getBoolean("auditor_can_delete_ballots")
+        val isTemplate: Boolean = resultSet.getBoolean("is_template")
+        val noMoreChanges: Boolean = resultSet.getBoolean("no_more_changes")
+        val isOpen: Boolean = resultSet.getBoolean("is_open")
         return ElectionRow(
-            owner, name, start, end, secret, restrictedToVoterList, doneConfiguring, template, started, finished,
-            canChangeCandidatesAfterDoneConfiguring, ownerCanDeleteBallots, auditorCanDeleteBallots
+            owner, name, secretBallot, scheduledStart, scheduledEnd, restrictWhoCanVote,
+            ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, noMoreChanges, isOpen
         )
     }
 }

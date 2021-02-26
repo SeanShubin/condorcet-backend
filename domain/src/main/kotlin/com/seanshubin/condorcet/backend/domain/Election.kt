@@ -5,15 +5,13 @@ import java.time.Instant
 data class Election(
     val ownerName: String,
     val name: String,
-    val startTime: Instant? = null,
-    val endTime: Instant? = null,
     val secretBallot: Boolean = true,
-    val restrictedToVoterList: Boolean = false,
-    val whenDoneConfiguring: Instant?,
+    val scheduledStart: Instant? = null,
+    val scheduledEnd: Instant? = null,
+    val restrictWhoCanVote: Boolean = false,
+    val ownerCanDeleteBallots: Boolean = false,
+    val auditorCanDeleteBallots: Boolean = false,
     val isTemplate: Boolean = false,
-    val isStarted: Boolean = false,
-    val isFinished: Boolean = false,
-    val canChangeCandidatesAfterDoneConfiguring: Boolean = false,
-    val creatorCanDeleteBallots: Boolean = false,
-    val auditorCanDeleteBallots: Boolean = false
+    val noMoreChanges: Boolean = false,
+    val isOpen: Boolean = false
 )
