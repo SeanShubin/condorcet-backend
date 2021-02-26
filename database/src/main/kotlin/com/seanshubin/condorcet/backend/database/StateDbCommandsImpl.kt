@@ -58,8 +58,8 @@ class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, G
         if (updates.isTemplate != null) {
             update("set-election-is-template", updates.isTemplate, name)
         }
-        if (updates.noMoreChanges != null) {
-            update("set-election-no-more-changes", updates.noMoreChanges, name)
+        if (updates.noChangesAfterVote != null) {
+            update("set-election-no-changes-after-vote", updates.noChangesAfterVote, name)
         }
         if (updates.isOpen != null) {
             update("set-election-is-open", updates.isOpen, name)

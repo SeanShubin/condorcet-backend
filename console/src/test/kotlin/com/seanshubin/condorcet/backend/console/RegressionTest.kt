@@ -67,7 +67,7 @@ class RegressionTest {
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")
                 ).toInstant(),
-                noMoreChanges = true,
+                noChangesAfterVote = false,
                 isOpen = true
             ),
             GetElection(name = "Favorite Ice Cream"),

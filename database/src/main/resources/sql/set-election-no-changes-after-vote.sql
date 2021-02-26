@@ -1,4 +1,4 @@
 update
     election
-set no_more_changes = ?
+set no_changes_after_vote = ?
 where name = ?

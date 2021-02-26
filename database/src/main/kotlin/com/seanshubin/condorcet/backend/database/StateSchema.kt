@@ -27,7 +27,7 @@ object StateSchema : Schema {
     val electionOwnerCanDeleteBallots = Field("owner_can_delete_ballots", BOOLEAN, default = "false")
     val electionAuditorCanDeleteBallots = Field("auditor_can_delete_ballots", BOOLEAN, default = "false")
     val electionIsTemplate = Field("is_template", BOOLEAN, default = "false")
-    val electionNoMoreChanges = Field("no_more_changes", BOOLEAN, default = "false")
+    val electionNoChangesAfterVote = Field("no_changes_after_vote", BOOLEAN, default = "true")
     val electionIsOpen = Field("is_open", BOOLEAN, default = "false")
     val election = Table(
         "election",
@@ -40,7 +40,7 @@ object StateSchema : Schema {
         electionOwnerCanDeleteBallots,
         electionAuditorCanDeleteBallots,
         electionIsTemplate,
-        electionNoMoreChanges,
+        electionNoChangesAfterVote,
         electionIsOpen
     )
     val candidateElection = ForeignKey("election", election)

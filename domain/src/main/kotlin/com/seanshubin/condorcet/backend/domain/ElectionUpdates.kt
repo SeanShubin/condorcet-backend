@@ -13,6 +13,6 @@ data class ElectionUpdates(
     val ownerCanDeleteBallots: Boolean? = null,
     val auditorCanDeleteBallots: Boolean? = null,
     val isTemplate: Boolean? = null,
-    val noMoreChanges: Boolean? = null,
+    val noChangesAfterVote: Boolean? = null,
     val isOpen: Boolean? = null,
 )

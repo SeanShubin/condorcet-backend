@@ -12,6 +12,6 @@ data class Election(
     val ownerCanDeleteBallots: Boolean = false,
     val auditorCanDeleteBallots: Boolean = false,
     val isTemplate: Boolean = false,
-    val noMoreChanges: Boolean = false,
+    val noChangesAfterVote: Boolean = false,
     val isOpen: Boolean = false
 )

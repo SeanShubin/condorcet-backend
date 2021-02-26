@@ -84,7 +84,7 @@ interface ServiceCommand {
         val ownerCanDeleteBallots: Boolean?,
         val auditorCanDeleteBallots: Boolean?,
         val isTemplate: Boolean?,
-        val noMoreChanges: Boolean?,
+        val noChangesAfterVote: Boolean?,
         val isOpen: Boolean?
     ) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
