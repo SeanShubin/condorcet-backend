@@ -10,10 +10,10 @@ class RememberingUuidGenerator(
     private val path: Path
 ) : UniqueIdGenerator {
     var index = 0
-    val previous: MutableList<String> = if (Files.exists(path)) Files.readAllLines(path) else mutableListOf()
 
-    override fun uniqueId(): String =
-        if (index < previous.size) {
+    override fun uniqueId(): String {
+        val previous: MutableList<String> = if (Files.exists(path)) Files.readAllLines(path) else mutableListOf()
+        return if (index < previous.size) {
             val result = previous[index]
             index++
             result
@@ -24,4 +24,5 @@ class RememberingUuidGenerator(
             Files.write(path, listOf(result), StandardOpenOption.CREATE, StandardOpenOption.APPEND)
             result
         }
+    }
 }

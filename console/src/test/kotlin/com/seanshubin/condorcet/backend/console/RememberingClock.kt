@@ -9,7 +9,6 @@ import java.time.ZoneId
 
 class RememberingClock(val backing: Clock, val path: Path) : Clock() {
     var index = 0
-    val previous: MutableList<String> = if (Files.exists(path)) Files.readAllLines(path) else mutableListOf()
     override fun getZone(): ZoneId {
         throw UnsupportedOperationException()
     }
@@ -18,8 +17,9 @@ class RememberingClock(val backing: Clock, val path: Path) : Clock() {
         throw UnsupportedOperationException()
     }
 
-    override fun instant(): Instant =
-        if (index < previous.size) {
+    override fun instant(): Instant {
+        val previous: MutableList<String> = if (Files.exists(path)) Files.readAllLines(path) else mutableListOf()
+        return if (index < previous.size) {
             val result = Instant.parse(previous[index])
             index++
             result
@@ -30,4 +30,5 @@ class RememberingClock(val backing: Clock, val path: Path) : Clock() {
             Files.write(path, listOf(result.toString()), StandardOpenOption.CREATE, StandardOpenOption.APPEND)
             result
         }
+    }
 }
