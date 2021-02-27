@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.service.http
 
 import com.seanshubin.condorcet.backend.json.JsonMappers
+import java.time.Instant
 
 class ServiceCommandParserImpl : ServiceCommandParser {
     override fun parse(name: String, content: String?): ServiceCommand {
@@ -21,7 +22,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "RemoveUser" -> JsonMappers.parse<ServiceCommand.RemoveUser>(json)
             "ListUsers" -> ServiceCommand.ListUsers
             "AddElection" -> JsonMappers.parse<ServiceCommand.AddElection>(json)
-            "UpdateElection" -> JsonMappers.parse<ServiceCommand.UpdateElection>(json)
+            "UpdateElection" -> parseUpdateElection(json)
             "DeleteElection" -> JsonMappers.parse<ServiceCommand.DeleteElection>(json)
             "GetElection" -> JsonMappers.parse<ServiceCommand.GetElection>(json)
             "ListElections" -> ServiceCommand.ListElections
@@ -35,5 +36,33 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "EventData" -> ServiceCommand.EventData
             else -> ServiceCommand.Unsupported(name, json)
         }
+    }
+
+    private fun Any?.toInstant(): Instant? {
+        this as String?
+        return if (this == null) {
+            null
+        } else {
+            Instant.parse(this)
+        }
+    }
+
+    private fun parseUpdateElection(json: String): ServiceCommand.UpdateElection {
+        val map = JsonMappers.parse<Map<String, Any?>>(json)
+        return ServiceCommand.UpdateElection(
+            name = map["name"] as String,
+            newName = map["newName"] as String?,
+            secretBallot = map["secretBallot"] as Boolean?,
+            clearScheduledStart = map.containsKey("scheduledStart") && map["scheduledStart"] == null,
+            scheduledStart = map["scheduledStart"].toInstant(),
+            clearScheduledEnd = map.containsKey("scheduledEnd") && map["scheduledEnd"] == null,
+            scheduledEnd = map["scheduledEnd"].toInstant(),
+            restrictWhoCanVote = map["restrictWhoCanVote"] as Boolean?,
+            ownerCanDeleteBallots = map["ownerCanDeleteBallots"] as Boolean?,
+            auditorCanDeleteBallots = map["auditorCanDeleteBallots"] as Boolean?,
+            isTemplate = map["isTemplate"] as Boolean?,
+            noChangesAfterVote = map["noChangesAfterVote"] as Boolean?,
+            isOpen = map["isOpen"] as Boolean?
+        )
     }
 }

@@ -75,7 +75,7 @@
     contract      []
     table         []
     domain        []
-    prototype     [ jetty jetty-alpn jetty-http2 java-jwt table mysql-jdbc ]
+    prototype     [ jetty jetty-alpn jetty-http2 java-jwt table mysql-jdbc json ]
     jwt           [ java-jwt contract ]
   }
   detangler [console]
