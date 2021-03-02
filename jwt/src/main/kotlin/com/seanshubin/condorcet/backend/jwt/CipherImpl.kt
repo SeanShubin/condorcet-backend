@@ -3,12 +3,6 @@ package com.seanshubin.condorcet.backend.jwt
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
-import java.security.KeyFactory
-import java.security.KeyPairGenerator
-import java.security.interfaces.RSAPrivateKey
-import java.security.interfaces.RSAPublicKey
-import java.security.spec.PKCS8EncodedKeySpec
-import java.security.spec.X509EncodedKeySpec
 
 class CipherImpl(algorithmFactory:AlgorithmFactory) : Cipher {
     private val algorithm: Algorithm = algorithmFactory.create()
@@ -21,5 +15,12 @@ class CipherImpl(algorithmFactory:AlgorithmFactory) : Cipher {
             jwt.withClaim(key, value)
         }
         return jwt.sign(algorithm)
+    }
+
+    override fun encryptedTokenToMap(token: String): Map<String, String?> {
+        val decoded = decode(token)
+        return decode(token).claims.keys.map { key ->
+            Pair(key, decoded.claims[key]?.asString())
+        }.toMap()
     }
 }
