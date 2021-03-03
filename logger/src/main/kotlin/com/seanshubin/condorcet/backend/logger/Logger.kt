@@ -16,4 +16,10 @@ interface Logger {
         exception.printStackTrace(printWriter)
         log(stringWriter.buffer.toString())
     }
+
+    companion object {
+        val nop = object : Logger {
+            override fun log(lines: List<String>) {}
+        }
+    }
 }

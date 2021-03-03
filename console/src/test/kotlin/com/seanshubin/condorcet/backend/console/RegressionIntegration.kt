@@ -1,11 +1,15 @@
 package com.seanshubin.condorcet.backend.console
 
+import com.seanshubin.condorcet.backend.contract.FilesContract
+import com.seanshubin.condorcet.backend.contract.FilesDelegate
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.crypto.Uuid4
 import com.seanshubin.condorcet.backend.dependencies.Integration
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
+import com.seanshubin.condorcet.backend.logger.LoggerFactory
+import com.seanshubin.condorcet.backend.server.Notifications
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
@@ -19,12 +23,17 @@ class RegressionIntegration(phase: Phase) : Integration {
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
     val uniqueIdGeneratorPath = regressionSnapshotDir.resolve("deterministic-unique-id.txt")
     val charset: Charset = StandardCharsets.UTF_8
-    val regressionFileMap: Map<RegressionFile, RegressionInfoFile> =
-        RegressionFile.values().map {
-            it to it.toRegressionInfoFile(regressionSnapshotDir, charset, phase)
-        }.toMap()
-
-    val regressionNotifications = RegressionNotifications(regressionFileMap)
+    val files: FilesContract = FilesDelegate
+    val loggerFactory = LoggerFactory.instanceDefaultZone
+    val regressionData: RegressionData = RegressionDataImpl(
+        loggerFactory,
+        regressionSnapshotDir,
+        phase,
+        files,
+        charset
+    )
+    private val regressionNotifications: Notifications = regressionData.createNotifications(regressionSnapshotDir)
+    override val createLoggingNotifications: (Path) -> Notifications = regressionData::createNotifications
 
     override val host: String = "localhost"
     override val user: String = "root"

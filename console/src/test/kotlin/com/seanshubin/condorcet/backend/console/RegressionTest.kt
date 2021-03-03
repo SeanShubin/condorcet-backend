@@ -109,12 +109,10 @@ class RegressionTest {
 
         fun compareActualWithExpected() {
             RegressionFile.values().forEach {
-                val expectedFile = regressionIntegrationExpected.regressionFileMap.getValue(it)
-                val expectedFilePath = expectedFile.path.toAbsolutePath()
-                val expected = expectedFile.load()
-                val actualFile = regressionIntegrationActual.regressionFileMap.getValue(it)
-                val actualFilePath = actualFile.path.toAbsolutePath()
-                val actual = actualFile.load()
+                val expected = regressionIntegrationExpected.regressionData.loadText(it)
+                val actual = regressionIntegrationActual.regressionData.loadText(it)
+                val expectedFilePath = regressionIntegrationExpected.regressionData.fullPath(it)
+                val actualFilePath = regressionIntegrationActual.regressionData.fullPath(it)
                 assertEquals(
                     expected,
                     actual,

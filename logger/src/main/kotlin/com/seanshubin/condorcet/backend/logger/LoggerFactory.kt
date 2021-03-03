@@ -25,13 +25,17 @@ class LoggerFactory(
         return LineEmittingAndFileLogger(initialize, emit, files, logFile)
     }
 
-    fun createLogGroup(baseDir: Path): LogGroup {
+    fun createLogGroupWithTimestamp(baseDir: Path): LogGroup {
         val now = clock.instant()
         val zone = clock.zone
         val zonedDateTime = ZonedDateTime.ofInstant(now, zone)
         val formattedDateTime = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(zonedDateTime)
         val logDir = baseDir.resolve(formattedDateTime.replace(':', '-').replace('.', '-'))
         return LogGroup(emit, files, logDir)
+    }
+
+    fun createLogGroupWithoutTimestamp(baseDir: Path): LogGroup {
+        return LogGroup(emit, files, baseDir)
     }
 
     companion object {

@@ -4,10 +4,12 @@ import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
+import com.seanshubin.condorcet.backend.server.Notifications
 import java.nio.file.Path
 import java.time.Clock
 
 interface Integration {
+    val createLoggingNotifications: (Path) -> Notifications
     val host: String
     val user: String
     val password: String
