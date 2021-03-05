@@ -6,6 +6,7 @@
 **/target/
 generated
 local-config
+/secrets
 *~
 *#
 .#*
