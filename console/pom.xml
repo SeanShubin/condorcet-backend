@@ -43,14 +43,14 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
-                    <finalName>condorcet-backend</finalName>
+                    <finalName>condorcet-backend-console</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.seanshubin.condorcet.backend.console.ServerAppKt</mainClass>
+                            <mainClass>com.seanshubin.condorcet.backend.console.ServerApp</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

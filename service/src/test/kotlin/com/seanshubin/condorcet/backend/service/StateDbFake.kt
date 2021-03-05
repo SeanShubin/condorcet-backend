@@ -18,5 +18,5 @@ class StateDbFake : StateDbNotImplemented {
     override fun searchUserByEmail(email: String): UserRow? =
         userRows.find { userRow -> userRow.email == email }
 
-    override fun tableCount(): Int = userRows.size
+    override fun userCount(): Int = userRows.size
 }
