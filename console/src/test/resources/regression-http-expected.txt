@@ -172,7 +172,8 @@ Content-Type: application/json
     "isTemplate" : false,
     "noChangesAfterVote" : true,
     "isOpen" : false
-  }
+  },
+  "canUpdate" : true
 }
 
 /DeleteElection

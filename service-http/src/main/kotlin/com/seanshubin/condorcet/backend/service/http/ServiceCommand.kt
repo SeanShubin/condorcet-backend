@@ -98,9 +98,8 @@ interface ServiceCommand {
     data class GetElection(val name: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val election = environment.service.getElection(accessToken, name)
-                val value = mapOf("election" to election)
-                responseBuilder().json(value).build()
+                val electionAndCanUpdate = environment.service.getElection(accessToken, name)
+                responseBuilder().json(electionAndCanUpdate).build()
             }
     }
 
