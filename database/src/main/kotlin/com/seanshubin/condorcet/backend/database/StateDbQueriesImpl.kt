@@ -53,6 +53,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         return queryZeroOrOneRow(::createElection, "election-by-name", name)
     }
 
+    override fun listCandidates(electionName: String): List<String> =
+        query(::createCandidateName, "candidate-names-by-election", electionName)
+
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
         val email = resultSet.getString("email")
@@ -79,4 +82,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
             ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, noChangesAfterVote, isOpen
         )
     }
+
+    private fun createCandidateName(resultSet: ResultSet): String =
+        resultSet.getString("name")
 }

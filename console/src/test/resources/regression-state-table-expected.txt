@@ -2,7 +2,7 @@ select * from int_variable
 ╔══╤═══════════╤═════╗
 ║id│name       │value║
 ╟──┼───────────┼─────╢
-║ 1│last-synced│    9║
+║ 1│last-synced│   10║
 ╚══╧═══════════╧═════╝
 select * from role_permission
 ╔══╤════════╤════════════════╗
@@ -53,9 +53,15 @@ select * from election
 ║ 2│       1│Favorite Ice Cream│        false│         <null>│       <null>│                false│                   false│                     false│      false│                 true│  false║
 ╚══╧════════╧══════════════════╧═════════════╧═══════════════╧═════════════╧═════════════════════╧════════════════════════╧══════════════════════════╧═══════════╧═════════════════════╧═══════╝
 select * from candidate
-╔══╤═══════════╤════╗
-║id│election_id│name║
-╚══╧═══════════╧════╝
+╔══╤═══════════╤══════════╗
+║id│election_id│name      ║
+╟──┼───────────┼──────────╢
+║ 1│          2│Chocolate ║
+╟──┼───────────┼──────────╢
+║ 3│          2│Strawberry║
+╟──┼───────────┼──────────╢
+║ 2│          2│Vanilla   ║
+╚══╧═══════════╧══════════╝
 select * from voter
 ╔══╤═══════════╤═══════╗
 ║id│election_id│user_id║

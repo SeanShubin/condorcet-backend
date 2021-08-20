@@ -37,6 +37,10 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
         processEvent(authority, DbEvent.DeleteElection(name))
     }
 
+    override fun setCandidates(authority: String, electionName: String, candidateNames: List<String>) {
+        processEvent(authority, DbEvent.SetCandidates(electionName, candidateNames))
+    }
+
     private fun processEvent(authority: String, dbEvent: DbEvent) {
         eventDbCommands.addEvent(
             authority,

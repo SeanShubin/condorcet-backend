@@ -176,6 +176,25 @@ class ServiceImpl(
         return genericTable.toTableData()
     }
 
+    override fun setCandidates(accessToken: AccessToken, electionName: String, candidateNames: List<String>) {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val electionRow = stateDbQueries.searchElectionByName(electionName)
+        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
+        electionRow!!
+        failIf(
+            accessToken.userName != electionRow.owner,
+            UNAUTHORIZED,
+            "User '${accessToken.userName}' is not allowed to modify election '$electionName' owned by user '${electionRow.owner}'"
+        )
+        stateDbCommands.setCandidates(accessToken.userName, electionName, candidateNames)
+    }
+
+    override fun listCandidates(accessToken: AccessToken, electionName: String): List<String> {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val candidateNames = stateDbQueries.listCandidates(electionName)
+        return candidateNames
+    }
+
     private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
     private fun userEmailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
     private fun electionNameExists(name: String): Boolean = stateDbQueries.searchElectionByName(name) != null

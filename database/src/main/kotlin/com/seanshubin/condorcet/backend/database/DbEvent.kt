@@ -44,4 +44,10 @@ interface DbEvent {
             stateDbCommands.deleteElection(authority, name)
         }
     }
+
+    data class SetCandidates(val electionName: String, val candidateNames: List<String>) : DbEvent {
+        override fun exec(authority: String, stateDbCommands: StateDbCommands) {
+            stateDbCommands.setCandidates(authority, electionName, candidateNames)
+        }
+    }
 }

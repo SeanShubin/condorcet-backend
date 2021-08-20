@@ -201,6 +201,23 @@ interface ServiceCommand {
             }
     }
 
+    data class SetCandidates(val electionName: String, val candidateNames: List<String>) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                environment.service.setCandidates(accessToken, electionName, candidateNames)
+                responseBuilder().build()
+            }
+    }
+
+    data class ListCandidates(val electionName: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val candidateNames = environment.service.listCandidates(accessToken, electionName)
+                val value = mapOf("candidates" to candidateNames)
+                responseBuilder().json(value).build()
+            }
+    }
+
     data class Unsupported(val name: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             return responseBuilder().unsupported("Unsupported command '$name'\n$content").build()

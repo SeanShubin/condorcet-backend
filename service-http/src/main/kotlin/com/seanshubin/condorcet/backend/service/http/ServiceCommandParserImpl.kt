@@ -34,6 +34,8 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "TableData" -> JsonMappers.parse<ServiceCommand.TableData>(json)
             "DebugTableData" -> JsonMappers.parse<ServiceCommand.DebugTableData>(json)
             "EventData" -> ServiceCommand.EventData
+            "SetCandidates" -> JsonMappers.parse<ServiceCommand.SetCandidates>(json)
+            "ListCandidates" -> JsonMappers.parse<ServiceCommand.ListCandidates>(json)
             else -> ServiceCommand.Unsupported(name, json)
         }
     }

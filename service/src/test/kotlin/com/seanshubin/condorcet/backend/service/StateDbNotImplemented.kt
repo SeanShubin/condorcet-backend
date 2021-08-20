@@ -139,4 +139,12 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     override fun debugTableData(schema: Schema, name: String): GenericTable {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun setCandidates(authority: String, electionName: String, candidateNames: List<String>) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun listCandidates(electionName: String): List<String> {
+        throw UnsupportedOperationException("not implemented")
+    }
 }
