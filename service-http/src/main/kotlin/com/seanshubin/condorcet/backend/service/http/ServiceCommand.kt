@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.service.http
 
 import com.auth0.jwt.exceptions.JWTDecodeException
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.http.*
 import com.seanshubin.condorcet.backend.json.JsonMappers
@@ -10,7 +11,6 @@ import com.seanshubin.condorcet.backend.service.RefreshToken
 import com.seanshubin.condorcet.backend.service.ServiceException
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import com.seanshubin.condorcet.backend.service.Tokens
-import com.seanshubin.condorcet.backend.service.http.DataTransfer.toElectionConfig
 import java.time.Instant
 
 interface ServiceCommand {
@@ -294,6 +294,22 @@ interface ServiceCommand {
     }
 
     companion object {
+        fun UpdateElection.toElectionConfig(): ElectionUpdates =
+            ElectionUpdates(
+                newName,
+                secretBallot,
+                clearScheduledStart,
+                scheduledStart,
+                clearScheduledEnd,
+                scheduledEnd,
+                restrictWhoCanVote,
+                ownerCanDeleteBallots,
+                auditorCanDeleteBallots,
+                isTemplate,
+                noChangesAfterVote,
+                isOpen
+            )
+
         private fun RequestValue.refreshToken(cipher: Cipher): RefreshToken? {
             val refreshTokenString = cookieValue("Refresh") ?: return null
             if (refreshTokenString.isBlank()) return null

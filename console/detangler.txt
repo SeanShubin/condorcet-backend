@@ -2,7 +2,7 @@
   reportDir console/target/detangled
   searchPaths
   [
-    ./console/target/condorcet-backend.jar
+    ./console/target/condorcet-backend-console.jar
   ]
   level 2
   startsWith
