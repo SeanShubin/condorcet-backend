@@ -334,8 +334,7 @@ select count(id)
 from user;
 select count(id)
 from election;
-select *
-from user;
+select * from user;
 select election.id,
        election.owner_id,
        user.name owner,
