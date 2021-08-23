@@ -77,9 +77,11 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val isTemplate: Boolean = resultSet.getBoolean("is_template")
         val noChangesAfterVote: Boolean = resultSet.getBoolean("no_changes_after_vote")
         val isOpen: Boolean = resultSet.getBoolean("is_open")
+        val candidateCount: Int = resultSet.getInt("candidate_count")
         return ElectionRow(
             owner, name, secretBallot, scheduledStart, scheduledEnd, restrictWhoCanVote,
-            ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, noChangesAfterVote, isOpen
+            ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, noChangesAfterVote, isOpen,
+            candidateCount
         )
     }
 

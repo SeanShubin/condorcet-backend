@@ -154,7 +154,7 @@ where name = 'Carol';
 update int_variable
 set value = 5
 where name = 'last-synced';
-select user.name as owner,
+select user.name           as owner,
        election.name,
        election.secret_ballot,
        election.scheduled_start,
@@ -164,11 +164,13 @@ select user.name as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.no_changes_after_vote,
-       election.is_open
+       election.is_open,
+       count(candidate.id) as candidate_count
 from election
-         inner join user
-                    on election.owner_id = user.id
-where election.name = 'Delete Me';
+         inner join user on election.owner_id = user.id
+         left join candidate on election.id = candidate.election_id
+where election.name = 'Delete Me'
+group by election.id;
 select value
 from int_variable
 where name = 'last-synced';
@@ -177,7 +179,7 @@ values ((select id from user where name = 'Alice'), 'Delete Me');
 update int_variable
 set value = 6
 where name = 'last-synced';
-select user.name as owner,
+select user.name           as owner,
        election.name,
        election.secret_ballot,
        election.scheduled_start,
@@ -187,11 +189,13 @@ select user.name as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.no_changes_after_vote,
-       election.is_open
+       election.is_open,
+       count(candidate.id) as candidate_count
 from election
-         inner join user
-                    on election.owner_id = user.id
-where election.name = 'Favorite Ice Cream Flavor';
+         inner join user on election.owner_id = user.id
+         left join candidate on election.id = candidate.election_id
+where election.name = 'Favorite Ice Cream Flavor'
+group by election.id;
 select value
 from int_variable
 where name = 'last-synced';
@@ -200,7 +204,7 @@ values ((select id from user where name = 'Alice'), 'Favorite Ice Cream Flavor')
 update int_variable
 set value = 7
 where name = 'last-synced';
-select user.name as owner,
+select user.name           as owner,
        election.name,
        election.secret_ballot,
        election.scheduled_start,
@@ -210,11 +214,13 @@ select user.name as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.no_changes_after_vote,
-       election.is_open
+       election.is_open,
+       count(candidate.id) as candidate_count
 from election
-         inner join user
-                    on election.owner_id = user.id
-where election.name = 'Favorite Ice Cream Flavor';
+         inner join user on election.owner_id = user.id
+         left join candidate on election.id = candidate.election_id
+where election.name = 'Favorite Ice Cream Flavor'
+group by election.id;
 select value
 from int_variable
 where name = 'last-synced';
@@ -261,7 +267,7 @@ where name = 'Favorite Ice Cream Flavor';
 update int_variable
 set value = 8
 where name = 'last-synced';
-select user.name as owner,
+select user.name           as owner,
        election.name,
        election.secret_ballot,
        election.scheduled_start,
@@ -271,50 +277,13 @@ select user.name as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.no_changes_after_vote,
-       election.is_open
+       election.is_open,
+       count(candidate.id) as candidate_count
 from election
-         inner join user
-                    on election.owner_id = user.id
-where election.name = 'Favorite Ice Cream';
-select user.name as owner,
-       election.name,
-       election.secret_ballot,
-       election.scheduled_start,
-       election.scheduled_end,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
-       election.no_changes_after_vote,
-       election.is_open
-from election
-         inner join user
-                    on election.owner_id = user.id
-where election.name = 'Delete Me';
-select value
-from int_variable
-where name = 'last-synced';
-delete
-from election
-where name = 'Delete Me';
-update int_variable
-set value = 9
-where name = 'last-synced';
-select user.name as owner,
-       election.name,
-       election.secret_ballot,
-       election.scheduled_start,
-       election.scheduled_end,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
-       election.no_changes_after_vote,
-       election.is_open
-from election
-         inner join user
-                    on election.owner_id = user.id
-where election.name = 'Favorite Ice Cream';
+         inner join user on election.owner_id = user.id
+         left join candidate on election.id = candidate.election_id
+where election.name = 'Favorite Ice Cream'
+group by election.id;
 select value
 from int_variable
 where name = 'last-synced';
@@ -328,13 +297,57 @@ insert into candidate (election_id, name)
 values ((select id from election where name = 'Favorite Ice Cream'),
         'Strawberry');
 update int_variable
+set value = 9
+where name = 'last-synced';
+select user.name           as owner,
+       election.name,
+       election.secret_ballot,
+       election.scheduled_start,
+       election.scheduled_end,
+       election.restrict_who_can_vote,
+       election.owner_can_delete_ballots,
+       election.auditor_can_delete_ballots,
+       election.is_template,
+       election.no_changes_after_vote,
+       election.is_open,
+       count(candidate.id) as candidate_count
+from election
+         inner join user on election.owner_id = user.id
+         left join candidate on election.id = candidate.election_id
+where election.name = 'Favorite Ice Cream'
+group by election.id;
+select user.name           as owner,
+       election.name,
+       election.secret_ballot,
+       election.scheduled_start,
+       election.scheduled_end,
+       election.restrict_who_can_vote,
+       election.owner_can_delete_ballots,
+       election.auditor_can_delete_ballots,
+       election.is_template,
+       election.no_changes_after_vote,
+       election.is_open,
+       count(candidate.id) as candidate_count
+from election
+         inner join user on election.owner_id = user.id
+         left join candidate on election.id = candidate.election_id
+where election.name = 'Delete Me'
+group by election.id;
+select value
+from int_variable
+where name = 'last-synced';
+delete
+from election
+where name = 'Delete Me';
+update int_variable
 set value = 10
 where name = 'last-synced';
 select count(id)
 from user;
 select count(id)
 from election;
-select * from user;
+select *
+from user;
 select election.id,
        election.owner_id,
        user.name owner,

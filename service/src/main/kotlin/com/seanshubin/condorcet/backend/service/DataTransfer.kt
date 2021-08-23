@@ -8,6 +8,7 @@ object DataTransfer {
         Election(
             owner,
             name,
+            candidateCount,
             secretBallot,
             scheduledStart,
             scheduledEnd,

@@ -42,6 +42,13 @@ object SampleDataApp {
         service.setRole(daveAccessToken, "Judy", Role.USER)
         val judyAccessToken = service.authenticate("Judy", "pass").accessToken
         service.addElection(eveAccessToken, "Favorite Ice Cream Flavor")
+        service.setCandidates(
+            eveAccessToken, "Favorite Ice Cream Flavor", listOf(
+                "Chocolate",
+                "Vanilla",
+                "Strawberry"
+            )
+        )
         service.updateElection(
             eveAccessToken, "Favorite Ice Cream Flavor",
             ElectionUpdates(

@@ -70,13 +70,13 @@ class RegressionTest {
                 noChangesAfterVote = false,
                 isOpen = true
             ),
-            GetElection(name = "Favorite Ice Cream"),
-            DeleteElection(name = "Delete Me"),
-            ListElections,
             SetCandidates(
                 electionName = "Favorite Ice Cream",
                 candidateNames = listOf("Chocolate", "Vanilla", "Strawberry")
             ),
+            GetElection(name = "Favorite Ice Cream"),
+            DeleteElection(name = "Delete Me"),
+            ListElections,
             ListCandidates(
                 electionName = "Favorite Ice Cream"
             ),

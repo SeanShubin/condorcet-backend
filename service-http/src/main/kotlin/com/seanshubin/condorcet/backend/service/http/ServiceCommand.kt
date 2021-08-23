@@ -26,6 +26,8 @@ interface ServiceCommand {
                 tokenResponse(tokens, environment.cipher)
             }
         }
+
+        override fun toString(): String = "Refresh"
     }
 
     data class Register(val name: String, val email: String, val password: String) : ServiceCommand {
@@ -46,6 +48,8 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             return responseBuilder().clearRefreshToken().build()
         }
+
+        override fun toString(): String = "Logout"
     }
 
     data class SetRole(val name: String, val role: Role) : ServiceCommand {
@@ -118,6 +122,8 @@ interface ServiceCommand {
                 val values = mapOf("elections" to elections)
                 responseBuilder().json(values).build()
             }
+
+        override fun toString(): String = "ListElections"
     }
 
     object ListUsers : ServiceCommand {
@@ -127,6 +133,8 @@ interface ServiceCommand {
                 val value = mapOf("users" to users)
                 responseBuilder().json(value).build()
             }
+
+        override fun toString(): String = "ListUsers"
     }
 
     object UserCount : ServiceCommand {
@@ -136,6 +144,8 @@ interface ServiceCommand {
                 val value = mapOf("userCount" to userCount)
                 responseBuilder().json(value).build()
             }
+
+        override fun toString(): String = "UserCount"
     }
 
     object ElectionCount : ServiceCommand {
@@ -145,6 +155,8 @@ interface ServiceCommand {
                 val value = mapOf("electionCount" to userCount)
                 responseBuilder().json(value).build()
             }
+
+        override fun toString(): String = "ElectionCount"
     }
 
     object TableCount : ServiceCommand {
@@ -154,6 +166,8 @@ interface ServiceCommand {
                 val value = mapOf("tableCount" to userCount)
                 responseBuilder().json(value).build()
             }
+
+        override fun toString(): String = "TableCount"
     }
 
     object EventCount : ServiceCommand {
@@ -163,6 +177,8 @@ interface ServiceCommand {
                 val value = mapOf("eventCount" to userCount)
                 responseBuilder().json(value).build()
             }
+
+        override fun toString(): String = "EventCount"
     }
 
     object ListTables : ServiceCommand {
@@ -172,6 +188,8 @@ interface ServiceCommand {
                 val value = mapOf("tableNames" to tables)
                 responseBuilder().json(value).build()
             }
+
+        override fun toString(): String = "ListTables"
     }
 
     data class TableData(val name: String) : ServiceCommand {
@@ -199,6 +217,8 @@ interface ServiceCommand {
                 val value = mapOf("events" to eventData)
                 responseBuilder().json(value).build()
             }
+
+        override fun toString(): String = "EventData"
     }
 
     data class SetCandidates(val electionName: String, val candidateNames: List<String>) : ServiceCommand {

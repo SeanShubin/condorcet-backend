@@ -13,11 +13,13 @@ values ('2021-02-20 06:26:30.148351', 'Alice', 'AddElection', '{"owner":"Alice",
 insert into event (`when`, authority, type, text)
 values ('2021-02-24 00:11:35.648172', 'Alice', 'AddElection', '{"owner":"Alice","name":"Favorite Ice Cream Flavor"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:02.441961', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"newName":"Favorite Ice Cream","secretBallot":true,"clearScheduledStart":false,"scheduledStart":"2021-02-03T04:55:30Z","clearScheduledEnd":false,"scheduledEnd":"2022-02-03T04:55:30Z","restrictWhoCanVote":true,"ownerCanDeleteBallots":true,"auditorCanDeleteBallots":true,"isTemplate":true,"noChangesAfterVote":false,"isOpen":true}}');
+values ('2021-02-24 19:26:02.441961', 'Alice', 'UpdateElection',
+        '{"name":"Favorite Ice Cream Flavor","updates":{"newName":"Favorite Ice Cream","secretBallot":true,"clearScheduledStart":false,"scheduledStart":"2021-02-03T04:55:30Z","clearScheduledEnd":false,"scheduledEnd":"2022-02-03T04:55:30Z","restrictWhoCanVote":true,"ownerCanDeleteBallots":true,"auditorCanDeleteBallots":true,"isTemplate":true,"noChangesAfterVote":false,"isOpen":true}}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:02.579771', 'Alice', 'DeleteElection', '{"name":"Delete Me"}');
+values ('2021-02-24 19:26:02.579771', 'Alice', 'SetCandidates',
+        '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Strawberry"]}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:03.44616', 'Alice', 'SetCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Strawberry"]}');
+values ('2021-02-24 19:26:03.44616', 'Alice', 'DeleteElection', '{"name":"Delete Me"}');
 select count(id)
 from event;
 select * from event;

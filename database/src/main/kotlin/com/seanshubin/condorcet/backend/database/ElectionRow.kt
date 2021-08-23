@@ -14,7 +14,8 @@ data class ElectionRow(
     val auditorCanDeleteBallots: Boolean = false,
     val isTemplate: Boolean = false,
     val noChangesAfterVote: Boolean = false,
-    val isOpen: Boolean = false
+    val isOpen: Boolean = false,
+    val candidateCount: Int
 ) : DbRow<String> {
     override val primaryKey: String = name
     override val cells: List<Any?> = listOf(

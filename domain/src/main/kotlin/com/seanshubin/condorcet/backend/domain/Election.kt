@@ -5,6 +5,7 @@ import java.time.Instant
 data class Election(
     val ownerName: String,
     val name: String,
+    val candidateCount: Int,
     val secretBallot: Boolean = true,
     val scheduledStart: Instant? = null,
     val scheduledEnd: Instant? = null,
@@ -13,5 +14,5 @@ data class Election(
     val auditorCanDeleteBallots: Boolean = false,
     val isTemplate: Boolean = false,
     val noChangesAfterVote: Boolean = false,
-    val isOpen: Boolean = false
+    val isOpen: Boolean = false,
 )
