@@ -3,7 +3,8 @@ values ('2021-02-15 07:56:19.715621', 'Alice', 'AddUser', '{"name":"Alice","emai
 insert into event (`when`, authority, type, text)
 values ('2021-02-15 07:56:19.863825', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"9cfdf833-a1cb-487a-bf8e-a2efd8b209a4","hash":"7961966BF84F86F943E0B56DB8CF66075CB7B160811FF2995107F7715D4F9D6C","role":"UNASSIGNED"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-15 07:56:19.907919', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"9c24ff2a-9f85-45cc-8f83-50974f93bc80","hash":"1F7CAB856AEE2DF4AE89369F2CF3C6B51856655B16E945BBB1E39D81CABB37E9","role":"UNASSIGNED"}');
+values ('2021-02-15 07:56:19.907919', 'Carol', 'AddUser',
+        '{"name":"Carol","email":"carol@email.com","salt":"9c24ff2a-9f85-45cc-8f83-50974f93bc80","hash":"1F7CAB856AEE2DF4AE89369F2CF3C6B51856655B16E945BBB1E39D81CABB37E9","role":"UNASSIGNED"}');
 insert into event (`when`, authority, type, text)
 values ('2021-02-15 08:47:44.946811', 'Alice', 'SetRole', '{"name":"Bob","role":"USER"}');
 insert into event (`when`, authority, type, text)
