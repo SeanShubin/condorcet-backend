@@ -287,6 +287,8 @@ group by election.id;
 select value
 from int_variable
 where name = 'last-synced';
+delete from candidate
+where election_id = (select id from election where name = 'Favorite Ice Cream');
 insert into candidate (election_id, name)
 values ((select id from election where name = 'Favorite Ice Cream'),
         'Chocolate');
@@ -298,6 +300,40 @@ values ((select id from election where name = 'Favorite Ice Cream'),
         'Strawberry');
 update int_variable
 set value = 9
+where name = 'last-synced';
+select user.name           as owner,
+       election.name,
+       election.secret_ballot,
+       election.scheduled_start,
+       election.scheduled_end,
+       election.restrict_who_can_vote,
+       election.owner_can_delete_ballots,
+       election.auditor_can_delete_ballots,
+       election.is_template,
+       election.no_changes_after_vote,
+       election.is_open,
+       count(candidate.id) as candidate_count
+from election
+         inner join user on election.owner_id = user.id
+         left join candidate on election.id = candidate.election_id
+where election.name = 'Favorite Ice Cream'
+group by election.id;
+select value
+from int_variable
+where name = 'last-synced';
+delete from candidate
+where election_id = (select id from election where name = 'Favorite Ice Cream');
+insert into candidate (election_id, name)
+values ((select id from election where name = 'Favorite Ice Cream'),
+        'Chocolate');
+insert into candidate (election_id, name)
+values ((select id from election where name = 'Favorite Ice Cream'),
+        'Vanilla');
+insert into candidate (election_id, name)
+values ((select id from election where name = 'Favorite Ice Cream'),
+        'Mint');
+update int_variable
+set value = 10
 where name = 'last-synced';
 select user.name           as owner,
        election.name,
@@ -340,7 +376,7 @@ delete
 from election
 where name = 'Delete Me';
 update int_variable
-set value = 10
+set value = 11
 where name = 'last-synced';
 select count(id)
 from user;

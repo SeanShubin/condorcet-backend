@@ -74,6 +74,10 @@ class RegressionTest {
                 electionName = "Favorite Ice Cream",
                 candidateNames = listOf("Chocolate", "Vanilla", "Strawberry")
             ),
+            SetCandidates(
+                electionName = "Favorite Ice Cream",
+                candidateNames = listOf("Chocolate", "Vanilla", "Mint")
+            ),
             GetElection(name = "Favorite Ice Cream"),
             DeleteElection(name = "Delete Me"),
             ListElections,

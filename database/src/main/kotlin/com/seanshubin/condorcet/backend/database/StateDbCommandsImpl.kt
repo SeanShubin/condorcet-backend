@@ -71,6 +71,7 @@ class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, G
     }
 
     override fun setCandidates(authority: String, electionName: String, candidateNames: List<String>) {
+        update("delete-all-candidates-from-election", electionName)
         candidateNames.forEach { candidateName ->
             update("add-candidate-to-election", electionName, candidateName)
         }
