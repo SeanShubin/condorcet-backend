@@ -76,9 +76,47 @@ object SampleDataApp {
         )
 
         service.addElection(frankAccessToken, "Government")
+        service.setCandidates(
+            frankAccessToken, "Government", listOf(
+                "Monarchy",
+                "Aristocracy",
+                "Democracy"
+            )
+        )
         service.addElection(frankAccessToken, "Dystopia")
+        service.setCandidates(
+            frankAccessToken, "Dystopia", listOf(
+                "1984",
+                "Brave New World",
+                "Fahrenheit 451"
+            )
+        )
         service.addElection(ivyAccessToken, "Pet")
+        service.setCandidates(
+            ivyAccessToken, "Pet", listOf(
+                "Cat",
+                "Dog",
+                "Bird",
+                "Fish",
+                "Reptile"
+            )
+        )
         service.addElection(judyAccessToken, "Fantasy")
+        service.setCandidates(
+            judyAccessToken, "Fantasy", listOf(
+                "Lord of the Rings",
+                "Marvel Cinematic Universe",
+                "Harry Potter"
+            )
+        )
         service.addElection(judyAccessToken, "Science Fiction")
+        service.setCandidates(
+            judyAccessToken, "Science Fiction", listOf(
+                "Babylon 5",
+                "Star Trek",
+                "Blake's 7",
+                "Firefly"
+            )
+        )
     }
 }
