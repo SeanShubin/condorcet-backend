@@ -17,7 +17,9 @@ values ('2021-02-24 19:26:02.441961', 'Alice', 'UpdateElection', '{"name":"Favor
 insert into event (`when`, authority, type, text)
 values ('2021-02-24 19:26:02.579771', 'Alice', 'SetCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Strawberry"]}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:03.44616', 'Alice', 'DeleteElection', '{"name":"Delete Me"}');
+values ('2021-02-24 19:26:03.44616', 'Alice', 'SetCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Mint"]}');
+insert into event (`when`, authority, type, text)
+values ('2021-02-24 19:26:03.504375', 'Alice', 'DeleteElection', '{"name":"Delete Me"}');
 select count(id)
 from event;
 select * from event;
