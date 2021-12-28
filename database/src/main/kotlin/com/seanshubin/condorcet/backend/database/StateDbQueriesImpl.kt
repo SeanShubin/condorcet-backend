@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.domain.Permission
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.sql.ResultSet
@@ -56,6 +57,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun listCandidates(electionName: String): List<String> =
         query(::createCandidateName, "candidate-names-by-election", electionName)
 
+    override fun listRankings(voterName: String, electionName: String): List<Ranking> =
+        query(::createRanking, "list-rankings", voterName, electionName)
+
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
         val email = resultSet.getString("email")
@@ -87,4 +91,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
 
     private fun createCandidateName(resultSet: ResultSet): String =
         resultSet.getString("name")
+
+    private fun createRanking(resultSet: ResultSet): Ranking =
+        Ranking(
+            resultSet.getString("candidate"),
+            resultSet.getInt("rank"))
 }

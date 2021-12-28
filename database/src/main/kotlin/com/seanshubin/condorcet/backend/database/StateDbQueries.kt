@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.domain.Permission
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 
@@ -17,4 +18,5 @@ interface StateDbQueries : GenericDatabase {
     fun lastSynced(): Int?
     fun searchElectionByName(name: String): ElectionRow?
     fun listCandidates(electionName: String): List<String>
+    fun listRankings(voterName:String, electionName:String):List<Ranking>
 }

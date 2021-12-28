@@ -91,6 +91,9 @@ class ServiceDelegateToLifecycle(
         withService { it.castBallot(accessToken, electionName, voterName, rankings) }
     }
 
+    override fun listRankings(accessToken: AccessToken, voterName: String, electionName: String): List<Ranking> =
+        withService { it.listRankings(accessToken, voterName, electionName) }
+
     private fun <T> withService(f: (Service) -> T): T =
         eventConnectionLifecycle.withValue { eventConnection ->
             stateConnectionLifecycle.withValue { stateConnection ->

@@ -225,6 +225,17 @@ class ServiceImpl(
         stateDbCommands.castBallot(accessToken.userName, voterName, electionName, rankings)
     }
 
+    override fun listRankings(accessToken: AccessToken, voterName: String, electionName: String): List<Ranking> {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        if(accessToken.userName != voterName){
+            throw ServiceException(
+                UNAUTHORIZED,
+                "User '${accessToken.userName}' not allowed to see a ballot cast by voter '$voterName'"
+            )
+        }
+        return stateDbQueries.listRankings(voterName, electionName)
+    }
+
     private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
     private fun userEmailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
     private fun electionNameExists(name: String): Boolean = stateDbQueries.searchElectionByName(name) != null

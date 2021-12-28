@@ -88,6 +88,10 @@ class RegressionTest {
                     Ranking("Mint", 3),
                 )
             ),
+            ListRankings(
+                voterName = "Alice",
+                electionName = "Favorite Ice Cream"
+            ),
             GetElection(name = "Favorite Ice Cream"),
             DeleteElection(name = "Delete Me"),
             ListElections,
