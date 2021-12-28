@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.interfaces.DecodedJWT
 
-class CipherImpl(algorithmFactory:AlgorithmFactory) : Cipher {
+class CipherImpl(algorithmFactory: AlgorithmFactory) : Cipher {
     private val algorithm: Algorithm = algorithmFactory.create()
 
     override fun decode(token: String): DecodedJWT = JWT.decode(token)

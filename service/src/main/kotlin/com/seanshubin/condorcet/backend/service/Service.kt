@@ -25,4 +25,5 @@ interface Service {
     fun eventData(accessToken: AccessToken): TableData
     fun setCandidates(accessToken: AccessToken, electionName: String, candidateNames: List<String>)
     fun listCandidates(accessToken: AccessToken, electionName: String): List<String>
+    fun castBallot(accessToken: AccessToken, electionName: String, voterName: String, rankings: List<Ranking>)
 }

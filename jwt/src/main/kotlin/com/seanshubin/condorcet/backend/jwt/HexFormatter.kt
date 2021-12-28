@@ -21,7 +21,8 @@ interface HexFormatter {
 
     object Pretty : HexFormatter {
         override fun bytesToHex(bytes: ByteArray): String {
-            return bytes.map(::byteToHex).windowed(16, 16, partialWindows = true).map { list -> list.joinToString(" ") }.joinToString("\n")
+            return bytes.map(::byteToHex).windowed(16, 16, partialWindows = true).map { list -> list.joinToString(" ") }
+                .joinToString("\n")
         }
 
         private fun byteToHex(byte: Byte): String {

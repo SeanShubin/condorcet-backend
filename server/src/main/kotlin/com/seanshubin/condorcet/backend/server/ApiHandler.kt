@@ -53,8 +53,8 @@ class ApiHandler(
             serviceCommand.exec(environment, requestValue)
         } catch (ex: ServiceException) {
             ServiceCommand.ServiceExceptionCommand(ex).exec(environment, requestValue)
-        } catch(ex:SQLException){
-            if(ex.message?.contains("Unknown database", ignoreCase = true) == true){
+        } catch (ex: SQLException) {
+            if (ex.message?.contains("Unknown database", ignoreCase = true) == true) {
                 schemaCreator.initialize()
                 service.synchronize()
                 try {

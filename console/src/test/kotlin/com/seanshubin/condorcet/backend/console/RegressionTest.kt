@@ -3,6 +3,7 @@ package com.seanshubin.condorcet.backend.console
 import com.seanshubin.condorcet.backend.console.Phase.ACTUAL
 import com.seanshubin.condorcet.backend.console.Phase.EXPECTED
 import com.seanshubin.condorcet.backend.dependencies.Dependencies
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand.*
@@ -77,6 +78,15 @@ class RegressionTest {
             SetCandidates(
                 electionName = "Favorite Ice Cream",
                 candidateNames = listOf("Chocolate", "Vanilla", "Mint")
+            ),
+            CastBallot(
+                voterName = "Alice",
+                electionName = "Favorite Ice Cream",
+                rankings = listOf(
+                    Ranking("Chocolate", 1),
+                    Ranking("Vanilla", 2),
+                    Ranking("Mint", 3),
+                )
             ),
             GetElection(name = "Favorite Ice Cream"),
             DeleteElection(name = "Delete Me"),

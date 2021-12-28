@@ -63,7 +63,7 @@
     crypto        []
     io            []
     service       [ crypto io database json logger ]
-    database      [ genericdb json domain ]
+    database      [ genericdb json domain crypto ]
     genericdb     [ mysql-jdbc io table ]
     server        [ jetty table service-http ]
     console       [ server dependencies ]

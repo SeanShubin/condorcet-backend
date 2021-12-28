@@ -1,10 +1,17 @@
 package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
+import java.time.Clock
 
-class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, GenericDatabase by genericDatabase {
+class StateDbCommandsImpl(
+    genericDatabase: GenericDatabase,
+    private val clock: Clock,
+    private val uniqueIdGenerator: UniqueIdGenerator
+) : StateDbCommands, GenericDatabase by genericDatabase {
     override fun setLastSynced(lastSynced: Int) {
         update("set-last-synced", lastSynced)
     }
@@ -29,7 +36,7 @@ class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, G
         update("add-election", owner, name)
     }
 
-    override fun updateElection(authority: String, name:String, updates: ElectionUpdates) {
+    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
         if (updates.newName != null) {
             update("set-election-name", updates.newName, name)
         }
@@ -74,6 +81,15 @@ class StateDbCommandsImpl(genericDatabase: GenericDatabase) : StateDbCommands, G
         update("delete-all-candidates-from-election", electionName)
         candidateNames.forEach { candidateName ->
             update("add-candidate-to-election", electionName, candidateName)
+        }
+    }
+
+    override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
+        val now = clock.instant()
+        val uniqueId = uniqueIdGenerator.uniqueId()
+        update("create-ballot", voterName, electionName, uniqueId, now)
+        rankings.forEach { (candidateName, rank) ->
+            update("create-ranking", voterName, electionName, candidateName, rank)
         }
     }
 }

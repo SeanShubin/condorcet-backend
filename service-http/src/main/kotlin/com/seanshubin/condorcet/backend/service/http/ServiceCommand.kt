@@ -2,6 +2,7 @@ package com.seanshubin.condorcet.backend.service.http
 
 import com.auth0.jwt.exceptions.JWTDecodeException
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.http.*
 import com.seanshubin.condorcet.backend.json.JsonMappers
@@ -235,6 +236,15 @@ interface ServiceCommand {
                 val candidateNames = environment.service.listCandidates(accessToken, electionName)
                 val value = mapOf("candidates" to candidateNames)
                 responseBuilder().json(value).build()
+            }
+    }
+
+    data class CastBallot(val voterName: String, val electionName: String, val rankings: List<Ranking>) :
+        ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                environment.service.castBallot(accessToken, electionName, voterName, rankings)
+                responseBuilder().build()
             }
     }
 

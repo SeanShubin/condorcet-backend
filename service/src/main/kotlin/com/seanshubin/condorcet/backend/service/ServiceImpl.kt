@@ -103,7 +103,11 @@ class ServiceImpl(
         val electionRow = stateDbQueries.searchElectionByName(name)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
         electionRow!!
-        failIf(accessToken.userName != electionRow.owner, UNAUTHORIZED, "User '${accessToken.userName}' is not allowed to modify election '$name' owned by user '${electionRow.owner}'")
+        failIf(
+            accessToken.userName != electionRow.owner,
+            UNAUTHORIZED,
+            "User '${accessToken.userName}' is not allowed to modify election '$name' owned by user '${electionRow.owner}'"
+        )
         stateDbCommands.updateElection(accessToken.userName, name, electionUpdates)
     }
 
@@ -122,7 +126,11 @@ class ServiceImpl(
         val electionRow = stateDbQueries.searchElectionByName(name)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
         electionRow!!
-        failIf(accessToken.userName != electionRow.owner, UNAUTHORIZED, "User '${accessToken.userName}' is not allowed to delete election '$name' owned by user '${electionRow.owner}'")
+        failIf(
+            accessToken.userName != electionRow.owner,
+            UNAUTHORIZED,
+            "User '${accessToken.userName}' is not allowed to delete election '$name' owned by user '${electionRow.owner}'"
+        )
         stateDbCommands.deleteElection(accessToken.userName, name)
     }
 
@@ -193,6 +201,28 @@ class ServiceImpl(
         failUnlessPermission(accessToken, USE_APPLICATION)
         val candidateNames = stateDbQueries.listCandidates(electionName)
         return candidateNames
+    }
+
+    override fun castBallot(
+        accessToken: AccessToken,
+        electionName: String,
+        voterName: String,
+        rankings: List<Ranking>
+    ) {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val electionRow = stateDbQueries.searchElectionByName(electionName)
+        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
+        electionRow!!
+        val voterRow = stateDbQueries.searchUserByName(voterName)
+        failIf(voterRow == null, NOT_FOUND, "Voter with name '$voterName' not found")
+        voterRow!!
+        if (accessToken.userName != voterName) {
+            throw ServiceException(
+                UNAUTHORIZED,
+                "User '${accessToken.userName}' not allowed to cast a ballot on behalf of voter '$voterName'"
+            )
+        }
+        stateDbCommands.castBallot(accessToken.userName, voterName, electionName, rankings)
     }
 
     private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null

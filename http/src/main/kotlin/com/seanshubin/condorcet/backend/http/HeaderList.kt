@@ -11,11 +11,11 @@ data class HeaderList(val list: List<Header>) {
         return matchResult.groupValues[1]
     }
 
-    fun filterByName(name:String):List<Header> =
+    fun filterByName(name: String): List<Header> =
         list.filter { it.name.equals(name, ignoreCase = true) }
 
-    fun setCookieList():List<SetCookie> =
-        filterByName("Set-Cookie").map{
+    fun setCookieList(): List<SetCookie> =
+        filterByName("Set-Cookie").map {
             SetCookie.parse(it.value)
         }
 

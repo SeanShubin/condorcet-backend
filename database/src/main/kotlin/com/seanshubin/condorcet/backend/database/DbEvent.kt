@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 
 interface DbEvent {
@@ -31,7 +32,7 @@ interface DbEvent {
         }
     }
 
-    data class UpdateElection(val name: String, val updates:ElectionUpdates) :
+    data class UpdateElection(val name: String, val updates: ElectionUpdates) :
         DbEvent {
         override fun exec(authority: String, stateDbCommands: StateDbCommands) {
             stateDbCommands.updateElection(authority, name, updates)
@@ -48,6 +49,12 @@ interface DbEvent {
     data class SetCandidates(val electionName: String, val candidateNames: List<String>) : DbEvent {
         override fun exec(authority: String, stateDbCommands: StateDbCommands) {
             stateDbCommands.setCandidates(authority, electionName, candidateNames)
+        }
+    }
+
+    data class CastBallot(val voterName: String, val electionName: String, val rankings: List<Ranking>) : DbEvent {
+        override fun exec(authority: String, stateDbCommands: StateDbCommands) {
+            stateDbCommands.castBallot(authority, voterName, electionName, rankings)
         }
     }
 }

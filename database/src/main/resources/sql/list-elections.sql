@@ -1,4 +1,4 @@
-select user.name owner,
+select user.name              owner,
        election.name,
        election.secret_ballot,
        election.scheduled_start,

@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 
 interface StateDbCommands {
@@ -28,4 +29,6 @@ interface StateDbCommands {
     fun deleteElection(authority: String, name: String)
 
     fun setCandidates(authority: String, electionName: String, candidateNames: List<String>)
+
+    fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>)
 }

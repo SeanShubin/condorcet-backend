@@ -8,9 +8,9 @@ Make sure you have a mysql database running configured with the settings listed 
 ## Scripts
 
 - `./scripts/prepare.sh`
-  - One time initialization
+    - One time initialization
 - `./scripts/run.sh`
-  - Run application
+    - Run application
 
 ## Notes
 

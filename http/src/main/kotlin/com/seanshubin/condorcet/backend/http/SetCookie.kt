@@ -8,7 +8,7 @@ data class SetCookie(val name: String, val value: String, val httpOnly: Boolean 
         return Header("Set-Cookie", cookieValue)
     }
 
-    fun toCookie():Cookie = Cookie(name, value)
+    fun toCookie(): Cookie = Cookie(name, value)
 
     companion object {
         fun parse(s: String): SetCookie {
@@ -18,8 +18,8 @@ data class SetCookie(val name: String, val value: String, val httpOnly: Boolean 
             val name = nameValueParts[0]
             val value = nameValueParts[1]
             val attributes = parts.drop(1)
-            val httpOnly = attributes.any{ it.equals("HttpOnly", ignoreCase = true)}
-            val secure = attributes.any{ it.equals("Secure", ignoreCase = true)}
+            val httpOnly = attributes.any { it.equals("HttpOnly", ignoreCase = true) }
+            val secure = attributes.any { it.equals("Secure", ignoreCase = true) }
             return SetCookie(name, value, httpOnly, secure)
         }
     }

@@ -6,6 +6,7 @@ import com.seanshubin.condorcet.backend.database.StateDbQueries
 import com.seanshubin.condorcet.backend.database.UserRow
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Permission
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
@@ -145,6 +146,10 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     }
 
     override fun listCandidates(electionName: String): List<String> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
         throw UnsupportedOperationException("not implemented")
     }
 }

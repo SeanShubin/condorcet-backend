@@ -1,7 +1,5 @@
 package com.seanshubin.condorcet.backend.genericdb
 
-import java.lang.RuntimeException
-
 class SchemaCreatorImpl(
     private val connection: ConnectionWrapper,
     private val schemaName: String,
@@ -10,8 +8,8 @@ class SchemaCreatorImpl(
     private val listTableEvent: (GenericTable) -> Unit
 ) : SchemaCreator {
     override fun purgeAllData() {
-        val purgeMarker ="can_be_purged"
-        if(schemaName.contains(purgeMarker)){
+        val purgeMarker = "can_be_purged"
+        if (schemaName.contains(purgeMarker)) {
             connection.update("purgeAllData($schemaName)", "drop database if exists $schemaName")
         } else {
             throw RuntimeException("Can only purge databases with '$purgeMarker' in their name")

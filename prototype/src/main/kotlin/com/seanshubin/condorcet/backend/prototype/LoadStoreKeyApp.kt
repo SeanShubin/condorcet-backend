@@ -43,7 +43,8 @@ object LoadStoreKeyApp {
         val loadedPrivateKeyBytes = loadBytes("private-key-1")
         val privateKey3: RSAPrivateKey =
             keyFactory.generatePrivate(PKCS8EncodedKeySpec(loadedPrivateKeyBytes)) as RSAPrivateKey
-        val publicKey3: RSAPublicKey = keyFactory.generatePublic(X509EncodedKeySpec(loadedPublicKeyBytes)) as RSAPublicKey
+        val publicKey3: RSAPublicKey =
+            keyFactory.generatePublic(X509EncodedKeySpec(loadedPublicKeyBytes)) as RSAPublicKey
 
     }
 
@@ -53,7 +54,8 @@ object LoadStoreKeyApp {
         val hex = HexFormatter.Pretty.bytesToHex(bytes)
         Files.writeString(file, hex)
     }
-    fun loadBytes(fileName: String):ByteArray {
+
+    fun loadBytes(fileName: String): ByteArray {
         val file = baseDir.resolve("$fileName.txt")
         val hex = Files.readString(file)
         val bytes = HexFormatter.hexToBytes(hex)
