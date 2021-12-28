@@ -83,12 +83,14 @@ class ServiceTest {
         private val eventDbFake = EventDbFake()
         val stateDbFake = StateDbFake()
         private val synchronizer = SynchronizerStub()
+        private val random = RandomStub()
         val service: Service = ServiceImpl(
             passwordUtil,
             eventDbFake,
             stateDbFake,
             stateDbFake,
-            synchronizer
+            synchronizer,
+            random
         )
     }
 }

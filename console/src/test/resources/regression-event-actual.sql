@@ -15,13 +15,15 @@ values ('2021-02-24 00:11:35.648172', 'Alice', 'AddElection', '{"owner":"Alice",
 insert into event (`when`, authority, type, text)
 values ('2021-02-24 19:26:02.441961', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"newName":"Favorite Ice Cream","secretBallot":true,"clearScheduledStart":false,"scheduledStart":"2021-02-03T04:55:30Z","clearScheduledEnd":false,"scheduledEnd":"2022-02-03T04:55:30Z","restrictWhoCanVote":true,"ownerCanDeleteBallots":true,"auditorCanDeleteBallots":true,"isTemplate":true,"noChangesAfterVote":false,"isOpen":true}}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:02.579771', 'Alice', 'SetCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Strawberry"]}');
+values ('2021-02-24 19:26:02.579771', 'Alice', 'AddCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Strawberry"]}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:03.44616', 'Alice', 'SetCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Mint"]}');
+values ('2021-02-24 19:26:03.44616', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Vanilla","rank":1},{"candidateName":"Chocolate","rank":2}]}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:03.504375', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Chocolate","rank":1},{"candidateName":"Vanilla","rank":2},{"candidateName":"Mint","rank":3}]}');
+values ('2021-12-28 00:47:59.530591', 'Alice', 'RemoveCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Strawberry"]}');
 insert into event (`when`, authority, type, text)
-values ('2021-12-28 00:58:26.696965', 'Alice', 'DeleteElection', '{"name":"Delete Me"}');
+values ('2021-12-28 00:58:26.696965', 'Alice', 'AddCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Butter Pecan","Neapolitan","Mint","Chocolate Chip"]}');
+insert into event (`when`, authority, type, text)
+values ('2021-12-28 21:58:43.680696', 'Alice', 'DeleteElection', '{"name":"Delete Me"}');
 select count(id)
 from event;
 select * from event;

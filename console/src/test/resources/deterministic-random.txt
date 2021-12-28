@@ -1,0 +1,3 @@
+from 0 until 4 resulted in 3
+from 0 until 3 resulted in 1
+from 0 until 2 resulted in 0

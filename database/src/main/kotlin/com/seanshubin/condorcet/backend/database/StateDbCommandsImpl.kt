@@ -77,10 +77,15 @@ class StateDbCommandsImpl(
         update("delete-election", name)
     }
 
-    override fun setCandidates(authority: String, electionName: String, candidateNames: List<String>) {
-        update("delete-all-candidates-from-election", electionName)
+    override fun addCandidates(authority: String, electionName: String, candidateNames: List<String>) {
         candidateNames.forEach { candidateName ->
             update("add-candidate-to-election", electionName, candidateName)
+        }
+    }
+
+    override fun removeCandidates(authority: String, electionName: String, candidateNames: List<String>) {
+        candidateNames.forEach { candidateName ->
+            update("remove-candidate-from-election", electionName, candidateName)
         }
     }
 

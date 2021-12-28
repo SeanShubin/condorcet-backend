@@ -4,18 +4,22 @@ import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Permission.*
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import com.seanshubin.condorcet.backend.domain.Role.OWNER
 import com.seanshubin.condorcet.backend.domain.Role.UNASSIGNED
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.service.DataTransfer.toDomain
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
+import kotlin.random.Random
 
 class ServiceImpl(
     private val passwordUtil: PasswordUtil,
     private val eventDbQueries: EventDbQueries,
     private val stateDbQueries: StateDbQueries,
     private val stateDbCommands: StateDbCommands,
-    private val synchronizer: Synchronizer
+    private val synchronizer: Synchronizer,
+    private val random: Random
 ) : Service {
     override fun synchronize() {
         synchronizer.synchronize()
@@ -194,7 +198,15 @@ class ServiceImpl(
             UNAUTHORIZED,
             "User '${accessToken.userName}' is not allowed to modify election '$electionName' owned by user '${electionRow.owner}'"
         )
-        stateDbCommands.setCandidates(accessToken.userName, electionName, candidateNames)
+        val originalCandidates = stateDbQueries.listCandidates(electionName)
+        val candidatesToDelete = originalCandidates.filter { !candidateNames.contains(it) }
+        val candidatesToAdd = candidateNames.filter { !originalCandidates.contains(it) }
+        if(candidatesToDelete.isNotEmpty()){
+            stateDbCommands.removeCandidates(accessToken.userName, electionName, candidatesToDelete)
+        }
+        if(candidatesToAdd.isNotEmpty()){
+            stateDbCommands.addCandidates(accessToken.userName, electionName, candidatesToAdd)
+        }
     }
 
     override fun listCandidates(accessToken: AccessToken, electionName: String): List<String> {
@@ -233,7 +245,9 @@ class ServiceImpl(
                 "User '${accessToken.userName}' not allowed to see a ballot cast by voter '$voterName'"
             )
         }
-        return stateDbQueries.listRankings(voterName, electionName)
+        val candidates = stateDbQueries.listCandidates(electionName)
+        val rankings = stateDbQueries.listRankings(voterName, electionName)
+        return rankings.addMissingCandidates(candidates).voterBiasedOrdering(random)
     }
 
     private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null

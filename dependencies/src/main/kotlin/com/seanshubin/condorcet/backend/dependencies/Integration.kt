@@ -7,6 +7,7 @@ import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.server.Notifications
 import java.nio.file.Path
 import java.time.Clock
+import kotlin.random.Random
 
 interface Integration {
     val createLoggingNotifications: (Path) -> Notifications
@@ -25,4 +26,5 @@ interface Integration {
     val uniqueIdGenerator: UniqueIdGenerator
     val clock: Clock
     val whereKeysAreStored: Path
+    val random: Random
 }

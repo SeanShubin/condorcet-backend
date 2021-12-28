@@ -11,7 +11,8 @@ class DbEventParserImpl : DbEventParser {
             "AddElection" -> JsonMappers.parse<DbEvent.AddElection>(content)
             "UpdateElection" -> JsonMappers.parse<DbEvent.UpdateElection>(content)
             "DeleteElection" -> JsonMappers.parse<DbEvent.DeleteElection>(content)
-            "SetCandidates" -> JsonMappers.parse<DbEvent.SetCandidates>(content)
+            "AddCandidates" -> JsonMappers.parse<DbEvent.AddCandidates>(content)
+            "RemoveCandidates" -> JsonMappers.parse<DbEvent.RemoveCandidates>(content)
             "CastBallot" -> JsonMappers.parse<DbEvent.CastBallot>(content)
             else -> throw RuntimeException("Unsupported database operation '$name'")
         }

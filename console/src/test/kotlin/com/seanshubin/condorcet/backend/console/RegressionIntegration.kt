@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.Clock
+import kotlin.random.Random
 
 class RegressionIntegration(phase: Phase) : Integration {
     val regressionSnapshotDir = Paths.get("src", "test", "resources")
@@ -22,6 +23,7 @@ class RegressionIntegration(phase: Phase) : Integration {
     val realClock = Clock.systemUTC()
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
     val uniqueIdGeneratorPath = regressionSnapshotDir.resolve("deterministic-unique-id.txt")
+    val randomPath = regressionSnapshotDir.resolve("deterministic-random.txt")
     val charset: Charset = StandardCharsets.UTF_8
     val files: FilesContract = FilesDelegate
     val loggerFactory = LoggerFactory.instanceDefaultZone
@@ -51,4 +53,6 @@ class RegressionIntegration(phase: Phase) : Integration {
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)
     override val whereKeysAreStored: Path = regressionSnapshotDir.resolve("keys")
+    private val backingRandom = Random.Default
+    override val random: Random = RememberingRandom(backingRandom, randomPath)
 }

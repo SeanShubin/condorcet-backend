@@ -11,6 +11,7 @@ import com.seanshubin.condorcet.backend.server.Notifications
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.Clock
+import kotlin.random.Random
 
 class ConsoleIntegration : Integration {
     private val logDir: Path = Paths.get("out", "log")
@@ -32,4 +33,5 @@ class ConsoleIntegration : Integration {
     override val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
     override val clock: Clock = Clock.systemUTC()
     override val whereKeysAreStored: Path = Paths.get("keys")
+    override val random: Random = Random.Default
 }

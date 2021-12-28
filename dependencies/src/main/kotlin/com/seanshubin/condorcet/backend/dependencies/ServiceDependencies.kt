@@ -19,6 +19,7 @@ class ServiceDependencies(
     private val oneWayHash: OneWayHash = Sha256Hash()
     private val uniqueIdGenerator: UniqueIdGenerator = integration.uniqueIdGenerator
     private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
+    private val random = integration.random
     private val eventGenericDatabase: GenericDatabase = GenericDatabaseImpl(
         eventConnection,
         queryLoader
@@ -55,6 +56,7 @@ class ServiceDependencies(
         eventDbQueries,
         stateDbQueries,
         syncDbCommands,
-        synchronizer
+        synchronizer,
+        random
     )
 }
