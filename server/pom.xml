@@ -7,11 +7,6 @@
     <dependencies>
         <dependency>
             <groupId>com.seanshubin.condorcet.backend</groupId>
-            <artifactId>condorcet-backend-table</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.seanshubin.condorcet.backend</groupId>
             <artifactId>condorcet-backend-service-http</artifactId>
             <version>${project.version}</version>
         </dependency>
