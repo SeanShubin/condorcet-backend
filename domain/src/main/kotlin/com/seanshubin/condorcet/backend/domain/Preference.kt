@@ -76,7 +76,6 @@ class Preference private constructor(private val path: List<String>, private val
                         else {
                             val left = current[i][k]
                             val right = current[k][j]
-                            val old = current[i][j]
                             val new = left + right
                             if (new.strength > old.strength) new
                             else old
