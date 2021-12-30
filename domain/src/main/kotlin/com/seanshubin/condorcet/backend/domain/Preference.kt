@@ -2,7 +2,7 @@ package com.seanshubin.condorcet.backend.domain
 
 import com.seanshubin.condorcet.backend.table.RowStyleTableFormatter
 
-class Preference private constructor(private val path: List<String>, private val strengths: List<Int>) {
+class Preference private constructor(val path: List<String>, val strengths: List<Int>) {
     constructor(origin: String, strength: Int, destination: String) : this(
         listOf(origin, destination),
         listOf(strength)
@@ -48,6 +48,12 @@ class Preference private constructor(private val path: List<String>, private val
         val parts: List<String> = listOf(path[0]) + strengthStrings.zip(path.drop(1)).flatMap { it.toList() }
         return parts.joinToString("")
     }
+
+    fun toKotlinString(): String =
+        path.windowed(2).zip(strengths).joinToString(" + ") { (ab, c) ->
+            val (a, b) = ab
+            """Preference("$a", $c, "$b")"""
+        }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -126,5 +132,9 @@ class Preference private constructor(private val path: List<String>, private val
         }
 
         fun List<List<Preference>>.toLines(): List<String> = RowStyleTableFormatter.minimal.format(this)
+
+        fun List<List<Preference>>.toKotlinString(): String = this.map { row ->
+            row.joinToString(", ", "  listOf(", ")") { it.toKotlinString() }
+        }.joinToString(",\n", "listOf(\n", "\n)")
     }
 }

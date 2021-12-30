@@ -12,11 +12,6 @@
         </dependency>
         <dependency>
             <groupId>com.seanshubin.condorcet.backend</groupId>
-            <artifactId>condorcet-backend-json</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.seanshubin.condorcet.backend</groupId>
             <artifactId>condorcet-backend-domain</artifactId>
             <version>${project.version}</version>
         </dependency>

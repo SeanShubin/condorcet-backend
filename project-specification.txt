@@ -63,7 +63,7 @@
     crypto        []
     io            []
     service       [ crypto io database json logger ]
-    database      [ genericdb json domain crypto ]
+    database      [ genericdb domain crypto ]
     genericdb     [ mysql-jdbc io table ]
     server        [ jetty service-http ]
     console       [ server dependencies ]
@@ -74,7 +74,7 @@
     http          []
     contract      []
     table         []
-    domain        [ table ]
+    domain        [ table json ]
     prototype     [ jetty jetty-alpn jetty-http2 java-jwt table mysql-jdbc json ]
     jwt           [ java-jwt contract ]
   }

@@ -3,8 +3,16 @@ package com.seanshubin.condorcet.backend.domain
 import com.seanshubin.condorcet.backend.domain.Preference.Companion.places
 import com.seanshubin.condorcet.backend.domain.Preference.Companion.strongestPaths
 
-interface Ballot {
-    fun prefers(a: String, b: String): Boolean
+data class Ballot(val rankings: List<Ranking>) {
+    fun prefers(a: String, b: String): Boolean {
+        return rankingFor(a) < rankingFor(b)
+    }
+
+    private fun rankingFor(name: String): Int =
+        rankings.find { ranking -> ranking.candidateName == name }?.rank ?: Int.MAX_VALUE
+
+    override fun toString(): String =
+        rankings.joinToString(" ") { (candidateName, rank) -> "$rank $candidateName" }
 
     companion object {
         fun List<Ballot>.tally(candidates: List<String>): Tally {
