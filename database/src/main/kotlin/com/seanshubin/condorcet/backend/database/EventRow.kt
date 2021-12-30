@@ -9,9 +9,7 @@ data class EventRow(
     val authority: String,
     val type: String,
     val text: String
-) : DbRow<Int> {
-    override val primaryKey: Int
-        get() = id
+) : DbRow {
     override val cells: List<Any?>
         get() = listOf(id, whenHappened, authority, type, text)
 }

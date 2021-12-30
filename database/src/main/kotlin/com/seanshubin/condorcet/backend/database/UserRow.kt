@@ -9,7 +9,6 @@ data class UserRow(
     val salt: String,
     val hash: String,
     val role: Role
-) : DbRow<String> {
-    override val primaryKey: String = name
+) : DbRow {
     override val cells: List<Any?> = listOf(name, email, salt, hash, role)
 }

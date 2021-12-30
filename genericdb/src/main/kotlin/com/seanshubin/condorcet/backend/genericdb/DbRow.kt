@@ -1,6 +1,5 @@
 package com.seanshubin.condorcet.backend.genericdb
 
-interface DbRow<T> {
-    val primaryKey: T
+interface DbRow {
     val cells: List<Any?>
 }
