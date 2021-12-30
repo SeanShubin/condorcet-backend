@@ -4,6 +4,7 @@ import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
+import com.seanshubin.condorcet.backend.genericdb.ResultSetExtensionFunctions.getIntOrNull
 import java.sql.ResultSet
 import java.time.Instant
 
@@ -107,5 +108,5 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     private fun createRanking(resultSet: ResultSet): Ranking =
         Ranking(
             resultSet.getString("candidate"),
-            resultSet.getInt("rank"))
+            resultSet.getIntOrNull("rank"))
 }
