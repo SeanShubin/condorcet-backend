@@ -3,6 +3,7 @@ package com.seanshubin.condorcet.backend.service
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.domain.*
+import com.seanshubin.condorcet.backend.domain.Ballot.Companion.tally
 import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
@@ -252,6 +253,23 @@ class ServiceImpl(
         val candidates = stateDbQueries.listCandidates(electionName)
         val rankings = stateDbQueries.listRankings(voterName, electionName)
         return rankings.addMissingCandidates(candidates).voterBiasedOrdering(random)
+    }
+
+    override fun tally(accessToken: AccessToken, electionName: String): Tally {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val candidates = stateDbQueries.listCandidates(electionName)
+        val rankings = stateDbQueries.listRankings(electionName)
+        val grouped: Map<String, List<RankingRow>> = rankings.groupBy { it.voter }
+        val ballots: List<Ballot> = grouped.keys.map { voter ->
+            val rows = grouped.getValue(voter)
+            val rankings = rows.map { row ->
+                Ranking(row.candidate, row.rank)
+            }
+            val ballot = Ballot(rankings)
+            ballot
+        }
+        val tally = ballots.tally(candidates)
+        return tally
     }
 
     private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null

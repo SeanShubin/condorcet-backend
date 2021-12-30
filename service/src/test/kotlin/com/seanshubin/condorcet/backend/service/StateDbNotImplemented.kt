@@ -165,4 +165,8 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     override fun searchBallot(voterName: String, electionName: String): BallotRow? {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun listRankings(electionName: String): List<RankingRow> {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

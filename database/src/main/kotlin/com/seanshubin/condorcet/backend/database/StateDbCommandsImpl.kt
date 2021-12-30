@@ -94,7 +94,11 @@ class StateDbCommandsImpl(
         val uniqueId = uniqueIdGenerator.uniqueId()
         update("create-ballot", voterName, electionName, uniqueId, now)
         rankings.forEach { (candidateName, rank) ->
-            update("create-ranking", voterName, electionName, candidateName, rank)
+            if (rank == null) {
+                update("delete-ranking", voterName, electionName, candidateName)
+            } else {
+                update("create-ranking", voterName, electionName, candidateName, rank)
+            }
         }
     }
 

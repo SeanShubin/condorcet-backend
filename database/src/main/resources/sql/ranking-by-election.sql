@@ -11,5 +11,4 @@ from ranking
                     on ballot.user_id = user.id
          inner join election
                     on ballot.election_id = election.id
-where user.name = ?
-  and election.name = ?
+where election.name = ?

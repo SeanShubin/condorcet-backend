@@ -34,6 +34,11 @@ class RegressionTest {
                 email = "carol@email.com",
                 password = "carol-password"
             ),
+            Register(
+                name = "Dave",
+                email = "dave@email.com",
+                password = "dave-password"
+            ),
             Logout,
             Authenticate(
                 nameOrEmail = "Alice",
@@ -42,6 +47,10 @@ class RegressionTest {
             Refresh,
             SetRole(
                 name = "Bob",
+                role = Role.USER
+            ),
+            SetRole(
+                name = "Dave",
                 role = Role.USER
             ),
             RemoveUser(name = "Carol"),
@@ -98,10 +107,12 @@ class RegressionTest {
                 voterName = "Alice",
                 electionName = "Favorite Ice Cream",
                 rankings = listOf(
-                    Ranking("Vanilla", 2),
-                    Ranking("Chocolate", 1),
-                    Ranking("Mint", 3),
-                    Ranking("Butter Pecan", 2),
+                    Ranking("Chocolate Chip", 1),
+                    Ranking("Neapolitan", 2),
+                    Ranking("Chocolate", 3),
+                    Ranking("Vanilla", 4),
+                    Ranking("Butter Pecan", 5),
+                    Ranking("Mint", 6),
                 )
             ),
             ListRankings(
@@ -121,7 +132,42 @@ class RegressionTest {
             EventCount,
             TableData("user"),
             DebugTableData("election"),
-            EventData
+            EventData,
+            Authenticate(
+                nameOrEmail = "Bob",
+                password = "bob-password"
+            ),
+            CastBallot(
+                voterName = "Bob",
+                electionName = "Favorite Ice Cream",
+                rankings = listOf(
+                    Ranking("Chocolate", 1),
+                    Ranking("Chocolate Chip", 2),
+                    Ranking("Vanilla", 3),
+                    Ranking("Mint", 4),
+                    Ranking("Butter Pecan", 5),
+                    Ranking("Neapolitan", 6),
+                )
+            ),
+            Authenticate(
+                nameOrEmail = "Dave",
+                password = "dave-password"
+            ),
+            CastBallot(
+                voterName = "Dave",
+                electionName = "Favorite Ice Cream",
+                rankings = listOf(
+                    Ranking("Mint", 1),
+                    Ranking("Chocolate Chip", 2),
+                    Ranking("Neapolitan", 3),
+                    Ranking("Chocolate", 4),
+                    Ranking("Vanilla", 5),
+                    Ranking("Butter Pecan", 6),
+                )
+            ),
+            Tally(
+                electionName = "Favorite Ice Cream"
+            )
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

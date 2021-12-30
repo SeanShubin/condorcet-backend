@@ -248,12 +248,20 @@ interface ServiceCommand {
             }
     }
 
-    data class ListRankings(val voterName: String, val electionName: String) :ServiceCommand {
+    data class ListRankings(val voterName: String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val elections = environment.service.listRankings(accessToken, voterName, electionName)
                 val values = mapOf("rankings" to elections)
                 responseBuilder().json(values).build()
+            }
+    }
+
+    data class Tally(val electionName: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val tally = environment.service.tally(accessToken, electionName)
+                responseBuilder().json(tally).build()
             }
     }
 

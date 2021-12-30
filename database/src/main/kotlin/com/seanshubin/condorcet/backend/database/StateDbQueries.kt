@@ -18,6 +18,7 @@ interface StateDbQueries : GenericDatabase {
     fun lastSynced(): Int?
     fun searchElectionByName(name: String): ElectionRow?
     fun listCandidates(electionName: String): List<String>
-    fun listRankings(voterName:String, electionName:String):List<Ranking>
-    fun searchBallot(voterName:String, electionName:String):BallotRow?
+    fun listRankings(voterName: String, electionName: String): List<Ranking>
+    fun listRankings(electionName: String): List<RankingRow>
+    fun searchBallot(voterName: String, electionName: String): BallotRow?
 }

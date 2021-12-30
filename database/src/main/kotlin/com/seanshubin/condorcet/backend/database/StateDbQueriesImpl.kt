@@ -4,7 +4,6 @@ import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
-import com.seanshubin.condorcet.backend.genericdb.ResultSetExtensionFunctions.getIntOrNull
 import java.sql.ResultSet
 import java.time.Instant
 
@@ -65,6 +64,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         return queryZeroOrOneRow(::createBallot, "ballot-by-voter-and-election", voterName, electionName)
     }
 
+    override fun listRankings(electionName: String): List<RankingRow> =
+        query(::createRankingRow, "ranking-by-election", electionName)
+
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
         val email = resultSet.getString("email")
@@ -98,7 +100,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val userName:String = resultSet.getString("user_name")
         val electionName:String = resultSet.getString("election_name")
         val confirmation:String = resultSet.getString("confirmation")
-        val whenCast:Instant = resultSet.getTimestamp("when_cast").toInstant()
+        val whenCast: Instant = resultSet.getTimestamp("when_cast").toInstant()
         return BallotRow(userName, electionName, confirmation, whenCast)
     }
 
@@ -108,5 +110,14 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     private fun createRanking(resultSet: ResultSet): Ranking =
         Ranking(
             resultSet.getString("candidate"),
-            resultSet.getIntOrNull("rank"))
+            resultSet.getInt("rank")
+        )
+
+    private fun createRankingRow(resultSet: ResultSet): RankingRow =
+        RankingRow(
+            resultSet.getString("voter"),
+            resultSet.getString("election"),
+            resultSet.getString("candidate"),
+            resultSet.getInt("rank")
+        )
 }
