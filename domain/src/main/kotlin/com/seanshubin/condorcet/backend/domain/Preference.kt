@@ -27,6 +27,16 @@ class Preference private constructor(private val path: List<String>, private val
         return Preference(path, newStrengths)
     }
 
+    fun incrementStrength(): Preference {
+        require(strengths.size == 1) {
+            "Size of strengths must be exactly 1"
+        }
+        require(path.size == 2) {
+            "Size of path must be exactly 2"
+        }
+        return Preference(origin, strength + 1, destination)
+    }
+
     private fun append(that: Preference): Preference {
         val newPath = this.path + that.path.drop(1)
         val newStrengths = this.strengths + that.strengths
@@ -67,7 +77,7 @@ class Preference private constructor(private val path: List<String>, private val
             }
         }
 
-        fun List<List<Preference>>.warshall(): List<List<Preference>> {
+        fun List<List<Preference>>.strongestPaths(): List<List<Preference>> {
             fun operation(current: List<List<Preference>>, k: Int): List<List<Preference>> {
                 return current.indices.map { i ->
                     current[i].indices.map { j ->
@@ -84,6 +94,35 @@ class Preference private constructor(private val path: List<String>, private val
                 }
             }
             return this.indices.fold(this, ::operation)
+        }
+
+        fun List<List<Preference>>.isUndefeated(target: Int, alreadyChecked: List<Int>): Boolean {
+            val isCompetitor = { x: Int -> target != x && !alreadyChecked.contains(x) }
+            return !this.indices.filter(isCompetitor).any { i ->
+                this[i][target].strength > this[target][i].strength
+            }
+        }
+
+        fun List<List<Preference>>.groupByPlace(remaining: List<Int>, soFar: List<List<Int>>): List<List<Int>> =
+            if (remaining.isEmpty()) {
+                soFar
+            } else {
+                val alreadyChecked = soFar.flatten()
+                val (undefeated, newRemaining) = remaining.partition { isUndefeated(it, alreadyChecked) }
+                val newSoFar = soFar + listOf(undefeated)
+                groupByPlace(newRemaining, newSoFar)
+            }
+
+        fun List<List<Preference>>.places(candidates: List<String>): List<Place> {
+            val groupedByPlace = this.groupByPlace(this.indices.toList(), emptyList())
+            val sizes = groupedByPlace.map { it.size }
+            val placeList = groupedByPlace.indices.flatMap { placeIndex ->
+                groupedByPlace[placeIndex].map { index ->
+                    val rank = sizes.take(placeIndex).sum() + 1
+                    Place(rank, candidates[index])
+                }
+            }
+            return placeList
         }
 
         fun List<List<Preference>>.toLines(): List<String> = RowStyleTableFormatter.minimal.format(this)

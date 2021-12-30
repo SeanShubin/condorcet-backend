@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.domain
 
-import com.seanshubin.condorcet.backend.domain.Preference.Companion.warshall
+import com.seanshubin.condorcet.backend.domain.Preference.Companion.strongestPaths
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -62,7 +62,7 @@ class PreferenceTest {
             )
         )
         val preferenceMatrix = Preference.createPreferenceMatrix(candidates, strengthMatrix)
-        val actual = preferenceMatrix.warshall()
+        val actual = preferenceMatrix.strongestPaths()
         assertEquals(expected, actual)
     }
 }

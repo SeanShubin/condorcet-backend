@@ -144,7 +144,7 @@ data class RowStyleTableFormatter(
             null -> rightJustify(justifiedCellToString(cell), width, padding)
             is String -> leftJustify(justifiedCellToString(cell), width, padding)
             is Enum<*> -> leftJustify(justifiedCellToString(cell), width, padding)
-            else -> rightJustify(justifiedCellToString(cell), width, padding)
+            else -> leftJustify(justifiedCellToString(cell), width, padding)
         }
 
     private fun rightJustify(s: String, width: Int, padding: String = " "): String {
