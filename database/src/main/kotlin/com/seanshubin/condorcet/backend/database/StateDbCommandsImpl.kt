@@ -97,4 +97,9 @@ class StateDbCommandsImpl(
             update("create-ranking", voterName, electionName, candidateName, rank)
         }
     }
+
+    override fun rescindBallot(authority: String, voterName: String, electionName: String) {
+        update("delete-rankings", voterName, electionName)
+        update("delete-ballot", voterName, electionName)
+    }
 }

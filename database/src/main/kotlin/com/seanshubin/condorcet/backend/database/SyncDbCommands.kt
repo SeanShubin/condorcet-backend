@@ -50,6 +50,10 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
         processEvent(authority, DbEvent.CastBallot(voterName, electionName, rankings))
     }
 
+    override fun rescindBallot(authority: String, voterName: String, electionName: String) {
+        processEvent(authority, DbEvent.RescindBallot(voterName, electionName))
+    }
+
     private fun processEvent(authority: String, dbEvent: DbEvent) {
         eventDbCommands.addEvent(
             authority,

@@ -94,6 +94,16 @@ class RegressionTest {
                     "Chocolate Chip"
                 )
             ),
+            CastBallot(
+                voterName = "Alice",
+                electionName = "Favorite Ice Cream",
+                rankings = listOf(
+                    Ranking("Vanilla", 2),
+                    Ranking("Chocolate", 1),
+                    Ranking("Mint", 3),
+                    Ranking("Butter Pecan", 2),
+                )
+            ),
             ListRankings(
                 voterName = "Alice",
                 electionName = "Favorite Ice Cream"

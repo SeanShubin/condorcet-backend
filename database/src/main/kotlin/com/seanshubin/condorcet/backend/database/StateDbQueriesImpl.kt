@@ -60,6 +60,10 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun listRankings(voterName: String, electionName: String): List<Ranking> =
         query(::createRanking, "list-rankings", voterName, electionName)
 
+    override fun searchBallot(voterName: String, electionName: String): BallotRow? {
+        return queryZeroOrOneRow(::createBallot, "ballot-by-voter-and-election", voterName, electionName)
+    }
+
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
         val email = resultSet.getString("email")
@@ -87,6 +91,14 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
             ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, noChangesAfterVote, isOpen,
             candidateCount
         )
+    }
+
+    private fun createBallot(resultSet: ResultSet): BallotRow {
+        val userName:String = resultSet.getString("user_name")
+        val electionName:String = resultSet.getString("election_name")
+        val confirmation:String = resultSet.getString("confirmation")
+        val whenCast:Instant = resultSet.getTimestamp("when_cast").toInstant()
+        return BallotRow(userName, electionName, confirmation, whenCast)
     }
 
     private fun createCandidateName(resultSet: ResultSet): String =

@@ -63,4 +63,10 @@ interface DbEvent {
             stateDbCommands.castBallot(authority, voterName, electionName, rankings)
         }
     }
+
+    data class RescindBallot(val voterName:String, val electionName:String):DbEvent {
+        override fun exec(authority: String, stateDbCommands: StateDbCommands) {
+            stateDbCommands.rescindBallot(authority, voterName, electionName)
+        }
+    }
 }

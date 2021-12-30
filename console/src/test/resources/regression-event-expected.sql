@@ -1,29 +1,33 @@
 insert into event (`when`, authority, type, text)
-values ('2021-02-15 07:56:19.715621', 'Alice', 'AddUser', '{"name":"Alice","email":"alice@email.com","salt":"8d027cff-d538-4078-8de9-b15c0c46d383","hash":"972A59B9F4F03166E3023CFE496F179F1AEACBAC0D8BEA2A5E28676D384A2BC4","role":"OWNER"}');
+values ('2021-12-30 03:47:48.927303', 'Alice', 'AddUser', '{"name":"Alice","email":"alice@email.com","salt":"a09a049b-4228-4c21-b86d-35bc7a1ed3bb","hash":"08DDCCEBFB8973647C97B56F04F5F24BDDBB3F164B4DF22B1DB6EC3DFB9B5398","role":"OWNER"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-15 07:56:19.863825', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"9cfdf833-a1cb-487a-bf8e-a2efd8b209a4","hash":"7961966BF84F86F943E0B56DB8CF66075CB7B160811FF2995107F7715D4F9D6C","role":"UNASSIGNED"}');
+values ('2021-12-30 03:47:49.081708', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"2ee67e26-d4d3-426a-9bcf-2b8b816ff2ce","hash":"DA6BCFE83821E48B41440D56EC9C34A9277520F69C26980E1ECD5ADE7B89813B","role":"UNASSIGNED"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-15 07:56:19.907919', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"9c24ff2a-9f85-45cc-8f83-50974f93bc80","hash":"1F7CAB856AEE2DF4AE89369F2CF3C6B51856655B16E945BBB1E39D81CABB37E9","role":"UNASSIGNED"}');
+values ('2021-12-30 03:47:49.171624', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"8c35dfe2-e4b9-4d66-8488-bb09a1f7451f","hash":"8398C9E8F1030A6BEE2F524A91A3FDF3C8AF4468BBC5CA90712D2AEE70B65240","role":"UNASSIGNED"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-15 08:47:44.946811', 'Alice', 'SetRole', '{"name":"Bob","role":"USER"}');
+values ('2021-12-30 03:47:49.476193', 'Alice', 'SetRole', '{"name":"Bob","role":"USER"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-15 08:49:06.420277', 'Alice', 'RemoveUser', '{"name":"Carol"}');
+values ('2021-12-30 03:47:49.566729', 'Alice', 'RemoveUser', '{"name":"Carol"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-20 06:26:30.148351', 'Alice', 'AddElection', '{"owner":"Alice","name":"Delete Me"}');
+values ('2021-12-30 03:47:49.762353', 'Alice', 'AddElection', '{"owner":"Alice","name":"Delete Me"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 00:11:35.648172', 'Alice', 'AddElection', '{"owner":"Alice","name":"Favorite Ice Cream Flavor"}');
+values ('2021-12-30 03:47:49.841237', 'Alice', 'AddElection', '{"owner":"Alice","name":"Favorite Ice Cream Flavor"}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:02.441961', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"newName":"Favorite Ice Cream","secretBallot":true,"clearScheduledStart":false,"scheduledStart":"2021-02-03T04:55:30Z","clearScheduledEnd":false,"scheduledEnd":"2022-02-03T04:55:30Z","restrictWhoCanVote":true,"ownerCanDeleteBallots":true,"auditorCanDeleteBallots":true,"isTemplate":true,"noChangesAfterVote":false,"isOpen":true}}');
+values ('2021-12-30 03:47:49.977763', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"newName":"Favorite Ice Cream","secretBallot":true,"clearScheduledStart":false,"scheduledStart":"2021-02-03T04:55:30Z","clearScheduledEnd":false,"scheduledEnd":"2022-02-03T04:55:30Z","restrictWhoCanVote":true,"ownerCanDeleteBallots":true,"auditorCanDeleteBallots":true,"isTemplate":true,"noChangesAfterVote":false,"isOpen":true}}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:02.579771', 'Alice', 'AddCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Strawberry"]}');
+values ('2021-12-30 03:47:50.134133', 'Alice', 'AddCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Chocolate","Vanilla","Strawberry"]}');
 insert into event (`when`, authority, type, text)
-values ('2021-02-24 19:26:03.44616', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Vanilla","rank":1},{"candidateName":"Chocolate","rank":2}]}');
+values ('2021-12-30 03:47:50.293079', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Vanilla","rank":1},{"candidateName":"Chocolate","rank":2}]}');
 insert into event (`when`, authority, type, text)
-values ('2021-12-28 00:47:59.530591', 'Alice', 'RemoveCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Strawberry"]}');
+values ('2021-12-30 03:47:50.383046', 'Alice', 'RemoveCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Strawberry"]}');
 insert into event (`when`, authority, type, text)
-values ('2021-12-28 00:58:26.696965', 'Alice', 'AddCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Butter Pecan","Neapolitan","Mint","Chocolate Chip"]}');
+values ('2021-12-30 03:47:50.396089', 'Alice', 'AddCandidates', '{"electionName":"Favorite Ice Cream","candidateNames":["Butter Pecan","Neapolitan","Mint","Chocolate Chip"]}');
 insert into event (`when`, authority, type, text)
-values ('2021-12-28 21:58:43.680696', 'Alice', 'DeleteElection', '{"name":"Delete Me"}');
+values ('2021-12-30 03:47:50.493329', 'Alice', 'RescindBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream"}');
+insert into event (`when`, authority, type, text)
+values ('2021-12-30 03:47:50.519411', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Vanilla","rank":2},{"candidateName":"Chocolate","rank":1},{"candidateName":"Mint","rank":3},{"candidateName":"Butter Pecan","rank":2}]}');
+insert into event (`when`, authority, type, text)
+values ('2021-12-30 03:47:50.768159', 'Alice', 'DeleteElection', '{"name":"Delete Me"}');
 select count(id)
 from event;
 select * from event;

@@ -27,7 +27,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Alice', 'alice@email.com', '8d027cff-d538-4078-8de9-b15c0c46d383', '972A59B9F4F03166E3023CFE496F179F1AEACBAC0D8BEA2A5E28676D384A2BC4', 'OWNER');
+values ('Alice', 'alice@email.com', 'a09a049b-4228-4c21-b86d-35bc7a1ed3bb', '08DDCCEBFB8973647C97B56F04F5F24BDDBB3F164B4DF22B1DB6EC3DFB9B5398', 'OWNER');
 update int_variable
 set value = 1
 where name = 'last-synced';
@@ -62,7 +62,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Bob', 'bob@email.com', '9cfdf833-a1cb-487a-bf8e-a2efd8b209a4', '7961966BF84F86F943E0B56DB8CF66075CB7B160811FF2995107F7715D4F9D6C', 'UNASSIGNED');
+values ('Bob', 'bob@email.com', '2ee67e26-d4d3-426a-9bcf-2b8b816ff2ce', 'DA6BCFE83821E48B41440D56EC9C34A9277520F69C26980E1ECD5ADE7B89813B', 'UNASSIGNED');
 update int_variable
 set value = 2
 where name = 'last-synced';
@@ -97,7 +97,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Carol', 'carol@email.com', '9c24ff2a-9f85-45cc-8f83-50974f93bc80', '1F7CAB856AEE2DF4AE89369F2CF3C6B51856655B16E945BBB1E39D81CABB37E9', 'UNASSIGNED');
+values ('Carol', 'carol@email.com', '8c35dfe2-e4b9-4d66-8488-bb09a1f7451f', '8398C9E8F1030A6BEE2F524A91A3FDF3C8AF4468BBC5CA90712D2AEE70B65240', 'UNASSIGNED');
 update int_variable
 set value = 3
 where name = 'last-synced';
@@ -323,14 +323,19 @@ select name,
        role
 from user
 where name = 'Alice';
+select user.name as user_name, election.name as election_name, confirmation, when_cast
+from ballot
+inner join user on ballot.user_id = user.id
+inner join election on ballot.election_id = election.id
+where user.name = 'Alice' and election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Alice'),
         (select id from election where name = 'Favorite Ice Cream'),
-        'ebd8a1ab-268d-4f1d-8786-a579d670b2e8',
-        '2021-02-24 19:26:03.504375');
+        '11baa435-610b-4776-84c7-7201dbdf3dc7',
+        '2021-12-30 03:47:50.312971');
 insert into ranking (ballot_id, candidate_id, `rank`)
 values ((
             select ballot.id
@@ -422,6 +427,121 @@ from election
          left join candidate on election.id = candidate.election_id
 where election.name = 'Favorite Ice Cream'
 group by election.id;
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Alice';
+select user.name as user_name, election.name as election_name, confirmation, when_cast
+from ballot
+inner join user on ballot.user_id = user.id
+inner join election on ballot.election_id = election.id
+where user.name = 'Alice' and election.name = 'Favorite Ice Cream';
+select value
+from int_variable
+where name = 'last-synced';
+delete
+from ranking
+where ranking.ballot_id = (
+    select id
+    from ballot
+    where ballot.user_id = (
+        select id
+        from user
+        where name = 'Alice')
+      and ballot.election_id = (
+        select id
+        from election
+        where name = 'Favorite Ice Cream'));
+delete
+from ballot
+where ballot.user_id = (select id from user where name = 'Alice')
+  and ballot.election_id = (select id from election where name = 'Favorite Ice Cream');
+update int_variable
+set value = 13
+where name = 'last-synced';
+select value
+from int_variable
+where name = 'last-synced';
+insert into ballot (user_id, election_id, confirmation, when_cast)
+values ((select id from user where name = 'Alice'),
+        (select id from election where name = 'Favorite Ice Cream'),
+        '3b12bd5b-0e7d-4519-86ff-0629ecdd5afb',
+        '2021-12-30 03:47:50.52543');
+insert into ranking (ballot_id, candidate_id, `rank`)
+values ((
+            select ballot.id
+            from ballot
+                     inner join user on ballot.user_id = user.id
+            where user.name = 'Alice'),
+        (
+            select candidate.id
+            from candidate
+                     inner join election on candidate.election_id = election.id
+            where election.name = 'Favorite Ice Cream'
+              and candidate.name = 'Vanilla'),
+        2);
+insert into ranking (ballot_id, candidate_id, `rank`)
+values ((
+            select ballot.id
+            from ballot
+                     inner join user on ballot.user_id = user.id
+            where user.name = 'Alice'),
+        (
+            select candidate.id
+            from candidate
+                     inner join election on candidate.election_id = election.id
+            where election.name = 'Favorite Ice Cream'
+              and candidate.name = 'Chocolate'),
+        1);
+insert into ranking (ballot_id, candidate_id, `rank`)
+values ((
+            select ballot.id
+            from ballot
+                     inner join user on ballot.user_id = user.id
+            where user.name = 'Alice'),
+        (
+            select candidate.id
+            from candidate
+                     inner join election on candidate.election_id = election.id
+            where election.name = 'Favorite Ice Cream'
+              and candidate.name = 'Mint'),
+        3);
+insert into ranking (ballot_id, candidate_id, `rank`)
+values ((
+            select ballot.id
+            from ballot
+                     inner join user on ballot.user_id = user.id
+            where user.name = 'Alice'),
+        (
+            select candidate.id
+            from candidate
+                     inner join election on candidate.election_id = election.id
+            where election.name = 'Favorite Ice Cream'
+              and candidate.name = 'Butter Pecan'),
+        2);
+update int_variable
+set value = 14
+where name = 'last-synced';
+select user.name           as owner,
+       election.name,
+       election.secret_ballot,
+       election.scheduled_start,
+       election.scheduled_end,
+       election.restrict_who_can_vote,
+       election.owner_can_delete_ballots,
+       election.auditor_can_delete_ballots,
+       election.is_template,
+       election.no_changes_after_vote,
+       election.is_open,
+       count(candidate.id) as candidate_count
+from election
+         inner join user on election.owner_id = user.id
+         left join candidate on election.id = candidate.election_id
+where election.name = 'Favorite Ice Cream'
+group by election.id;
 select user.name           as owner,
        election.name,
        election.secret_ballot,
@@ -446,7 +566,7 @@ delete
 from election
 where name = 'Delete Me';
 update int_variable
-set value = 13
+set value = 15
 where name = 'last-synced';
 select count(id)
 from user;

@@ -1,9 +1,6 @@
 package com.seanshubin.condorcet.backend.service
 
-import com.seanshubin.condorcet.backend.database.ElectionRow
-import com.seanshubin.condorcet.backend.database.StateDbCommands
-import com.seanshubin.condorcet.backend.database.StateDbQueries
-import com.seanshubin.condorcet.backend.database.UserRow
+import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Ranking
@@ -158,6 +155,14 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     }
 
     override fun listRankings(voterName: String, electionName: String): List<Ranking> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun rescindBallot(authority: String, voterName: String, electionName: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun searchBallot(voterName: String, electionName: String): BallotRow? {
         throw UnsupportedOperationException("not implemented")
     }
 }

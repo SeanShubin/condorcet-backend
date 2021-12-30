@@ -234,6 +234,10 @@ class ServiceImpl(
                 "User '${accessToken.userName}' not allowed to cast a ballot on behalf of voter '$voterName'"
             )
         }
+        val ballotRow = stateDbQueries.searchBallot(voterName, electionName)
+        if(ballotRow != null){
+            stateDbCommands.rescindBallot(accessToken.userName, voterName, electionName)
+        }
         stateDbCommands.castBallot(accessToken.userName, voterName, electionName, rankings)
     }
 
