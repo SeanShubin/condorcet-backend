@@ -142,6 +142,8 @@ data class RowStyleTableFormatter(
             is Left -> leftJustify(justifiedCellToString(cell.x), width, padding)
             is Right -> rightJustify(justifiedCellToString(cell.x), width, padding)
             null -> rightJustify(justifiedCellToString(cell), width, padding)
+            is Int -> rightJustify(justifiedCellToString(cell), width, padding)
+            is Boolean -> rightJustify(justifiedCellToString(cell), width, padding)
             is String -> leftJustify(justifiedCellToString(cell), width, padding)
             is Enum<*> -> leftJustify(justifiedCellToString(cell), width, padding)
             else -> leftJustify(justifiedCellToString(cell), width, padding)
