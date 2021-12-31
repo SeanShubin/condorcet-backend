@@ -84,11 +84,11 @@ class ServiceDelegateToLifecycle(
 
     override fun castBallot(
         accessToken: AccessToken,
-        electionName: String,
         voterName: String,
+        electionName: String,
         rankings: List<Ranking>
     ) {
-        withService { it.castBallot(accessToken, electionName, voterName, rankings) }
+        withService { it.castBallot(accessToken, voterName, electionName, rankings) }
     }
 
     override fun listRankings(accessToken: AccessToken, voterName: String, electionName: String): List<Ranking> =

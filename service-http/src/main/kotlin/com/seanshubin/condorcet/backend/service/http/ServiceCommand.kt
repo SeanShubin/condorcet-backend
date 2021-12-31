@@ -243,7 +243,7 @@ interface ServiceCommand {
         ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.castBallot(accessToken, electionName, voterName, rankings)
+                environment.service.castBallot(accessToken, voterName, electionName, rankings)
                 responseBuilder().build()
             }
     }

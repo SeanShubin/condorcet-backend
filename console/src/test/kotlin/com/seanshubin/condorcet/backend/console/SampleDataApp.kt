@@ -2,6 +2,7 @@ package com.seanshubin.condorcet.backend.console
 
 import com.seanshubin.condorcet.backend.dependencies.Dependencies
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
+import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import java.time.LocalDate
 import java.time.LocalTime
@@ -44,9 +45,12 @@ object SampleDataApp {
         service.addElection(eveAccessToken, "Favorite Ice Cream Flavor")
         service.setCandidates(
             eveAccessToken, "Favorite Ice Cream Flavor", listOf(
+                "Chocolate Chip",
+                "Neapolitan",
                 "Chocolate",
                 "Vanilla",
-                "Strawberry"
+                "Butter Pecan",
+                "Mint"
             )
         )
         service.updateElection(
@@ -116,6 +120,36 @@ object SampleDataApp {
                 "Star Trek",
                 "Blake's 7",
                 "Firefly"
+            )
+        )
+        service.castBallot(
+            aliceAccessToken, "Alice", "Favorite Ice Cream", listOf(
+                Ranking("Chocolate Chip", 1),
+                Ranking("Neapolitan", 2),
+                Ranking("Chocolate", 3),
+                Ranking("Vanilla", 4),
+                Ranking("Butter Pecan", 5),
+                Ranking("Mint", 6),
+            )
+        )
+        service.castBallot(
+            carolAccessToken, "Carol", "Favorite Ice Cream", listOf(
+                Ranking("Chocolate", 1),
+                Ranking("Chocolate Chip", 2),
+                Ranking("Vanilla", 3),
+                Ranking("Mint", 4),
+                Ranking("Butter Pecan", 5),
+                Ranking("Neapolitan", 6),
+            )
+        )
+        service.castBallot(
+            daveAccessToken, "Dave", "Favorite Ice Cream", listOf(
+                Ranking("Mint", 1),
+                Ranking("Chocolate Chip", 2),
+                Ranking("Neapolitan", 3),
+                Ranking("Chocolate", 4),
+                Ranking("Vanilla", 5),
+                Ranking("Butter Pecan", 6),
             )
         )
     }

@@ -218,8 +218,8 @@ class ServiceImpl(
 
     override fun castBallot(
         accessToken: AccessToken,
-        electionName: String,
         voterName: String,
+        electionName: String,
         rankings: List<Ranking>
     ) {
         failUnlessPermission(accessToken, USE_APPLICATION)
