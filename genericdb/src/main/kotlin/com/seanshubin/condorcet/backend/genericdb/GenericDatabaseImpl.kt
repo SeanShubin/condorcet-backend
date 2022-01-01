@@ -65,4 +65,15 @@ class GenericDatabaseImpl(
         val code = queryLoader.load("debug-$name")
         return connection.queryGenericTable(name, code)
     }
+
+    override fun <ParentType, ChildType, KeyType, ResultType> queryJoin(
+        parentFunction: (ResultSet) -> ParentType,
+        childFunction: (ResultSet) -> ChildType,
+        keyFunction: (ResultSet) -> KeyType,
+        mergeFunction: (ParentType, List<ChildType>) -> ResultType,
+        name: String,
+        vararg parameters: Any?
+    ): List<ResultType> {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

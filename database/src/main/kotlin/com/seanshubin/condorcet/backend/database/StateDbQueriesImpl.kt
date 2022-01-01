@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.domain.BallotRanking
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
@@ -64,8 +65,19 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         return queryZeroOrOneRow(::createBallot, "ballot-by-voter-and-election", voterName, electionName)
     }
 
-    override fun listRankings(electionName: String): List<RankingRow> =
-        query(::createRankingRow, "ranking-by-election", electionName)
+    override fun listRankings(electionName: String): List<VoterElectionRankingRow> =
+        query(::createVoterElectionRankingRow, "ranking-by-election", electionName)
+
+    override fun listBallotRankings(voterName: String, electionName: String): List<BallotRanking> =
+        queryJoin(
+            ::createBallotRow,
+            ::createRankingRow,
+            ::createBallotRankingKey,
+            ::createBallotRanking,
+            "list-ballot-rankings",
+            voterName,
+            electionName
+        )
 
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
@@ -113,11 +125,36 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
             resultSet.getInt("rank")
         )
 
-    private fun createRankingRow(resultSet: ResultSet): RankingRow =
-        RankingRow(
+    private fun createVoterElectionRankingRow(resultSet: ResultSet): VoterElectionRankingRow =
+        VoterElectionRankingRow(
             resultSet.getString("voter"),
             resultSet.getString("election"),
             resultSet.getString("candidate"),
             resultSet.getInt("rank")
         )
+
+    private fun createBallotRow(resultSet: ResultSet): BallotRow =
+        BallotRow(
+            resultSet.getString("user"),
+            resultSet.getString("election"),
+            resultSet.getString("confirmation"),
+            resultSet.getTimestamp("when_cast").toInstant()
+        )
+
+    private fun createRankingRow(resultSet: ResultSet): RankingRow =
+        RankingRow(
+            resultSet.getString("candidate"),
+            resultSet.getInt("rank")
+        )
+
+    private fun createBallotRankingKey(resultSet: ResultSet): Int =
+        resultSet.getInt("ballot_id")
+
+    private fun createBallotRanking(ballot: BallotRow, rankingList: List<RankingRow>): BallotRanking =
+        BallotRanking(
+            ballot.user,
+            ballot.election,
+            ballot.confirmation,
+            ballot.whenCast,
+            rankingList.map { Ranking(it.candidate, it.rank) })
 }

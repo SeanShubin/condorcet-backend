@@ -26,6 +26,15 @@ interface GenericDatabase {
         vararg parameters: Any?
     ): List<T>
 
+    fun <ParentType, ChildType, KeyType, ResultType> queryJoin(
+        parentFunction: (ResultSet) -> ParentType,
+        childFunction: (ResultSet) -> ChildType,
+        keyFunction: (ResultSet) -> KeyType,
+        mergeFunction: (ParentType, List<ChildType>) -> ResultType,
+        name: String,
+        vararg parameters: Any?
+    ): List<ResultType>
+
     fun queryUntyped(
         name: String,
         code: String,

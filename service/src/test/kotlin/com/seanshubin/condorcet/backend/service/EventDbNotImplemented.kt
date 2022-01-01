@@ -63,4 +63,15 @@ interface EventDbNotImplemented : EventDbQueries, EventDbCommands {
     override fun debugTableData(schema: Schema, name: String): GenericTable {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun <ParentType, ChildType, KeyType, ResultType> queryJoin(
+        parentFunction: (ResultSet) -> ParentType,
+        childFunction: (ResultSet) -> ChildType,
+        keyFunction: (ResultSet) -> KeyType,
+        mergeFunction: (ParentType, List<ChildType>) -> ResultType,
+        name: String,
+        vararg parameters: Any?
+    ): List<ResultType> {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

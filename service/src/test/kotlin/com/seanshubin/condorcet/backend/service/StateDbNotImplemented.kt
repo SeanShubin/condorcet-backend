@@ -1,10 +1,7 @@
 package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.database.*
-import com.seanshubin.condorcet.backend.domain.ElectionUpdates
-import com.seanshubin.condorcet.backend.domain.Permission
-import com.seanshubin.condorcet.backend.domain.Ranking
-import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
 import java.sql.ResultSet
@@ -110,6 +107,17 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
+    override fun <ParentType, ChildType, KeyType, ResultType> queryJoin(
+        parentFunction: (ResultSet) -> ParentType,
+        childFunction: (ResultSet) -> ChildType,
+        keyFunction: (ResultSet) -> KeyType,
+        mergeFunction: (ParentType, List<ChildType>) -> ResultType,
+        name: String,
+        vararg parameters: Any?
+    ): List<ResultType> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
     override fun queryUntyped(name: String, code: String, vararg parameters: Any?): GenericTable {
         throw UnsupportedOperationException("not implemented")
     }
@@ -166,7 +174,11 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun listRankings(electionName: String): List<RankingRow> {
+    override fun listBallotRankings(voterName: String, electionName: String): List<BallotRanking> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun listRankings(electionName: String): List<VoterElectionRankingRow> {
         throw UnsupportedOperationException("not implemented")
     }
 }
