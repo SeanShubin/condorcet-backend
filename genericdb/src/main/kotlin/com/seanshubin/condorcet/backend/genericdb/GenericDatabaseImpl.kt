@@ -74,6 +74,17 @@ class GenericDatabaseImpl(
         name: String,
         vararg parameters: Any?
     ): List<ResultType> {
-        throw UnsupportedOperationException("not implemented")
+        val code = queryLoader.load(name)
+        data class Row(val parent:ParentType, val child:ChildType, val key:KeyType)
+        val allRows = connection.queryList(name, code, *parameters){
+            Row(parentFunction(it), childFunction(it), keyFunction(it))
+        }
+        val grouped = allRows.groupBy { it.key }
+        val results = grouped.map { (key, rows) ->
+            val parent = rows[0].parent
+            val children = rows.map {it.child}
+            mergeFunction(parent, children)
+        }
+        return results
     }
 }

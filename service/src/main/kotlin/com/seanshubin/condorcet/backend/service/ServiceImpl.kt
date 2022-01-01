@@ -258,16 +258,7 @@ class ServiceImpl(
     override fun tally(accessToken: AccessToken, electionName: String): Tally {
         failUnlessPermission(accessToken, USE_APPLICATION)
         val candidates = stateDbQueries.listCandidates(electionName)
-        val rankings = stateDbQueries.listRankings(electionName)
-        val grouped: Map<String, List<VoterElectionRankingRow>> = rankings.groupBy { it.voter }
-        val ballots: List<Ballot> = grouped.keys.map { voter ->
-            val rows = grouped.getValue(voter)
-            val rankings = rows.map { row ->
-                Ranking(row.candidate, row.rank)
-            }
-            val ballot = Ballot(rankings)
-            ballot
-        }
+        val ballots = stateDbQueries.listBallots(electionName)
         val tally = ballots.tally(candidates)
         return tally
     }

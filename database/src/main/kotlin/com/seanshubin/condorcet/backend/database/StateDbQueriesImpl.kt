@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
-import com.seanshubin.condorcet.backend.domain.BallotRanking
+import com.seanshubin.condorcet.backend.domain.Ballot
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
@@ -62,20 +62,19 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         query(::createRanking, "list-rankings", voterName, electionName)
 
     override fun searchBallot(voterName: String, electionName: String): BallotRow? {
-        return queryZeroOrOneRow(::createBallot, "ballot-by-voter-and-election", voterName, electionName)
+        return queryZeroOrOneRow(this::createBallot, "ballot-by-voter-and-election", voterName, electionName)
     }
 
     override fun listRankings(electionName: String): List<VoterElectionRankingRow> =
         query(::createVoterElectionRankingRow, "ranking-by-election", electionName)
 
-    override fun listBallotRankings(voterName: String, electionName: String): List<BallotRanking> =
+    override fun listBallots(electionName: String): List<Ballot> =
         queryJoin(
             ::createBallotRow,
             ::createRankingRow,
             ::createBallotRankingKey,
-            ::createBallotRanking,
+            ::createBallot,
             "list-ballot-rankings",
-            voterName,
             electionName
         )
 
@@ -148,10 +147,10 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         )
 
     private fun createBallotRankingKey(resultSet: ResultSet): Int =
-        resultSet.getInt("ballot_id")
+        resultSet.getInt("ballot.id")
 
-    private fun createBallotRanking(ballot: BallotRow, rankingList: List<RankingRow>): BallotRanking =
-        BallotRanking(
+    private fun createBallot(ballot: BallotRow, rankingList: List<RankingRow>): Ballot =
+        Ballot(
             ballot.user,
             ballot.election,
             ballot.confirmation,

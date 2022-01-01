@@ -528,64 +528,76 @@ Content-Type: application/json
 {
   "candidates" : [ "Butter Pecan", "Chocolate", "Chocolate Chip", "Mint", "Neapolitan", "Vanilla" ],
   "ballots" : [ {
+    "user" : "Alice",
+    "election" : "Favorite Ice Cream",
+    "confirmation" : "afee81f2-21cc-4fab-b630-770a08721686",
+    "whenCast" : "2021-12-30T18:52:08.744169Z",
     "rankings" : [ {
-      "candidateName" : "Butter Pecan",
-      "rank" : 5
-    }, {
-      "candidateName" : "Chocolate",
-      "rank" : 3
+      "candidateName" : "Neapolitan",
+      "rank" : 2
     }, {
       "candidateName" : "Chocolate Chip",
       "rank" : 1
     }, {
-      "candidateName" : "Mint",
-      "rank" : 6
-    }, {
-      "candidateName" : "Neapolitan",
-      "rank" : 2
-    }, {
       "candidateName" : "Vanilla",
       "rank" : 4
-    } ]
-  }, {
-    "rankings" : [ {
+    }, {
       "candidateName" : "Butter Pecan",
       "rank" : 5
     }, {
-      "candidateName" : "Chocolate",
-      "rank" : 1
-    }, {
-      "candidateName" : "Chocolate Chip",
-      "rank" : 2
-    }, {
       "candidateName" : "Mint",
-      "rank" : 4
-    }, {
-      "candidateName" : "Neapolitan",
       "rank" : 6
     }, {
-      "candidateName" : "Vanilla",
+      "candidateName" : "Chocolate",
       "rank" : 3
     } ]
   }, {
+    "user" : "Bob",
+    "election" : "Favorite Ice Cream",
+    "confirmation" : "e1c1dfe0-0423-43f2-bfec-430782b04545",
+    "whenCast" : "2021-12-30T19:21:10.720300Z",
     "rankings" : [ {
-      "candidateName" : "Butter Pecan",
-      "rank" : 6
-    }, {
       "candidateName" : "Chocolate",
-      "rank" : 4
+      "rank" : 1
+    }, {
+      "candidateName" : "Neapolitan",
+      "rank" : 6
     }, {
       "candidateName" : "Chocolate Chip",
       "rank" : 2
     }, {
+      "candidateName" : "Vanilla",
+      "rank" : 3
+    }, {
+      "candidateName" : "Butter Pecan",
+      "rank" : 5
+    }, {
       "candidateName" : "Mint",
-      "rank" : 1
+      "rank" : 4
+    } ]
+  }, {
+    "user" : "Dave",
+    "election" : "Favorite Ice Cream",
+    "confirmation" : "8c9fd5ac-7f5b-44bf-ab33-4542452dbceb",
+    "whenCast" : "2021-12-30T19:21:10.812729Z",
+    "rankings" : [ {
+      "candidateName" : "Chocolate",
+      "rank" : 4
     }, {
       "candidateName" : "Neapolitan",
       "rank" : 3
     }, {
+      "candidateName" : "Chocolate Chip",
+      "rank" : 2
+    }, {
       "candidateName" : "Vanilla",
       "rank" : 5
+    }, {
+      "candidateName" : "Butter Pecan",
+      "rank" : 6
+    }, {
+      "candidateName" : "Mint",
+      "rank" : 1
     } ]
   } ],
   "preferences" : [ [ {

@@ -1,12 +1,15 @@
 package com.seanshubin.condorcet.backend.domain
 
 import com.seanshubin.condorcet.backend.domain.Ballot.Companion.tally
+import java.time.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BallotTest {
     @Test
     fun count() {
+        val createBallotsFunction = newCreateBallotsFunction()
+        fun createBallots(quantity:Int, vararg candidate:String):List<Ballot> = createBallotsFunction(quantity, candidate)
         val candidates = listOf("Rock", "Paper", "Scissors")
         val ballots =
             createBallots(4, "Rock", "Scissors", "Paper") +
@@ -50,6 +53,8 @@ class BallotTest {
 
     @Test
     fun ties() {
+        val createBallotsFunction = newCreateBallotsFunction()
+        fun createBallots(quantity:Int, vararg candidate:String):List<Ballot> = createBallotsFunction(quantity, candidate)
         val candidates = listOf("a", "b", "c", "d", "e")
         val ballots =
             createBallots(1, "a", "b") +
@@ -138,8 +143,69 @@ class BallotTest {
         assertEquals(places, tally.places)
     }
 
-    private fun createBallots(quantity: Int, vararg candidates: String): List<Ballot> {
+    private fun newCreateBallotsFunction():(Int, Array<out String>) -> List<Ballot> =
+        makeCreateRankingsFunction(UserRepository(), ConfirmationRepository(), ClockStub())
+
+    private fun makeCreateRankingsFunction(
+        userRepository: UserRepository,
+        confirmationRepository: ConfirmationRepository,
+        clockStub: ClockStub
+    ): (Int, Array<out String>) -> List<Ballot> {
+        fun createRankings(quantity: Int, vararg candidates: String): List<Ballot> {
+            val rankings = candidates.mapIndexed { index, candidate -> Ranking(candidate, index + 1) }
+            return (1..quantity).map {
+                val user = userRepository.newUser()
+                val election = "some election"
+                val confirmation = confirmationRepository.newConfirmation()
+                val whenCast = clockStub.instant()
+                Ballot(user, election, confirmation, whenCast, rankings)
+            }
+        }
+        return ::createRankings
+    }
+
+    private fun createRankingsBaseFunction(
+        userRepository: UserRepository,
+        confirmationRepository: ConfirmationRepository,
+        clockStub: ClockStub,
+        quantity: Int,
+        vararg candidates: String
+    ): List<Ballot> {
         val rankings = candidates.mapIndexed { index, candidate -> Ranking(candidate, index + 1) }
-        return (1..quantity).map { Ballot(rankings) }
+        return (1..quantity).map {
+            val user = userRepository.newUser()
+            val election = "some election"
+            val confirmation = confirmationRepository.newConfirmation()
+            val whenCast = clockStub.instant()
+            Ballot(user, election, confirmation, whenCast, rankings)
+        }
+    }
+
+    class UserRepository {
+        var index = 0
+        fun newUser(): String = "user-${++index}"
+    }
+
+    class ConfirmationRepository {
+        var index = 0
+        fun newConfirmation(): String = "confirmation-${++index}"
+    }
+
+    class ClockStub : Clock() {
+        val utc = ZoneId.of("UTC")
+        val baseDate = LocalDate.of(2022, 1, 1)
+        val baseTime = LocalTime.of(0, 0, 0)
+        val baseDateTime = ZonedDateTime.of(baseDate, baseTime, utc)
+        var index = 0L
+        override fun getZone(): ZoneId {
+            throw UnsupportedOperationException("not implemented")
+        }
+
+        override fun withZone(zone: ZoneId?): Clock {
+            throw UnsupportedOperationException("not implemented")
+        }
+
+        override fun instant(): Instant =
+            baseDateTime.plusMinutes(++index).toInstant()
     }
 }

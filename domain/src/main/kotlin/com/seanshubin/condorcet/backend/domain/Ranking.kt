@@ -4,6 +4,15 @@ import kotlin.random.Random
 
 data class Ranking(val candidateName: String, val rank: Int?) {
     companion object{
+        fun List<Ranking>.prefers(a: String, b: String): Boolean =
+            rankingFor(a) < rankingFor(b)
+
+        private fun List<Ranking>.rankingFor(name: String): Int =
+            find { ranking -> ranking.candidateName == name }?.rank ?: Int.MAX_VALUE
+
+        fun List<Ranking>.listToString() =
+            joinToString(" ") { (candidateName, rank) -> "$rank $candidateName" }
+
         fun List<Ranking>.voterBiasedOrdering(random: Random):List<Ranking>{
             val rankAscending = Comparator<Ranking> { o1, o2 ->
                 val rank1 = o1?.rank ?: Int.MAX_VALUE
