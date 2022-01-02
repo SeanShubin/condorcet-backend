@@ -13,7 +13,7 @@ class ConnectionWrapper(
         updateParameters(name, parameters, statement)
         return statement.use {
             sqlEvent(statement.asSql())
-            f(executeQuery(name, code, statement))
+            f(executeQuery(name, statement))
         }
     }
 
@@ -22,7 +22,7 @@ class ConnectionWrapper(
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(name, parameters, statement)
         statement.use {
-            val resultSet = executeQuery(name, code, statement)
+            val resultSet = executeQuery(name, statement)
             while (resultSet.next()) {
                 list.add(f(resultSet))
             }
@@ -34,7 +34,7 @@ class ConnectionWrapper(
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(name, parameters, statement)
         statement.use {
-            val resultSet = executeQuery(name, code, statement)
+            val resultSet = executeQuery(name, statement)
             return resultSet.next()
         }
     }
@@ -44,7 +44,7 @@ class ConnectionWrapper(
         sqlEvent(statement.asSql())
         updateParameters(name, parameters, statement)
         return statement.use {
-            val resultSet = executeQuery(name, code, statement)
+            val resultSet = executeQuery(name, statement)
             val iterator = ResultSetIterator.consume(resultSet)
             val columnNames = iterator.columnNames
             val rows = iterator.consumeRemainingToTable()
@@ -89,7 +89,7 @@ class ConnectionWrapper(
         updateParameters(name, parameters, statement)
         return statement.use {
             sqlEvent(statement.asSql())
-            executeUpdate(name, code, statement)
+            executeUpdate(name, statement)
         }
     }
 
@@ -140,7 +140,7 @@ class ConnectionWrapper(
         }
     }
 
-    private fun executeUpdate(name: String, code: String, statement: PreparedStatement): Int {
+    private fun executeUpdate(name: String, statement: PreparedStatement): Int {
         try {
             return statement.executeUpdate()
         } catch (ex: SQLException) {
@@ -148,7 +148,7 @@ class ConnectionWrapper(
         }
     }
 
-    private fun executeQuery(name: String, code: String, statement: PreparedStatement): ResultSet {
+    private fun executeQuery(name: String, statement: PreparedStatement): ResultSet {
         try {
             return statement.executeQuery()
         } catch (ex: SQLException) {
