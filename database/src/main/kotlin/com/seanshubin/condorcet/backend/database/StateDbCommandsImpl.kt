@@ -97,7 +97,7 @@ class StateDbCommandsImpl(
             if (rank == null) {
                 update("delete-ranking", voterName, electionName, candidateName)
             } else {
-                update("create-ranking", voterName, electionName, candidateName, rank)
+                update("create-ranking", voterName, electionName, electionName, candidateName, rank)
             }
         }
     }

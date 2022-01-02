@@ -74,4 +74,8 @@ interface EventDbNotImplemented : EventDbQueries, EventDbCommands {
     ): List<ResultType> {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun debugQuery(sql: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

@@ -101,6 +101,22 @@ class ConnectionWrapper(
         return queryGenericTable(name, table.toSelectAllStatement())
     }
 
+    fun debugQuery(
+        sql: String,
+        vararg parameters: Any?
+    ) {
+        val statement = connection.prepareStatement(sql) as ClientPreparedStatement
+        updateParameters(parameters, statement)
+        val table = statement.use {
+            val resultSet = statement.executeQuery()
+            val iterator = ResultSetIterator.consume(resultSet)
+            val columnNames = iterator.columnNames
+            val rows = iterator.consumeRemainingToTable()
+            GenericTable(statement.asSql(), columnNames, rows)
+        }
+        table.toLines().forEach(::println)
+    }
+
     override fun close() {
         connection.close()
     }
@@ -124,7 +140,7 @@ class ConnectionWrapper(
         try {
             return statement.executeUpdate()
         } catch (ex: SQLException) {
-            throw SQLException("$name\n$code\n${ex.message}", ex)
+            throw SQLException("$name\n${statement.asSql()}\n${ex.message}", ex)
         }
     }
 
@@ -132,9 +148,11 @@ class ConnectionWrapper(
         try {
             return statement.executeQuery()
         } catch (ex: SQLException) {
-            throw SQLException("$name\n$code\n${ex.message}", ex)
+            throw SQLException("$name\n${statement.asSql()}\n${ex.message}", ex)
         }
     }
+
+    private fun Statement.asSql(): String = (this as ClientPreparedStatement).asSql()
 
     companion object {
         fun createInt(resultSet: ResultSet): Int = resultSet.getInt(1)

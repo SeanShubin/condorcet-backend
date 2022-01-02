@@ -82,9 +82,13 @@ class GenericDatabaseImpl(
         val grouped = allRows.groupBy { it.key }
         val results = grouped.map { (key, rows) ->
             val parent = rows[0].parent
-            val children = rows.map {it.child}
+            val children = rows.map { it.child }
             mergeFunction(parent, children)
         }
         return results
+    }
+
+    override fun debugQuery(sql: String) {
+        connection.debugQuery(sql)
     }
 }

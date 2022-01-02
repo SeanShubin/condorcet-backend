@@ -18,16 +18,17 @@ object SampleDataApp {
         initializer.purgeAllData()
         initializer.initialize()
         val aliceAccessToken = service.register("Alice", "alice@email.com", "pass").accessToken
-        service.register("Bob", "bob@email.com", "pass")
-        service.register("Carol", "carol@email.com", "pass")
-        service.register("Dave", "dave@email.com", "pass")
+        service.register("Bob", "bob@email.com", "pass").accessToken
+        service.register("Carol", "carol@email.com", "pass").accessToken
+        service.register("Dave", "dave@email.com", "pass").accessToken
         service.register("Eve", "eve@email.com", "pass").accessToken
         service.register("Frank", "frank@email.com", "pass").accessToken
-        service.register("Grace", "grace@email.com", "pass")
-        service.register("Heidi", "heidi@email.com", "pass")
+        service.register("Grace", "grace@email.com", "pass").accessToken
+        service.register("Heidi", "heidi@email.com", "pass").accessToken
         service.register("Ivy", "ivy@email.com", "pass").accessToken
         service.register("Judy", "judy@email.com", "pass").accessToken
         service.setRole(aliceAccessToken, "Bob", Role.AUDITOR)
+        val bobAccessToken = service.authenticate("Bob", "pass").accessToken
         service.setRole(aliceAccessToken, "Carol", Role.ADMIN)
         val carolAccessToken = service.authenticate("Carol", "pass").accessToken
         service.setRole(aliceAccessToken, "Dave", Role.ADMIN)
@@ -37,11 +38,56 @@ object SampleDataApp {
         service.setRole(carolAccessToken, "Frank", Role.USER)
         val frankAccessToken = service.authenticate("Frank", "pass").accessToken
         service.setRole(carolAccessToken, "Grace", Role.USER)
+        val graceAccessToken = service.authenticate("Grace", "pass").accessToken
         service.setRole(daveAccessToken, "Heidi", Role.USER)
+        val heidiAccessToken = service.authenticate("Heidi", "pass").accessToken
         service.setRole(daveAccessToken, "Ivy", Role.USER)
         val ivyAccessToken = service.authenticate("Ivy", "pass").accessToken
         service.setRole(daveAccessToken, "Judy", Role.USER)
         val judyAccessToken = service.authenticate("Judy", "pass").accessToken
+        service.addElection(aliceAccessToken, "Cycle Test")
+        service.setCandidates(aliceAccessToken, "Cycle Test", listOf("Rock", "Paper", "Scissors"))
+        service.castBallot(
+            aliceAccessToken, "Alice", "Cycle Test",
+            listOf(Ranking("Rock", 1), Ranking("Scissors", 2), Ranking("Paper", 3))
+        )
+        service.castBallot(
+            bobAccessToken, "Bob", "Cycle Test",
+            listOf(Ranking("Rock", 1), Ranking("Scissors", 2), Ranking("Paper", 3))
+        )
+        service.castBallot(
+            carolAccessToken, "Carol", "Cycle Test",
+            listOf(Ranking("Rock", 1), Ranking("Scissors", 2), Ranking("Paper", 3))
+        )
+        service.castBallot(
+            daveAccessToken, "Dave", "Cycle Test",
+            listOf(Ranking("Rock", 1), Ranking("Scissors", 2), Ranking("Paper", 3))
+        )
+        service.castBallot(
+            eveAccessToken, "Eve", "Cycle Test",
+            listOf(Ranking("Scissors", 1), Ranking("Paper", 2), Ranking("Rock", 3))
+        )
+        service.castBallot(
+            frankAccessToken, "Frank", "Cycle Test",
+            listOf(Ranking("Scissors", 1), Ranking("Paper", 2), Ranking("Rock", 3))
+        )
+        service.castBallot(
+            graceAccessToken, "Grace", "Cycle Test",
+            listOf(Ranking("Scissors", 1), Ranking("Paper", 2), Ranking("Rock", 3))
+        )
+        service.castBallot(
+            heidiAccessToken, "Heidi", "Cycle Test",
+            listOf(Ranking("Paper", 1), Ranking("Rock", 2), Ranking("Scissors", 3))
+        )
+        service.castBallot(
+            ivyAccessToken, "Ivy", "Cycle Test",
+            listOf(Ranking("Paper", 1), Ranking("Rock", 2), Ranking("Scissors", 3))
+        )
+        service.castBallot(
+            judyAccessToken, "Judy", "Cycle Test",
+            listOf(Ranking("Paper", 1), Ranking("Rock", 2), Ranking("Scissors", 3))
+        )
+
         service.addElection(eveAccessToken, "Favorite Ice Cream Flavor")
         service.setCandidates(
             eveAccessToken, "Favorite Ice Cream Flavor", listOf(

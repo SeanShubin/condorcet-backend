@@ -3,7 +3,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = ?),
+                     inner join election on ballot.election_id = election.id
+            where user.name = ?
+              and election.name = ?),
         (
             select candidate.id
             from candidate
