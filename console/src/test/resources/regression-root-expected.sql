@@ -1,6 +1,8 @@
 drop database if exists condorcet_regression_test_event_can_be_purged;
 drop database if exists condorcet_regression_test_state_can_be_purged;
-select count(*) from information_schema.schemata where schema_name = 'condorcet_regression_test_event_can_be_purged';
+select count(*)
+from information_schema.schemata
+where schema_name = 'condorcet_regression_test_event_can_be_purged';
 create database condorcet_regression_test_event_can_be_purged;
 use condorcet_regression_test_event_can_be_purged;
 create table event (
@@ -11,7 +13,9 @@ create table event (
     text text not null,
     primary key(id)
 );
-select count(*) from information_schema.schemata where schema_name = 'condorcet_regression_test_state_can_be_purged';
+select count(*)
+from information_schema.schemata
+where schema_name = 'condorcet_regression_test_state_can_be_purged';
 create database condorcet_regression_test_state_can_be_purged;
 use condorcet_regression_test_state_can_be_purged;
 create table int_variable (
@@ -139,3 +143,87 @@ select * from voter;
 select * from ballot;
 select * from ranking;
 select * from tally;
+use condorcet_regression_test_event_can_be_purged;
+select event.id,
+       event.`when`,
+       event.authority,
+       event.type,
+       event.text
+from event
+order by event.id;
+use condorcet_regression_test_state_can_be_purged;
+select *
+from int_variable;
+select role, permission
+from role_permission;
+select *
+from user
+order by user.id;
+select election.id,
+       election.owner_id,
+       user.name owner,
+       election.name,
+       election.secret_ballot,
+       election.scheduled_start,
+       election.scheduled_end,
+       election.restrict_who_can_vote,
+       election.owner_can_delete_ballots,
+       election.auditor_can_delete_ballots,
+       election.is_template,
+       election.no_changes_after_vote,
+       election.is_open
+from election
+         inner join user on election.owner_id = user.id;
+select candidate.id,
+       election.name election,
+       candidate.name,
+       candidate.election_id
+from candidate
+         inner join election on candidate.election_id = election.id
+order by candidate.id;
+select voter.id,
+       user.name     voter,
+       election.name election,
+       voter.user_id,
+       voter.election_id
+from voter
+         inner join election on voter.election_id = election.id
+         inner join user on voter.user_id = user.id
+order by voter.id;
+select ballot.id,
+       user.name     user,
+       election.name election,
+       ballot.confirmation,
+       ballot.when_cast,
+       ballot.user_id,
+       ballot.election_id
+from ballot
+         inner join user on ballot.user_id = user.id
+         inner join election on ballot.election_id = election.id
+order by ballot.id;
+select ranking.id,
+       election.name  election,
+       user.name      voter,
+       candidate.name candidate,
+       ranking.rank,
+       ballot.confirmation,
+       ballot.when_cast,
+       ballot.election_id,
+       ranking.ballot_id,
+       ranking.candidate_id,
+       ballot.user_id
+from ranking
+         inner join ballot on ranking.ballot_id = ballot.id
+         inner join election on ballot.election_id = election.id
+         inner join candidate on ranking.candidate_id = candidate.id
+         inner join user on ballot.user_id = user.id
+order by election.name,
+         user.name,
+         ranking.rank;
+select tally.id,
+       election.name election,
+       tally.report,
+       tally.election_id
+from tally
+         inner join election on tally.election_id = election.id
+order by tally.id;
