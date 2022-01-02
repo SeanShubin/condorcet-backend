@@ -2,13 +2,13 @@ package com.seanshubin.condorcet.backend.domain
 
 import kotlin.random.Random
 
-data class Ranking(val candidateName: String, val rank: Int?) {
+data class Ranking(val name: String, val rank: Int?) {
     companion object{
         fun List<Ranking>.prefers(a: String, b: String): Boolean =
             rankingFor(a) < rankingFor(b)
 
         private fun List<Ranking>.rankingFor(name: String): Int =
-            find { ranking -> ranking.candidateName == name }?.rank ?: Int.MAX_VALUE
+            find { ranking -> ranking.name == name }?.rank ?: Int.MAX_VALUE
 
         fun List<Ranking>.listToString() =
             joinToString(" ") { (candidateName, rank) -> "$rank $candidateName" }
@@ -27,7 +27,7 @@ data class Ranking(val candidateName: String, val rank: Int?) {
         }
 
         fun List<Ranking>.addMissingCandidates(allCandidates: List<String>): List<Ranking> {
-            val existingCandidates = this.map { it.candidateName }
+            val existingCandidates = this.map { it.name }
             val isMissing = {candidate:String -> !existingCandidates.contains(candidate)}
             val missingCandidates = allCandidates.filter(isMissing)
             val newRankings = missingCandidates.map { Ranking(it, null)}

@@ -392,7 +392,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Alice'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Alice'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -405,7 +407,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Alice'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Alice'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -526,7 +530,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Alice'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Alice'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -539,7 +545,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Alice'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Alice'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -552,7 +560,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Alice'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Alice'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -565,7 +575,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Alice'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Alice'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -578,7 +590,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Alice'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Alice'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -591,7 +605,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Alice'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Alice'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -714,7 +730,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Bob'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Bob'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -727,7 +745,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Bob'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Bob'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -740,7 +760,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Bob'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Bob'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -753,7 +775,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Bob'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Bob'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -766,7 +790,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Bob'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Bob'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -779,7 +805,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Bob'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Bob'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -839,7 +867,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Dave'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Dave'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -852,7 +882,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Dave'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Dave'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -865,7 +897,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Dave'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Dave'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -878,7 +912,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Dave'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Dave'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -891,7 +927,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Dave'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Dave'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
@@ -904,7 +942,9 @@ values ((
             select ballot.id
             from ballot
                      inner join user on ballot.user_id = user.id
-            where user.name = 'Dave'),
+                     inner join election on ballot.election_id = election.id
+            where user.name = 'Dave'
+              and election.name = 'Favorite Ice Cream'),
         (
             select candidate.id
             from candidate
