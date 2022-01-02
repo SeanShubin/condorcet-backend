@@ -4,4 +4,5 @@ interface SchemaCreator {
     fun purgeAllData()
     fun initialize()
     fun listAllData()
+    fun listAllDebugData()
 }

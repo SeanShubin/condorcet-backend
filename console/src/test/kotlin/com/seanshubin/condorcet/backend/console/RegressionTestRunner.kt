@@ -16,6 +16,7 @@ class RegressionTestRunner(
             handleCommand(fakeBrowser, command)
         }
         dependencies.schemaCreator.listAllData()
+        dependencies.schemaCreator.listAllDebugData()
     }
 
     fun handleCommand(fakeBrowser: FakeBrowser, command: ServiceCommand) {

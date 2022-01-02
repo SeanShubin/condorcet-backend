@@ -16,6 +16,10 @@ class SchemaSchemaCreatorDelegateToLifecycle(
         withInitializer { it.listAllData() }
     }
 
+    override fun listAllDebugData() {
+        withInitializer { it.listAllDebugData() }
+    }
+
     private fun <T> withInitializer(f: (SchemaCreator) -> T): T =
         connectionLifecycle.withValue { connection ->
             val initializer = createSchemaCreator(connection)

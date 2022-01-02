@@ -29,6 +29,14 @@ class SchemaCreatorImpl(
         }
     }
 
+    override fun listAllDebugData() {
+        useDatabase()
+        schema.tables.forEach {
+            val tableData = database.debugTableData(schema, it.name)
+            listTableEvent(tableData)
+        }
+    }
+
     private fun needsInitialize(): Boolean {
         return database.queryExactlyOneInt("table-count", schemaName) == 0
     }

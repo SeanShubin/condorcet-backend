@@ -12,4 +12,8 @@ class CompositeSchemaCreator(private vararg val schemaCreators: SchemaCreator) :
     override fun listAllData() {
         schemaCreators.forEach { it.listAllData() }
     }
+
+    override fun listAllDebugData() {
+        schemaCreators.forEach { it.listAllDebugData() }
+    }
 }
