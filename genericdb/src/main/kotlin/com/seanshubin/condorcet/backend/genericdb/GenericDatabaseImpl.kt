@@ -53,6 +53,18 @@ class GenericDatabaseImpl(
         return connection.update(name, code, *parameters)
     }
 
+    override fun updateUsingScript(name: String) {
+        val scriptCode = queryLoader.load(name)
+        val statements = scriptCode.split(';').map(String::trim).filter(String::isNotBlank)
+        updateUsingSqlList(name, statements)
+    }
+
+    override fun updateUsingSqlList(name: String, sqlList: List<String>) {
+        sqlList.forEachIndexed { index, code ->
+            connection.update("$name[$index]", code)
+        }
+    }
+
     override fun tableNames(schema: Schema): List<String> =
         schema.tables.map { it.name }
 
@@ -76,8 +88,10 @@ class GenericDatabaseImpl(
         vararg parameters: Any?
     ): List<ResultType> {
         val code = queryLoader.load(name)
-        data class Row(val parent:ParentType, val child:ChildType, val key:KeyType)
-        val allRows = connection.queryList(name, code, *parameters){
+
+        data class Row(val parent: ParentType, val child: ChildType, val key: KeyType)
+
+        val allRows = connection.queryList(name, code, *parameters) {
             Row(parentFunction(it), childFunction(it), keyFunction(it))
         }
         val grouped = allRows.groupBy { it.key }
@@ -91,5 +105,25 @@ class GenericDatabaseImpl(
 
     override fun debugQuery(sql: String) {
         connection.debugQuery(sql)
+    }
+
+    override fun purgeDatabase(name: String) {
+        val purgeMarker = "can_be_purged"
+        if (name.contains(purgeMarker)) {
+            val sql = "drop database if exists $name"
+            connection.update("purgeDatabase('$name')", sql)
+        } else {
+            throw RuntimeException("Can only purge databases with '$purgeMarker' in their name")
+        }
+    }
+
+    override fun createDatabase(name: String) {
+        val sql = "create database $name"
+        connection.update("createDatabase('$name')", sql)
+    }
+
+    override fun useDatabase(name: String) {
+        val sql = "use $name"
+        connection.update("useDatabase('$name')", sql)
     }
 }

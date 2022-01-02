@@ -78,4 +78,24 @@ interface EventDbNotImplemented : EventDbQueries, EventDbCommands {
     override fun debugQuery(sql: String) {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun updateUsingScript(name: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun purgeDatabase(name: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun createDatabase(name: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun useDatabase(name: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun updateUsingSqlList(name: String, sqlList: List<String>) {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

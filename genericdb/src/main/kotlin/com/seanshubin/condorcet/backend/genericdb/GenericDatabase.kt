@@ -44,8 +44,13 @@ interface GenericDatabase {
     fun queryExactlyOneInt(name: String, vararg parameters: Any?): Int
     fun queryZeroOrOneInt(name: String, vararg parameters: Any?): Int?
     fun update(name: String, vararg parameters: Any?): Int
+    fun updateUsingScript(name: String)
+    fun updateUsingSqlList(name: String, sqlList: List<String>)
     fun tableNames(schema: Schema): List<String>
     fun tableData(schema: Schema, name: String): GenericTable
     fun debugTableData(schema: Schema, tableName: String): GenericTable
     fun debugQuery(sql: String)
+    fun purgeDatabase(name: String)
+    fun createDatabase(name: String)
+    fun useDatabase(name: String)
 }
