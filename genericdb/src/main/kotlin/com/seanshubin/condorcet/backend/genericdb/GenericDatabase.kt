@@ -46,6 +46,6 @@ interface GenericDatabase {
     fun update(name: String, vararg parameters: Any?): Int
     fun tableNames(schema: Schema): List<String>
     fun tableData(schema: Schema, name: String): GenericTable
-    fun debugTableData(schema: Schema, name: String): GenericTable
+    fun debugTableData(schema: Schema, tableName: String): GenericTable
     fun debugQuery(sql: String)
 }
