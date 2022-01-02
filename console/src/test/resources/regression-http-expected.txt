@@ -1052,6 +1052,7 @@ Content-Type: application/json
   }, {
     "rank" : 6,
     "candidate" : "Butter Pecan"
-  } ]
+  } ],
+  "whoVoted" : [ "Alice", "Bob", "Dave" ]
 }
 
