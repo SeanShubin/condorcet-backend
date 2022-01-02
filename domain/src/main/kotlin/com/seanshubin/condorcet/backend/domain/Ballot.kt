@@ -18,10 +18,11 @@ data class Ballot(val user:String,
         class BallotCounter(val candidates: List<String>, val ballots: List<Ballot>) {
             fun countBallots(): Tally {
                 val emptyPreferences = createEmptyPreferences()
-                val preferences = ballots.map{it.rankings}.fold(emptyPreferences, ::accumulateRankings)
+                val preferences = ballots.map { it.rankings }.fold(emptyPreferences, ::accumulateRankings)
                 val strongestPaths = preferences.strongestPaths()
                 val places = strongestPaths.places(candidates)
-                return Tally(candidates, ballots, preferences, strongestPaths, places)
+                val whoVoted = ballots.map { it.user }
+                return Tally(candidates, ballots, preferences, strongestPaths, places, whoVoted)
             }
 
             fun createEmptyPreferences(): List<List<Preference>> =

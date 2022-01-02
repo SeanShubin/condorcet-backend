@@ -7,7 +7,8 @@ data class Tally(
     val ballots: List<Ballot>,
     val preferences: List<List<Preference>>,
     val strongestPathMatrix: List<List<Preference>>,
-    val places: List<Place>
+    val places: List<Place>,
+    val whoVoted: List<String>
 ) {
     fun toLines(): List<String> =
         listOf("candidates") +
@@ -19,7 +20,9 @@ data class Tally(
                 listOf("strongest paths") +
                 strongestPathMatrix.toLines().map(indent) +
                 listOf("places") +
-                places.map { it.toString() }.map(indent)
+                places.map { it.toString() }.map(indent) +
+                listOf("who voted") +
+                whoVoted.map(indent)
 
     private val indent = { s: String -> "  $s" }
 }
