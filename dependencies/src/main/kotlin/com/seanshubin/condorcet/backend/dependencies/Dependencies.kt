@@ -52,7 +52,7 @@ class Dependencies(
         InitializerDependencies(integration, connection).schemaCreator
     }
     val schemaCreator: SchemaCreator =
-        SchemaSchemaCreatorDelegateToLifecycle(createSchemaCreator, rootConnectionLifecycle)
+        SchemaCreatorDelegateToLifecycle(createSchemaCreator, rootConnectionLifecycle)
     val service: Service = ServiceDelegateToLifecycle(
         createService,
         eventConnectionLifecycle,

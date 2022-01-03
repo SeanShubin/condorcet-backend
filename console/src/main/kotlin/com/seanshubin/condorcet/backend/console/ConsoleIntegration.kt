@@ -32,6 +32,6 @@ class ConsoleIntegration : Integration {
     override val responseEvent: (ResponseValue) -> Unit = notifications::responseEvent
     override val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
     override val clock: Clock = Clock.systemUTC()
-    override val whereKeysAreStored: Path = Paths.get("keys")
+    override val whereKeysAreStored: Path = Paths.get("secrets")
     override val random: Random = Random.Default
 }

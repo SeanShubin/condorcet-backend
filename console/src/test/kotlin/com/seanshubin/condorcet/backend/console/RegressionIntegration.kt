@@ -18,7 +18,8 @@ import java.time.Clock
 import kotlin.random.Random
 
 class RegressionIntegration(phase: Phase) : Integration {
-    val regressionSnapshotDir = Paths.get("src", "test", "resources")
+    val regressionSnapshotDir =
+        Paths.get("console", "src", "test", "resources", "com", "seanshubin", "condorcet", "backend", "console")
     val clockPath = regressionSnapshotDir.resolve("deterministic-clock.txt")
     val realClock = Clock.systemUTC()
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
@@ -52,7 +53,7 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val uniqueIdGenerator: UniqueIdGenerator =
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)
-    override val whereKeysAreStored: Path = regressionSnapshotDir.resolve("keys")
+    override val whereKeysAreStored: Path = regressionSnapshotDir
     private val backingRandom = Random.Default
     override val random: Random = RememberingRandom(backingRandom, randomPath)
 }

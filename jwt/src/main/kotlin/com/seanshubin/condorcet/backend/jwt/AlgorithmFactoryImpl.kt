@@ -15,10 +15,10 @@ import java.security.spec.X509EncodedKeySpec
 class AlgorithmFactoryImpl(
     private val files: FilesContract,
     private val charset: Charset,
-    private val keyBasePath: Path
+    private val basePath: Path
 ) : AlgorithmFactory {
-    private val publicKeyPath: Path = keyBasePath.resolve("public-key.txt")
-    private val privateKeyPath: Path = keyBasePath.resolve("private-key.txt")
+    private val publicKeyPath: Path = basePath.resolve("rsa-public-key.txt")
+    private val privateKeyPath: Path = basePath.resolve("rsa-private-key.txt")
     override fun create(): Algorithm {
         val (publicKeyBytes, privateKeyBytes) = loadKeyBytes()
         val keyFactory = KeyFactory.getInstance("RSA")
@@ -45,7 +45,7 @@ class AlgorithmFactoryImpl(
     }
 
     private fun createAndLoadKeyBytes(): Pair<ByteArray, ByteArray> {
-        files.createDirectories(keyBasePath)
+        files.createDirectories(basePath)
         val keyPairGenerator = KeyPairGenerator.getInstance("RSA")
         keyPairGenerator.initialize(1024)
         val keyPair = keyPairGenerator.generateKeyPair()

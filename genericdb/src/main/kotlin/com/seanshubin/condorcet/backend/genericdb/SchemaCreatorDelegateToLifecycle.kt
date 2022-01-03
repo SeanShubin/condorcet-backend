@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.genericdb
 
-class SchemaSchemaCreatorDelegateToLifecycle(
+class SchemaCreatorDelegateToLifecycle(
     private val createSchemaCreator: (ConnectionWrapper) -> SchemaCreator,
     private val connectionLifecycle: Lifecycle<ConnectionWrapper>,
 ) : SchemaCreator {

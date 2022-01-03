@@ -5,7 +5,7 @@ import java.nio.charset.StandardCharsets
 
 class QueryLoaderFromResource : QueryLoader {
     override fun load(name: String): String {
-        val resourceName = "sql/$name.sql"
+        val resourceName = "com/seanshubin/condorcet/backend/database/$name.sql"
         val charset = StandardCharsets.UTF_8
         val classLoader = this.javaClass.classLoader
         val inputStream = classLoader.getResourceAsStream(resourceName)
