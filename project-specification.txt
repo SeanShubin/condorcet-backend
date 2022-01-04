@@ -60,23 +60,23 @@
   }
   global [ stdlib test ]
   modules {
-    crypto        []
-    io            []
-    service       [ crypto io database json logger ]
-    database      [ genericdb domain crypto ]
-    genericdb     [ mysql-jdbc io table ]
-    server        [ jetty service-http ]
     console       [ server dependencies ]
     dependencies  [ server ]
-    json          [ jackson jackson-time ]
-    logger        [ contract ]
+    server        [ jetty service-http ]
     service-http  [ service http jwt ]
-    http          []
-    contract      []
-    table         []
-    domain        [ table json ]
-    prototype     [ jetty jetty-alpn jetty-http2 java-jwt table mysql-jdbc json ]
     jwt           [ java-jwt contract ]
+    http          []
+    service       [ crypto io database json logger ]
+    logger        [ contract ]
+    contract      []
+    database      [ genericdb domain crypto ]
+    domain        [ table json ]
+    genericdb     [ mysql-jdbc io table ]
+    io            []
+    crypto        []
+    prototype     [ jetty jetty-alpn jetty-http2 java-jwt table mysql-jdbc json ]
+    json          [ jackson jackson-time ]
+    table         []
   }
   detangler [console]
   consoleEntryPoint {
@@ -85,4 +85,3 @@
   javaVersion 12
   deployableToMavenCentral true
 }
-
