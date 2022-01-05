@@ -30,6 +30,10 @@
             <artifactId>condorcet-backend-logger</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-core-jvm</artifactId>
+        </dependency>
     </dependencies>
     <parent>
         <groupId>com.seanshubin.condorcet.backend</groupId>
