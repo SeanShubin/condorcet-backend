@@ -1,15 +1,16 @@
 package com.seanshubin.condorcet.backend.domain
 
-import com.seanshubin.condorcet.backend.domain.Ballot.Companion.tally
 import java.time.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class BallotTest {
+class TallyTest {
     @Test
     fun count() {
         val createBallotsFunction = newCreateBallotsFunction()
-        fun createBallots(quantity:Int, vararg candidate:String):List<Ballot> = createBallotsFunction(quantity, candidate)
+        fun createBallots(quantity: Int, vararg candidate: String): List<Ballot> =
+            createBallotsFunction(quantity, candidate)
+
         val candidates = listOf("Rock", "Paper", "Scissors")
         val ballots =
             createBallots(4, "Rock", "Scissors", "Paper") +
@@ -43,7 +44,7 @@ class BallotTest {
         )
         val places = listOf(Place(1, "Rock"), Place(2, "Scissors"), Place(3, "Paper"))
 
-        val tally = ballots.tally(candidates)
+        val tally = Tally.countBallots(candidates, ballots)
         assertEquals(candidates, tally.candidates)
         assertEquals(ballots, tally.ballots)
         assertEquals(preferences, tally.preferences)
@@ -135,7 +136,7 @@ class BallotTest {
         )
         val places = listOf(Place(1, "a"), Place(1, "b"), Place(3, "c"), Place(4, "d"), Place(4, "e"))
 
-        val tally = ballots.tally(candidates)
+        val tally = Tally.countBallots(candidates, ballots)
         assertEquals(candidates, tally.candidates)
         assertEquals(ballots, tally.ballots)
         assertEquals(preferences, tally.preferences)
