@@ -528,16 +528,43 @@ Content-Type: application/json
 {
   "candidates" : [ "Butter Pecan", "Chocolate", "Chocolate Chip", "Mint", "Neapolitan", "Vanilla" ],
   "ballots" : [ {
+    "user" : "Dave",
+    "election" : "Favorite Ice Cream",
+    "confirmation" : "8c9fd5ac-7f5b-44bf-ab33-4542452dbceb",
+    "whenCast" : "2021-12-30T19:21:10.812729Z",
+    "rankings" : [ {
+      "name" : "Mint",
+      "rank" : 1
+    }, {
+      "name" : "Chocolate Chip",
+      "rank" : 2
+    }, {
+      "name" : "Neapolitan",
+      "rank" : 3
+    }, {
+      "name" : "Chocolate",
+      "rank" : 4
+    }, {
+      "name" : "Vanilla",
+      "rank" : 5
+    }, {
+      "name" : "Butter Pecan",
+      "rank" : 6
+    } ]
+  }, {
     "user" : "Alice",
     "election" : "Favorite Ice Cream",
     "confirmation" : "afee81f2-21cc-4fab-b630-770a08721686",
     "whenCast" : "2021-12-30T18:52:08.744169Z",
     "rankings" : [ {
+      "name" : "Chocolate Chip",
+      "rank" : 1
+    }, {
       "name" : "Neapolitan",
       "rank" : 2
     }, {
-      "name" : "Chocolate Chip",
-      "rank" : 1
+      "name" : "Chocolate",
+      "rank" : 3
     }, {
       "name" : "Vanilla",
       "rank" : 4
@@ -547,9 +574,6 @@ Content-Type: application/json
     }, {
       "name" : "Mint",
       "rank" : 6
-    }, {
-      "name" : "Chocolate",
-      "rank" : 3
     } ]
   }, {
     "user" : "Bob",
@@ -560,44 +584,20 @@ Content-Type: application/json
       "name" : "Chocolate",
       "rank" : 1
     }, {
-      "name" : "Neapolitan",
-      "rank" : 6
-    }, {
       "name" : "Chocolate Chip",
       "rank" : 2
     }, {
       "name" : "Vanilla",
       "rank" : 3
     }, {
-      "name" : "Butter Pecan",
-      "rank" : 5
-    }, {
       "name" : "Mint",
       "rank" : 4
-    } ]
-  }, {
-    "user" : "Dave",
-    "election" : "Favorite Ice Cream",
-    "confirmation" : "8c9fd5ac-7f5b-44bf-ab33-4542452dbceb",
-    "whenCast" : "2021-12-30T19:21:10.812729Z",
-    "rankings" : [ {
-      "name" : "Chocolate",
-      "rank" : 4
+    }, {
+      "name" : "Butter Pecan",
+      "rank" : 5
     }, {
       "name" : "Neapolitan",
-      "rank" : 3
-    }, {
-      "name" : "Chocolate Chip",
-      "rank" : 2
-    }, {
-      "name" : "Vanilla",
-      "rank" : 5
-    }, {
-      "name" : "Butter Pecan",
       "rank" : 6
-    }, {
-      "name" : "Mint",
-      "rank" : 1
     } ]
   } ],
   "preferences" : [ [ {

@@ -12,4 +12,4 @@ from ballot
          inner join election on ballot.election_id = election.id
          inner join candidate on ranking.candidate_id = candidate.id
 where election.name = ?
-order by ballot.id
+order by ballot.confirmation, ranking.rank, candidate.name

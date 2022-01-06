@@ -40,7 +40,7 @@ data class Tally(
                 val preferences = ballots.map { it.rankings }.fold(emptyPreferences, ::accumulateRankings)
                 val strongestPaths = preferences.strongestPaths()
                 val places = strongestPaths.places(candidates)
-                val whoVoted = ballots.map { it.user }
+                val whoVoted = ballots.map { it.user }.sorted()
                 return Tally(candidates, ballots, preferences, strongestPaths, places, whoVoted)
             }
 
