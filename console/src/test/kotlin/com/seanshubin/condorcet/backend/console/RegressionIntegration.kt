@@ -19,7 +19,7 @@ import kotlin.random.Random
 
 class RegressionIntegration(phase: Phase) : Integration {
     val regressionSnapshotDir =
-        Paths.get("console", "src", "test", "resources", "com", "seanshubin", "condorcet", "backend", "console")
+        Paths.get("src", "test", "resources", "com", "seanshubin", "condorcet", "backend", "console")
     val clockPath = regressionSnapshotDir.resolve("deterministic-clock.txt")
     val realClock = Clock.systemUTC()
     val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
