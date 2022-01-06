@@ -3,7 +3,6 @@ package com.seanshubin.condorcet.backend.service
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.domain.*
-import com.seanshubin.condorcet.backend.domain.Ballot.Companion.tally
 import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
@@ -259,7 +258,7 @@ class ServiceImpl(
         failUnlessPermission(accessToken, USE_APPLICATION)
         val candidates = stateDbQueries.listCandidates(electionName)
         val ballots = stateDbQueries.listBallots(electionName)
-        val tally = ballots.tally(candidates)
+        val tally = Tally.countBallots(candidates, ballots)
         return tally
     }
 
