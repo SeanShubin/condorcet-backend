@@ -16,7 +16,7 @@ object DataTransfer {
             ownerCanDeleteBallots,
             auditorCanDeleteBallots,
             isTemplate,
-            noChangesAfterVote,
+            allowChangesAfterVote,
             isOpen
         )
 }

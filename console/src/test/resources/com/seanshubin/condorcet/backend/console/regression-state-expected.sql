@@ -214,7 +214,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -239,7 +239,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -264,7 +264,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -309,7 +309,7 @@ set is_template = 1
 where name = 'Favorite Ice Cream Flavor';
 update
     election
-set no_changes_after_vote = 0
+set allow_changes_after_vote = 0
 where name = 'Favorite Ice Cream Flavor';
 update
     election
@@ -327,7 +327,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -359,7 +359,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -429,7 +429,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -474,7 +474,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -627,7 +627,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -644,7 +644,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -677,7 +677,7 @@ select election.id,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open
 from election
          inner join user on election.owner_id = user.id;
@@ -697,7 +697,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election
@@ -834,7 +834,7 @@ select user.name           as owner,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.no_changes_after_vote,
+       election.allow_changes_after_vote,
        election.is_open,
        count(candidate.id) as candidate_count
 from election

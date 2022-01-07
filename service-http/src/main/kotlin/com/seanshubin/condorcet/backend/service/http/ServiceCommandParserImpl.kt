@@ -66,7 +66,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             ownerCanDeleteBallots = map["ownerCanDeleteBallots"] as Boolean?,
             auditorCanDeleteBallots = map["auditorCanDeleteBallots"] as Boolean?,
             isTemplate = map["isTemplate"] as Boolean?,
-            noChangesAfterVote = map["noChangesAfterVote"] as Boolean?,
+            allowChangesAfterVote = map["allowChangesAfterVote"] as Boolean?,
             isOpen = map["isOpen"] as Boolean?
         )
     }

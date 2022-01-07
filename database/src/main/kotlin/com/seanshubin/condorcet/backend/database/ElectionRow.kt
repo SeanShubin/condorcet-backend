@@ -13,7 +13,7 @@ data class ElectionRow(
     val ownerCanDeleteBallots: Boolean = false,
     val auditorCanDeleteBallots: Boolean = false,
     val isTemplate: Boolean = false,
-    val noChangesAfterVote: Boolean = false,
+    val allowChangesAfterVote: Boolean = false,
     val isOpen: Boolean = false,
     val candidateCount: Int
 ) : DbRow {
@@ -27,7 +27,7 @@ data class ElectionRow(
         ownerCanDeleteBallots,
         auditorCanDeleteBallots,
         isTemplate,
-        noChangesAfterVote,
+        allowChangesAfterVote,
         isOpen
     )
 }
