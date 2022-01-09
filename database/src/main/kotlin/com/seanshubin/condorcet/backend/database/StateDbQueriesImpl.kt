@@ -13,56 +13,56 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun findUserByName(name: String): UserRow =
         queryExactlyOneRow(
             ::createUser,
-            "user-by-name",
+            "user-select-by-name",
             name
         )
 
     override fun searchUserByName(name: String): UserRow? =
         queryZeroOrOneRow(
             ::createUser,
-            "user-by-name",
+            "user-select-by-name",
             name
         )
 
     override fun searchUserByEmail(email: String): UserRow? =
         queryZeroOrOneRow(
             ::createUser,
-            "user-by-email",
+            "user-select-by-email",
             email
         )
 
     override fun tableCount(): Int = StateSchema.tables.size
 
     override fun userCount(): Int =
-        queryExactlyOneInt("count-users")
+        queryExactlyOneInt("user-count")
 
     override fun electionCount(): Int =
-        queryExactlyOneInt("count-elections")
+        queryExactlyOneInt("election-count")
 
     override fun listUsers(): List<UserRow> =
-        query(::createUser, "list-users")
+        query(::createUser, "user-select")
 
     override fun listElections(): List<ElectionRow> =
-        query(::createElection, "list-elections")
+        query(::createElection, "election-select")
 
     override fun roleHasPermission(role: Role, permission: Permission): Boolean {
-        return queryExists("role-has-permission", role.name, permission.name)
+        return queryExists("role-permission-exists", role.name, permission.name)
     }
 
-    override fun lastSynced(): Int? = queryZeroOrOneInt("get-last-synced")
+    override fun lastSynced(): Int? = queryZeroOrOneInt("variable-select-last-synced")
 
     override fun searchElectionByName(name: String): ElectionRow? {
-        return queryZeroOrOneRow(::createElection, "election-by-name", name)
+        return queryZeroOrOneRow(::createElection, "election-select-by-name", name)
     }
 
     override fun listCandidates(electionName: String): List<String> =
-        query(::createCandidateName, "candidate-names-by-election", electionName)
+        query(::createCandidateName, "candidate-select-by-election", electionName)
 
     override fun listRankings(voterName: String, electionName: String): List<Ranking> =
-        query(::createRanking, "list-rankings", voterName, electionName)
+        query(::createRanking, "ranking-select-by-user-election", voterName, electionName)
 
     override fun searchBallot(voterName: String, electionName: String): BallotRow? {
-        return queryZeroOrOneRow(this::createBallot, "ballot-by-voter-and-election", voterName, electionName)
+        return queryZeroOrOneRow(this::createBallot, "ballot-select-by-user-election", voterName, electionName)
     }
 
     override fun listRankings(electionName: String): List<VoterElectionRankingRow> =
@@ -74,7 +74,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
             ::createRankingRow,
             ::createBallotRankingKey,
             ::createBallot,
-            "list-ballot-rankings",
+            "ranking-select-by-election",
             electionName
         )
 

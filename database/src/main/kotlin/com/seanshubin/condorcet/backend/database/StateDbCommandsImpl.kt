@@ -13,19 +13,19 @@ class StateDbCommandsImpl(
     private val uniqueIdGenerator: UniqueIdGenerator
 ) : StateDbCommands, GenericDatabase by genericDatabase {
     override fun setLastSynced(lastSynced: Int) {
-        update("set-last-synced", lastSynced)
+        update("variable-update-last-synced", lastSynced)
     }
 
     override fun initializeLastSynced(lastSynced: Int) {
-        update("initialize-last-synced", lastSynced)
+        update("variable-insert-last-synced", lastSynced)
     }
 
     override fun createUser(authority: String, name: String, email: String, salt: String, hash: String, role: Role) {
-        update("create-user", name, email, salt, hash, role.name)
+        update("user-insert", name, email, salt, hash, role.name)
     }
 
     override fun setRole(authority: String, name: String, role: Role) {
-        update("set-role", role.name, name)
+        update("user-update-role", role.name, name)
     }
 
     override fun removeUser(authority: String, name: String) {
@@ -33,43 +33,43 @@ class StateDbCommandsImpl(
     }
 
     override fun addElection(authority: String, owner: String, name: String) {
-        update("add-election", owner, name)
+        update("election-insert", owner, name)
     }
 
     override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
         if (updates.newName != null) {
-            update("set-election-name", updates.newName, name)
+            update("election-update-name", updates.newName, name)
         }
         if (updates.secretBallot != null) {
-            update("set-election-secret-ballot", updates.secretBallot, name)
+            update("election-update-secret-ballot", updates.secretBallot, name)
         }
         if (updates.clearNoVotingBefore == true) {
-            update("set-election-no-voting-before", null, name)
+            update("election-update-no-voting-before", null, name)
         } else {
-            update("set-election-no-voting-before", updates.noVotingBefore, name)
+            update("election-update-no-voting-before", updates.noVotingBefore, name)
         }
         if (updates.clearNoVotingAfter == true) {
-            update("set-election-no-voting-after", null, name)
+            update("election-update-no-voting-after", null, name)
         } else {
-            update("set-election-no-voting-after", updates.noVotingAfter, name)
+            update("election-update-no-voting-after", updates.noVotingAfter, name)
         }
         if (updates.restrictWhoCanVote != null) {
-            update("set-election-restrict-who-can-vote", updates.restrictWhoCanVote, name)
+            update("election-update-restrict-who-can-vote", updates.restrictWhoCanVote, name)
         }
         if (updates.ownerCanDeleteBallots != null) {
-            update("set-election-owner-can-delete-ballots", updates.ownerCanDeleteBallots, name)
+            update("election-update-owner-can-delete-ballots", updates.ownerCanDeleteBallots, name)
         }
         if (updates.auditorCanDeleteBallots != null) {
-            update("set-election-auditor-can-delete-ballots", updates.auditorCanDeleteBallots, name)
+            update("election-update-auditor-can-delete-ballots", updates.auditorCanDeleteBallots, name)
         }
         if (updates.isTemplate != null) {
-            update("set-election-is-template", updates.isTemplate, name)
+            update("election-update-is-template", updates.isTemplate, name)
         }
         if (updates.allowChangesAfterVote != null) {
-            update("set-election-allow-changes-after-vote", updates.allowChangesAfterVote, name)
+            update("election-update-allow-changes-after-vote", updates.allowChangesAfterVote, name)
         }
         if (updates.isOpen != null) {
-            update("set-election-is-open", updates.isOpen, name)
+            update("election-update-is-open", updates.isOpen, name)
         }
     }
 
@@ -79,25 +79,25 @@ class StateDbCommandsImpl(
 
     override fun addCandidates(authority: String, electionName: String, candidateNames: List<String>) {
         candidateNames.forEach { candidateName ->
-            update("add-candidate-to-election", electionName, candidateName)
+            update("candidate-insert", electionName, candidateName)
         }
     }
 
     override fun removeCandidates(authority: String, electionName: String, candidateNames: List<String>) {
         candidateNames.forEach { candidateName ->
-            update("remove-candidate-from-election", electionName, candidateName)
+            update("candidate-delete", electionName, candidateName)
         }
     }
 
     override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
         val now = clock.instant()
         val uniqueId = uniqueIdGenerator.uniqueId()
-        update("create-ballot", voterName, electionName, uniqueId, now)
+        update("ballot-insert", voterName, electionName, uniqueId, now)
         rankings.forEach { (candidateName, rank) ->
             if (rank == null) {
                 update("delete-ranking", voterName, electionName, candidateName)
             } else {
-                update("create-ranking", voterName, electionName, electionName, candidateName, rank)
+                update("ranking-insert", voterName, electionName, electionName, candidateName, rank)
             }
         }
     }

@@ -10,7 +10,7 @@ class EventDbCommandsImpl(
 ) : EventDbCommands, GenericDatabase by genericDatabase {
     override fun addEvent(authority: String, type: String, body: String) {
         update(
-            "insert-event",
+            "event-insert",
             clock.instant(),
             authority,
             type,

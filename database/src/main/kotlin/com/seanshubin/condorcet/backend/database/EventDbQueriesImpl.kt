@@ -5,10 +5,10 @@ import java.sql.ResultSet
 
 class EventDbQueriesImpl(genericDatabase: GenericDatabase) : EventDbQueries, GenericDatabase by genericDatabase {
     override fun eventsToSync(lastEventSynced: Int): List<EventRow> =
-        query(::createEvent, "list-unsynced-events", lastEventSynced)
+        query(::createEvent, "event-select-unsynced", lastEventSynced)
 
     override fun eventCount(): Int =
-        queryExactlyOneInt("count-events")
+        queryExactlyOneInt("event-count")
 
     private fun createEvent(resultSet: ResultSet): EventRow {
         val id = resultSet.getInt("id")

@@ -38,7 +38,7 @@ class SchemaCreatorImpl(
     }
 
     private fun needsInitialize(): Boolean {
-        return database.queryExactlyOneInt("table-count", schemaName) == 0
+        return database.queryExactlyOneInt("schema-count-table", schemaName) == 0
     }
 
     private fun createDatabase() {

@@ -92,5 +92,5 @@ object StateSchema : Schema {
         ranking,
         tally
     )
-    override val initializeQueryName: String? = "initialize-state-db"
+    override val initializeQueryName: String? = "state-db-initialize"
 }
