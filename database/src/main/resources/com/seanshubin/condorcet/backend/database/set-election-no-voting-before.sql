@@ -1,4 +1,4 @@
 update
     election
-set scheduled_start = ?
+set no_voting_before = ?
 where name = ?

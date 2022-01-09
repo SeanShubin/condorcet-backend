@@ -7,7 +7,10 @@ class ServiceCommandParserImpl : ServiceCommandParser {
     override fun parse(name: String, content: String?): ServiceCommand {
         return try {
             parseJson(name, content ?: "")
-        } catch (ex: Exception) {
+        } catch (ex: Throwable) {
+            // catch Throwable instead of Exception
+            // because jackson's JsonDeserializer.getAbsentValue
+            // can throw a java.lang.NoSuchMethodError
             return ServiceCommand.Malformed(name, content ?: "");
         }
     }
@@ -58,10 +61,10 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             name = map["name"] as String,
             newName = map["newName"] as String?,
             secretBallot = map["secretBallot"] as Boolean?,
-            clearScheduledStart = map.containsKey("scheduledStart") && map["scheduledStart"] == null,
-            scheduledStart = map["scheduledStart"].toInstant(),
-            clearScheduledEnd = map.containsKey("scheduledEnd") && map["scheduledEnd"] == null,
-            scheduledEnd = map["scheduledEnd"].toInstant(),
+            clearNoVotingBefore = map.containsKey("noVotingBefore") && map["noVotingBefore"] == null,
+            noVotingBefore = map["noVotingBefore"].toInstant(),
+            clearNoVotingAfter = map.containsKey("noVotingAfter") && map["noVotingAfter"] == null,
+            noVotingAfter = map["noVotingAfter"].toInstant(),
             restrictWhoCanVote = map["restrictWhoCanVote"] as Boolean?,
             ownerCanDeleteBallots = map["ownerCanDeleteBallots"] as Boolean?,
             auditorCanDeleteBallots = map["auditorCanDeleteBallots"] as Boolean?,

@@ -65,14 +65,14 @@ class RegressionTest {
                 ownerCanDeleteBallots = true,
                 auditorCanDeleteBallots = true,
                 restrictWhoCanVote = true,
-                clearScheduledStart = false,
-                scheduledStart = ZonedDateTime.of(
+                clearNoVotingBefore = false,
+                noVotingBefore = ZonedDateTime.of(
                     LocalDate.of(2021, 2, 3),
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")
                 ).toInstant(),
-                clearScheduledEnd = false,
-                scheduledEnd = ZonedDateTime.of(
+                clearNoVotingAfter = false,
+                noVotingAfter = ZonedDateTime.of(
                     LocalDate.of(2022, 2, 3),
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")

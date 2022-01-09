@@ -21,8 +21,8 @@ object StateSchema : Schema {
     val electionOwner = ForeignKey("owner", user)
     val electionName = Field("name", STRING, unique = true)
     val electionSecretBallot = Field("secret_ballot", BOOLEAN, default = "false")
-    val electionScheduledStart = Field("scheduled_start", DATE, allowNull = true)
-    val electionScheduledEnd = Field("scheduled_end", DATE, allowNull = true)
+    val electionNoVotingBefore = Field("no_voting_before", DATE, allowNull = true)
+    val electionNoVotingAfter = Field("no_voting_after", DATE, allowNull = true)
     val electionRestrictWhoCanVote = Field("restrict_who_can_vote", BOOLEAN, default = "false")
     val electionOwnerCanDeleteBallots = Field("owner_can_delete_ballots", BOOLEAN, default = "false")
     val electionAuditorCanDeleteBallots = Field("auditor_can_delete_ballots", BOOLEAN, default = "false")
@@ -34,8 +34,8 @@ object StateSchema : Schema {
         electionOwner,
         electionName,
         electionSecretBallot,
-        electionScheduledStart,
-        electionScheduledEnd,
+        electionNoVotingBefore,
+        electionNoVotingAfter,
         electionRestrictWhoCanVote,
         electionOwnerCanDeleteBallots,
         electionAuditorCanDeleteBallots,

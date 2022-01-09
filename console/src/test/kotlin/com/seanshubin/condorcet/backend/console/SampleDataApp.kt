@@ -108,14 +108,14 @@ object SampleDataApp {
                 ownerCanDeleteBallots = true,
                 auditorCanDeleteBallots = true,
                 restrictWhoCanVote = true,
-                clearScheduledStart = null,
-                scheduledStart = ZonedDateTime.of(
+                clearNoVotingBefore = null,
+                noVotingBefore = ZonedDateTime.of(
                     LocalDate.of(2021, 2, 3),
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")
                 ).toInstant(),
-                clearScheduledEnd = null,
-                scheduledEnd = ZonedDateTime.of(
+                clearNoVotingAfter = null,
+                noVotingAfter = ZonedDateTime.of(
                     LocalDate.of(2022, 2, 3),
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")

@@ -43,15 +43,15 @@ class StateDbCommandsImpl(
         if (updates.secretBallot != null) {
             update("set-election-secret-ballot", updates.secretBallot, name)
         }
-        if (updates.clearScheduledStart == true) {
-            update("set-election-scheduled-start", null, name)
+        if (updates.clearNoVotingBefore == true) {
+            update("set-election-no-voting-before", null, name)
         } else {
-            update("set-election-scheduled-start", updates.scheduledStart, name)
+            update("set-election-no-voting-before", updates.noVotingBefore, name)
         }
-        if (updates.clearScheduledEnd == true) {
-            update("set-election-scheduled-end", null, name)
+        if (updates.clearNoVotingAfter == true) {
+            update("set-election-no-voting-after", null, name)
         } else {
-            update("set-election-scheduled-end", updates.scheduledEnd, name)
+            update("set-election-no-voting-after", updates.noVotingAfter, name)
         }
         if (updates.restrictWhoCanVote != null) {
             update("set-election-restrict-who-can-vote", updates.restrictWhoCanVote, name)
