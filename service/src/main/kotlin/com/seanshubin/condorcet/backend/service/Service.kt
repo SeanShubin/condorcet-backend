@@ -14,7 +14,7 @@ interface Service {
     fun launchElection(accessToken:AccessToken, name:String, allowEdit:Boolean)
     fun finalizeElection(accessToken:AccessToken, name:String)
     fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates)
-    fun getElection(accessToken: AccessToken, name: String): ElectionAndCanUpdate
+    fun getElection(accessToken: AccessToken, name: String): Election
     fun deleteElection(accessToken: AccessToken, name: String)
     fun listElections(accessToken: AccessToken): List<Election>
     fun listTables(accessToken: AccessToken): List<String>

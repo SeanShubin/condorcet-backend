@@ -298,21 +298,18 @@ Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0
 200
 Content-Type: application/json
 {
-  "election" : {
-    "ownerName" : "Alice",
-    "name" : "Favorite Ice Cream",
-    "candidateCount" : 6,
-    "secretBallot" : false,
-    "noVotingBefore" : null,
-    "noVotingAfter" : null,
-    "restrictWhoCanVote" : false,
-    "ownerCanDeleteBallots" : false,
-    "auditorCanDeleteBallots" : false,
-    "isTemplate" : false,
-    "allowEdit" : false,
-    "allowVote" : false
-  },
-  "canUpdate" : true
+  "ownerName" : "Alice",
+  "name" : "Favorite Ice Cream",
+  "candidateCount" : 6,
+  "secretBallot" : false,
+  "noVotingBefore" : null,
+  "noVotingAfter" : null,
+  "restrictWhoCanVote" : false,
+  "ownerCanDeleteBallots" : false,
+  "auditorCanDeleteBallots" : false,
+  "isTemplate" : false,
+  "allowEdit" : false,
+  "allowVote" : false
 }
 
 /DeleteElection
