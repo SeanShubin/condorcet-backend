@@ -6,12 +6,12 @@ import java.time.Instant
 class ServiceCommandParserImpl : ServiceCommandParser {
     override fun parse(name: String, content: String?): ServiceCommand {
         return try {
-            parseJson(name, content ?: "")
+            parseJson(name, content ?: "{}")
         } catch (ex: Throwable) {
             // catch Throwable instead of Exception
             // because jackson's JsonDeserializer.getAbsentValue
             // can throw a java.lang.NoSuchMethodError
-            return ServiceCommand.Malformed(name, content ?: "");
+            return ServiceCommand.Malformed(name, content ?: "{}");
         }
     }
 

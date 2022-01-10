@@ -63,8 +63,10 @@ class ApiHandler(
                     ServiceCommand.ServiceExceptionCommand(ex).exec(environment, requestValue)
                 }
             } else {
-                throw ex
+                ServiceCommand.TopLevelExceptionCommand(ex).exec(environment, requestValue)
             }
+        } catch (ex: Throwable) {
+            ServiceCommand.TopLevelExceptionCommand(ex).exec(environment, requestValue)
         }
 
     private fun HttpServletRequest.toRequestValue(target: String): RequestValue {

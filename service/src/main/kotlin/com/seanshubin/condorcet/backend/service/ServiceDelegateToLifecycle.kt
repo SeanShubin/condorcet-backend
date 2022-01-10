@@ -16,8 +16,8 @@ class ServiceDelegateToLifecycle(
     override fun refresh(refreshToken: RefreshToken): Tokens =
         withService { it.refresh(refreshToken) }
 
-    override fun register(rawName: String, email: String, password: String): Tokens =
-        withService { it.register(rawName, email, password) }
+    override fun register(name: String, email: String, password: String): Tokens =
+        withService { it.register(name, email, password) }
 
     override fun authenticate(nameOrEmail: String, password: String): Tokens =
         withService { it.authenticate(nameOrEmail, password) }

@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.service
 
+import arrow.core.Either
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.domain.*
@@ -9,6 +10,8 @@ import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrde
 import com.seanshubin.condorcet.backend.domain.Role.OWNER
 import com.seanshubin.condorcet.backend.domain.Role.UNASSIGNED
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
+import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
+import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
 import com.seanshubin.condorcet.backend.service.DataTransfer.toDomain
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import kotlin.random.Random
@@ -33,20 +36,21 @@ class ServiceImpl(
         return Tokens(refreshToken, accessToken)
     }
 
-    override fun register(rawName: String, email: String, password: String): Tokens {
-        val name = collapseWhitespace(rawName)
-        failIf(name.isBlank(), UNSUPPORTED, "User name must not be blank")
-        failIf(userNameExists(name), CONFLICT, "User with name '$name' already exists")
-        failIf(userEmailExists(email), CONFLICT, "User with email '$email' already exists")
+    override fun register(name: String, email: String, password: String): Tokens {
+        val validName = validateString(name, "name", Validation.userName)
+        val validEmail = validateString(email, "email", Validation.email)
+        val validPassword = validateString(password, "password", Validation.password)
+        failIf(userNameExists(validName), CONFLICT, "User with name '$validName' already exists")
+        failIf(userEmailExists(validEmail), CONFLICT, "User with email '$validEmail' already exists")
         val role = if (stateDbQueries.userCount() == 0) {
             OWNER
         } else {
             UNASSIGNED
         }
-        val (salt, hash) = passwordUtil.createSaltAndHash(password)
-        val authority = name
-        stateDbCommands.createUser(authority, name, email, salt, hash, role)
-        val user = stateDbQueries.findUserByName(name)
+        val (salt, hash) = passwordUtil.createSaltAndHash(validPassword)
+        val authority = validName
+        stateDbCommands.createUser(authority, validName, validEmail, salt, hash, role)
+        val user = stateDbQueries.findUserByName(validName)
         return createTokens(user)
     }
 
@@ -97,12 +101,20 @@ class ServiceImpl(
     }
 
     override fun addElection(accessToken: AccessToken, name: String) {
+        val validName = validateString(name, "name", Validation.electionName)
         failUnlessPermission(accessToken, USE_APPLICATION)
-        failIf(electionNameExists(name), CONFLICT, "Election with name '$name' already exists")
-        stateDbCommands.addElection(accessToken.userName, accessToken.userName, name)
+        failIf(electionNameExists(validName), CONFLICT, "Election with name '$validName' already exists")
+        stateDbCommands.addElection(accessToken.userName, accessToken.userName, validName)
+    }
+
+    private fun validateElectionUpdates(electionUpdates: ElectionUpdates): ElectionUpdates {
+        val newName = electionUpdates.newName ?: return electionUpdates
+        val validNewName = validateString(newName, "electionUpdates.newName", Validation.electionName)
+        return electionUpdates.copy(newName = validNewName)
     }
 
     override fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates) {
+        val validElectionUpdates = validateElectionUpdates(electionUpdates)
         failUnlessPermission(accessToken, USE_APPLICATION)
         val electionRow = stateDbQueries.searchElectionByName(name)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
@@ -112,7 +124,7 @@ class ServiceImpl(
             UNAUTHORIZED,
             "User '${accessToken.userName}' is not allowed to modify election '$name' owned by user '${electionRow.owner}'"
         )
-        stateDbCommands.updateElection(accessToken.userName, name, electionUpdates)
+        stateDbCommands.updateElection(accessToken.userName, name, validElectionUpdates)
     }
 
     override fun getElection(accessToken: AccessToken, name: String): ElectionAndCanUpdate {
@@ -189,6 +201,7 @@ class ServiceImpl(
     }
 
     override fun setCandidates(accessToken: AccessToken, electionName: String, candidateNames: List<String>) {
+        val validCandidateNames = validateStringList(candidateNames, "candidate", Validation.candidateName)
         failUnlessPermission(accessToken, USE_APPLICATION)
         val electionRow = stateDbQueries.searchElectionByName(electionName)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
@@ -199,12 +212,12 @@ class ServiceImpl(
             "User '${accessToken.userName}' is not allowed to modify election '$electionName' owned by user '${electionRow.owner}'"
         )
         val originalCandidates = stateDbQueries.listCandidates(electionName)
-        val candidatesToDelete = originalCandidates.filter { !candidateNames.contains(it) }
-        val candidatesToAdd = candidateNames.filter { !originalCandidates.contains(it) }
-        if(candidatesToDelete.isNotEmpty()){
+        val candidatesToDelete = originalCandidates.missing(validCandidateNames)
+        val candidatesToAdd = originalCandidates.extra(validCandidateNames)
+        if (candidatesToDelete.isNotEmpty()) {
             stateDbCommands.removeCandidates(accessToken.userName, electionName, candidatesToDelete)
         }
-        if(candidatesToAdd.isNotEmpty()){
+        if (candidatesToAdd.isNotEmpty()) {
             stateDbCommands.addCandidates(accessToken.userName, electionName, candidatesToAdd)
         }
     }
@@ -278,6 +291,10 @@ class ServiceImpl(
 
     private fun isSelf(accessToken: AccessToken, userRow: UserRow): Boolean = accessToken.userName == userRow.name
 
+    private fun fail(category: ServiceException.Category, message: String): Nothing {
+        throw ServiceException(category, message)
+    }
+
     private fun failIf(shouldFail: Boolean, category: ServiceException.Category, message: String) {
         if (shouldFail) throw ServiceException(category, message)
     }
@@ -318,14 +335,22 @@ class ServiceImpl(
         return Tokens(refreshToken, accessToken)
     }
 
-    private fun collapseWhitespace(s: String): String = s.trim().replace(whitespaceBlock, " ")
     private fun GenericTable.toTableData(): TableData {
         val columnNames = this.columnNames
         val rows = this.rows
         return TableData(columnNames, rows)
     }
 
-    companion object {
-        val whitespaceBlock = Regex("""\s+""")
-    }
+    private fun validateString(original: String, caption: String, rule: (String) -> Either<String, String>): String =
+        when (val validated = rule(original)) {
+            is Either.Right -> validated.value
+            is Either.Left -> fail(UNSUPPORTED, "Invalid $caption, ${validated.value}")
+        }
+
+    private fun validateStringList(
+        original: List<String>,
+        caption: String,
+        rule: (String) -> Either<String, String>
+    ): List<String> =
+        original.filter { it.trim() != "" }.map { validateString(it, "$caption '$it'", rule) }
 }
