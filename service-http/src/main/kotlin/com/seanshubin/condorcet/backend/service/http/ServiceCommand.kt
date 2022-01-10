@@ -77,6 +77,22 @@ interface ServiceCommand {
             }
     }
 
+    data class LaunchElection(val name: String, val allowEdit:Boolean) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                environment.service.launchElection(accessToken, name, allowEdit)
+                responseBuilder().build()
+            }
+    }
+
+    data class FinalizeElection(val name: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                environment.service.finalizeElection(accessToken, name)
+                responseBuilder().build()
+            }
+    }
+
     data class UpdateElection(
         val name: String,
         val newName: String?,
@@ -89,8 +105,8 @@ interface ServiceCommand {
         val ownerCanDeleteBallots: Boolean?,
         val auditorCanDeleteBallots: Boolean?,
         val isTemplate: Boolean?,
-        val allowChangesAfterVote: Boolean?,
-        val isOpen: Boolean?
+        val allowEdit: Boolean?,
+        val allowVote: Boolean?
     ) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
@@ -378,8 +394,8 @@ interface ServiceCommand {
                 ownerCanDeleteBallots,
                 auditorCanDeleteBallots,
                 isTemplate,
-                allowChangesAfterVote,
-                isOpen
+                allowEdit,
+                allowVote
             )
 
         private fun RequestValue.refreshToken(cipher: Cipher): RefreshToken? {

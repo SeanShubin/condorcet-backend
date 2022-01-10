@@ -37,6 +37,14 @@ class ServiceDelegateToLifecycle(
         withService { it.addElection(accessToken, name) }
     }
 
+    override fun launchElection(accessToken: AccessToken, name: String, allowEdit: Boolean) {
+        withService { it.launchElection(accessToken, name, allowEdit) }
+    }
+
+    override fun finalizeElection(accessToken: AccessToken, name: String) {
+        withService { it.finalizeElection(accessToken, name) }
+    }
+
     override fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates) {
         withService { it.updateElection(accessToken, name, electionUpdates) }
     }

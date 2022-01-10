@@ -65,11 +65,11 @@ class StateDbCommandsImpl(
         if (updates.isTemplate != null) {
             update("election-update-is-template", updates.isTemplate, name)
         }
-        if (updates.allowChangesAfterVote != null) {
-            update("election-update-allow-changes-after-vote", updates.allowChangesAfterVote, name)
+        if (updates.allowEdit != null) {
+            update("election-update-allow-edit", updates.allowEdit, name)
         }
-        if (updates.isOpen != null) {
-            update("election-update-is-open", updates.isOpen, name)
+        if (updates.allowVote != null) {
+            update("election-update-allow-vote", updates.allowVote, name)
         }
     }
 

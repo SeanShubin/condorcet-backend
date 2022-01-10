@@ -13,8 +13,8 @@ data class ElectionRow(
     val ownerCanDeleteBallots: Boolean = false,
     val auditorCanDeleteBallots: Boolean = false,
     val isTemplate: Boolean = false,
-    val allowChangesAfterVote: Boolean = false,
-    val isOpen: Boolean = false,
+    val allowEdit: Boolean = false,
+    val allowVote: Boolean = false,
     val candidateCount: Int
 ) : DbRow {
     override val cells: List<Any?> = listOf(
@@ -27,7 +27,7 @@ data class ElectionRow(
         ownerCanDeleteBallots,
         auditorCanDeleteBallots,
         isTemplate,
-        allowChangesAfterVote,
-        isOpen
+        allowEdit,
+        allowVote
     )
 }

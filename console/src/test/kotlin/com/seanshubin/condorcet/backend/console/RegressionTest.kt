@@ -77,12 +77,16 @@ class RegressionTest {
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")
                 ).toInstant(),
-                allowChangesAfterVote = false,
-                isOpen = true
+                allowEdit = false,
+                allowVote = true
             ),
             SetCandidates(
                 electionName = "Favorite Ice Cream",
                 candidateNames = listOf("Chocolate", "Vanilla", "Strawberry")
+            ),
+            LaunchElection(
+                name="Favorite Ice Cream",
+                allowEdit = true
             ),
             CastBallot(
                 voterName = "Alice",
@@ -114,6 +118,9 @@ class RegressionTest {
                     Ranking("Butter Pecan", 5),
                     Ranking("Mint", 6),
                 )
+            ),
+            FinalizeElection(
+                name="Favorite Ice Cream"
             ),
             ListRankings(
                 voterName = "Alice",

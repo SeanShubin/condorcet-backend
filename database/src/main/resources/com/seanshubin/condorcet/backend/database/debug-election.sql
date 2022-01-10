@@ -9,7 +9,7 @@ select election.id,
        election.owner_can_delete_ballots,
        election.auditor_can_delete_ballots,
        election.is_template,
-       election.allow_changes_after_vote,
-       election.is_open
+       election.allow_edit,
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id

@@ -11,6 +11,8 @@ interface Service {
     fun removeUser(accessToken: AccessToken, name: String)
     fun listUsers(accessToken: AccessToken): List<UserNameRole>
     fun addElection(accessToken: AccessToken, name: String)
+    fun launchElection(accessToken:AccessToken, name:String, allowEdit:Boolean)
+    fun finalizeElection(accessToken:AccessToken, name:String)
     fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates)
     fun getElection(accessToken: AccessToken, name: String): ElectionAndCanUpdate
     fun deleteElection(accessToken: AccessToken, name: String)

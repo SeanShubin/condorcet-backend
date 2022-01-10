@@ -25,6 +25,8 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "RemoveUser" -> JsonMappers.parse<ServiceCommand.RemoveUser>(json)
             "ListUsers" -> ServiceCommand.ListUsers
             "AddElection" -> JsonMappers.parse<ServiceCommand.AddElection>(json)
+            "LaunchElection" -> JsonMappers.parse<ServiceCommand.LaunchElection>(json)
+            "FinalizeElection" -> JsonMappers.parse<ServiceCommand.FinalizeElection>(json)
             "UpdateElection" -> parseUpdateElection(json)
             "DeleteElection" -> JsonMappers.parse<ServiceCommand.DeleteElection>(json)
             "GetElection" -> JsonMappers.parse<ServiceCommand.GetElection>(json)
@@ -69,8 +71,8 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             ownerCanDeleteBallots = map["ownerCanDeleteBallots"] as Boolean?,
             auditorCanDeleteBallots = map["auditorCanDeleteBallots"] as Boolean?,
             isTemplate = map["isTemplate"] as Boolean?,
-            allowChangesAfterVote = map["allowChangesAfterVote"] as Boolean?,
-            isOpen = map["isOpen"] as Boolean?
+            allowEdit = map["allowEdit"] as Boolean?,
+            allowVote = map["allowVote"] as Boolean?
         )
     }
 }

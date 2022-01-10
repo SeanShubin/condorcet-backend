@@ -97,12 +97,12 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val ownerCanDeleteBallots: Boolean = resultSet.getBoolean("owner_can_delete_ballots")
         val auditorCanDeleteBallots: Boolean = resultSet.getBoolean("auditor_can_delete_ballots")
         val isTemplate: Boolean = resultSet.getBoolean("is_template")
-        val allowChangesAfterVote: Boolean = resultSet.getBoolean("allow_changes_after_vote")
-        val isOpen: Boolean = resultSet.getBoolean("is_open")
+        val allowEdit: Boolean = resultSet.getBoolean("allow_edit")
+        val allowVote: Boolean = resultSet.getBoolean("allow_vote")
         val candidateCount: Int = resultSet.getInt("candidate_count")
         return ElectionRow(
             owner, name, secretBallot, noVotingBefore, noVotingAfter, restrictWhoCanVote,
-            ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, allowChangesAfterVote, isOpen,
+            ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, allowEdit, allowVote,
             candidateCount
         )
     }

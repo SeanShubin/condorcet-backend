@@ -120,8 +120,8 @@ object SampleDataApp {
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")
                 ).toInstant(),
-                allowChangesAfterVote = false,
-                isOpen = true
+                allowEdit = false,
+                allowVote = true
             ),
         )
 

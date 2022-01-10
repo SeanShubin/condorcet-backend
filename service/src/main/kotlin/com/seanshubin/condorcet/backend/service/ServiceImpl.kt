@@ -107,6 +107,20 @@ class ServiceImpl(
         stateDbCommands.addElection(accessToken.userName, accessToken.userName, validName)
     }
 
+    override fun launchElection(accessToken: AccessToken, name: String, allowEdit: Boolean) {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        failUnlessElectionOwner(accessToken, name)
+        val updates = ElectionUpdates(allowVote = true, allowEdit = allowEdit)
+        stateDbCommands.updateElection(accessToken.userName, name, updates)
+    }
+
+    override fun finalizeElection(accessToken: AccessToken, name: String) {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        failUnlessElectionOwner(accessToken, name)
+        val updates = ElectionUpdates(allowVote = false, allowEdit = false)
+        stateDbCommands.updateElection(accessToken.userName, name, updates)
+    }
+
     private fun validateElectionUpdates(electionUpdates: ElectionUpdates): ElectionUpdates {
         val newName = electionUpdates.newName ?: return electionUpdates
         val validNewName = validateString(newName, "electionUpdates.newName", Validation.electionName)
@@ -114,16 +128,9 @@ class ServiceImpl(
     }
 
     override fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates) {
-        val validElectionUpdates = validateElectionUpdates(electionUpdates)
         failUnlessPermission(accessToken, USE_APPLICATION)
-        val electionRow = stateDbQueries.searchElectionByName(name)
-        failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
-        electionRow!!
-        failIf(
-            accessToken.userName != electionRow.owner,
-            UNAUTHORIZED,
-            "User '${accessToken.userName}' is not allowed to modify election '$name' owned by user '${electionRow.owner}'"
-        )
+        failUnlessElectionOwner(accessToken, name)
+        val validElectionUpdates = validateElectionUpdates(electionUpdates)
         stateDbCommands.updateElection(accessToken.userName, name, validElectionUpdates)
     }
 
@@ -353,4 +360,15 @@ class ServiceImpl(
         rule: (String) -> Either<String, String>
     ): List<String> =
         original.filter { it.trim() != "" }.map { validateString(it, "$caption '$it'", rule) }
+
+    private fun failUnlessElectionOwner(accessToken:AccessToken, electionName:String){
+            val electionRow = stateDbQueries.searchElectionByName(electionName)
+            failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
+            electionRow!!
+            failIf(
+                accessToken.userName != electionRow.owner,
+                UNAUTHORIZED,
+                "User '${accessToken.userName}' does not own election '$electionName', it is owned by user '${electionRow.owner}'"
+            )
+    }
 }

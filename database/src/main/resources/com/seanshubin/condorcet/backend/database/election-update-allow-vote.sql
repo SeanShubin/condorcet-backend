@@ -1,4 +1,4 @@
 update
     election
-set allow_changes_after_vote = ?
+set allow_vote = ?
 where name = ?

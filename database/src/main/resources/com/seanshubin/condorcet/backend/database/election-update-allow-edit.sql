@@ -1,4 +1,4 @@
 update
     election
-set is_open = ?
+set allow_edit = ?
 where name = ?
