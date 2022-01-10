@@ -78,6 +78,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
             electionName
         )
 
+    override fun listVoterNames(): List<String> =
+        query(::createVoterName,"user-by-permission", Permission.USE_APPLICATION.toString())
+
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
         val email = resultSet.getString("email")
@@ -114,6 +117,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val whenCast: Instant = resultSet.getTimestamp("when_cast").toInstant()
         return BallotRow(userName, electionName, confirmation, whenCast)
     }
+
+    private fun createVoterName(resultSet: ResultSet): String =
+        resultSet.getString("name")
 
     private fun createCandidateName(resultSet: ResultSet): String =
         resultSet.getString("name")

@@ -23,4 +23,5 @@ interface StateDbQueries : GenericDatabase {
     fun listRankings(electionName: String): List<VoterElectionRankingRow>
     fun searchBallot(voterName: String, electionName: String): BallotRow?
     fun listBallots(electionName: String): List<Ballot>
+    fun listVoterNames():List<String>
 }

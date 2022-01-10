@@ -283,6 +283,12 @@ class ServiceImpl(
         return tally
     }
 
+    override fun listVoterNames(accessToken: AccessToken): List<String> {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val voterNames = stateDbQueries.listVoterNames()
+        return voterNames
+    }
+
     private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
     private fun userEmailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
     private fun electionNameExists(name: String): Boolean = stateDbQueries.searchElectionByName(name) != null

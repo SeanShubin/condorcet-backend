@@ -105,6 +105,9 @@ class ServiceDelegateToLifecycle(
     override fun tally(accessToken: AccessToken, electionName: String): Tally =
         withService { it.tally(accessToken, electionName) }
 
+    override fun listVoterNames(accessToken: AccessToken): List<String> =
+        withService { it.listVoterNames(accessToken) }
+
     private fun <T> withService(f: (Service) -> T): T =
         eventConnectionLifecycle.withValue { eventConnection ->
             stateConnectionLifecycle.withValue { stateConnection ->

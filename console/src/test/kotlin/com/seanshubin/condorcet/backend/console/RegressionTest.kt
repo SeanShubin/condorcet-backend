@@ -172,7 +172,8 @@ class RegressionTest {
             ),
             Tally(
                 electionName = "Favorite Ice Cream"
-            )
+            ),
+            ListVoterNames
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

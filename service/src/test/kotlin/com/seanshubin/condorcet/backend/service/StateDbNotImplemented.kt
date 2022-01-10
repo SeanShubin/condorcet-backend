@@ -205,4 +205,8 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     override fun useDatabase(name: String) {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun listVoterNames(): List<String> {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

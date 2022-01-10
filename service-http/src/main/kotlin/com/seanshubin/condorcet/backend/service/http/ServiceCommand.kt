@@ -279,6 +279,16 @@ interface ServiceCommand {
             }
     }
 
+    object ListVoterNames : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val voterNames = environment.service.listVoterNames(accessToken)
+                responseBuilder().json(voterNames).build()
+            }
+
+        override fun toString(): String = "ListUserNames"
+    }
+
     data class Unsupported(val name: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             return responseBuilder().unsupported("Unsupported command '$name'\n$content").build()
