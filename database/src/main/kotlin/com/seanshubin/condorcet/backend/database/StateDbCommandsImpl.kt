@@ -36,7 +36,7 @@ class StateDbCommandsImpl(
         update("election-insert", owner, name)
     }
 
-    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
+    override fun updateElection(authority: String, name: String, updates: DbElectionUpdates) {
         if (updates.newName != null) {
             update("election-update-name", updates.newName, name)
         }

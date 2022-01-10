@@ -3,6 +3,7 @@ package com.seanshubin.condorcet.backend.service
 import arrow.core.Either
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.database.*
+import com.seanshubin.condorcet.backend.database.DbElectionUpdates.Companion.toDbElectionUpdates
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
@@ -110,21 +111,22 @@ class ServiceImpl(
     override fun launchElection(accessToken: AccessToken, name: String, allowEdit: Boolean) {
         failUnlessPermission(accessToken, USE_APPLICATION)
         failUnlessElectionOwner(accessToken, name)
-        val updates = ElectionUpdates(allowVote = true, allowEdit = allowEdit)
+        val updates = DbElectionUpdates(allowVote = true, allowEdit = allowEdit)
         stateDbCommands.updateElection(accessToken.userName, name, updates)
     }
 
     override fun finalizeElection(accessToken: AccessToken, name: String) {
         failUnlessPermission(accessToken, USE_APPLICATION)
         failUnlessElectionOwner(accessToken, name)
-        val updates = ElectionUpdates(allowVote = false, allowEdit = false)
+        val updates = DbElectionUpdates(allowVote = false, allowEdit = false)
         stateDbCommands.updateElection(accessToken.userName, name, updates)
     }
 
-    private fun validateElectionUpdates(electionUpdates: ElectionUpdates): ElectionUpdates {
-        val newName = electionUpdates.newName ?: return electionUpdates
+    private fun validateElectionUpdates(electionUpdates: ElectionUpdates): DbElectionUpdates {
+        val dbElectionUpdates = electionUpdates.toDbElectionUpdates()
+        val newName = dbElectionUpdates.newName ?: return dbElectionUpdates
         val validNewName = validateString(newName, "electionUpdates.newName", Validation.electionName)
-        return electionUpdates.copy(newName = validNewName)
+        return dbElectionUpdates.copy(newName = validNewName)
     }
 
     override fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates) {

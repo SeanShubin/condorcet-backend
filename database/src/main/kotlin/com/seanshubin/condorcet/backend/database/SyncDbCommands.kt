@@ -30,7 +30,7 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
         processEvent(authority, DbEvent.AddElection(owner, name))
     }
 
-    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
+    override fun updateElection(authority: String, name: String, updates: DbElectionUpdates) {
         processEvent(authority, DbEvent.UpdateElection(name, updates))
     }
 

@@ -119,9 +119,7 @@ object SampleDataApp {
                     LocalDate.of(2022, 2, 3),
                     LocalTime.of(4, 55, 30),
                     ZoneId.of("UTC")
-                ).toInstant(),
-                allowEdit = false,
-                allowVote = true
+                ).toInstant()
             ),
         )
 

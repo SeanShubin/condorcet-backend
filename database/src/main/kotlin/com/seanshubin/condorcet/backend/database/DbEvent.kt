@@ -32,7 +32,7 @@ interface DbEvent {
         }
     }
 
-    data class UpdateElection(val name: String, val updates: ElectionUpdates) :
+    data class UpdateElection(val name: String, val updates: DbElectionUpdates) :
         DbEvent {
         override fun exec(authority: String, stateDbCommands: StateDbCommands) {
             stateDbCommands.updateElection(authority, name, updates)

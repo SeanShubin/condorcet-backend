@@ -307,14 +307,6 @@ update
     election
 set is_template = 1
 where name = 'Favorite Ice Cream Flavor';
-update
-    election
-set allow_edit = 1
-where name = 'Favorite Ice Cream Flavor';
-update
-    election
-set allow_vote = 0
-where name = 'Favorite Ice Cream Flavor';
 update int_variable
 set value = 10
 where name = 'last-synced';

@@ -104,9 +104,7 @@ interface ServiceCommand {
         val restrictWhoCanVote: Boolean?,
         val ownerCanDeleteBallots: Boolean?,
         val auditorCanDeleteBallots: Boolean?,
-        val isTemplate: Boolean?,
-        val allowEdit: Boolean?,
-        val allowVote: Boolean?
+        val isTemplate: Boolean?
     ) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
@@ -393,9 +391,7 @@ interface ServiceCommand {
                 restrictWhoCanVote,
                 ownerCanDeleteBallots,
                 auditorCanDeleteBallots,
-                isTemplate,
-                allowEdit,
-                allowVote
+                isTemplate
             )
 
         private fun RequestValue.refreshToken(cipher: Cipher): RefreshToken? {
