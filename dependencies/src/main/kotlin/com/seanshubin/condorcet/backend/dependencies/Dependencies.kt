@@ -36,6 +36,7 @@ class Dependencies(
     private val stateDatabaseEvent: (String) -> Unit = integration.stateDatabaseEvent
     private val requestEvent: (RequestValue) -> Unit = integration.requestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.responseEvent
+    private val topLevelException: (Throwable) -> Unit = integration.topLevelException
     private val rootConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         ConnectionLifecycle(host, user, password, rootDatabaseEvent)
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
@@ -70,7 +71,8 @@ class Dependencies(
         service,
         cipher,
         requestEvent,
-        responseEvent
+        responseEvent,
+        topLevelException
     )
     val runner: Runnable = ServerRunner(serverContract, handler)
 }

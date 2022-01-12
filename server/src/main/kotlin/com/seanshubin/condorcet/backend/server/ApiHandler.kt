@@ -25,7 +25,8 @@ class ApiHandler(
     private val service: Service,
     private val cipher: Cipher,
     private val requestEvent: (RequestValue) -> Unit,
-    private val responseEvent: (ResponseValue) -> Unit
+    private val responseEvent: (ResponseValue) -> Unit,
+    private val topLevelException:(Throwable) ->Unit
 ) : AbstractHandler() {
     override fun handle(
         target: String,
@@ -37,7 +38,7 @@ class ApiHandler(
         val requestValue = request.toRequestValue(target)
         requestEvent(requestValue)
         val serviceCommand = serviceCommandParser.parse(serviceRequestName, requestValue.body)
-        val environment = ServiceEnvironment(service, cipher)
+        val environment = ServiceEnvironment(service, cipher, topLevelException)
         val responseValue = exec(serviceCommand, environment, requestValue)
         responseEvent(responseValue)
         responseValue.writeTo(response)

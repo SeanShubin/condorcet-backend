@@ -325,6 +325,7 @@ interface ServiceCommand {
 
     class TopLevelExceptionCommand(val exception: Throwable) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
+            environment.topLevelException(exception)
             val status = 500
             val userSafeMessage = "server error: ${exception.message}"
             return responseBuilder().status(status).userSafeMessage(userSafeMessage).build()

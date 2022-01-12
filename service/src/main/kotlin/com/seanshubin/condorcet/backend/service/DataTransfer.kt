@@ -9,6 +9,7 @@ object DataTransfer {
             owner,
             name,
             candidateCount,
+            voterCount,
             secretBallot,
             noVotingBefore,
             noVotingAfter,

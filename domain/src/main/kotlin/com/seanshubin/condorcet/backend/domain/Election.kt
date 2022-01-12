@@ -6,6 +6,7 @@ data class Election(
     val ownerName: String,
     val name: String,
     val candidateCount: Int,
+    val voterCount:Int,
     val secretBallot: Boolean = true,
     val noVotingBefore: Instant? = null,
     val noVotingAfter: Instant? = null,

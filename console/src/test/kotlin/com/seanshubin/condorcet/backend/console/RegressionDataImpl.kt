@@ -18,8 +18,11 @@ class RegressionDataImpl(
     val files: FilesContract,
     val charset: Charset
 ) : RegressionData, NotificationsFactory {
-    override fun loadText(regressionFile: RegressionFile): String =
-        files.readString(fullPath(regressionFile), charset)
+    override fun loadText(regressionFile: RegressionFile): String {
+        val path = fullPath(regressionFile)
+        return if (files.exists(path)) files.readString(fullPath(regressionFile), charset)
+        else ""
+    }
 
     override fun namePath(regressionFile: RegressionFile): Path = regressionFile.toNamePath()
     override fun fullPath(regressionFile: RegressionFile): Path = logDir.resolve(namePath(regressionFile))
@@ -31,13 +34,15 @@ class RegressionDataImpl(
         val eventTableLogger: Logger = createLogger(logGroup, RegressionFile.EVENT_TABLE)
         val stateTableLogger: Logger = createLogger(logGroup, RegressionFile.STATE_TABLE)
         val httpLogger: Logger = createLogger(logGroup, RegressionFile.HTTP)
+        val topLevelExceptionLogger: Logger = createLogger(logGroup, RegressionFile.TOP_LEVEL_EXCEPTION)
         return LoggingNotifications(
             rootDatabaseLogger,
             eventDatabaseLogger,
             stateDatabaseLogger,
             eventTableLogger,
             stateTableLogger,
-            httpLogger
+            httpLogger,
+            topLevelExceptionLogger
         )
     }
 

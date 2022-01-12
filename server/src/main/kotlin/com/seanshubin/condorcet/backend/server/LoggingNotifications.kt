@@ -4,6 +4,8 @@ import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.logger.Logger
+import java.io.PrintWriter
+import java.io.StringWriter
 
 class LoggingNotifications(
     private val rootDatabaseLogger: Logger,
@@ -11,7 +13,8 @@ class LoggingNotifications(
     private val stateDatabaseLogger: Logger,
     private val eventTableLogger: Logger,
     private val stateTableLogger: Logger,
-    private val httpLogger: Logger
+    private val httpLogger: Logger,
+    private val topLevelExceptionLogger:Logger
 ) : Notifications {
     override fun rootDatabaseEvent(statement: String) {
         rootDatabaseLogger.log("${statement.trim()};")
@@ -40,5 +43,12 @@ class LoggingNotifications(
     override fun responseEvent(response: ResponseValue) {
         response.toLines().forEach(httpLogger::log)
         httpLogger.log("")
+    }
+
+    override fun topLevelException(throwable: Throwable) {
+        val stringWriter = StringWriter()
+        val printWriter = PrintWriter(stringWriter)
+        throwable.printStackTrace(printWriter)
+        topLevelExceptionLogger.log(stringWriter.buffer.toString())
     }
 }

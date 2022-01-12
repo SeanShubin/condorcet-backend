@@ -9,9 +9,8 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
 where election.name = ?
-group by election.id

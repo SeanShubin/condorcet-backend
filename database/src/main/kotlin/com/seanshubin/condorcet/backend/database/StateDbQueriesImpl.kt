@@ -109,10 +109,11 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val allowEdit: Boolean = resultSet.getBoolean("allow_edit")
         val allowVote: Boolean = resultSet.getBoolean("allow_vote")
         val candidateCount: Int = resultSet.getInt("candidate_count")
+        val voterCount:Int = resultSet.getInt("voter_count")
         return ElectionRow(
             owner, name, secretBallot, noVotingBefore, noVotingAfter, restrictWhoCanVote,
             ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, allowEdit, allowVote,
-            candidateCount
+            candidateCount, voterCount
         )
     }
 

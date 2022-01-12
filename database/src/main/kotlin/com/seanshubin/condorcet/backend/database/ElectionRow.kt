@@ -15,7 +15,8 @@ data class ElectionRow(
     val isTemplate: Boolean = false,
     val allowEdit: Boolean = false,
     val allowVote: Boolean = false,
-    val candidateCount: Int
+    val candidateCount: Int,
+    val voterCount: Int
 ) : DbRow {
     override val cells: List<Any?> = listOf(
         owner,

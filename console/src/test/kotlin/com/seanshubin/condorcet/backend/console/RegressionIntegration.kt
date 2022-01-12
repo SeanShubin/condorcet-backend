@@ -50,6 +50,7 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val responseEvent: (ResponseValue) -> Unit = regressionNotifications::responseEvent
     override val eventTableEvent: (GenericTable) -> Unit = regressionNotifications::eventTableEvent
     override val stateTableEvent: (GenericTable) -> Unit = regressionNotifications::stateTableEvent
+    override val topLevelException: (Throwable) -> Unit = regressionNotifications::topLevelException
     override val uniqueIdGenerator: UniqueIdGenerator =
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)

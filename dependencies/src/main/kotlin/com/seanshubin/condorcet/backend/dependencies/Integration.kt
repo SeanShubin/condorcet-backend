@@ -23,6 +23,7 @@ interface Integration {
     val stateTableEvent: (GenericTable) -> Unit
     val requestEvent: (RequestValue) -> Unit
     val responseEvent: (ResponseValue) -> Unit
+    val topLevelException: (Throwable) -> Unit
     val uniqueIdGenerator: UniqueIdGenerator
     val clock: Clock
     val whereKeysAreStored: Path

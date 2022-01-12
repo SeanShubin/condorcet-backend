@@ -267,12 +267,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Delete Me'
-group by election.id;
+where election.name = 'Delete Me';
 select value
 from int_variable
 where name = 'last-synced';
@@ -292,12 +291,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream Flavor'
-group by election.id;
+where election.name = 'Favorite Ice Cream Flavor';
 select value
 from int_variable
 where name = 'last-synced';
@@ -317,12 +315,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream Flavor'
-group by election.id;
+where election.name = 'Favorite Ice Cream Flavor';
 select value
 from int_variable
 where name = 'last-synced';
@@ -372,12 +369,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
@@ -404,12 +400,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
@@ -436,12 +431,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
@@ -475,12 +469,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select name,
        email,
        salt,
@@ -545,12 +538,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
@@ -590,12 +582,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select name,
        email,
        salt,
@@ -743,12 +734,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
@@ -782,12 +772,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select user.name           as owner,
        election.name,
        election.secret_ballot,
@@ -799,12 +788,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Delete Me'
-group by election.id;
+where election.name = 'Delete Me';
 select value
 from int_variable
 where name = 'last-synced';
@@ -852,12 +840,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select name,
        email,
        salt,
@@ -989,12 +976,11 @@ select user.name           as owner,
        election.is_template,
        election.allow_edit,
        election.allow_vote,
-       count(candidate.id) as candidate_count
+       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
+       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
 from election
          inner join user on election.owner_id = user.id
-         left join candidate on election.id = candidate.election_id
-where election.name = 'Favorite Ice Cream'
-group by election.id;
+where election.name = 'Favorite Ice Cream';
 select name,
        email,
        salt,

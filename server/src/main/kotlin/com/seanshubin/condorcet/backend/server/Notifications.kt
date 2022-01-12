@@ -12,4 +12,5 @@ interface Notifications {
     fun stateTableEvent(table: GenericTable)
     fun requestEvent(request: RequestValue)
     fun responseEvent(response: ResponseValue)
+    fun topLevelException(throwable:Throwable)
 }
