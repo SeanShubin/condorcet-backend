@@ -27,6 +27,10 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
+    override fun listUserNames(): List<String> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
     override fun addElection(authority: String, owner: String, name: String) {
         throw UnsupportedOperationException("not implemented")
     }
@@ -154,6 +158,14 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
+    override fun addVoters(authority: String, electionName: String, voterNames: List<String>) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun removeVoters(authority: String, electionName: String, voterNames: List<String>) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
     override fun listCandidates(electionName: String): List<String> {
         throw UnsupportedOperationException("not implemented")
     }
@@ -207,6 +219,10 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     }
 
     override fun listVoterNames(): List<String> {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun listVotersForElection(electionName: String): List<String> {
         throw UnsupportedOperationException("not implemented")
     }
 }

@@ -46,6 +46,14 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
         processEvent(authority, DbEvent.RemoveCandidates(electionName, candidateNames))
     }
 
+    override fun addVoters(authority: String, electionName: String, voterNames: List<String>) {
+        processEvent(authority, DbEvent.AddVoters(electionName, voterNames))
+    }
+
+    override fun removeVoters(authority: String, electionName: String, voterNames: List<String>) {
+        processEvent(authority, DbEvent.RemoveVoters(electionName, voterNames))
+    }
+
     override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
         processEvent(authority, DbEvent.CastBallot(voterName, electionName, rankings))
     }

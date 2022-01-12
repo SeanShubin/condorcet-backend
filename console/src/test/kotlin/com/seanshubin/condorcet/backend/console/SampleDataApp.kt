@@ -139,6 +139,7 @@ object SampleDataApp {
                 "Fahrenheit 451"
             )
         )
+        service.setEligibleVoters(frankAccessToken, "Dystopia", listOf("Alice", "Carol", "Eve", "Grace", "Ivy"))
         service.addElection(ivyAccessToken, "Pet")
         service.setCandidates(
             ivyAccessToken, "Pet", listOf(

@@ -89,6 +89,18 @@ class StateDbCommandsImpl(
         }
     }
 
+    override fun addVoters(authority: String, electionName: String, voterNames: List<String>) {
+        voterNames.forEach { voterName ->
+            update("voter-insert", electionName, voterName)
+        }
+    }
+
+    override fun removeVoters(authority: String, electionName: String, voterNames: List<String>) {
+        voterNames.forEach { voterName ->
+            update("voter-delete", electionName, voterName)
+        }
+    }
+
     override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
         val now = clock.instant()
         val uniqueId = uniqueIdGenerator.uniqueId()

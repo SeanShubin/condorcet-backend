@@ -77,7 +77,7 @@ interface ServiceCommand {
             }
     }
 
-    data class LaunchElection(val name: String, val allowEdit:Boolean) : ServiceCommand {
+    data class LaunchElection(val name: String, val allowEdit: Boolean) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 environment.service.launchElection(accessToken, name, allowEdit)
@@ -253,6 +253,14 @@ interface ServiceCommand {
             }
     }
 
+    data class SetEligibleVoters(val electionName: String, val userNames: List<String>) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                environment.service.setEligibleVoters(accessToken, electionName, userNames)
+                responseBuilder().build()
+            }
+    }
+
     data class CastBallot(val voterName: String, val electionName: String, val rankings: List<Ranking>) :
         ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
@@ -279,15 +287,22 @@ interface ServiceCommand {
             }
     }
 
-    object ListVoterNames : ServiceCommand {
+    data class ListEligibility(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val voterNames = environment.service.listVoterNames(accessToken)
+                val voterNames = environment.service.listEligibility(accessToken, electionName)
                 responseBuilder().json(voterNames).build()
             }
-
-        override fun toString(): String = "ListUserNames"
     }
+
+    data class IsEligible(val userName: String, val electionName: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val value = environment.service.isEligible(accessToken, userName, electionName)
+                responseBuilder().json(value).build()
+            }
+    }
+
 
     data class Unsupported(val name: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {

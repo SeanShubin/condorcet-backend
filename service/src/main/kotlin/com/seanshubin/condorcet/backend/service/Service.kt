@@ -30,5 +30,7 @@ interface Service {
     fun castBallot(accessToken: AccessToken, voterName: String, electionName: String, rankings: List<Ranking>)
     fun listRankings(accessToken: AccessToken, voterName: String, electionName: String): List<Ranking>
     fun tally(accessToken: AccessToken, electionName: String): Tally
-    fun listVoterNames(accessToken:AccessToken):List<String>
+    fun listEligibility(accessToken:AccessToken, electionName:String):List<VoterEligibility>
+    fun setEligibleVoters(accessToken:AccessToken, electionName:String, userNames:List<String>)
+    fun isEligible(accessToken:AccessToken, userName:String, electionName:String):Boolean
 }

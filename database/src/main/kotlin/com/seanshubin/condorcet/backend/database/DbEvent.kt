@@ -58,6 +58,18 @@ interface DbEvent {
         }
     }
 
+    data class AddVoters(val electionName: String, val voterNames: List<String>) : DbEvent {
+        override fun exec(authority: String, stateDbCommands: StateDbCommands) {
+            stateDbCommands.addVoters(authority, electionName, voterNames)
+        }
+    }
+
+    data class RemoveVoters(val electionName: String, val voterNames: List<String>) : DbEvent {
+        override fun exec(authority: String, stateDbCommands: StateDbCommands) {
+            stateDbCommands.removeVoters(authority, electionName, voterNames)
+        }
+    }
+
     data class CastBallot(val voterName: String, val electionName: String, val rankings: List<Ranking>) : DbEvent {
         override fun exec(authority: String, stateDbCommands: StateDbCommands) {
             stateDbCommands.castBallot(authority, voterName, electionName, rankings)

@@ -209,16 +209,9 @@ class ServiceImpl(
     }
 
     override fun setCandidates(accessToken: AccessToken, electionName: String, candidateNames: List<String>) {
-        val validCandidateNames = validateStringList(candidateNames, "candidate", Validation.candidateName)
         failUnlessPermission(accessToken, USE_APPLICATION)
-        val electionRow = stateDbQueries.searchElectionByName(electionName)
-        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
-        electionRow!!
-        failIf(
-            accessToken.userName != electionRow.owner,
-            UNAUTHORIZED,
-            "User '${accessToken.userName}' is not allowed to modify election '$electionName' owned by user '${electionRow.owner}'"
-        )
+        failUnlessElectionOwner(accessToken, electionName)
+        val validCandidateNames = validateStringList(candidateNames, "candidate", Validation.candidateName)
         val originalCandidates = stateDbQueries.listCandidates(electionName)
         val candidatesToDelete = originalCandidates.missing(validCandidateNames)
         val candidatesToAdd = originalCandidates.extra(validCandidateNames)
@@ -256,7 +249,7 @@ class ServiceImpl(
             )
         }
         val ballotRow = stateDbQueries.searchBallot(voterName, electionName)
-        if(ballotRow != null){
+        if (ballotRow != null) {
             stateDbCommands.rescindBallot(accessToken.userName, voterName, electionName)
         }
         stateDbCommands.castBallot(accessToken.userName, voterName, electionName, rankings)
@@ -264,7 +257,7 @@ class ServiceImpl(
 
     override fun listRankings(accessToken: AccessToken, voterName: String, electionName: String): List<Ranking> {
         failUnlessPermission(accessToken, USE_APPLICATION)
-        if(accessToken.userName != voterName){
+        if (accessToken.userName != voterName) {
             throw ServiceException(
                 UNAUTHORIZED,
                 "User '${accessToken.userName}' not allowed to see a ballot cast by voter '$voterName'"
@@ -283,10 +276,36 @@ class ServiceImpl(
         return tally
     }
 
-    override fun listVoterNames(accessToken: AccessToken): List<String> {
+    override fun listEligibility(accessToken: AccessToken, electionName: String): List<VoterEligibility> {
         failUnlessPermission(accessToken, USE_APPLICATION)
-        val voterNames = stateDbQueries.listVoterNames()
-        return voterNames
+        val allVoters = stateDbQueries.listVoterNames()
+        val eligibleVoters = stateDbQueries.listVotersForElection(electionName)
+        val list = allVoters.map {
+            val eligible = eligibleVoters.contains(it)
+            VoterEligibility(it, eligible)
+        }
+        return list
+    }
+
+    override fun setEligibleVoters(accessToken: AccessToken, electionName: String, voterNames: List<String>) {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        failUnlessElectionOwner(accessToken, electionName)
+        validateVoterNames(voterNames)
+        val originalVoters = stateDbQueries.listVotersForElection(electionName)
+        val votersToDelete = originalVoters.missing(voterNames)
+        val votersToAdd = originalVoters.extra(voterNames)
+        if (votersToDelete.isNotEmpty()) {
+            stateDbCommands.removeVoters(accessToken.userName, electionName, votersToDelete)
+        }
+        if (votersToAdd.isNotEmpty()) {
+            stateDbCommands.addVoters(accessToken.userName, electionName, votersToAdd)
+        }
+    }
+
+    override fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val eligibleVoters = stateDbQueries.listVotersForElection(electionName)
+        return eligibleVoters.contains(userName)
     }
 
     private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
@@ -368,14 +387,23 @@ class ServiceImpl(
     ): List<String> =
         original.filter { it.trim() != "" }.map { validateString(it, "$caption '$it'", rule) }
 
-    private fun failUnlessElectionOwner(accessToken:AccessToken, electionName:String){
-            val electionRow = stateDbQueries.searchElectionByName(electionName)
-            failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
-            electionRow!!
-            failIf(
-                accessToken.userName != electionRow.owner,
-                UNAUTHORIZED,
-                "User '${accessToken.userName}' does not own election '$electionName', it is owned by user '${electionRow.owner}'"
-            )
+    private fun failUnlessElectionOwner(accessToken: AccessToken, electionName: String) {
+        val electionRow = stateDbQueries.searchElectionByName(electionName)
+        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
+        electionRow!!
+        failIf(
+            accessToken.userName != electionRow.owner,
+            UNAUTHORIZED,
+            "User '${accessToken.userName}' does not own election '$electionName', it is owned by user '${electionRow.owner}'"
+        )
+    }
+
+    private fun validateVoterNames(voterNames: List<String>) {
+        val userNames = stateDbQueries.listUserNames()
+        val invalidNames = voterNames.filterNot { userNames.contains(it) }
+        if (invalidNames.isNotEmpty()) {
+            val invalidNamesString = invalidNames.joinToString("', '", "'", "'")
+            fail(UNSUPPORTED, "The following are not valid user names: $invalidNamesString")
+        }
     }
 }

@@ -39,6 +39,11 @@ class RegressionTest {
                 email = "dave@email.com",
                 password = "dave-password"
             ),
+            Register(
+                name = "Eve",
+                email = "eve@email.com",
+                password = "eve-password"
+            ),
             Logout,
             Authenticate(
                 nameOrEmail = "Alice",
@@ -51,6 +56,10 @@ class RegressionTest {
             ),
             SetRole(
                 name = "Dave",
+                role = Role.USER
+            ),
+            SetRole(
+                name = "Eve",
                 role = Role.USER
             ),
             RemoveUser(name = "Carol"),
@@ -81,6 +90,17 @@ class RegressionTest {
             SetCandidates(
                 electionName = "Favorite Ice Cream",
                 candidateNames = listOf("Chocolate", "Vanilla", "Strawberry")
+            ),
+            SetEligibleVoters(
+                electionName = "Favorite Ice Cream",
+                userNames = listOf("Alice", "Bob", "Dave")
+            ),
+            ListEligibility(
+                electionName = "Favorite Ice Cream"
+            ),
+            IsEligible(
+                electionName = "Favorite Ice Cream",
+                userName = "Alice"
             ),
             LaunchElection(
                 name="Favorite Ice Cream",
@@ -172,8 +192,7 @@ class RegressionTest {
             ),
             Tally(
                 electionName = "Favorite Ice Cream"
-            ),
-            ListVoterNames
+            )
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

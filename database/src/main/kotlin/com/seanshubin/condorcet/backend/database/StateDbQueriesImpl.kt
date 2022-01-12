@@ -56,7 +56,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     }
 
     override fun listCandidates(electionName: String): List<String> =
-        query(::createCandidateName, "candidate-select-by-election", electionName)
+        query(::createName, "candidate-select-by-election", electionName)
 
     override fun listRankings(voterName: String, electionName: String): List<Ranking> =
         query(::createRanking, "ranking-select-by-user-election", voterName, electionName)
@@ -79,7 +79,13 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         )
 
     override fun listVoterNames(): List<String> =
-        query(::createVoterName,"user-by-permission", Permission.USE_APPLICATION.toString())
+        query(::createName,"user-by-permission", Permission.USE_APPLICATION.toString())
+
+    override fun listVotersForElection(electionName: String): List<String> =
+        query(::createName, "user-by-election", electionName)
+
+    override fun listUserNames(): List<String> =
+        query(::createName, "user-select")
 
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
@@ -118,10 +124,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         return BallotRow(userName, electionName, confirmation, whenCast)
     }
 
-    private fun createVoterName(resultSet: ResultSet): String =
-        resultSet.getString("name")
-
-    private fun createCandidateName(resultSet: ResultSet): String =
+    private fun createName(resultSet: ResultSet): String =
         resultSet.getString("name")
 
     private fun createRanking(resultSet: ResultSet): Ranking =

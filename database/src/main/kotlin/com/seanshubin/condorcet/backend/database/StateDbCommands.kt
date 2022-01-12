@@ -32,6 +32,10 @@ interface StateDbCommands {
 
     fun removeCandidates(authority: String, electionName: String, candidateNames: List<String>)
 
+    fun addVoters(authority: String, electionName: String, voterNames: List<String>)
+
+    fun removeVoters(authority: String, electionName: String, voterNames: List<String>)
+
     fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>)
 
     fun rescindBallot(authority: String, voterName: String, electionName: String)
