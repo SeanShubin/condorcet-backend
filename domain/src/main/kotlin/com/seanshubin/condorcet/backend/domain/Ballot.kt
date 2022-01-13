@@ -8,4 +8,6 @@ data class Ballot(
     val confirmation: String,
     val whenCast: Instant,
     val rankings: List<Ranking>
-)
+) {
+    fun makeSecret():Ballot = copy(user="<redacted>")
+}

@@ -30,17 +30,22 @@ data class Tally(
     private val indent = { s: String -> "  $s" }
 
     companion object {
-        fun countBallots(candidates: List<String>, ballots: List<Ballot>): Tally {
-            return BallotCounter(candidates, ballots).countBallots()
+        fun countBallots(secretBallot: Boolean, candidates: List<String>, ballots: List<Ballot>): Tally {
+            return BallotCounter(secretBallot, candidates, ballots).countBallots()
         }
 
-        class BallotCounter(val candidates: List<String>, val ballots: List<Ballot>) {
+        class BallotCounter(val secretBallot: Boolean, val candidates: List<String>, val rawBallots: List<Ballot>) {
             fun countBallots(): Tally {
                 val emptyPreferences = createEmptyPreferences()
-                val preferences = ballots.map { it.rankings }.fold(emptyPreferences, ::accumulateRankings)
+                val preferences = rawBallots.map { it.rankings }.fold(emptyPreferences, ::accumulateRankings)
                 val strongestPaths = preferences.strongestPaths()
                 val places = strongestPaths.places(candidates)
-                val whoVoted = ballots.map { it.user }.sorted()
+                val whoVoted = rawBallots.map { it.user }.sorted()
+                val ballots = if (secretBallot) {
+                    rawBallots.sortedBy { it.user }
+                } else {
+                    rawBallots.map { it.makeSecret() }.sortedBy { it.confirmation }
+                }
                 return Tally(candidates, ballots, preferences, strongestPaths, places, whoVoted)
             }
 

@@ -272,9 +272,11 @@ class ServiceImpl(
 
     override fun tally(accessToken: AccessToken, electionName: String): Tally {
         failUnlessPermission(accessToken, USE_APPLICATION)
+        val electionRow = findElection(electionName)
+        val secretBallot = electionRow.secretBallot
         val candidates = stateDbQueries.listCandidates(electionName)
         val ballots = stateDbQueries.listBallots(electionName)
-        val tally = Tally.countBallots(candidates, ballots)
+        val tally = Tally.countBallots(secretBallot, candidates, ballots)
         return tally
     }
 
@@ -389,10 +391,14 @@ class ServiceImpl(
     ): List<String> =
         original.filter { it.trim() != "" }.map { validateString(it, "$caption '$it'", rule) }
 
-    private fun failUnlessElectionOwner(accessToken: AccessToken, electionName: String) {
+    private fun findElection(electionName:String):ElectionRow {
         val electionRow = stateDbQueries.searchElectionByName(electionName)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
-        electionRow!!
+        return electionRow!!
+    }
+
+    private fun failUnlessElectionOwner(accessToken: AccessToken, electionName: String) {
+        val electionRow = findElection(electionName)
         failIf(
             accessToken.userName != electionRow.owner,
             UNAUTHORIZED,

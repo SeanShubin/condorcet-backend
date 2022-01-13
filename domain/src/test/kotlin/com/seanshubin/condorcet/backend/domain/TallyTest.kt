@@ -44,7 +44,8 @@ class TallyTest {
         )
         val places = listOf(Place(1, "Rock"), Place(2, "Scissors"), Place(3, "Paper"))
 
-        val tally = Tally.countBallots(candidates, ballots)
+        val secretBallot = false
+        val tally = Tally.countBallots(secretBallot, candidates, ballots)
         assertEquals(candidates, tally.candidates)
         assertEquals(ballots, tally.ballots)
         assertEquals(preferences, tally.preferences)
@@ -136,7 +137,8 @@ class TallyTest {
         )
         val places = listOf(Place(1, "a"), Place(1, "b"), Place(3, "c"), Place(4, "d"), Place(4, "e"))
 
-        val tally = Tally.countBallots(candidates, ballots)
+        val secretBallot = false
+        val tally = Tally.countBallots(secretBallot, candidates, ballots)
         assertEquals(candidates, tally.candidates)
         assertEquals(ballots, tally.ballots)
         assertEquals(preferences, tally.preferences)

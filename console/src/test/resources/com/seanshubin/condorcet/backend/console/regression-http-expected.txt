@@ -600,7 +600,7 @@ Content-Type: application/json
 {
   "candidates" : [ "Butter Pecan", "Chocolate", "Chocolate Chip", "Mint", "Neapolitan", "Vanilla" ],
   "ballots" : [ {
-    "user" : "Dave",
+    "user" : "<redacted>",
     "election" : "Favorite Ice Cream",
     "confirmation" : "44c3906b-a13e-4436-8cd2-1356122f9596",
     "whenCast" : "2022-01-12T05:39:32.078075Z",
@@ -624,7 +624,7 @@ Content-Type: application/json
       "rank" : 6
     } ]
   }, {
-    "user" : "Bob",
+    "user" : "<redacted>",
     "election" : "Favorite Ice Cream",
     "confirmation" : "8c9fd5ac-7f5b-44bf-ab33-4542452dbceb",
     "whenCast" : "2022-01-11T22:35:21.903940Z",
@@ -648,7 +648,7 @@ Content-Type: application/json
       "rank" : 6
     } ]
   }, {
-    "user" : "Alice",
+    "user" : "<redacted>",
     "election" : "Favorite Ice Cream",
     "confirmation" : "e1c1dfe0-0423-43f2-bfec-430782b04545",
     "whenCast" : "2021-12-30T19:21:10.807202Z",
