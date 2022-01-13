@@ -777,6 +777,20 @@ select user.name           as owner,
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
+select
+       count(candidate.id)
+from candidate
+    inner join election
+        on candidate.election_id = election.id
+where
+      election.name = 'Favorite Ice Cream';
+select
+       count(voter.id)
+from voter
+    inner join election
+        on voter.election_id = election.id
+where
+        election.name = 'Favorite Ice Cream';
 select user.name           as owner,
        election.name,
        election.secret_ballot,

@@ -1,10 +1,12 @@
-package com.seanshubin.condorcet.backend.database
+package com.seanshubin.condorcet.backend.domain
 
 import java.time.Instant
 
-data class ElectionRow(
-    val owner: String,
+data class ElectionDetail(
+    val ownerName: String,
     val name: String,
+    val candidateCount: Int,
+    val voterCount:Int,
     val secretBallot: Boolean = true,
     val noVotingBefore: Instant? = null,
     val noVotingAfter: Instant? = null,
@@ -12,6 +14,6 @@ data class ElectionRow(
     val ownerCanDeleteBallots: Boolean = false,
     val auditorCanDeleteBallots: Boolean = false,
     val isTemplate: Boolean = false,
-    val allowEdit: Boolean = false,
-    val allowVote: Boolean = false
+    val allowEdit: Boolean = true,
+    val allowVote: Boolean = false,
 )

@@ -49,14 +49,14 @@ class ServiceDelegateToLifecycle(
         withService { it.updateElection(accessToken, name, electionUpdates) }
     }
 
-    override fun getElection(accessToken: AccessToken, name: String): Election =
+    override fun getElection(accessToken: AccessToken, name: String): ElectionDetail =
         withService { it.getElection(accessToken, name) }
 
     override fun deleteElection(accessToken: AccessToken, name: String) {
         withService { it.deleteElection(accessToken, name) }
     }
 
-    override fun listElections(accessToken: AccessToken): List<Election> =
+    override fun listElections(accessToken: AccessToken): List<ElectionSummary> =
         withService { it.listElections(accessToken) }
 
     override fun listTables(accessToken: AccessToken): List<String> =

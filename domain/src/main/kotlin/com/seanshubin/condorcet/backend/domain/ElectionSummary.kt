@@ -2,11 +2,9 @@ package com.seanshubin.condorcet.backend.domain
 
 import java.time.Instant
 
-data class Election(
+data class ElectionSummary(
     val ownerName: String,
     val name: String,
-    val candidateCount: Int,
-    val voterCount:Int,
     val secretBallot: Boolean = true,
     val noVotingBefore: Instant? = null,
     val noVotingAfter: Instant? = null,

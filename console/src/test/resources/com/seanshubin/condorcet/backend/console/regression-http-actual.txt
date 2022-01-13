@@ -402,8 +402,6 @@ Content-Type: application/json
   "elections" : [ {
     "ownerName" : "Alice",
     "name" : "Favorite Ice Cream",
-    "candidateCount" : 6,
-    "voterCount" : 3,
     "secretBallot" : false,
     "noVotingBefore" : null,
     "noVotingAfter" : null,

@@ -39,6 +39,12 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun electionCount(): Int =
         queryExactlyOneInt("election-count")
 
+    override fun candidateCount(electionName: String): Int =
+        queryExactlyOneInt("candidate-count-by-election", electionName)
+
+    override fun voterCount(electionName: String): Int =
+        queryExactlyOneInt("voter-count-by-election", electionName)
+
     override fun listUsers(): List<UserRow> =
         query(::createUser, "user-select")
 
@@ -108,12 +114,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val isTemplate: Boolean = resultSet.getBoolean("is_template")
         val allowEdit: Boolean = resultSet.getBoolean("allow_edit")
         val allowVote: Boolean = resultSet.getBoolean("allow_vote")
-        val candidateCount: Int = resultSet.getInt("candidate_count")
-        val voterCount:Int = resultSet.getInt("voter_count")
         return ElectionRow(
             owner, name, secretBallot, noVotingBefore, noVotingAfter, restrictWhoCanVote,
-            ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, allowEdit, allowVote,
-            candidateCount, voterCount
+            ownerCanDeleteBallots, auditorCanDeleteBallots, isTemplate, allowEdit, allowVote
         )
     }
 

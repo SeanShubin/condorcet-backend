@@ -136,12 +136,14 @@ class ServiceImpl(
         stateDbCommands.updateElection(accessToken.userName, name, validElectionUpdates)
     }
 
-    override fun getElection(accessToken: AccessToken, name: String): Election {
+    override fun getElection(accessToken: AccessToken, name: String): ElectionDetail {
         failUnlessPermission(accessToken, USE_APPLICATION)
         val electionRow = stateDbQueries.searchElectionByName(name)
+        val candidateCount = stateDbQueries.candidateCount(name)
+        val voterCount = stateDbQueries.voterCount(name)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
         electionRow!!
-        val election = electionRow.toDomain()
+        val election = electionRow.toDomain(candidateCount, voterCount)
         return election
     }
 
@@ -158,7 +160,7 @@ class ServiceImpl(
         stateDbCommands.deleteElection(accessToken.userName, name)
     }
 
-    override fun listElections(accessToken: AccessToken): List<Election> {
+    override fun listElections(accessToken: AccessToken): List<ElectionSummary> {
         failUnlessPermission(accessToken, USE_APPLICATION)
         val rows = stateDbQueries.listElections()
         val list = rows.map { it.toDomain() }

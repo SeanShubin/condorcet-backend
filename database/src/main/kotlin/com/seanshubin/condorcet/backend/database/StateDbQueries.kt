@@ -12,6 +12,8 @@ interface StateDbQueries : GenericDatabase {
     fun searchUserByEmail(email: String): UserRow?
     fun userCount(): Int
     fun electionCount(): Int
+    fun candidateCount(electionName:String):Int
+    fun voterCount(electionName:String):Int
     fun tableCount(): Int
     fun listUsers(): List<UserRow>
     fun listElections(): List<ElectionRow>
