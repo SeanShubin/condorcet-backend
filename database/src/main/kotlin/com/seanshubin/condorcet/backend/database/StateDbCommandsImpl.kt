@@ -37,27 +37,28 @@ class StateDbCommandsImpl(
     }
 
     override fun updateElection(authority: String, name: String, updates: DbElectionUpdates) {
+        val updatedName = updates.newName ?: name
         if (updates.newName != null) {
             update("election-update-name", updates.newName, name)
         }
         if (updates.secretBallot != null) {
-            update("election-update-secret-ballot", updates.secretBallot, name)
+            update("election-update-secret-ballot", updates.secretBallot, updatedName)
         }
         if (updates.clearNoVotingBefore == true) {
-            update("election-update-no-voting-before", null, name)
+            update("election-update-no-voting-before", null, updatedName)
         } else {
-            update("election-update-no-voting-before", updates.noVotingBefore, name)
+            update("election-update-no-voting-before", updates.noVotingBefore, updatedName)
         }
         if (updates.clearNoVotingAfter == true) {
-            update("election-update-no-voting-after", null, name)
+            update("election-update-no-voting-after", null, updatedName)
         } else {
-            update("election-update-no-voting-after", updates.noVotingAfter, name)
+            update("election-update-no-voting-after", updates.noVotingAfter, updatedName)
         }
         if (updates.allowEdit != null) {
-            update("election-update-allow-edit", updates.allowEdit, name)
+            update("election-update-allow-edit", updates.allowEdit, updatedName)
         }
         if (updates.allowVote != null) {
-            update("election-update-allow-vote", updates.allowVote, name)
+            update("election-update-allow-vote", updates.allowVote, updatedName)
         }
     }
 

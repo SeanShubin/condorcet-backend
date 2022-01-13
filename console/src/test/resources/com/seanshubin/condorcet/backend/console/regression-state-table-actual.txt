@@ -54,7 +54,7 @@ select * from election
 ╔══╤════════╤══════════════════╤═════════════╤════════════════╤═══════════════╤══════════╤══════════╗
 ║id│owner_id│name              │secret_ballot│no_voting_before│no_voting_after│allow_vote│allow_edit║
 ╟──┼────────┼──────────────────┼─────────────┼────────────────┼───────────────┼──────────┼──────────╢
-║ 2│       1│Favorite Ice Cream│        false│          <null>│         <null>│     false│     false║
+║ 2│       1│Favorite Ice Cream│         true│          <null>│         <null>│     false│     false║
 ╚══╧════════╧══════════════════╧═════════════╧════════════════╧═══════════════╧══════════╧══════════╝
 select * from candidate
 ╔══╤═══════════╤══════════════╗
@@ -210,7 +210,7 @@ from election
 ╔══╤════════╤═════╤══════════════════╤═════════════╤════════════════╤═══════════════╤══════════╤══════════╗
 ║id│owner_id│owner│name              │secret_ballot│no_voting_before│no_voting_after│allow_edit│allow_vote║
 ╟──┼────────┼─────┼──────────────────┼─────────────┼────────────────┼───────────────┼──────────┼──────────╢
-║ 2│       1│Alice│Favorite Ice Cream│        false│          <null>│         <null>│     false│     false║
+║ 2│       1│Alice│Favorite Ice Cream│         true│          <null>│         <null>│     false│     false║
 ╚══╧════════╧═════╧══════════════════╧═════════════╧════════════════╧═══════════════╧══════════╧══════════╝
 select candidate.id,
        election.name election,

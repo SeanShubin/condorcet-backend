@@ -426,15 +426,15 @@ where name = 'Favorite Ice Cream Flavor';
 update
     election
 set secret_ballot = 1
-where name = 'Favorite Ice Cream Flavor';
+where name = 'Favorite Ice Cream';
 update
     election
 set no_voting_before = '2021-02-03 04:55:30'
-where name = 'Favorite Ice Cream Flavor';
+where name = 'Favorite Ice Cream';
 update
     election
 set no_voting_after = '2022-02-03 04:55:30'
-where name = 'Favorite Ice Cream Flavor';
+where name = 'Favorite Ice Cream';
 update int_variable
 set value = 12
 where name = 'last-synced';

@@ -370,7 +370,7 @@ Content-Type: application/json
   "name" : "Favorite Ice Cream",
   "candidateCount" : 6,
   "voterCount" : 3,
-  "secretBallot" : false,
+  "secretBallot" : true,
   "noVotingBefore" : null,
   "noVotingAfter" : null,
   "allowEdit" : false,
@@ -394,7 +394,7 @@ Content-Type: application/json
   "elections" : [ {
     "ownerName" : "Alice",
     "name" : "Favorite Ice Cream",
-    "secretBallot" : false,
+    "secretBallot" : true,
     "noVotingBefore" : null,
     "noVotingAfter" : null,
     "allowEdit" : false,
@@ -485,7 +485,7 @@ Content-Type: application/json
 {
   "table" : {
     "columnNames" : [ "id", "owner_id", "owner", "name", "secret_ballot", "no_voting_before", "no_voting_after", "allow_edit", "allow_vote" ],
-    "rows" : [ [ 2, 1, "Alice", "Favorite Ice Cream", false, null, null, false, false ] ]
+    "rows" : [ [ 2, 1, "Alice", "Favorite Ice Cream", true, null, null, false, false ] ]
   }
 }
 
