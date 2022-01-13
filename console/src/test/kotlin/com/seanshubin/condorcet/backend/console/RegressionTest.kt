@@ -5,6 +5,7 @@ import com.seanshubin.condorcet.backend.console.Phase.EXPECTED
 import com.seanshubin.condorcet.backend.dependencies.Dependencies
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.service.RegexConstants
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand.*
 import java.time.LocalDate
@@ -70,10 +71,6 @@ class RegressionTest {
                 name = "Favorite Ice Cream Flavor",
                 newName = "Favorite Ice Cream",
                 secretBallot = true,
-                isTemplate = true,
-                ownerCanDeleteBallots = true,
-                auditorCanDeleteBallots = true,
-                restrictWhoCanVote = true,
                 clearNoVotingBefore = false,
                 noVotingBefore = ZonedDateTime.of(
                     LocalDate.of(2021, 2, 3),
@@ -219,10 +216,22 @@ class RegressionTest {
             regressionTestRunner.run()
         }
 
+        private val whitespaceBlock = Regex("""\s+""")
+        private val newLineRegex = Regex("""\r\n|\r|\n""")
+        private val tableCharsRegex = Regex("[║│╔═╗╤╚╝╧╟─╢┼]")
+
+        private fun String.replaceTableCharsWithWhitespace():String = replace(tableCharsRegex, " ")
+
+        private fun String.collapseWhitespace():String =
+            replace(RegexConstants.whitespaceBlock, " ")
+
+        private fun String.collapseMultilineWhitespace():String =
+            split(newLineRegex).joinToString("\n") { it.replaceTableCharsWithWhitespace().collapseWhitespace() }
+
         fun compareActualWithExpected() {
             RegressionFile.values().forEach {
-                val expected = regressionIntegrationExpected.regressionData.loadText(it)
-                val actual = regressionIntegrationActual.regressionData.loadText(it)
+                val expected = regressionIntegrationExpected.regressionData.loadText(it).collapseMultilineWhitespace()
+                val actual = regressionIntegrationActual.regressionData.loadText(it).collapseMultilineWhitespace()
                 val expectedFilePath = regressionIntegrationExpected.regressionData.fullPath(it)
                 val actualFilePath = regressionIntegrationActual.regressionData.fullPath(it)
                 assertEquals(

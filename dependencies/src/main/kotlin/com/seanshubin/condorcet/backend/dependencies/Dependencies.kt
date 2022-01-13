@@ -22,6 +22,7 @@ import org.eclipse.jetty.server.Server
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
+import java.sql.SQLException
 
 class Dependencies(
     integration: Integration
@@ -34,15 +35,16 @@ class Dependencies(
     private val rootDatabaseEvent: (String) -> Unit = integration.rootDatabaseEvent
     private val eventDatabaseEvent: (String) -> Unit = integration.eventDatabaseEvent
     private val stateDatabaseEvent: (String) -> Unit = integration.stateDatabaseEvent
+    private val sqlException: (String, String, SQLException) -> Unit = integration.sqlException
     private val requestEvent: (RequestValue) -> Unit = integration.requestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.responseEvent
     private val topLevelException: (Throwable) -> Unit = integration.topLevelException
     private val rootConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, rootDatabaseEvent)
+        ConnectionLifecycle(host, user, password, rootDatabaseEvent, sqlException)
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        TransactionalConnectionLifecycle(host, user, password, eventDatabaseEvent, eventSchemaName)
+        TransactionalConnectionLifecycle(host, user, password, eventSchemaName, eventDatabaseEvent, sqlException)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        TransactionalConnectionLifecycle(host, user, password, stateDatabaseEvent, stateSchemaName)
+        TransactionalConnectionLifecycle(host, user, password, stateSchemaName, stateDatabaseEvent, sqlException)
     private val port: Int = 8080
     private val server: Server = Server(port)
     private val serverContract: ServerContract = JettyServer(server)

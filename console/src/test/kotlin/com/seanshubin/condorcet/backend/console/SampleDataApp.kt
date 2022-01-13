@@ -105,10 +105,6 @@ object SampleDataApp {
             ElectionUpdates(
                 newName = "Favorite Ice Cream",
                 secretBallot = true,
-                isTemplate = true,
-                ownerCanDeleteBallots = true,
-                auditorCanDeleteBallots = true,
-                restrictWhoCanVote = true,
                 clearNoVotingBefore = null,
                 noVotingBefore = ZonedDateTime.of(
                     LocalDate.of(2021, 2, 3),

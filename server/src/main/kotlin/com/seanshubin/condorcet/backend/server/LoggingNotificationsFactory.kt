@@ -15,6 +15,7 @@ class LoggingNotificationsFactory : NotificationsFactory {
         val stateTableLogger: Logger = logGroup.create("state-snapshot", "sql")
         val httpLogger: Logger = logGroup.create("http")
         val topLevelExceptionLogger: Logger = logGroup.create("exception")
+        val sqlExceptionLogger:Logger = logGroup.create("sql-exception")
         return LoggingNotifications(
             rootDatabaseLogger,
             eventDatabaseLogger,
@@ -22,7 +23,8 @@ class LoggingNotificationsFactory : NotificationsFactory {
             eventTableLogger,
             stateTableLogger,
             httpLogger,
-            topLevelExceptionLogger
+            topLevelExceptionLogger,
+            sqlExceptionLogger
         )
     }
 }

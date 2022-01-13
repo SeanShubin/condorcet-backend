@@ -23,10 +23,6 @@ object StateSchema : Schema {
     val electionSecretBallot = Field("secret_ballot", BOOLEAN, default = "false")
     val electionNoVotingBefore = Field("no_voting_before", DATE, allowNull = true)
     val electionNoVotingAfter = Field("no_voting_after", DATE, allowNull = true)
-    val electionRestrictWhoCanVote = Field("restrict_who_can_vote", BOOLEAN, default = "false")
-    val electionOwnerCanDeleteBallots = Field("owner_can_delete_ballots", BOOLEAN, default = "false")
-    val electionAuditorCanDeleteBallots = Field("auditor_can_delete_ballots", BOOLEAN, default = "false")
-    val electionIsTemplate = Field("is_template", BOOLEAN, default = "false")
     val electionAllowVote = Field("allow_vote", BOOLEAN, default = "false")
     val electionAllowEdit = Field("allow_edit", BOOLEAN, default = "true")
     val election = Table(
@@ -36,10 +32,6 @@ object StateSchema : Schema {
         electionSecretBallot,
         electionNoVotingBefore,
         electionNoVotingAfter,
-        electionRestrictWhoCanVote,
-        electionOwnerCanDeleteBallots,
-        electionAuditorCanDeleteBallots,
-        electionIsTemplate,
         electionAllowVote,
         electionAllowEdit
     )

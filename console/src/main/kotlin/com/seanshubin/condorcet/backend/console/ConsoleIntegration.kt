@@ -10,6 +10,7 @@ import com.seanshubin.condorcet.backend.server.LoggingNotificationsFactory
 import com.seanshubin.condorcet.backend.server.Notifications
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.sql.SQLException
 import java.time.Clock
 import kotlin.random.Random
 
@@ -31,6 +32,7 @@ class ConsoleIntegration : Integration {
     override val requestEvent: (RequestValue) -> Unit = notifications::requestEvent
     override val responseEvent: (ResponseValue) -> Unit = notifications::responseEvent
     override val topLevelException: (Throwable) -> Unit = notifications::topLevelException
+    override val sqlException: (String, String, SQLException) -> Unit = notifications::sqlException
     override val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
     override val clock: Clock = Clock.systemUTC()
     override val whereKeysAreStored: Path = Paths.get("secrets")

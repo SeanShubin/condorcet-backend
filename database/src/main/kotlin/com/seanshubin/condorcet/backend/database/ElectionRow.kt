@@ -8,10 +8,6 @@ data class ElectionRow(
     val secretBallot: Boolean = true,
     val noVotingBefore: Instant? = null,
     val noVotingAfter: Instant? = null,
-    val restrictWhoCanVote: Boolean = false,
-    val ownerCanDeleteBallots: Boolean = false,
-    val auditorCanDeleteBallots: Boolean = false,
-    val isTemplate: Boolean = false,
     val allowEdit: Boolean = false,
     val allowVote: Boolean = false
 )

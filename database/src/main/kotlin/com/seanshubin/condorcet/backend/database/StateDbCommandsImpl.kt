@@ -53,18 +53,6 @@ class StateDbCommandsImpl(
         } else {
             update("election-update-no-voting-after", updates.noVotingAfter, name)
         }
-        if (updates.restrictWhoCanVote != null) {
-            update("election-update-restrict-who-can-vote", updates.restrictWhoCanVote, name)
-        }
-        if (updates.ownerCanDeleteBallots != null) {
-            update("election-update-owner-can-delete-ballots", updates.ownerCanDeleteBallots, name)
-        }
-        if (updates.auditorCanDeleteBallots != null) {
-            update("election-update-auditor-can-delete-ballots", updates.auditorCanDeleteBallots, name)
-        }
-        if (updates.isTemplate != null) {
-            update("election-update-is-template", updates.isTemplate, name)
-        }
         if (updates.allowEdit != null) {
             update("election-update-allow-edit", updates.allowEdit, name)
         }

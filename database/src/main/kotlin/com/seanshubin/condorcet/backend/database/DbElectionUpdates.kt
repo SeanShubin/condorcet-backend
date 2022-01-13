@@ -10,10 +10,6 @@ data class DbElectionUpdates(
     val noVotingBefore: Instant? = null,
     val clearNoVotingAfter: Boolean? = null,
     val noVotingAfter: Instant? = null,
-    val restrictWhoCanVote: Boolean? = null,
-    val ownerCanDeleteBallots: Boolean? = null,
-    val auditorCanDeleteBallots: Boolean? = null,
-    val isTemplate: Boolean? = null,
     val allowVote: Boolean? = null,
     val allowEdit: Boolean? = null
 ) {
@@ -24,11 +20,7 @@ data class DbElectionUpdates(
             clearNoVotingBefore = clearNoVotingBefore,
             noVotingBefore = noVotingBefore,
             clearNoVotingAfter = clearNoVotingAfter,
-            noVotingAfter = noVotingAfter,
-            restrictWhoCanVote = restrictWhoCanVote,
-            ownerCanDeleteBallots = ownerCanDeleteBallots,
-            auditorCanDeleteBallots = auditorCanDeleteBallots,
-            isTemplate = isTemplate
+            noVotingAfter = noVotingAfter
         )
     }
 }

@@ -34,7 +34,8 @@ class RegressionDataImpl(
         val eventTableLogger: Logger = createLogger(logGroup, RegressionFile.EVENT_TABLE)
         val stateTableLogger: Logger = createLogger(logGroup, RegressionFile.STATE_TABLE)
         val httpLogger: Logger = createLogger(logGroup, RegressionFile.HTTP)
-        val topLevelExceptionLogger: Logger = createLogger(logGroup, RegressionFile.TOP_LEVEL_EXCEPTION)
+        val topLevelExceptionLogger: Logger = logGroup.create("top-level-exception")
+        val sqlExceptionLogger: Logger = logGroup.create("sql-exception")
         return LoggingNotifications(
             rootDatabaseLogger,
             eventDatabaseLogger,
@@ -42,12 +43,13 @@ class RegressionDataImpl(
             eventTableLogger,
             stateTableLogger,
             httpLogger,
-            topLevelExceptionLogger
+            topLevelExceptionLogger,
+            sqlExceptionLogger
         )
     }
 
     private fun RegressionFile.toNamePath(): Path =
-        Paths.get("regression-$fileName-${phase.name.toLowerCase()}.$extension")
+        Paths.get("regression-$fileName-${phase.name.lowercase()}.$extension")
 
     private fun createLogger(logGroup: LogGroup, regressionFile: RegressionFile): Logger {
         val fullPath = fullPath(regressionFile)

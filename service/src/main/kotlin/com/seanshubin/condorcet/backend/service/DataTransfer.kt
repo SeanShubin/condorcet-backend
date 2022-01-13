@@ -12,10 +12,6 @@ object DataTransfer {
             secretBallot,
             noVotingBefore,
             noVotingAfter,
-            restrictWhoCanVote,
-            ownerCanDeleteBallots,
-            auditorCanDeleteBallots,
-            isTemplate,
             allowEdit,
             allowVote
         )
@@ -28,10 +24,6 @@ object DataTransfer {
             secretBallot,
             noVotingBefore,
             noVotingAfter,
-            restrictWhoCanVote,
-            ownerCanDeleteBallots,
-            auditorCanDeleteBallots,
-            isTemplate,
             allowEdit,
             allowVote
         )

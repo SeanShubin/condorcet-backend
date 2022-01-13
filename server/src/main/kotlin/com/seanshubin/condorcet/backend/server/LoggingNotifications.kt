@@ -6,6 +6,7 @@ import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.logger.Logger
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.sql.SQLException
 
 class LoggingNotifications(
     private val rootDatabaseLogger: Logger,
@@ -14,7 +15,8 @@ class LoggingNotifications(
     private val eventTableLogger: Logger,
     private val stateTableLogger: Logger,
     private val httpLogger: Logger,
-    private val topLevelExceptionLogger:Logger
+    private val topLevelExceptionLogger:Logger,
+    private val sqlExceptionLogger:Logger
 ) : Notifications {
     override fun rootDatabaseEvent(statement: String) {
         rootDatabaseLogger.log("${statement.trim()};")
@@ -50,5 +52,14 @@ class LoggingNotifications(
         val printWriter = PrintWriter(stringWriter)
         throwable.printStackTrace(printWriter)
         topLevelExceptionLogger.log(stringWriter.buffer.toString())
+    }
+
+    override fun sqlException(name: String, sqlCode:String, ex: SQLException) {
+        sqlExceptionLogger.log(name)
+        sqlExceptionLogger.log(sqlCode)
+        val stringWriter = StringWriter()
+        val printWriter = PrintWriter(stringWriter)
+        ex.printStackTrace(printWriter)
+        sqlExceptionLogger.log(stringWriter.buffer.toString())
     }
 }

@@ -65,7 +65,7 @@ from event
 where id > 10
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 03:47:50.383046', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"newName":"Favorite Ice Cream","secretBallot":true,"clearNoVotingBefore":false,"noVotingBefore":"2021-02-03T04:55:30Z","clearNoVotingAfter":false,"noVotingAfter":"2022-02-03T04:55:30Z","restrictWhoCanVote":true,"ownerCanDeleteBallots":true,"auditorCanDeleteBallots":true,"isTemplate":true,"allowVote":null,"allowEdit":null}}');
+values ('2021-12-30 03:47:50.383046', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"newName":"Favorite Ice Cream","secretBallot":true,"clearNoVotingBefore":false,"noVotingBefore":"2021-02-03T04:55:30Z","clearNoVotingAfter":false,"noVotingAfter":"2022-02-03T04:55:30Z","allowVote":null,"allowEdit":null}}');
 select id, `when`, authority, type, text
 from event
 where id > 11
@@ -83,7 +83,7 @@ from event
 where id > 13
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 03:47:50.519411', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream","updates":{"newName":null,"secretBallot":null,"clearNoVotingBefore":null,"noVotingBefore":null,"clearNoVotingAfter":null,"noVotingAfter":null,"restrictWhoCanVote":null,"ownerCanDeleteBallots":null,"auditorCanDeleteBallots":null,"isTemplate":null,"allowVote":true,"allowEdit":true}}');
+values ('2021-12-30 03:47:50.519411', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream","updates":{"newName":null,"secretBallot":null,"clearNoVotingBefore":null,"noVotingBefore":null,"clearNoVotingAfter":null,"noVotingAfter":null,"allowVote":true,"allowEdit":true}}');
 select id, `when`, authority, type, text
 from event
 where id > 14
@@ -119,7 +119,7 @@ from event
 where id > 19
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 19:21:10.812729', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream","updates":{"newName":null,"secretBallot":null,"clearNoVotingBefore":null,"noVotingBefore":null,"clearNoVotingAfter":null,"noVotingAfter":null,"restrictWhoCanVote":null,"ownerCanDeleteBallots":null,"auditorCanDeleteBallots":null,"isTemplate":null,"allowVote":false,"allowEdit":false}}');
+values ('2021-12-30 19:21:10.812729', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream","updates":{"newName":null,"secretBallot":null,"clearNoVotingBefore":null,"noVotingBefore":null,"clearNoVotingAfter":null,"noVotingAfter":null,"allowVote":false,"allowEdit":false}}');
 select id, `when`, authority, type, text
 from event
 where id > 20

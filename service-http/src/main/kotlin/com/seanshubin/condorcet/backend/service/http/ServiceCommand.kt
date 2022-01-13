@@ -100,11 +100,7 @@ interface ServiceCommand {
         val clearNoVotingBefore: Boolean,
         val noVotingBefore: Instant?,
         val clearNoVotingAfter: Boolean,
-        val noVotingAfter: Instant?,
-        val restrictWhoCanVote: Boolean?,
-        val ownerCanDeleteBallots: Boolean?,
-        val auditorCanDeleteBallots: Boolean?,
-        val isTemplate: Boolean?
+        val noVotingAfter: Instant?
     ) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
@@ -413,11 +409,7 @@ interface ServiceCommand {
                 clearNoVotingBefore,
                 noVotingBefore,
                 clearNoVotingAfter,
-                noVotingAfter,
-                restrictWhoCanVote,
-                ownerCanDeleteBallots,
-                auditorCanDeleteBallots,
-                isTemplate
+                noVotingAfter
             )
 
         private fun RequestValue.refreshToken(cipher: Cipher): RefreshToken? {

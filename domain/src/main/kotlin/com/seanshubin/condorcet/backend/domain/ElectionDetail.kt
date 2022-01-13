@@ -10,10 +10,6 @@ data class ElectionDetail(
     val secretBallot: Boolean = true,
     val noVotingBefore: Instant? = null,
     val noVotingAfter: Instant? = null,
-    val restrictWhoCanVote: Boolean = false,
-    val ownerCanDeleteBallots: Boolean = false,
-    val auditorCanDeleteBallots: Boolean = false,
-    val isTemplate: Boolean = false,
     val allowEdit: Boolean = true,
     val allowVote: Boolean = false,
 )

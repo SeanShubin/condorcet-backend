@@ -14,6 +14,7 @@ import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 import java.nio.file.Paths
+import java.sql.SQLException
 import java.time.Clock
 import kotlin.random.Random
 
@@ -51,6 +52,7 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val eventTableEvent: (GenericTable) -> Unit = regressionNotifications::eventTableEvent
     override val stateTableEvent: (GenericTable) -> Unit = regressionNotifications::stateTableEvent
     override val topLevelException: (Throwable) -> Unit = regressionNotifications::topLevelException
+    override val sqlException: (String, String, SQLException) -> Unit = regressionNotifications::sqlException
     override val uniqueIdGenerator: UniqueIdGenerator =
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)

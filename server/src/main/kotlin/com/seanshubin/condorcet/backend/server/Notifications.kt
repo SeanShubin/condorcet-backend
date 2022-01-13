@@ -3,6 +3,7 @@ package com.seanshubin.condorcet.backend.server
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
+import java.sql.SQLException
 
 interface Notifications {
     fun rootDatabaseEvent(statement: String)
@@ -13,4 +14,5 @@ interface Notifications {
     fun requestEvent(request: RequestValue)
     fun responseEvent(response: ResponseValue)
     fun topLevelException(throwable:Throwable)
+    fun sqlException(name:String, sqlCode:String, ex:SQLException)
 }

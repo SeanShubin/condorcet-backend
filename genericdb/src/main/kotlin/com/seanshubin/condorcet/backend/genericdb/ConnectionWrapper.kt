@@ -6,7 +6,8 @@ import java.time.Instant
 
 class ConnectionWrapper(
     private val connection: Connection,
-    private val sqlEvent: (String) -> Unit
+    private val sqlEvent: (String) -> Unit,
+    private val sqlException:(String, String, SQLException) -> Unit
 ) : AutoCloseable {
     fun <T> query(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> T): T {
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
@@ -142,6 +143,7 @@ class ConnectionWrapper(
             sqlEvent(statement.asSql())
             return statement.executeUpdate()
         } catch (ex: SQLException) {
+            sqlException(name, statement.asSql(), ex)
             throw SQLException("$name\n${statement.asSql()}\n${ex.message}", ex)
         }
     }
@@ -151,6 +153,7 @@ class ConnectionWrapper(
             sqlEvent(statement.asSql())
             return statement.executeQuery()
         } catch (ex: SQLException) {
+            sqlException(name, statement.asSql(), ex)
             throw SQLException("$name\n${statement.asSql()}\n${ex.message}", ex)
         }
     }

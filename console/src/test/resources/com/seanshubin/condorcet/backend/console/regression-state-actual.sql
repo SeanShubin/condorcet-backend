@@ -367,10 +367,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -393,10 +389,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -419,10 +411,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -447,22 +435,6 @@ update
     election
 set no_voting_after = '2022-02-03 04:55:30'
 where name = 'Favorite Ice Cream Flavor';
-update
-    election
-set restrict_who_can_vote = 1
-where name = 'Favorite Ice Cream Flavor';
-update
-    election
-set owner_can_delete_ballots = 1
-where name = 'Favorite Ice Cream Flavor';
-update
-    election
-set auditor_can_delete_ballots = 1
-where name = 'Favorite Ice Cream Flavor';
-update
-    election
-set is_template = 1
-where name = 'Favorite Ice Cream Flavor';
 update int_variable
 set value = 12
 where name = 'last-synced';
@@ -475,10 +447,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -513,10 +481,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -576,10 +540,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -616,10 +576,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -687,10 +643,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -738,10 +690,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -892,10 +840,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -949,10 +893,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -981,10 +921,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -1008,10 +944,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -1065,10 +997,6 @@ select election.id,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -1093,10 +1021,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election
@@ -1231,10 +1155,6 @@ select user.name as owner,
        election.secret_ballot,
        election.no_voting_before,
        election.no_voting_after,
-       election.restrict_who_can_vote,
-       election.owner_can_delete_ballots,
-       election.auditor_can_delete_ballots,
-       election.is_template,
        election.allow_edit,
        election.allow_vote
 from election

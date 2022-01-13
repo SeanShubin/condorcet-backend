@@ -69,11 +69,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             clearNoVotingBefore = map.containsKey("noVotingBefore") && map["noVotingBefore"] == null,
             noVotingBefore = map["noVotingBefore"].toInstant(),
             clearNoVotingAfter = map.containsKey("noVotingAfter") && map["noVotingAfter"] == null,
-            noVotingAfter = map["noVotingAfter"].toInstant(),
-            restrictWhoCanVote = map["restrictWhoCanVote"] as Boolean?,
-            ownerCanDeleteBallots = map["ownerCanDeleteBallots"] as Boolean?,
-            auditorCanDeleteBallots = map["auditorCanDeleteBallots"] as Boolean?,
-            isTemplate = map["isTemplate"] as Boolean?
+            noVotingAfter = map["noVotingAfter"].toInstant()
         )
     }
 }
