@@ -88,7 +88,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         query(::createName,"user-by-permission", Permission.USE_APPLICATION.toString())
 
     override fun listVotersForElection(electionName: String): List<String> =
-        query(::createName, "user-by-election", electionName)
+        query(::createName, "voter-by-election", electionName)
 
     override fun listUserNames(): List<String> =
         query(::createName, "user-select")

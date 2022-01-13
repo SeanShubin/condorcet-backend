@@ -12,7 +12,6 @@ class ConnectionWrapper(
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(name, parameters, statement)
         return statement.use {
-            sqlEvent(statement.asSql())
             f(executeQuery(name, statement))
         }
     }
@@ -41,7 +40,6 @@ class ConnectionWrapper(
 
     fun queryGenericTable(name: String, code: String, vararg parameters: Any?): GenericTable {
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
-        sqlEvent(statement.asSql())
         updateParameters(name, parameters, statement)
         return statement.use {
             val resultSet = executeQuery(name, statement)
@@ -88,7 +86,6 @@ class ConnectionWrapper(
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(name, parameters, statement)
         return statement.use {
-            sqlEvent(statement.asSql())
             executeUpdate(name, statement)
         }
     }
@@ -142,6 +139,7 @@ class ConnectionWrapper(
 
     private fun executeUpdate(name: String, statement: PreparedStatement): Int {
         try {
+            sqlEvent(statement.asSql())
             return statement.executeUpdate()
         } catch (ex: SQLException) {
             throw SQLException("$name\n${statement.asSql()}\n${ex.message}", ex)
@@ -150,6 +148,7 @@ class ConnectionWrapper(
 
     private fun executeQuery(name: String, statement: PreparedStatement): ResultSet {
         try {
+            sqlEvent(statement.asSql())
             return statement.executeQuery()
         } catch (ex: SQLException) {
             throw SQLException("$name\n${statement.asSql()}\n${ex.message}", ex)

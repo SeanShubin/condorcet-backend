@@ -47,6 +47,7 @@ object SampleDataApp {
         val judyAccessToken = service.authenticate("Judy", "pass").accessToken
         service.addElection(aliceAccessToken, "Cycle Test")
         service.setCandidates(aliceAccessToken, "Cycle Test", listOf("Rock", "Paper", "Scissors"))
+        service.setEligibleVoters(aliceAccessToken, "Cycle Test", listOf("Alice", "Bob", "Carol", "Dave", "Eve"))
         service.castBallot(
             aliceAccessToken, "Alice", "Cycle Test",
             listOf(Ranking("Rock", 1), Ranking("Scissors", 2), Ranking("Paper", 3))

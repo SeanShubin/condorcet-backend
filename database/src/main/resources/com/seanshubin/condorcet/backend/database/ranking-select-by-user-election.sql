@@ -5,4 +5,4 @@ from ballot
          inner join candidate on ranking.candidate_id = candidate.id
          inner join user on ballot.user_id = user.id
 where user.name = ?
-  and election.name = ?;
+  and election.name = ?

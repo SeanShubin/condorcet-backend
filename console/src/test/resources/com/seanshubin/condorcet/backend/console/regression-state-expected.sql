@@ -199,6 +199,10 @@ select name,
        role
 from user
 where name = 'Bob';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
 select value
 from int_variable
 where name = 'last-synced';
@@ -215,6 +219,10 @@ select name,
        role
 from user
 where name = 'Dave';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
 select value
 from int_variable
 where name = 'last-synced';
@@ -231,6 +239,10 @@ select name,
        role
 from user
 where name = 'Eve';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
 select value
 from int_variable
 where name = 'last-synced';
@@ -247,6 +259,10 @@ select name,
        role
 from user
 where name = 'Carol';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
 select value
 from int_variable
 where name = 'last-synced';
@@ -256,7 +272,97 @@ where name = 'Carol';
 update int_variable
 set value = 9
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select name, email, salt, hash, role
+from user;
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -266,9 +372,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Delete Me';
@@ -280,7 +384,11 @@ values ((select id from user where name = 'Alice'), 'Delete Me');
 update int_variable
 set value = 10
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -290,9 +398,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream Flavor';
@@ -304,7 +410,11 @@ values ((select id from user where name = 'Alice'), 'Favorite Ice Cream Flavor')
 update int_variable
 set value = 11
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -314,9 +424,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream Flavor';
@@ -358,7 +466,11 @@ where name = 'Favorite Ice Cream Flavor';
 update int_variable
 set value = 12
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -368,11 +480,14 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
+where election.name = 'Favorite Ice Cream';
+select candidate.name
+from candidate
+         inner join election
+                    on candidate.election_id = election.id
 where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
@@ -389,7 +504,11 @@ values ((select id from election where name = 'Favorite Ice Cream'),
 update int_variable
 set value = 13
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -399,12 +518,17 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
+select name, email, salt, hash, role
+from user;
+select user.name name
+from voter
+         inner join user on voter.user_id = user.id
+         inner join election on voter.election_id = election.id
+where election.name = 'Favorite Ice Cream';;
 select value
 from int_variable
 where name = 'last-synced';
@@ -420,7 +544,34 @@ values ((select id from election where name = 'Favorite Ice Cream'),
 update int_variable
 set value = 14
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name
+from user
+         inner join role_permission on user.role = role_permission.role
+where permission = 'USE_APPLICATION'
+order by user.name;
+select user.name name
+from voter
+         inner join user on voter.user_id = user.id
+         inner join election on voter.election_id = election.id
+where election.name = 'Favorite Ice Cream';;
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name name
+from voter
+         inner join user on voter.user_id = user.id
+         inner join election on voter.election_id = election.id
+where election.name = 'Favorite Ice Cream';;
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -430,9 +581,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
@@ -458,7 +607,11 @@ where name = 'Favorite Ice Cream';
 update int_variable
 set value = 15
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -468,9 +621,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
@@ -527,7 +678,11 @@ values ((
 update int_variable
 set value = 16
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -537,11 +692,14 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
+where election.name = 'Favorite Ice Cream';
+select candidate.name
+from candidate
+         inner join election
+                    on candidate.election_id = election.id
 where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
@@ -571,7 +729,11 @@ values ((select id from election where name = 'Favorite Ice Cream'),
 update int_variable
 set value = 18
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -581,9 +743,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
@@ -723,7 +883,11 @@ values ((
 update int_variable
 set value = 20
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -733,9 +897,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
@@ -761,7 +923,28 @@ where name = 'Favorite Ice Cream';
 update int_variable
 set value = 21
 where name = 'last-synced';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select candidate.name
+from candidate
+         inner join election
+                    on candidate.election_id = election.id
+where election.name = 'Favorite Ice Cream';
+select candidate.name as candidate, ranking.rank as `rank`
+from ballot
+         inner join election on ballot.election_id = election.id
+         inner join ranking on ranking.ballot_id = ballot.id
+         inner join candidate on ranking.candidate_id = candidate.id
+         inner join user on ballot.user_id = user.id
+where user.name = 'Alice'
+  and election.name = 'Favorite Ice Cream';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -771,9 +954,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
@@ -791,7 +972,11 @@ from voter
         on voter.election_id = election.id
 where
         election.name = 'Favorite Ice Cream';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -801,9 +986,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Delete Me';
@@ -816,11 +999,65 @@ where name = 'Delete Me';
 update int_variable
 set value = 22
 where name = 'last-synced';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
+       election.name,
+       election.secret_ballot,
+       election.no_voting_before,
+       election.no_voting_after,
+       election.restrict_who_can_vote,
+       election.owner_can_delete_ballots,
+       election.auditor_can_delete_ballots,
+       election.is_template,
+       election.allow_edit,
+       election.allow_vote
+from election
+         inner join user on election.owner_id = user.id;
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select candidate.name
+from candidate
+         inner join election
+                    on candidate.election_id = election.id
+where election.name = 'Favorite Ice Cream';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'VIEW_SECRETS';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'VIEW_APPLICATION';
 select count(id)
 from user;
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'VIEW_APPLICATION';
 select count(id)
 from election;
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'VIEW_APPLICATION';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'VIEW_APPLICATION';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'VIEW_SECRETS';
 select * from user;
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'VIEW_SECRETS';
 select election.id,
        election.owner_id,
        user.name owner,
@@ -836,6 +1073,10 @@ select election.id,
        election.allow_vote
 from election
          inner join user on election.owner_id = user.id;
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'VIEW_SECRETS';
 select name,
        email,
        salt,
@@ -843,7 +1084,11 @@ select name,
        role
 from user
 where name = 'Bob';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'USER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -853,9 +1098,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
@@ -979,7 +1222,11 @@ select name,
        role
 from user
 where name = 'Dave';
-select user.name           as owner,
+select role, permission
+from role_permission
+where role = 'USER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
        election.name,
        election.secret_ballot,
        election.no_voting_before,
@@ -989,9 +1236,7 @@ select user.name           as owner,
        election.auditor_can_delete_ballots,
        election.is_template,
        election.allow_edit,
-       election.allow_vote,
-       (select count(candidate.id) from candidate inner join election on candidate.election_id = election.id) as candidate_count,
-       (select count(voter.id) from voter inner join election on voter.election_id = election.id) as voter_count
+       election.allow_vote
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
@@ -1108,3 +1353,27 @@ values ((
 update int_variable
 set value = 24
 where name = 'last-synced';
+select role, permission
+from role_permission
+where role = 'USER'
+  and permission = 'USE_APPLICATION';
+select candidate.name
+from candidate
+         inner join election
+                    on candidate.election_id = election.id
+where election.name = 'Favorite Ice Cream';
+select
+    ballot.id,
+    user.name user,
+    election.name election,
+    ballot.confirmation,
+    ballot.when_cast,
+    ranking.rank,
+    candidate.name candidate
+from ballot
+         inner join ranking on ballot.id = ranking.ballot_id
+         inner join user on ballot.user_id = user.id
+         inner join election on ballot.election_id = election.id
+         inner join candidate on ranking.candidate_id = candidate.id
+where election.name = 'Favorite Ice Cream'
+order by ballot.confirmation, ranking.rank, candidate.name;
