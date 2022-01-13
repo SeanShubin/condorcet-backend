@@ -1,0 +1,1142 @@
+/Register
+{
+  "name" : "Alice",
+  "email" : "alice@email.com",
+  "password" : "alice-password"
+}
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
+}
+
+/Register
+{
+  "name" : "Bob",
+  "email" : "bob@email.com",
+  "password" : "bob-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw",
+  "userName" : "Bob",
+  "role" : "UNASSIGNED"
+}
+
+/Register
+{
+  "name" : "Carol",
+  "email" : "carol@email.com",
+  "password" : "carol-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c",
+  "userName" : "Carol",
+  "role" : "UNASSIGNED"
+}
+
+/Register
+{
+  "name" : "Dave",
+  "email" : "dave@email.com",
+  "password" : "dave-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9sIn0.ao7re7CHf5AudrpyweDra8SZY3XKIrT96O-6ZfFlTyYbym1WfZ5s96dxwxXZUVz46EYdXX23mAJkcGhSdfmRqarMSGZTc9trm6B0_YXHQukdiQzQ0_XDbK_xdkmjSx2itrdorjl9-oygpvnb0PSle27SYpgAnzTdezbk9Zp4rPs
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.cBY2ntXT5xAmYHEqTgBfmworW40vzpldRD6cCfeLkaEeNk43LShdOmJ1JN6_L9ZjYVT5Cih097vWFPmWJLL4XCfWv3VV8yy_Yr-IoeSTzgHXfoEQYEF_dUeBfhydL3VFHZmZHcF408R8kK1DA2kmwPmhbchS1JSMRugB69udo2s; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRGF2ZSJ9.FYdxZ9GbsR9HbB5pxD1eV4aFVVMH34_7hBSoNQ8HAIPe98fvpdKYK-Mi2borTpD9dzz9W15cPHA0dPR-EuKjV0jpt3Z8bjBa0-EXHj-nyg6X67ksisBPLK4mt77r3VqIIg8CyD5jHOeOsqh_ztjlGayrzA7ady6P0or1A641fy0",
+  "userName" : "Dave",
+  "role" : "UNASSIGNED"
+}
+
+/Register
+{
+  "name" : "Eve",
+  "email" : "eve@email.com",
+  "password" : "eve-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRGF2ZSJ9.FYdxZ9GbsR9HbB5pxD1eV4aFVVMH34_7hBSoNQ8HAIPe98fvpdKYK-Mi2borTpD9dzz9W15cPHA0dPR-EuKjV0jpt3Z8bjBa0-EXHj-nyg6X67ksisBPLK4mt77r3VqIIg8CyD5jHOeOsqh_ztjlGayrzA7ady6P0or1A641fy0
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.cBY2ntXT5xAmYHEqTgBfmworW40vzpldRD6cCfeLkaEeNk43LShdOmJ1JN6_L9ZjYVT5Cih097vWFPmWJLL4XCfWv3VV8yy_Yr-IoeSTzgHXfoEQYEF_dUeBfhydL3VFHZmZHcF408R8kK1DA2kmwPmhbchS1JSMRugB69udo2s
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkV2ZSJ9.i_dj12iMfm9PnDY_t0vHI0g3cMDu49MhMPVGsF1yQjf_R-eB21m1WEwRLDLz848lSPxJo3Jyf3ACjTTxjvHuiKjGxyUIUqfgVHs2qGbXRMIEdwiMJIbT_agBTiCzgCe6zlkqgxoJbSSZvYMAAjFok1HXU60AJ6SO_ZdlWD-WwLs; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRXZlIn0.HX7SrmlWRHaTUiiXxnQgN7-97J1PhUO4DFYEramw8OItMqrTbADoVpHPxlaUq-IpLa965qKux3GToXt4wtxRW9CCTCHgjnt5UHc6ENaMGzejCRGfW1JA1H0auqCOfji8ht_mdvRHsl-bBq5vVeIC2W19Lmog1xkn1bWP0UFZFnk",
+  "userName" : "Eve",
+  "role" : "UNASSIGNED"
+}
+
+/Logout
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRXZlIn0.HX7SrmlWRHaTUiiXxnQgN7-97J1PhUO4DFYEramw8OItMqrTbADoVpHPxlaUq-IpLa965qKux3GToXt4wtxRW9CCTCHgjnt5UHc6ENaMGzejCRGfW1JA1H0auqCOfji8ht_mdvRHsl-bBq5vVeIC2W19Lmog1xkn1bWP0UFZFnk
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkV2ZSJ9.i_dj12iMfm9PnDY_t0vHI0g3cMDu49MhMPVGsF1yQjf_R-eB21m1WEwRLDLz848lSPxJo3Jyf3ACjTTxjvHuiKjGxyUIUqfgVHs2qGbXRMIEdwiMJIbT_agBTiCzgCe6zlkqgxoJbSSZvYMAAjFok1HXU60AJ6SO_ZdlWD-WwLs
+200
+Set-Cookie: Refresh=; HttpOnly
+
+/Authenticate
+{
+  "nameOrEmail" : "Alice",
+  "password" : "alice-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRXZlIn0.HX7SrmlWRHaTUiiXxnQgN7-97J1PhUO4DFYEramw8OItMqrTbADoVpHPxlaUq-IpLa965qKux3GToXt4wtxRW9CCTCHgjnt5UHc6ENaMGzejCRGfW1JA1H0auqCOfji8ht_mdvRHsl-bBq5vVeIC2W19Lmog1xkn1bWP0UFZFnk
+Cookie: Refresh=
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
+}
+
+/Refresh
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
+  "userName" : "Alice",
+  "role" : "OWNER"
+}
+
+/SetRole
+{
+  "name" : "Bob",
+  "role" : "USER"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/SetRole
+{
+  "name" : "Dave",
+  "role" : "USER"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/SetRole
+{
+  "name" : "Eve",
+  "role" : "USER"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/RemoveUser
+{
+  "name" : "Carol"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/ListUsers
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "users" : [ {
+    "name" : "Alice",
+    "role" : "OWNER",
+    "allowedRoles" : [ "OWNER" ]
+  }, {
+    "name" : "Bob",
+    "role" : "USER",
+    "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  }, {
+    "name" : "Dave",
+    "role" : "USER",
+    "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  }, {
+    "name" : "Eve",
+    "role" : "USER",
+    "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  } ]
+}
+
+/AddElection
+{
+  "name" : "Delete Me"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/AddElection
+{
+  "name" : "Favorite Ice Cream Flavor"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/UpdateElection
+{
+  "name" : "Favorite Ice Cream Flavor",
+  "newName" : "Favorite Ice Cream",
+  "secretBallot" : true,
+  "clearNoVotingBefore" : false,
+  "noVotingBefore" : "2021-02-03T04:55:30Z",
+  "clearNoVotingAfter" : false,
+  "noVotingAfter" : "2022-02-03T04:55:30Z",
+  "restrictWhoCanVote" : true,
+  "ownerCanDeleteBallots" : true,
+  "auditorCanDeleteBallots" : true,
+  "isTemplate" : true
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/SetCandidates
+{
+  "electionName" : "Favorite Ice Cream",
+  "candidateNames" : [ "Chocolate", "Vanilla", "Strawberry" ]
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/SetEligibleVoters
+{
+  "electionName" : "Favorite Ice Cream",
+  "userNames" : [ "Alice", "Bob", "Dave" ]
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/ListEligibility
+{
+  "electionName" : "Favorite Ice Cream"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+[ {
+  "name" : "Alice",
+  "eligible" : true
+}, {
+  "name" : "Bob",
+  "eligible" : true
+}, {
+  "name" : "Dave",
+  "eligible" : true
+}, {
+  "name" : "Eve",
+  "eligible" : false
+} ]
+
+/IsEligible
+{
+  "userName" : "Alice",
+  "electionName" : "Favorite Ice Cream"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+true
+
+/LaunchElection
+{
+  "name" : "Favorite Ice Cream",
+  "allowEdit" : true
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/CastBallot
+{
+  "voterName" : "Alice",
+  "electionName" : "Favorite Ice Cream",
+  "rankings" : [ {
+    "name" : "Vanilla",
+    "rank" : 1
+  }, {
+    "name" : "Chocolate",
+    "rank" : 2
+  } ]
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/SetCandidates
+{
+  "electionName" : "Favorite Ice Cream",
+  "candidateNames" : [ "Butter Pecan", "Chocolate", "Neapolitan", "Vanilla", "Mint", "Chocolate Chip" ]
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/CastBallot
+{
+  "voterName" : "Alice",
+  "electionName" : "Favorite Ice Cream",
+  "rankings" : [ {
+    "name" : "Chocolate Chip",
+    "rank" : 1
+  }, {
+    "name" : "Neapolitan",
+    "rank" : 2
+  }, {
+    "name" : "Chocolate",
+    "rank" : 3
+  }, {
+    "name" : "Vanilla",
+    "rank" : 4
+  }, {
+    "name" : "Butter Pecan",
+    "rank" : 5
+  }, {
+    "name" : "Mint",
+    "rank" : 6
+  } ]
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/FinalizeElection
+{
+  "name" : "Favorite Ice Cream"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/ListRankings
+{
+  "voterName" : "Alice",
+  "electionName" : "Favorite Ice Cream"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "rankings" : [ {
+    "name" : "Chocolate Chip",
+    "rank" : 1
+  }, {
+    "name" : "Neapolitan",
+    "rank" : 2
+  }, {
+    "name" : "Chocolate",
+    "rank" : 3
+  }, {
+    "name" : "Vanilla",
+    "rank" : 4
+  }, {
+    "name" : "Butter Pecan",
+    "rank" : 5
+  }, {
+    "name" : "Mint",
+    "rank" : 6
+  } ]
+}
+
+/GetElection
+{
+  "name" : "Favorite Ice Cream"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "ownerName" : "Alice",
+  "name" : "Favorite Ice Cream",
+  "candidateCount" : 6,
+  "voterCount" : 3,
+  "secretBallot" : false,
+  "noVotingBefore" : null,
+  "noVotingAfter" : null,
+  "restrictWhoCanVote" : false,
+  "ownerCanDeleteBallots" : false,
+  "auditorCanDeleteBallots" : false,
+  "isTemplate" : false,
+  "allowEdit" : false,
+  "allowVote" : false
+}
+
+/DeleteElection
+{
+  "name" : "Delete Me"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+
+/ListElections
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "elections" : [ {
+    "ownerName" : "Alice",
+    "name" : "Favorite Ice Cream",
+    "secretBallot" : false,
+    "noVotingBefore" : null,
+    "noVotingAfter" : null,
+    "restrictWhoCanVote" : false,
+    "ownerCanDeleteBallots" : false,
+    "auditorCanDeleteBallots" : false,
+    "isTemplate" : false,
+    "allowEdit" : false,
+    "allowVote" : false
+  } ]
+}
+
+/ListCandidates
+{
+  "electionName" : "Favorite Ice Cream"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "candidates" : [ "Butter Pecan", "Chocolate", "Chocolate Chip", "Mint", "Neapolitan", "Vanilla" ]
+}
+
+/ListTables
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "tableNames" : [ "int_variable", "role_permission", "user", "election", "candidate", "voter", "ballot", "ranking", "tally" ]
+}
+
+/UserCount
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "userCount" : 4
+}
+
+/ElectionCount
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "electionCount" : 1
+}
+
+/TableCount
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "tableCount" : 9
+}
+
+/EventCount
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "eventCount" : 22
+}
+
+/TableData
+{
+  "name" : "user"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "table" : {
+    "columnNames" : [ "id", "name", "email", "role", "salt", "hash" ],
+    "rows" : [ [ 1, "Alice", "alice@email.com", "OWNER", "a09a049b-4228-4c21-b86d-35bc7a1ed3bb", "08DDCCEBFB8973647C97B56F04F5F24BDDBB3F164B4DF22B1DB6EC3DFB9B5398" ], [ 2, "Bob", "bob@email.com", "USER", "2ee67e26-d4d3-426a-9bcf-2b8b816ff2ce", "DA6BCFE83821E48B41440D56EC9C34A9277520F69C26980E1ECD5ADE7B89813B" ], [ 4, "Dave", "dave@email.com", "USER", "11baa435-610b-4776-84c7-7201dbdf3dc7", "2935594E22361D0DC1AB0118A6D589ECDF5119390FD408FBCAD60AFB22E2996E" ], [ 5, "Eve", "eve@email.com", "USER", "3b12bd5b-0e7d-4519-86ff-0629ecdd5afb", "00313095B4583C6B2498847968E56379891E7476C052DE7B104979CE004F141B" ] ]
+  }
+}
+
+/DebugTableData
+{
+  "name" : "election"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "table" : {
+    "columnNames" : [ "id", "owner_id", "owner", "name", "secret_ballot", "no_voting_before", "no_voting_after", "restrict_who_can_vote", "owner_can_delete_ballots", "auditor_can_delete_ballots", "is_template", "allow_edit", "allow_vote" ],
+    "rows" : [ [ 2, 1, "Alice", "Favorite Ice Cream", false, null, null, false, false, false, false, false, false ] ]
+  }
+}
+
+/EventData
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+{
+  "events" : {
+    "columnNames" : [ "id", "when", "authority", "type", "text" ],
+    "rows" : [ [ 1, "2021-12-30T03:47:48.927303", "Alice", "AddUser", "{\"name\":\"Alice\",\"email\":\"alice@email.com\",\"salt\":\"a09a049b-4228-4c21-b86d-35bc7a1ed3bb\",\"hash\":\"08DDCCEBFB8973647C97B56F04F5F24BDDBB3F164B4DF22B1DB6EC3DFB9B5398\",\"role\":\"OWNER\"}" ], [ 2, "2021-12-30T03:47:49.081708", "Bob", "AddUser", "{\"name\":\"Bob\",\"email\":\"bob@email.com\",\"salt\":\"2ee67e26-d4d3-426a-9bcf-2b8b816ff2ce\",\"hash\":\"DA6BCFE83821E48B41440D56EC9C34A9277520F69C26980E1ECD5ADE7B89813B\",\"role\":\"UNASSIGNED\"}" ], [ 3, "2021-12-30T03:47:49.171624", "Carol", "AddUser", "{\"name\":\"Carol\",\"email\":\"carol@email.com\",\"salt\":\"8c35dfe2-e4b9-4d66-8488-bb09a1f7451f\",\"hash\":\"8398C9E8F1030A6BEE2F524A91A3FDF3C8AF4468BBC5CA90712D2AEE70B65240\",\"role\":\"UNASSIGNED\"}" ], [ 4, "2021-12-30T03:47:49.476193", "Dave", "AddUser", "{\"name\":\"Dave\",\"email\":\"dave@email.com\",\"salt\":\"11baa435-610b-4776-84c7-7201dbdf3dc7\",\"hash\":\"2935594E22361D0DC1AB0118A6D589ECDF5119390FD408FBCAD60AFB22E2996E\",\"role\":\"UNASSIGNED\"}" ], [ 5, "2021-12-30T03:47:49.566729", "Eve", "AddUser", "{\"name\":\"Eve\",\"email\":\"eve@email.com\",\"salt\":\"3b12bd5b-0e7d-4519-86ff-0629ecdd5afb\",\"hash\":\"00313095B4583C6B2498847968E56379891E7476C052DE7B104979CE004F141B\",\"role\":\"UNASSIGNED\"}" ], [ 6, "2021-12-30T03:47:49.762353", "Alice", "SetRole", "{\"name\":\"Bob\",\"role\":\"USER\"}" ], [ 7, "2021-12-30T03:47:49.841237", "Alice", "SetRole", "{\"name\":\"Dave\",\"role\":\"USER\"}" ], [ 8, "2021-12-30T03:47:49.977763", "Alice", "SetRole", "{\"name\":\"Eve\",\"role\":\"USER\"}" ], [ 9, "2021-12-30T03:47:50.134133", "Alice", "RemoveUser", "{\"name\":\"Carol\"}" ], [ 10, "2021-12-30T03:47:50.293079", "Alice", "AddElection", "{\"owner\":\"Alice\",\"name\":\"Delete Me\"}" ], [ 11, "2021-12-30T03:47:50.312971", "Alice", "AddElection", "{\"owner\":\"Alice\",\"name\":\"Favorite Ice Cream Flavor\"}" ], [ 12, "2021-12-30T03:47:50.383046", "Alice", "UpdateElection", "{\"name\":\"Favorite Ice Cream Flavor\",\"updates\":{\"newName\":\"Favorite Ice Cream\",\"secretBallot\":true,\"clearNoVotingBefore\":false,\"noVotingBefore\":\"2021-02-03T04:55:30Z\",\"clearNoVotingAfter\":false,\"noVotingAfter\":\"2022-02-03T04:55:30Z\",\"restrictWhoCanVote\":true,\"ownerCanDeleteBallots\":true,\"auditorCanDeleteBallots\":true,\"isTemplate\":true,\"allowVote\":null,\"allowEdit\":null}}" ], [ 13, "2021-12-30T03:47:50.396089", "Alice", "AddCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Chocolate\",\"Vanilla\",\"Strawberry\"]}" ], [ 14, "2021-12-30T03:47:50.493329", "Alice", "AddVoters", "{\"electionName\":\"Favorite Ice Cream\",\"voterNames\":[\"Alice\",\"Bob\",\"Dave\"]}" ], [ 15, "2021-12-30T03:47:50.519411", "Alice", "UpdateElection", "{\"name\":\"Favorite Ice Cream\",\"updates\":{\"newName\":null,\"secretBallot\":null,\"clearNoVotingBefore\":null,\"noVotingBefore\":null,\"clearNoVotingAfter\":null,\"noVotingAfter\":null,\"restrictWhoCanVote\":null,\"ownerCanDeleteBallots\":null,\"auditorCanDeleteBallots\":null,\"isTemplate\":null,\"allowVote\":true,\"allowEdit\":true}}" ], [ 16, "2021-12-30T03:47:50.52543", "Alice", "CastBallot", "{\"voterName\":\"Alice\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"name\":\"Vanilla\",\"rank\":1},{\"name\":\"Chocolate\",\"rank\":2}]}" ], [ 17, "2021-12-30T18:52:08.744169", "Alice", "RemoveCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Strawberry\"]}" ], [ 18, "2021-12-30T18:52:08.75218", "Alice", "AddCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Butter Pecan\",\"Neapolitan\",\"Mint\",\"Chocolate Chip\"]}" ], [ 19, "2021-12-30T18:52:08.756192", "Alice", "RescindBallot", "{\"voterName\":\"Alice\",\"electionName\":\"Favorite Ice Cream\"}" ], [ 20, "2021-12-30T19:21:10.7203", "Alice", "CastBallot", "{\"voterName\":\"Alice\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"name\":\"Chocolate Chip\",\"rank\":1},{\"name\":\"Neapolitan\",\"rank\":2},{\"name\":\"Chocolate\",\"rank\":3},{\"name\":\"Vanilla\",\"rank\":4},{\"name\":\"Butter Pecan\",\"rank\":5},{\"name\":\"Mint\",\"rank\":6}]}" ], [ 21, "2021-12-30T19:21:10.812729", "Alice", "UpdateElection", "{\"name\":\"Favorite Ice Cream\",\"updates\":{\"newName\":null,\"secretBallot\":null,\"clearNoVotingBefore\":null,\"noVotingBefore\":null,\"clearNoVotingAfter\":null,\"noVotingAfter\":null,\"restrictWhoCanVote\":null,\"ownerCanDeleteBallots\":null,\"auditorCanDeleteBallots\":null,\"isTemplate\":null,\"allowVote\":false,\"allowEdit\":false}}" ], [ 22, "2022-01-10T18:26:27.787505", "Alice", "DeleteElection", "{\"name\":\"Delete Me\"}" ] ]
+  }
+}
+
+/Authenticate
+{
+  "nameOrEmail" : "Bob",
+  "password" : "bob-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0.bDwBqTpowEk1UoXTLtMuYUchVokw2RmiVsh70Ne4BqmS62Z1OUmJUGG2EpYcFqI6fZ6pRfK_Zahn6brCctk1KodZA9vUp9kF8WoZQo1m6TIULW2FS6Mhzojcd6VXhk99hABjZWdXzGP8lEow64AtL3CjDUWeQpv445RimjD0Z4Y
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiQm9iIn0.UOTkG6oD54FgGPmT__N483ONWaW80miGWGDgWUY16wQDvz7MjEg2k25Lu9g1KTRj6YICNki5tkKju5QHWBgIE7tRquDDRt4NaTAaZvvabKj0tVmzbAYOZ6OCQCKEyAnAxxlDeRXLhZcKZuc2fjo3Hf6IBLLOxx3gzR_UmCmu0H4",
+  "userName" : "Bob",
+  "role" : "USER"
+}
+
+/CastBallot
+{
+  "voterName" : "Bob",
+  "electionName" : "Favorite Ice Cream",
+  "rankings" : [ {
+    "name" : "Chocolate",
+    "rank" : 1
+  }, {
+    "name" : "Chocolate Chip",
+    "rank" : 2
+  }, {
+    "name" : "Vanilla",
+    "rank" : 3
+  }, {
+    "name" : "Mint",
+    "rank" : 4
+  }, {
+    "name" : "Butter Pecan",
+    "rank" : 5
+  }, {
+    "name" : "Neapolitan",
+    "rank" : 6
+  } ]
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiQm9iIn0.UOTkG6oD54FgGPmT__N483ONWaW80miGWGDgWUY16wQDvz7MjEg2k25Lu9g1KTRj6YICNki5tkKju5QHWBgIE7tRquDDRt4NaTAaZvvabKj0tVmzbAYOZ6OCQCKEyAnAxxlDeRXLhZcKZuc2fjo3Hf6IBLLOxx3gzR_UmCmu0H4
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE
+200
+
+/Authenticate
+{
+  "nameOrEmail" : "Dave",
+  "password" : "dave-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiQm9iIn0.UOTkG6oD54FgGPmT__N483ONWaW80miGWGDgWUY16wQDvz7MjEg2k25Lu9g1KTRj6YICNki5tkKju5QHWBgIE7tRquDDRt4NaTAaZvvabKj0tVmzbAYOZ6OCQCKEyAnAxxlDeRXLhZcKZuc2fjo3Hf6IBLLOxx3gzR_UmCmu0H4
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ9.OkaogqZhfAjRD1-8fmXmcKDyuH0InBW3z0qmw-eHn6duB1paTQSVDUcdB3XMqDIkTqBCWpZcxR7Jk2JRsQ7jJ-dkifamoreC8i2tQwx56SLPLRyOlkEBWdWNmWw7j1Ja4O6T-yvnQQPSLXxk4U7CM9QAcBxNRR1i0PwCjEC23EE
+200
+Content-Type: application/json
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.cBY2ntXT5xAmYHEqTgBfmworW40vzpldRD6cCfeLkaEeNk43LShdOmJ1JN6_L9ZjYVT5Cih097vWFPmWJLL4XCfWv3VV8yy_Yr-IoeSTzgHXfoEQYEF_dUeBfhydL3VFHZmZHcF408R8kK1DA2kmwPmhbchS1JSMRugB69udo2s; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiRGF2ZSJ9.VxJu7jXQSM_8c2_k32YEEV24cTYp4fpYM2tH25XZvRFrBF8HeNRZCA0Yn2rJsbv3PKYrqoKgZmXxCWqk4uI1_l371MurA7OpwC6LbEAyWBTSiV-Ac6qPQkn7Uroz1q4gKM2YX0XvsobEPJC101NGHt0iRl6ZkB1-4zTo8Zhf51c",
+  "userName" : "Dave",
+  "role" : "USER"
+}
+
+/CastBallot
+{
+  "voterName" : "Dave",
+  "electionName" : "Favorite Ice Cream",
+  "rankings" : [ {
+    "name" : "Mint",
+    "rank" : 1
+  }, {
+    "name" : "Chocolate Chip",
+    "rank" : 2
+  }, {
+    "name" : "Neapolitan",
+    "rank" : 3
+  }, {
+    "name" : "Chocolate",
+    "rank" : 4
+  }, {
+    "name" : "Vanilla",
+    "rank" : 5
+  }, {
+    "name" : "Butter Pecan",
+    "rank" : 6
+  } ]
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiRGF2ZSJ9.VxJu7jXQSM_8c2_k32YEEV24cTYp4fpYM2tH25XZvRFrBF8HeNRZCA0Yn2rJsbv3PKYrqoKgZmXxCWqk4uI1_l371MurA7OpwC6LbEAyWBTSiV-Ac6qPQkn7Uroz1q4gKM2YX0XvsobEPJC101NGHt0iRl6ZkB1-4zTo8Zhf51c
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.cBY2ntXT5xAmYHEqTgBfmworW40vzpldRD6cCfeLkaEeNk43LShdOmJ1JN6_L9ZjYVT5Cih097vWFPmWJLL4XCfWv3VV8yy_Yr-IoeSTzgHXfoEQYEF_dUeBfhydL3VFHZmZHcF408R8kK1DA2kmwPmhbchS1JSMRugB69udo2s
+200
+
+/Tally
+{
+  "electionName" : "Favorite Ice Cream"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiRGF2ZSJ9.VxJu7jXQSM_8c2_k32YEEV24cTYp4fpYM2tH25XZvRFrBF8HeNRZCA0Yn2rJsbv3PKYrqoKgZmXxCWqk4uI1_l371MurA7OpwC6LbEAyWBTSiV-Ac6qPQkn7Uroz1q4gKM2YX0XvsobEPJC101NGHt0iRl6ZkB1-4zTo8Zhf51c
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.cBY2ntXT5xAmYHEqTgBfmworW40vzpldRD6cCfeLkaEeNk43LShdOmJ1JN6_L9ZjYVT5Cih097vWFPmWJLL4XCfWv3VV8yy_Yr-IoeSTzgHXfoEQYEF_dUeBfhydL3VFHZmZHcF408R8kK1DA2kmwPmhbchS1JSMRugB69udo2s
+200
+Content-Type: application/json
+{
+  "candidates" : [ "Butter Pecan", "Chocolate", "Chocolate Chip", "Mint", "Neapolitan", "Vanilla" ],
+  "ballots" : [ {
+    "user" : "Dave",
+    "election" : "Favorite Ice Cream",
+    "confirmation" : "44c3906b-a13e-4436-8cd2-1356122f9596",
+    "whenCast" : "2022-01-12T05:39:32.078075Z",
+    "rankings" : [ {
+      "name" : "Mint",
+      "rank" : 1
+    }, {
+      "name" : "Chocolate Chip",
+      "rank" : 2
+    }, {
+      "name" : "Neapolitan",
+      "rank" : 3
+    }, {
+      "name" : "Chocolate",
+      "rank" : 4
+    }, {
+      "name" : "Vanilla",
+      "rank" : 5
+    }, {
+      "name" : "Butter Pecan",
+      "rank" : 6
+    } ]
+  }, {
+    "user" : "Bob",
+    "election" : "Favorite Ice Cream",
+    "confirmation" : "8c9fd5ac-7f5b-44bf-ab33-4542452dbceb",
+    "whenCast" : "2022-01-11T22:35:21.903940Z",
+    "rankings" : [ {
+      "name" : "Chocolate",
+      "rank" : 1
+    }, {
+      "name" : "Chocolate Chip",
+      "rank" : 2
+    }, {
+      "name" : "Vanilla",
+      "rank" : 3
+    }, {
+      "name" : "Mint",
+      "rank" : 4
+    }, {
+      "name" : "Butter Pecan",
+      "rank" : 5
+    }, {
+      "name" : "Neapolitan",
+      "rank" : 6
+    } ]
+  }, {
+    "user" : "Alice",
+    "election" : "Favorite Ice Cream",
+    "confirmation" : "e1c1dfe0-0423-43f2-bfec-430782b04545",
+    "whenCast" : "2021-12-30T19:21:10.807202Z",
+    "rankings" : [ {
+      "name" : "Chocolate Chip",
+      "rank" : 1
+    }, {
+      "name" : "Neapolitan",
+      "rank" : 2
+    }, {
+      "name" : "Chocolate",
+      "rank" : 3
+    }, {
+      "name" : "Vanilla",
+      "rank" : 4
+    }, {
+      "name" : "Butter Pecan",
+      "rank" : 5
+    }, {
+      "name" : "Mint",
+      "rank" : 6
+    } ]
+  } ],
+  "preferences" : [ [ {
+    "path" : [ "Butter Pecan", "Butter Pecan" ],
+    "strengths" : [ 0 ],
+    "origin" : "Butter Pecan",
+    "strength" : 0,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Butter Pecan", "Chocolate" ],
+    "strengths" : [ 0 ],
+    "origin" : "Butter Pecan",
+    "strength" : 0,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Butter Pecan", "Chocolate Chip" ],
+    "strengths" : [ 0 ],
+    "origin" : "Butter Pecan",
+    "strength" : 0,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Butter Pecan", "Mint" ],
+    "strengths" : [ 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Butter Pecan", "Neapolitan" ],
+    "strengths" : [ 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Butter Pecan", "Vanilla" ],
+    "strengths" : [ 0 ],
+    "origin" : "Butter Pecan",
+    "strength" : 0,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Chocolate", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Chocolate", "Chocolate" ],
+    "strengths" : [ 0 ],
+    "origin" : "Chocolate",
+    "strength" : 0,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Chocolate", "Chocolate Chip" ],
+    "strengths" : [ 1 ],
+    "origin" : "Chocolate",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Chocolate", "Mint" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate",
+    "strength" : 2,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Chocolate", "Neapolitan" ],
+    "strengths" : [ 1 ],
+    "origin" : "Chocolate",
+    "strength" : 1,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Chocolate", "Vanilla" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate",
+    "strength" : 3,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Chocolate Chip", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Chocolate Chip", "Chocolate" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 2,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Chocolate Chip", "Chocolate Chip" ],
+    "strengths" : [ 0 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 0,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Chocolate Chip", "Mint" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 2,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Chocolate Chip", "Neapolitan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Chocolate Chip", "Vanilla" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Mint", "Butter Pecan" ],
+    "strengths" : [ 2 ],
+    "origin" : "Mint",
+    "strength" : 2,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Mint", "Chocolate" ],
+    "strengths" : [ 1 ],
+    "origin" : "Mint",
+    "strength" : 1,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Mint", "Chocolate Chip" ],
+    "strengths" : [ 1 ],
+    "origin" : "Mint",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Mint", "Mint" ],
+    "strengths" : [ 0 ],
+    "origin" : "Mint",
+    "strength" : 0,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Mint", "Neapolitan" ],
+    "strengths" : [ 2 ],
+    "origin" : "Mint",
+    "strength" : 2,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Mint", "Vanilla" ],
+    "strengths" : [ 1 ],
+    "origin" : "Mint",
+    "strength" : 1,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Neapolitan", "Butter Pecan" ],
+    "strengths" : [ 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Neapolitan", "Chocolate" ],
+    "strengths" : [ 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Neapolitan", "Chocolate Chip" ],
+    "strengths" : [ 0 ],
+    "origin" : "Neapolitan",
+    "strength" : 0,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Neapolitan", "Mint" ],
+    "strengths" : [ 1 ],
+    "origin" : "Neapolitan",
+    "strength" : 1,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Neapolitan", "Neapolitan" ],
+    "strengths" : [ 0 ],
+    "origin" : "Neapolitan",
+    "strength" : 0,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Neapolitan", "Vanilla" ],
+    "strengths" : [ 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Vanilla", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Vanilla",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Vanilla", "Chocolate" ],
+    "strengths" : [ 0 ],
+    "origin" : "Vanilla",
+    "strength" : 0,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Vanilla", "Chocolate Chip" ],
+    "strengths" : [ 0 ],
+    "origin" : "Vanilla",
+    "strength" : 0,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Vanilla", "Mint" ],
+    "strengths" : [ 2 ],
+    "origin" : "Vanilla",
+    "strength" : 2,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Vanilla", "Neapolitan" ],
+    "strengths" : [ 1 ],
+    "origin" : "Vanilla",
+    "strength" : 1,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Vanilla", "Vanilla" ],
+    "strengths" : [ 0 ],
+    "origin" : "Vanilla",
+    "strength" : 0,
+    "destination" : "Vanilla"
+  } ] ],
+  "strongestPathMatrix" : [ [ {
+    "path" : [ "Butter Pecan", "Butter Pecan" ],
+    "strengths" : [ 0 ],
+    "origin" : "Butter Pecan",
+    "strength" : 0,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Butter Pecan", "Mint", "Chocolate" ],
+    "strengths" : [ 1, 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Butter Pecan", "Mint", "Chocolate Chip" ],
+    "strengths" : [ 1, 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Butter Pecan", "Mint" ],
+    "strengths" : [ 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Butter Pecan", "Neapolitan" ],
+    "strengths" : [ 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Butter Pecan", "Mint", "Vanilla" ],
+    "strengths" : [ 1, 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Chocolate", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Chocolate", "Chocolate" ],
+    "strengths" : [ 0 ],
+    "origin" : "Chocolate",
+    "strength" : 0,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Chocolate", "Chocolate Chip" ],
+    "strengths" : [ 1 ],
+    "origin" : "Chocolate",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Chocolate", "Mint" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate",
+    "strength" : 2,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Chocolate", "Mint", "Neapolitan" ],
+    "strengths" : [ 2, 2 ],
+    "origin" : "Chocolate",
+    "strength" : 2,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Chocolate", "Vanilla" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate",
+    "strength" : 3,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Chocolate Chip", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Chocolate Chip", "Chocolate" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 2,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Chocolate Chip", "Chocolate Chip" ],
+    "strengths" : [ 0 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 0,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Chocolate Chip", "Mint" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 2,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Chocolate Chip", "Neapolitan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Chocolate Chip", "Vanilla" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Mint", "Butter Pecan" ],
+    "strengths" : [ 2 ],
+    "origin" : "Mint",
+    "strength" : 2,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Mint", "Neapolitan", "Chocolate" ],
+    "strengths" : [ 2, 2 ],
+    "origin" : "Mint",
+    "strength" : 2,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Mint", "Chocolate Chip" ],
+    "strengths" : [ 1 ],
+    "origin" : "Mint",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Mint", "Mint" ],
+    "strengths" : [ 0 ],
+    "origin" : "Mint",
+    "strength" : 0,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Mint", "Neapolitan" ],
+    "strengths" : [ 2 ],
+    "origin" : "Mint",
+    "strength" : 2,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Mint", "Neapolitan", "Vanilla" ],
+    "strengths" : [ 2, 2 ],
+    "origin" : "Mint",
+    "strength" : 2,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Neapolitan", "Butter Pecan" ],
+    "strengths" : [ 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Neapolitan", "Chocolate" ],
+    "strengths" : [ 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Neapolitan", "Chocolate", "Chocolate Chip" ],
+    "strengths" : [ 2, 1 ],
+    "origin" : "Neapolitan",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Neapolitan", "Chocolate", "Mint" ],
+    "strengths" : [ 2, 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Neapolitan", "Neapolitan" ],
+    "strengths" : [ 0 ],
+    "origin" : "Neapolitan",
+    "strength" : 0,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Neapolitan", "Vanilla" ],
+    "strengths" : [ 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
+    "destination" : "Vanilla"
+  } ], [ {
+    "path" : [ "Vanilla", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Vanilla",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  }, {
+    "path" : [ "Vanilla", "Mint", "Neapolitan", "Chocolate" ],
+    "strengths" : [ 2, 2, 2 ],
+    "origin" : "Vanilla",
+    "strength" : 2,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Vanilla", "Mint", "Chocolate Chip" ],
+    "strengths" : [ 2, 1 ],
+    "origin" : "Vanilla",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Vanilla", "Mint" ],
+    "strengths" : [ 2 ],
+    "origin" : "Vanilla",
+    "strength" : 2,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Vanilla", "Mint", "Neapolitan" ],
+    "strengths" : [ 2, 2 ],
+    "origin" : "Vanilla",
+    "strength" : 2,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Vanilla", "Vanilla" ],
+    "strengths" : [ 0 ],
+    "origin" : "Vanilla",
+    "strength" : 0,
+    "destination" : "Vanilla"
+  } ] ],
+  "places" : [ {
+    "rank" : 1,
+    "candidate" : "Chocolate Chip"
+  }, {
+    "rank" : 2,
+    "candidate" : "Chocolate"
+  }, {
+    "rank" : 2,
+    "candidate" : "Mint"
+  }, {
+    "rank" : 2,
+    "candidate" : "Neapolitan"
+  }, {
+    "rank" : 5,
+    "candidate" : "Vanilla"
+  }, {
+    "rank" : 6,
+    "candidate" : "Butter Pecan"
+  } ],
+  "whoVoted" : [ "Alice", "Bob", "Dave" ]
+}
+
