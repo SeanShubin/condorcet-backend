@@ -605,23 +605,23 @@ Content-Type: application/json
     "confirmation" : "8c9fd5ac-7f5b-44bf-ab33-4542452dbceb",
     "whenCast" : "2022-01-11T22:35:21.903940Z",
     "rankings" : [ {
-      "name" : "Mint",
-      "rank" : 1
-    }, {
-      "name" : "Chocolate Chip",
-      "rank" : 2
-    }, {
-      "name" : "Neapolitan",
-      "rank" : 3
+      "name" : "Butter Pecan",
+      "rank" : 6
     }, {
       "name" : "Chocolate",
       "rank" : 4
     }, {
+      "name" : "Chocolate Chip",
+      "rank" : 2
+    }, {
+      "name" : "Mint",
+      "rank" : 1
+    }, {
+      "name" : "Neapolitan",
+      "rank" : 3
+    }, {
       "name" : "Vanilla",
       "rank" : 5
-    }, {
-      "name" : "Butter Pecan",
-      "rank" : 6
     } ]
   }, {
     "user" : "<redacted>",
@@ -629,23 +629,23 @@ Content-Type: application/json
     "confirmation" : "afee81f2-21cc-4fab-b630-770a08721686",
     "whenCast" : "2021-12-30T03:47:50.768159Z",
     "rankings" : [ {
-      "name" : "Chocolate Chip",
-      "rank" : 1
-    }, {
-      "name" : "Neapolitan",
-      "rank" : 2
+      "name" : "Butter Pecan",
+      "rank" : 5
     }, {
       "name" : "Chocolate",
       "rank" : 3
     }, {
-      "name" : "Vanilla",
-      "rank" : 4
-    }, {
-      "name" : "Butter Pecan",
-      "rank" : 5
+      "name" : "Chocolate Chip",
+      "rank" : 1
     }, {
       "name" : "Mint",
       "rank" : 6
+    }, {
+      "name" : "Neapolitan",
+      "rank" : 2
+    }, {
+      "name" : "Vanilla",
+      "rank" : 4
     } ]
   }, {
     "user" : "<redacted>",
@@ -653,23 +653,23 @@ Content-Type: application/json
     "confirmation" : "e1c1dfe0-0423-43f2-bfec-430782b04545",
     "whenCast" : "2022-01-10T18:26:27.787505Z",
     "rankings" : [ {
+      "name" : "Butter Pecan",
+      "rank" : 5
+    }, {
       "name" : "Chocolate",
       "rank" : 1
     }, {
       "name" : "Chocolate Chip",
       "rank" : 2
     }, {
-      "name" : "Vanilla",
-      "rank" : 3
-    }, {
       "name" : "Mint",
       "rank" : 4
     }, {
-      "name" : "Butter Pecan",
-      "rank" : 5
-    }, {
       "name" : "Neapolitan",
       "rank" : 6
+    }, {
+      "name" : "Vanilla",
+      "rank" : 3
     } ]
   } ],
   "preferences" : [ [ {
