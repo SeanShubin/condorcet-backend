@@ -38,5 +38,5 @@ interface StateDbCommands {
 
     fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>)
 
-    fun rescindBallot(authority: String, voterName: String, electionName: String)
+    fun setRankings(authority: String, electionName:String, ballotConfirmation:String, rankings: List<Ranking>)
 }

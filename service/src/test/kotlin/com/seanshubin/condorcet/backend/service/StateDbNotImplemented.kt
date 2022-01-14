@@ -182,11 +182,11 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun listRankings(voterName: String, electionName: String): List<Ranking> {
+    override fun setRankings(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun rescindBallot(authority: String, voterName: String, electionName: String) {
+    override fun listRankings(voterName: String, electionName: String): List<Ranking> {
         throw UnsupportedOperationException("not implemented")
     }
 

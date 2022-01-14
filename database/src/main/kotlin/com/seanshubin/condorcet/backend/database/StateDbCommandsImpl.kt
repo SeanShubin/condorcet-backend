@@ -1,7 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
-import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
@@ -92,19 +91,22 @@ class StateDbCommandsImpl(
 
     override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
         val now = clock.instant()
-        val uniqueId = uniqueIdGenerator.uniqueId()
-        update("ballot-insert", voterName, electionName, uniqueId, now)
-        rankings.forEach { (candidateName, rank) ->
-            if (rank == null) {
-                update("delete-ranking", voterName, electionName, candidateName)
-            } else {
-                update("ranking-insert", voterName, electionName, electionName, candidateName, rank)
-            }
-        }
+        val ballotConfirmation = uniqueIdGenerator.uniqueId()
+        update("ballot-insert", voterName, electionName, ballotConfirmation, now)
+        setRankings(authority, electionName, ballotConfirmation, rankings)
     }
 
-    override fun rescindBallot(authority: String, voterName: String, electionName: String) {
-        update("delete-rankings", voterName, electionName)
-        update("delete-ballot", voterName, electionName)
+    override fun setRankings(
+        authority: String,
+        electionName: String,
+        ballotConfirmation: String,
+        rankings: List<Ranking>
+    ) {
+        update("ranking-delete-by-ballot-confirmation", ballotConfirmation)
+        rankings.forEach { (candidateName, rank) ->
+            if (rank != null) {
+                update("ranking-insert", ballotConfirmation, electionName, candidateName, rank)
+            }
+        }
     }
 }

@@ -606,14 +606,10 @@ values ((select id from user where name = 'Alice'),
         (select id from election where name = 'Favorite Ice Cream'),
         'afee81f2-21cc-4fab-b630-770a08721686',
         '2021-12-30 03:47:50.768159');
+delete from ranking
+where ballot_id = (select id from ballot where confirmation = 'afee81f2-21cc-4fab-b630-770a08721686');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Alice'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
         (
             select candidate.id
             from candidate
@@ -622,13 +618,7 @@ values ((
               and candidate.name = 'Vanilla'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Alice'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
         (
             select candidate.id
             from candidate
@@ -715,42 +705,10 @@ where user.name = 'Alice' and election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
-delete
-from ranking
-where ranking.ballot_id = (
-    select id
-    from ballot
-    where ballot.user_id = (
-        select id
-        from user
-        where name = 'Alice')
-      and ballot.election_id = (
-        select id
-        from election
-        where name = 'Favorite Ice Cream'));
-delete
-from ballot
-where ballot.user_id = (select id from user where name = 'Alice')
-  and ballot.election_id = (select id from election where name = 'Favorite Ice Cream');
-update int_variable
-set value = 19
-where name = 'last-synced';
-select value
-from int_variable
-where name = 'last-synced';
-insert into ballot (user_id, election_id, confirmation, when_cast)
-values ((select id from user where name = 'Alice'),
-        (select id from election where name = 'Favorite Ice Cream'),
-        'e1c1dfe0-0423-43f2-bfec-430782b04545',
-        '2021-12-30 19:21:10.807202');
+delete from ranking
+where ballot_id = (select id from ballot where confirmation = 'afee81f2-21cc-4fab-b630-770a08721686');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Alice'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
         (
             select candidate.id
             from candidate
@@ -759,13 +717,7 @@ values ((
               and candidate.name = 'Chocolate Chip'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Alice'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
         (
             select candidate.id
             from candidate
@@ -774,13 +726,7 @@ values ((
               and candidate.name = 'Neapolitan'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Alice'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
         (
             select candidate.id
             from candidate
@@ -789,13 +735,7 @@ values ((
               and candidate.name = 'Chocolate'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Alice'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
         (
             select candidate.id
             from candidate
@@ -804,13 +744,7 @@ values ((
               and candidate.name = 'Vanilla'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Alice'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
         (
             select candidate.id
             from candidate
@@ -819,13 +753,7 @@ values ((
               and candidate.name = 'Butter Pecan'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Alice'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
         (
             select candidate.id
             from candidate
@@ -834,7 +762,7 @@ values ((
               and candidate.name = 'Mint'),
         6);
 update int_variable
-set value = 20
+set value = 19
 where name = 'last-synced';
 select role, permission
 from role_permission
@@ -870,7 +798,7 @@ update
 set allow_vote = 0
 where name = 'Favorite Ice Cream';
 update int_variable
-set value = 21
+set value = 20
 where name = 'last-synced';
 select role, permission
 from role_permission
@@ -938,7 +866,7 @@ delete
 from election
 where name = 'Delete Me';
 update int_variable
-set value = 22
+set value = 21
 where name = 'last-synced';
 select role, permission
 from role_permission
@@ -1050,16 +978,12 @@ where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Bob'),
         (select id from election where name = 'Favorite Ice Cream'),
-        '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb',
-        '2022-01-11 22:35:21.90394');
+        'e1c1dfe0-0423-43f2-bfec-430782b04545',
+        '2022-01-10 18:26:27.787505');
+delete from ranking
+where ballot_id = (select id from ballot where confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Bob'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
         (
             select candidate.id
             from candidate
@@ -1068,13 +992,7 @@ values ((
               and candidate.name = 'Chocolate'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Bob'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
         (
             select candidate.id
             from candidate
@@ -1083,13 +1001,7 @@ values ((
               and candidate.name = 'Chocolate Chip'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Bob'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
         (
             select candidate.id
             from candidate
@@ -1098,13 +1010,7 @@ values ((
               and candidate.name = 'Vanilla'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Bob'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
         (
             select candidate.id
             from candidate
@@ -1113,13 +1019,7 @@ values ((
               and candidate.name = 'Mint'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Bob'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
         (
             select candidate.id
             from candidate
@@ -1128,13 +1028,7 @@ values ((
               and candidate.name = 'Butter Pecan'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Bob'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
         (
             select candidate.id
             from candidate
@@ -1143,7 +1037,7 @@ values ((
               and candidate.name = 'Neapolitan'),
         6);
 update int_variable
-set value = 23
+set value = 22
 where name = 'last-synced';
 select name,
        email,
@@ -1184,16 +1078,12 @@ where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Dave'),
         (select id from election where name = 'Favorite Ice Cream'),
-        '44c3906b-a13e-4436-8cd2-1356122f9596',
-        '2022-01-12 05:39:32.078075');
+        '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb',
+        '2022-01-11 22:35:21.90394');
+delete from ranking
+where ballot_id = (select id from ballot where confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Dave'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
         (
             select candidate.id
             from candidate
@@ -1202,13 +1092,7 @@ values ((
               and candidate.name = 'Mint'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Dave'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
         (
             select candidate.id
             from candidate
@@ -1217,13 +1101,7 @@ values ((
               and candidate.name = 'Chocolate Chip'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Dave'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
         (
             select candidate.id
             from candidate
@@ -1232,13 +1110,7 @@ values ((
               and candidate.name = 'Neapolitan'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Dave'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
         (
             select candidate.id
             from candidate
@@ -1247,13 +1119,7 @@ values ((
               and candidate.name = 'Chocolate'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Dave'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
         (
             select candidate.id
             from candidate
@@ -1262,13 +1128,7 @@ values ((
               and candidate.name = 'Vanilla'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((
-            select ballot.id
-            from ballot
-                     inner join user on ballot.user_id = user.id
-                     inner join election on ballot.election_id = election.id
-            where user.name = 'Dave'
-              and election.name = 'Favorite Ice Cream'),
+values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
         (
             select candidate.id
             from candidate
@@ -1277,7 +1137,7 @@ values ((
               and candidate.name = 'Butter Pecan'),
         6);
 update int_variable
-set value = 24
+set value = 23
 where name = 'last-synced';
 select role, permission
 from role_permission

@@ -1,6 +1,5 @@
 package com.seanshubin.condorcet.backend.database
 
-import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.json.JsonMappers
@@ -58,8 +57,8 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
         processEvent(authority, DbEvent.CastBallot(voterName, electionName, rankings))
     }
 
-    override fun rescindBallot(authority: String, voterName: String, electionName: String) {
-        processEvent(authority, DbEvent.RescindBallot(voterName, electionName))
+    override fun setRankings(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
+        processEvent(authority, DbEvent.SetRankings(voterName, electionName, rankings))
     }
 
     private fun processEvent(authority: String, dbEvent: DbEvent) {

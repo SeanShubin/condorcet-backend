@@ -251,10 +251,12 @@ class ServiceImpl(
             )
         }
         val ballotRow = stateDbQueries.searchBallot(voterName, electionName)
-        if (ballotRow != null) {
-            stateDbCommands.rescindBallot(accessToken.userName, voterName, electionName)
+        if (ballotRow == null) {
+            stateDbCommands.castBallot(accessToken.userName, voterName, electionName, rankings)
+        } else {
+            val ballotConfirmation = ballotRow.confirmation
+            stateDbCommands.setRankings(accessToken.userName, electionName, ballotConfirmation, rankings)
         }
-        stateDbCommands.castBallot(accessToken.userName, voterName, electionName, rankings)
     }
 
     override fun listRankings(accessToken: AccessToken, voterName: String, electionName: String): List<Ranking> {
