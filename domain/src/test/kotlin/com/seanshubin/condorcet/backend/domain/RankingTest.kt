@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.domain
 
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.effectiveRankings
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import kotlin.random.Random
 import kotlin.test.Test
@@ -22,7 +23,7 @@ class RankingTest {
         // shuffle builds from end to beginning
         // so grab the e first at 1, leaving: a r
         // then grab the r, now also 1
-        val random = RandomStub(1,1)
+        val random = RandomStub(1, 1)
         val actual = original.voterBiasedOrdering(random)
         assertEquals(expected, actual)
     }
@@ -34,14 +35,43 @@ class RankingTest {
         val cat = Ranking("Cat", null)
         val dog = Ranking("Dog", null)
         val reptile = Ranking("Reptile", null)
-        val allCandidates = listOf("Cat", "Dog", "Fish", "Bird","Reptile")
+        val allCandidates = listOf("Cat", "Dog", "Fish", "Bird", "Reptile")
         val original = listOf(fish, bird)
         val expected = listOf(fish, bird, cat, dog, reptile)
         val actual = original.addMissingCandidates(allCandidates)
         assertEquals(expected, actual)
     }
 
-    class RandomStub(vararg val numbers:Int): Random(){
+    @Test
+    fun effectiveRankings() {
+        val a = Ranking("a", -4)
+        val b = Ranking("b", 9)
+        val c = Ranking("c", 2)
+        val d = Ranking("d", 2)
+        val e = Ranking("e", 3)
+        val f = Ranking("f", null)
+        val g = Ranking("g", 5)
+        val h = Ranking("h", null)
+        val i = Ranking("i", 0)
+        val j = Ranking("j", 2)
+        val input = listOf(a, b, c, d, e, f, g, h, i, j)
+        val actual = input.effectiveRankings()
+        val expected = listOf(
+            Ranking("a", 1),
+            Ranking("b", 6),
+            Ranking("c", 3),
+            Ranking("d", 3),
+            Ranking("e", 4),
+            Ranking("f", 7),
+            Ranking("g", 5),
+            Ranking("h", 7),
+            Ranking("i", 2),
+            Ranking("j", 3)
+        )
+        assertEquals(expected, actual)
+    }
+
+    class RandomStub(vararg val numbers: Int) : Random() {
         var index = 0
         override fun nextBits(bitCount: Int): Int {
             throw UnsupportedOperationException("not implemented")

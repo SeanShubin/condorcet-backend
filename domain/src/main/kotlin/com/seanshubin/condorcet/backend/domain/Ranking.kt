@@ -33,5 +33,17 @@ data class Ranking(val name: String, val rank: Int?) {
             val newRankings = missingCandidates.map { Ranking(it, null)}
             return this + newRankings
         }
+
+        fun List<Ranking>.effectiveRankings():List<Ranking> {
+            val distinctOrderedRanks = this.mapNotNull { it.rank }.distinct().sorted()
+            val normalized =(1..distinctOrderedRanks.size)
+            val newRankMap = distinctOrderedRanks.zip(normalized).toMap()
+            val lastRank = distinctOrderedRanks.size+1
+            val result = map{(name, rank)->
+                val newRank = newRankMap[rank] ?: lastRank
+                Ranking(name, newRank)
+            }
+            return result
+        }
     }
 }

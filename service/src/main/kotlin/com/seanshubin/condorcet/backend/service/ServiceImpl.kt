@@ -7,6 +7,7 @@ import com.seanshubin.condorcet.backend.database.DbElectionUpdates.Companion.toD
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.effectiveRankings
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import com.seanshubin.condorcet.backend.domain.Role.OWNER
 import com.seanshubin.condorcet.backend.domain.Role.UNASSIGNED
@@ -250,12 +251,13 @@ class ServiceImpl(
                 "User '${accessToken.userName}' not allowed to cast a ballot on behalf of voter '$voterName'"
             )
         }
+        val effectiveRankings = rankings.effectiveRankings()
         val ballotRow = stateDbQueries.searchBallot(voterName, electionName)
         if (ballotRow == null) {
-            stateDbCommands.castBallot(accessToken.userName, voterName, electionName, rankings)
+            stateDbCommands.castBallot(accessToken.userName, voterName, electionName, effectiveRankings)
         } else {
             val ballotConfirmation = ballotRow.confirmation
-            stateDbCommands.setRankings(accessToken.userName, electionName, ballotConfirmation, rankings)
+            stateDbCommands.setRankings(accessToken.userName, electionName, ballotConfirmation, effectiveRankings)
         }
     }
 
