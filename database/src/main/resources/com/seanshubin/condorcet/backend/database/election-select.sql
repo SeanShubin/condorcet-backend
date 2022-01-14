@@ -7,3 +7,4 @@ select user.name as owner,
        election.allow_vote
 from election
          inner join user on election.owner_id = user.id
+order by election.name

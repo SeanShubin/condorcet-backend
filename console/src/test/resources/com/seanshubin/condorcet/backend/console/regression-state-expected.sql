@@ -277,7 +277,8 @@ from role_permission
 where role = 'OWNER'
   and permission = 'MANAGE_USERS';
 select name, email, salt, hash, role
-from user;
+from user
+order by name;
 select role, permission
 from role_permission
 where role = 'OWNER'
@@ -487,12 +488,14 @@ from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
 select name, email, salt, hash, role
-from user;
-select user.name name
-from voter
-         inner join user on voter.user_id = user.id
-         inner join election on voter.election_id = election.id
-where election.name = 'Favorite Ice Cream';;
+from user
+order by name;
+select user.name
+from user
+     inner join voter on user.id = voter.user_id
+     inner join election on user.id = voter.user_id
+where election.name = 'Favorite Ice Cream'
+order by user.name;
 select value
 from int_variable
 where name = 'last-synced';
@@ -517,20 +520,22 @@ from user
          inner join role_permission on user.role = role_permission.role
 where permission = 'USE_APPLICATION'
 order by user.name;
-select user.name name
-from voter
-         inner join user on voter.user_id = user.id
-         inner join election on voter.election_id = election.id
-where election.name = 'Favorite Ice Cream';;
+select user.name
+from user
+     inner join voter on user.id = voter.user_id
+     inner join election on user.id = voter.user_id
+where election.name = 'Favorite Ice Cream'
+order by user.name;
 select role, permission
 from role_permission
 where role = 'OWNER'
   and permission = 'USE_APPLICATION';
-select user.name name
-from voter
-         inner join user on voter.user_id = user.id
-         inner join election on voter.election_id = election.id
-where election.name = 'Favorite Ice Cream';;
+select user.name
+from user
+     inner join voter on user.id = voter.user_id
+     inner join election on user.id = voter.user_id
+where election.name = 'Favorite Ice Cream'
+order by user.name;
 select role, permission
 from role_permission
 where role = 'OWNER'
@@ -947,7 +952,8 @@ select user.name as owner,
        election.allow_edit,
        election.allow_vote
 from election
-         inner join user on election.owner_id = user.id;
+         inner join user on election.owner_id = user.id
+order by election.name;
 select role, permission
 from role_permission
 where role = 'OWNER'
