@@ -16,44 +16,44 @@ class ServiceDelegateToLifecycle(
     override fun refresh(refreshToken: RefreshToken): Tokens =
         withService { it.refresh(refreshToken) }
 
-    override fun register(name: String, email: String, password: String): Tokens =
-        withService { it.register(name, email, password) }
+    override fun register(userName: String, email: String, password: String): Tokens =
+        withService { it.register(userName, email, password) }
 
     override fun authenticate(nameOrEmail: String, password: String): Tokens =
         withService { it.authenticate(nameOrEmail, password) }
 
-    override fun setRole(accessToken: AccessToken, name: String, role: Role) {
-        withService { it.setRole(accessToken, name, role) }
+    override fun setRole(accessToken: AccessToken, userName: String, role: Role) {
+        withService { it.setRole(accessToken, userName, role) }
     }
 
-    override fun removeUser(accessToken: AccessToken, name: String) {
-        withService { it.removeUser(accessToken, name) }
+    override fun removeUser(accessToken: AccessToken, userName: String) {
+        withService { it.removeUser(accessToken, userName) }
     }
 
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> =
         withService { it.listUsers(accessToken) }
 
-    override fun addElection(accessToken: AccessToken, name: String) {
-        withService { it.addElection(accessToken, name) }
+    override fun addElection(accessToken: AccessToken, electionName: String) {
+        withService { it.addElection(accessToken, electionName) }
     }
 
-    override fun launchElection(accessToken: AccessToken, name: String, allowEdit: Boolean) {
-        withService { it.launchElection(accessToken, name, allowEdit) }
+    override fun launchElection(accessToken: AccessToken, electionName: String, allowEdit: Boolean) {
+        withService { it.launchElection(accessToken, electionName, allowEdit) }
     }
 
-    override fun finalizeElection(accessToken: AccessToken, name: String) {
-        withService { it.finalizeElection(accessToken, name) }
+    override fun finalizeElection(accessToken: AccessToken, electionName: String) {
+        withService { it.finalizeElection(accessToken, electionName) }
     }
 
-    override fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates) {
-        withService { it.updateElection(accessToken, name, electionUpdates) }
+    override fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates) {
+        withService { it.updateElection(accessToken, electionName, electionUpdates) }
     }
 
-    override fun getElection(accessToken: AccessToken, name: String): ElectionDetail =
-        withService { it.getElection(accessToken, name) }
+    override fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail =
+        withService { it.getElection(accessToken, electionName) }
 
-    override fun deleteElection(accessToken: AccessToken, name: String) {
-        withService { it.deleteElection(accessToken, name) }
+    override fun deleteElection(accessToken: AccessToken, electionName: String) {
+        withService { it.deleteElection(accessToken, electionName) }
     }
 
     override fun listElections(accessToken: AccessToken): List<ElectionSummary> =
@@ -62,11 +62,11 @@ class ServiceDelegateToLifecycle(
     override fun listTables(accessToken: AccessToken): List<String> =
         withService { it.listTables(accessToken) }
 
-    override fun tableData(accessToken: AccessToken, name: String): TableData =
-        withService { it.tableData(accessToken, name) }
+    override fun tableData(accessToken: AccessToken, tableName: String): TableData =
+        withService { it.tableData(accessToken, tableName) }
 
-    override fun debugTableData(accessToken: AccessToken, name: String): TableData =
-        withService { it.debugTableData(accessToken, name) }
+    override fun debugTableData(accessToken: AccessToken, tableName: String): TableData =
+        withService { it.debugTableData(accessToken, tableName) }
 
     override fun eventData(accessToken: AccessToken): TableData =
         withService { it.eventData(accessToken) }

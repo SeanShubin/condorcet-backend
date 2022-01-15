@@ -65,7 +65,7 @@ from event
 where id > 10
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 03:47:50.383046', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"newName":"Favorite Ice Cream","secretBallot":true,"clearNoVotingBefore":false,"noVotingBefore":"2021-02-03T04:55:30Z","clearNoVotingAfter":false,"noVotingAfter":"2022-02-03T04:55:30Z","allowVote":null,"allowEdit":null}}');
+values ('2021-12-30 03:47:50.383046', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream Flavor","updates":{"newElectionName":"Favorite Ice Cream","secretBallot":true,"clearNoVotingBefore":false,"noVotingBefore":"2021-02-03T04:55:30Z","clearNoVotingAfter":false,"noVotingAfter":"2022-02-03T04:55:30Z","allowVote":null,"allowEdit":null}}');
 select id, `when`, authority, type, text
 from event
 where id > 11
@@ -83,13 +83,13 @@ from event
 where id > 13
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 03:47:50.519411', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream","updates":{"newName":null,"secretBallot":null,"clearNoVotingBefore":null,"noVotingBefore":null,"clearNoVotingAfter":null,"noVotingAfter":null,"allowVote":true,"allowEdit":true}}');
+values ('2021-12-30 03:47:50.519411', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream","updates":{"newElectionName":null,"secretBallot":null,"clearNoVotingBefore":null,"noVotingBefore":null,"clearNoVotingAfter":null,"noVotingAfter":null,"allowVote":true,"allowEdit":true}}');
 select id, `when`, authority, type, text
 from event
 where id > 14
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 03:47:50.52543', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"name":"Vanilla","rank":1},{"name":"Chocolate","rank":2}]}');
+values ('2021-12-30 03:47:50.52543', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Vanilla","rank":1},{"candidateName":"Chocolate","rank":2}]}');
 select id, `when`, authority, type, text
 from event
 where id > 15
@@ -107,13 +107,13 @@ from event
 where id > 17
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 18:52:08.756192', 'Alice', 'SetRankings', '{"voterName":"Favorite Ice Cream","electionName":"afee81f2-21cc-4fab-b630-770a08721686","rankings":[{"name":"Chocolate Chip","rank":1},{"name":"Neapolitan","rank":2},{"name":"Chocolate","rank":3},{"name":"Vanilla","rank":4},{"name":"Butter Pecan","rank":5},{"name":"Mint","rank":6}]}');
+values ('2021-12-30 18:52:08.756192', 'Alice', 'SetRankings', '{"voterName":"Favorite Ice Cream","electionName":"afee81f2-21cc-4fab-b630-770a08721686","rankings":[{"candidateName":"Chocolate Chip","rank":1},{"candidateName":"Neapolitan","rank":2},{"candidateName":"Chocolate","rank":3},{"candidateName":"Vanilla","rank":4},{"candidateName":"Butter Pecan","rank":5},{"candidateName":"Mint","rank":6}]}');
 select id, `when`, authority, type, text
 from event
 where id > 18
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 19:21:10.7203', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream","updates":{"newName":null,"secretBallot":null,"clearNoVotingBefore":null,"noVotingBefore":null,"clearNoVotingAfter":null,"noVotingAfter":null,"allowVote":false,"allowEdit":false}}');
+values ('2021-12-30 19:21:10.7203', 'Alice', 'UpdateElection', '{"name":"Favorite Ice Cream","updates":{"newElectionName":null,"secretBallot":null,"clearNoVotingBefore":null,"noVotingBefore":null,"clearNoVotingAfter":null,"noVotingAfter":null,"allowVote":false,"allowEdit":false}}');
 select id, `when`, authority, type, text
 from event
 where id > 19
@@ -128,13 +128,13 @@ select count(id)
 from event;
 select * from event;
 insert into event (`when`, authority, type, text)
-values ('2021-12-30 19:21:10.812729', 'Bob', 'CastBallot', '{"voterName":"Bob","electionName":"Favorite Ice Cream","rankings":[{"name":"Chocolate","rank":1},{"name":"Chocolate Chip","rank":2},{"name":"Vanilla","rank":3},{"name":"Mint","rank":4},{"name":"Butter Pecan","rank":5},{"name":"Neapolitan","rank":6}]}');
+values ('2021-12-30 19:21:10.812729', 'Bob', 'CastBallot', '{"voterName":"Bob","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Chocolate","rank":1},{"candidateName":"Chocolate Chip","rank":2},{"candidateName":"Vanilla","rank":3},{"candidateName":"Mint","rank":4},{"candidateName":"Butter Pecan","rank":5},{"candidateName":"Neapolitan","rank":6}]}');
 select id, `when`, authority, type, text
 from event
 where id > 21
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-01-10 18:26:27.791247', 'Dave', 'CastBallot', '{"voterName":"Dave","electionName":"Favorite Ice Cream","rankings":[{"name":"Mint","rank":1},{"name":"Chocolate Chip","rank":2},{"name":"Neapolitan","rank":3},{"name":"Chocolate","rank":4},{"name":"Vanilla","rank":5},{"name":"Butter Pecan","rank":6}]}');
+values ('2022-01-10 18:26:27.791247', 'Dave', 'CastBallot', '{"voterName":"Dave","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Mint","rank":1},{"candidateName":"Chocolate Chip","rank":2},{"candidateName":"Neapolitan","rank":3},{"candidateName":"Chocolate","rank":4},{"candidateName":"Vanilla","rank":5},{"candidateName":"Butter Pecan","rank":6}]}');
 select id, `when`, authority, type, text
 from event
 where id > 22

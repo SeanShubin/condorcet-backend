@@ -4,7 +4,7 @@ import java.time.Instant
 
 data class ElectionDetail(
     val ownerName: String,
-    val name: String,
+    val electionName: String,
     val candidateCount: Int,
     val voterCount:Int,
     val secretBallot: Boolean = true,

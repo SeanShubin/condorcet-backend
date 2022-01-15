@@ -7,7 +7,7 @@ import com.seanshubin.condorcet.backend.domain.Preference.Companion.toLines
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.prefers
 
 data class Tally(
-    val candidates: List<String>,
+    val candidateNames: List<String>,
     val ballots: List<Ballot>,
     val preferences: List<List<Preference>>,
     val strongestPathMatrix: List<List<Preference>>,
@@ -16,7 +16,7 @@ data class Tally(
 ) {
     fun toLines(): List<String> =
         listOf("candidates") +
-                candidates.map(indent) +
+                candidateNames.map(indent) +
                 listOf("ballots") +
                 ballots.map { it.toString() }.map(indent) +
                 listOf("preferences") +
@@ -41,12 +41,12 @@ data class Tally(
                 val preferences = rawBallots.map { it.rankings }.fold(emptyPreferences, ::accumulateRankings)
                 val strongestPaths = preferences.strongestPaths()
                 val places = strongestPaths.places(candidates)
-                val whoVoted = rawBallots.map { it.user }.sorted()
+                val whoVoted = rawBallots.map { it.userName }.sorted()
                 val rankSortedBallots = rawBallots.sortRankingsByName()
                 val ballots = if (secretBallot) {
                     rankSortedBallots.map { it.makeSecret() }.sortedBy { it.confirmation }
                 } else {
-                    rankSortedBallots.sortedBy { it.user }
+                    rankSortedBallots.sortedBy { it.userName }
                 }
                 return Tally(candidates, ballots, preferences, strongestPaths, places, whoVoted)
             }

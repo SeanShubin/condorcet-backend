@@ -31,9 +31,9 @@ interface ServiceCommand {
         override fun toString(): String = "Refresh"
     }
 
-    data class Register(val name: String, val email: String, val password: String) : ServiceCommand {
+    data class Register(val userName: String, val email: String, val password: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            val tokens = environment.service.register(name, email, password)
+            val tokens = environment.service.register(userName, email, password)
             return tokenResponse(tokens, environment.cipher)
         }
     }
@@ -53,49 +53,49 @@ interface ServiceCommand {
         override fun toString(): String = "Logout"
     }
 
-    data class SetRole(val name: String, val role: Role) : ServiceCommand {
+    data class SetRole(val userName: String, val role: Role) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.setRole(accessToken, name, role)
+                environment.service.setRole(accessToken, userName, role)
                 responseBuilder().build()
             }
     }
 
-    data class RemoveUser(val name: String) : ServiceCommand {
+    data class RemoveUser(val userName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.removeUser(accessToken, name)
+                environment.service.removeUser(accessToken, userName)
                 responseBuilder().build()
             }
     }
 
-    data class AddElection(val name: String) : ServiceCommand {
+    data class AddElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.addElection(accessToken, name)
+                environment.service.addElection(accessToken, electionName)
                 responseBuilder().build()
             }
     }
 
-    data class LaunchElection(val name: String, val allowEdit: Boolean) : ServiceCommand {
+    data class LaunchElection(val electionName: String, val allowEdit: Boolean) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.launchElection(accessToken, name, allowEdit)
+                environment.service.launchElection(accessToken, electionName, allowEdit)
                 responseBuilder().build()
             }
     }
 
-    data class FinalizeElection(val name: String) : ServiceCommand {
+    data class FinalizeElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.finalizeElection(accessToken, name)
+                environment.service.finalizeElection(accessToken, electionName)
                 responseBuilder().build()
             }
     }
 
     data class UpdateElection(
-        val name: String,
-        val newName: String?,
+        val electionName: String,
+        val newElectionName: String?,
         val secretBallot: Boolean?,
         val clearNoVotingBefore: Boolean,
         val noVotingBefore: Instant?,
@@ -105,23 +105,23 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val electionConfig = toElectionConfig()
-                environment.service.updateElection(accessToken, name, electionConfig)
+                environment.service.updateElection(accessToken, electionName, electionConfig)
                 responseBuilder().build()
             }
     }
 
-    data class GetElection(val name: String) : ServiceCommand {
+    data class GetElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val electionAndCanUpdate = environment.service.getElection(accessToken, name)
-                responseBuilder().json(electionAndCanUpdate).build()
+                val election = environment.service.getElection(accessToken, electionName)
+                responseBuilder().json(election).build()
             }
     }
 
-    data class DeleteElection(val name: String) : ServiceCommand {
+    data class DeleteElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.deleteElection(accessToken, name)
+                environment.service.deleteElection(accessToken, electionName)
                 responseBuilder().build()
             }
     }
@@ -130,8 +130,7 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val elections = environment.service.listElections(accessToken)
-                val values = mapOf("elections" to elections)
-                responseBuilder().json(values).build()
+                responseBuilder().json(elections).build()
             }
 
         override fun toString(): String = "ListElections"
@@ -141,8 +140,7 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val users = environment.service.listUsers(accessToken)
-                val value = mapOf("users" to users)
-                responseBuilder().json(value).build()
+                responseBuilder().json(users).build()
             }
 
         override fun toString(): String = "ListUsers"
@@ -152,8 +150,7 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val userCount = environment.service.userCount(accessToken)
-                val value = mapOf("userCount" to userCount)
-                responseBuilder().json(value).build()
+                responseBuilder().json(userCount).build()
             }
 
         override fun toString(): String = "UserCount"
@@ -162,9 +159,8 @@ interface ServiceCommand {
     object ElectionCount : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val userCount = environment.service.electionCount(accessToken)
-                val value = mapOf("electionCount" to userCount)
-                responseBuilder().json(value).build()
+                val electionCount = environment.service.electionCount(accessToken)
+                responseBuilder().json(electionCount).build()
             }
 
         override fun toString(): String = "ElectionCount"
@@ -173,9 +169,8 @@ interface ServiceCommand {
     object TableCount : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val userCount = environment.service.tableCount(accessToken)
-                val value = mapOf("tableCount" to userCount)
-                responseBuilder().json(value).build()
+                val tableCount = environment.service.tableCount(accessToken)
+                responseBuilder().json(tableCount).build()
             }
 
         override fun toString(): String = "TableCount"
@@ -184,9 +179,8 @@ interface ServiceCommand {
     object EventCount : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val userCount = environment.service.eventCount(accessToken)
-                val value = mapOf("eventCount" to userCount)
-                responseBuilder().json(value).build()
+                val eventCount = environment.service.eventCount(accessToken)
+                responseBuilder().json(eventCount).build()
             }
 
         override fun toString(): String = "EventCount"
@@ -196,28 +190,25 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val tables = environment.service.listTables(accessToken)
-                val value = mapOf("tableNames" to tables)
-                responseBuilder().json(value).build()
+                responseBuilder().json(tables).build()
             }
 
         override fun toString(): String = "ListTables"
     }
 
-    data class TableData(val name: String) : ServiceCommand {
+    data class TableData(val tableName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val tableData = environment.service.tableData(accessToken, name)
-                val value = mapOf("table" to tableData)
-                responseBuilder().json(value).build()
+                val tableData = environment.service.tableData(accessToken, tableName)
+                responseBuilder().json(tableData).build()
             }
     }
 
-    data class DebugTableData(val name: String) : ServiceCommand {
+    data class DebugTableData(val tableName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val tableData = environment.service.debugTableData(accessToken, name)
-                val value = mapOf("table" to tableData)
-                responseBuilder().json(value).build()
+                val tableData = environment.service.debugTableData(accessToken, tableName)
+                responseBuilder().json(tableData).build()
             }
     }
 
@@ -225,8 +216,7 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val eventData = environment.service.eventData(accessToken)
-                val value = mapOf("events" to eventData)
-                responseBuilder().json(value).build()
+                responseBuilder().json(eventData).build()
             }
 
         override fun toString(): String = "EventData"
@@ -244,8 +234,7 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val candidateNames = environment.service.listCandidates(accessToken, electionName)
-                val value = mapOf("candidates" to candidateNames)
-                responseBuilder().json(value).build()
+                responseBuilder().json(candidateNames).build()
             }
     }
 
@@ -269,9 +258,8 @@ interface ServiceCommand {
     data class ListRankings(val voterName: String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val elections = environment.service.listRankings(accessToken, voterName, electionName)
-                val values = mapOf("rankings" to elections)
-                responseBuilder().json(values).build()
+                val rankings = environment.service.listRankings(accessToken, voterName, electionName)
+                responseBuilder().json(rankings).build()
             }
     }
 
@@ -294,21 +282,21 @@ interface ServiceCommand {
     data class IsEligible(val userName: String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                val value = environment.service.isEligible(accessToken, userName, electionName)
-                responseBuilder().json(value).build()
+                val isEligible = environment.service.isEligible(accessToken, userName, electionName)
+                responseBuilder().json(isEligible).build()
             }
     }
 
 
-    data class Unsupported(val name: String, val content: String) : ServiceCommand {
+    data class Unsupported(val commandName: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            return responseBuilder().unsupported("Unsupported command '$name'\n$content").build()
+            return responseBuilder().unsupported("Unsupported command '$commandName'\n$content").build()
         }
     }
 
-    data class Malformed(val name: String, val content: String) : ServiceCommand {
+    data class Malformed(val commandName: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            return responseBuilder().unsupported("Malformed body for command '$name'\n$content").build()
+            return responseBuilder().unsupported("Malformed body for command '$commandName'\n$content").build()
         }
     }
 
@@ -404,7 +392,7 @@ interface ServiceCommand {
     companion object {
         fun UpdateElection.toElectionConfig(): ElectionUpdates =
             ElectionUpdates(
-                newName,
+                newElectionName,
                 secretBallot,
                 clearNoVotingBefore,
                 noVotingBefore,
@@ -438,12 +426,12 @@ interface ServiceCommand {
                     "role" to tokens.accessToken.role.name
                 )
             )
-            val value = mapOf(
+            val tokenResponse = mapOf(
                 "accessToken" to accessTokenString,
                 "userName" to tokens.accessToken.userName,
                 "role" to tokens.accessToken.role.name
             )
-            return responseBuilder().refreshToken(refreshTokenString).json(value).build()
+            return responseBuilder().refreshToken(refreshTokenString).json(tokenResponse).build()
         }
 
         private fun responseBuilder(): ResponseBuilder = ResponseBuilder()
@@ -452,7 +440,6 @@ interface ServiceCommand {
             UNAUTHORIZED to 401,
             NOT_FOUND to 404,
             CONFLICT to 409,
-            UNSUPPORTED to 400,
             UNSUPPORTED to 400
         )
 

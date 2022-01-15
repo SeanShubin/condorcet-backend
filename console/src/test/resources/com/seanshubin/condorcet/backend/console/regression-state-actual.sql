@@ -555,14 +555,6 @@ from int_variable
 where name = 'last-synced';
 update
     election
-set no_voting_before = null
-where name = 'Favorite Ice Cream';
-update
-    election
-set no_voting_after = null
-where name = 'Favorite Ice Cream';
-update
-    election
 set allow_edit = 1
 where name = 'Favorite Ice Cream';
 update
@@ -781,14 +773,6 @@ where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
-update
-    election
-set no_voting_before = null
-where name = 'Favorite Ice Cream';
-update
-    election
-set no_voting_after = null
-where name = 'Favorite Ice Cream';
 update
     election
 set allow_edit = 0

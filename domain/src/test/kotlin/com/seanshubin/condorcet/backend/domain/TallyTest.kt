@@ -46,7 +46,7 @@ class TallyTest {
 
         val secretBallot = false
         val tally = Tally.countBallots(secretBallot, candidates, ballots)
-        assertEquals(candidates, tally.candidates)
+        assertEquals(candidates, tally.candidateNames)
         assertEquals(ballots, tally.ballots)
         assertEquals(preferences, tally.preferences)
         assertEquals(strongestPathMatrix, tally.strongestPathMatrix)
@@ -139,7 +139,7 @@ class TallyTest {
 
         val secretBallot = false
         val tally = Tally.countBallots(secretBallot, candidates, ballots)
-        assertEquals(candidates, tally.candidates)
+        assertEquals(candidates, tally.candidateNames)
         assertEquals(ballots, tally.ballots)
         assertEquals(preferences, tally.preferences)
         assertEquals(strongestPathMatrix, tally.strongestPathMatrix)

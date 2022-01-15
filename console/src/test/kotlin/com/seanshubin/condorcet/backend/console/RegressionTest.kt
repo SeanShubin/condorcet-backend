@@ -21,27 +21,27 @@ class RegressionTest {
         // given
         val commands = listOf(
             Register(
-                name = "Alice",
+                userName = "Alice",
                 email = "alice@email.com",
                 password = "alice-password"
             ),
             Register(
-                name = "Bob",
+                userName = "Bob",
                 email = "bob@email.com",
                 password = "bob-password"
             ),
             Register(
-                name = "Carol",
+                userName = "Carol",
                 email = "carol@email.com",
                 password = "carol-password"
             ),
             Register(
-                name = "Dave",
+                userName = "Dave",
                 email = "dave@email.com",
                 password = "dave-password"
             ),
             Register(
-                name = "Eve",
+                userName = "Eve",
                 email = "eve@email.com",
                 password = "eve-password"
             ),
@@ -52,24 +52,24 @@ class RegressionTest {
             ),
             Refresh,
             SetRole(
-                name = "Bob",
+                userName = "Bob",
                 role = Role.USER
             ),
             SetRole(
-                name = "Dave",
+                userName = "Dave",
                 role = Role.USER
             ),
             SetRole(
-                name = "Eve",
+                userName = "Eve",
                 role = Role.USER
             ),
-            RemoveUser(name = "Carol"),
+            RemoveUser(userName = "Carol"),
             ListUsers,
-            AddElection(name = "Delete Me"),
-            AddElection(name = "Favorite Ice Cream Flavor"),
+            AddElection(electionName = "Delete Me"),
+            AddElection(electionName = "Favorite Ice Cream Flavor"),
             UpdateElection(
-                name = "Favorite Ice Cream Flavor",
-                newName = "Favorite Ice Cream",
+                electionName = "Favorite Ice Cream Flavor",
+                newElectionName = "Favorite Ice Cream",
                 secretBallot = true,
                 clearNoVotingBefore = false,
                 noVotingBefore = ZonedDateTime.of(
@@ -100,7 +100,7 @@ class RegressionTest {
                 userName = "Alice"
             ),
             LaunchElection(
-                name="Favorite Ice Cream",
+                electionName="Favorite Ice Cream",
                 allowEdit = true
             ),
             CastBallot(
@@ -135,14 +135,14 @@ class RegressionTest {
                 )
             ),
             FinalizeElection(
-                name="Favorite Ice Cream"
+                electionName="Favorite Ice Cream"
             ),
             ListRankings(
                 voterName = "Alice",
                 electionName = "Favorite Ice Cream"
             ),
-            GetElection(name = "Favorite Ice Cream"),
-            DeleteElection(name = "Delete Me"),
+            GetElection(electionName = "Favorite Ice Cream"),
+            DeleteElection(electionName = "Delete Me"),
             ListElections,
             ListCandidates(
                 electionName = "Favorite Ice Cream"

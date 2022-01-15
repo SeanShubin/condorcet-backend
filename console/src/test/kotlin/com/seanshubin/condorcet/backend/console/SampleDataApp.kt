@@ -103,7 +103,7 @@ object SampleDataApp {
         service.updateElection(
             eveAccessToken, "Favorite Ice Cream Flavor",
             ElectionUpdates(
-                newName = "Favorite Ice Cream",
+                newElectionName = "Favorite Ice Cream",
                 secretBallot = true,
                 clearNoVotingBefore = null,
                 noVotingBefore = ZonedDateTime.of(

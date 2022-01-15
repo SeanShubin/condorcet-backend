@@ -493,7 +493,7 @@ order by name;
 select user.name
 from user
      inner join voter on user.id = voter.user_id
-     inner join election on user.id = voter.user_id
+     inner join election on election.id = voter.election_id
 where election.name = 'Favorite Ice Cream'
 order by user.name;
 select value
@@ -523,7 +523,7 @@ order by user.name;
 select user.name
 from user
      inner join voter on user.id = voter.user_id
-     inner join election on user.id = voter.user_id
+     inner join election on election.id = voter.election_id
 where election.name = 'Favorite Ice Cream'
 order by user.name;
 select role, permission
@@ -533,7 +533,7 @@ where role = 'OWNER'
 select user.name
 from user
      inner join voter on user.id = voter.user_id
-     inner join election on user.id = voter.user_id
+     inner join election on election.id = voter.election_id
 where election.name = 'Favorite Ice Cream'
 order by user.name;
 select role, permission
@@ -553,14 +553,6 @@ where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
-update
-    election
-set no_voting_before = null
-where name = 'Favorite Ice Cream';
-update
-    election
-set no_voting_after = null
-where name = 'Favorite Ice Cream';
 update
     election
 set allow_edit = 1
@@ -781,14 +773,6 @@ where election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
-update
-    election
-set no_voting_before = null
-where name = 'Favorite Ice Cream';
-update
-    election
-set no_voting_after = null
-where name = 'Favorite Ice Cream';
 update
     election
 set allow_edit = 0

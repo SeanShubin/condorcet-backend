@@ -38,8 +38,8 @@ class ServiceImpl(
         return Tokens(refreshToken, accessToken)
     }
 
-    override fun register(name: String, email: String, password: String): Tokens {
-        val validName = validateString(name, "name", Validation.userName)
+    override fun register(userName: String, email: String, password: String): Tokens {
+        val validName = validateString(userName, "name", Validation.userName)
         val validEmail = validateString(email, "email", Validation.email)
         val validPassword = validateString(password, "password", Validation.password)
         failIf(userNameExists(validName), CONFLICT, "User with name '$validName' already exists")
@@ -65,21 +65,21 @@ class ServiceImpl(
         return createTokens(userRow)
     }
 
-    override fun setRole(accessToken: AccessToken, name: String, role: Role) {
-        val userRow = searchUserByName(name)
-        failIf(userRow == null, NOT_FOUND, "User with name '$name' does not exist")
+    override fun setRole(accessToken: AccessToken, userName: String, role: Role) {
+        val userRow = searchUserByName(userName)
+        failIf(userRow == null, NOT_FOUND, "User with name '$userName' does not exist")
         userRow!!
         failUnlessPermission(accessToken, MANAGE_USERS)
         val isChangingSelfRole = isSelf(accessToken, userRow) && accessToken.role != role
         failIf(isChangingSelfRole, UNAUTHORIZED, "Not allowed to change role for self")
         failUnless(roleIsGreater(accessToken, userRow), UNAUTHORIZED, "Must have greater role than target")
         failUnless(roleIsGreater(accessToken, role), UNAUTHORIZED, "Not allowed to set roles greater or equal to self")
-        stateDbCommands.setRole(accessToken.userName, name, role)
+        stateDbCommands.setRole(accessToken.userName, userName, role)
     }
 
-    override fun removeUser(accessToken: AccessToken, name: String) {
-        val userRow = searchUserByName(name)
-        failIf(userRow == null, NOT_FOUND, "User with name '$name' does not exist")
+    override fun removeUser(accessToken: AccessToken, userName: String) {
+        val userRow = searchUserByName(userName)
+        failIf(userRow == null, NOT_FOUND, "User with name '$userName' does not exist")
         userRow!!
         failUnlessPermission(accessToken, MANAGE_USERS)
         failIf(
@@ -87,7 +87,7 @@ class ServiceImpl(
             "Not allowed to remove self unless you are the only user"
         )
         failUnless(roleIsGreater(accessToken, userRow), UNAUTHORIZED, "Must have greater role than target")
-        stateDbCommands.removeUser(accessToken.userName, name)
+        stateDbCommands.removeUser(accessToken.userName, userName)
     }
 
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> {
@@ -102,63 +102,63 @@ class ServiceImpl(
         return list
     }
 
-    override fun addElection(accessToken: AccessToken, name: String) {
-        val validName = validateString(name, "name", Validation.electionName)
+    override fun addElection(accessToken: AccessToken, electionName: String) {
+        val validName = validateString(electionName, "name", Validation.electionName)
         failUnlessPermission(accessToken, USE_APPLICATION)
         failIf(electionNameExists(validName), CONFLICT, "Election with name '$validName' already exists")
         stateDbCommands.addElection(accessToken.userName, accessToken.userName, validName)
     }
 
-    override fun launchElection(accessToken: AccessToken, name: String, allowEdit: Boolean) {
+    override fun launchElection(accessToken: AccessToken, electionName: String, allowEdit: Boolean) {
         failUnlessPermission(accessToken, USE_APPLICATION)
-        failUnlessElectionOwner(accessToken, name)
+        failUnlessElectionOwner(accessToken, electionName)
         val updates = DbElectionUpdates(allowVote = true, allowEdit = allowEdit)
-        stateDbCommands.updateElection(accessToken.userName, name, updates)
+        stateDbCommands.updateElection(accessToken.userName, electionName, updates)
     }
 
-    override fun finalizeElection(accessToken: AccessToken, name: String) {
+    override fun finalizeElection(accessToken: AccessToken, electionName: String) {
         failUnlessPermission(accessToken, USE_APPLICATION)
-        failUnlessElectionOwner(accessToken, name)
+        failUnlessElectionOwner(accessToken, electionName)
         val updates = DbElectionUpdates(allowVote = false, allowEdit = false)
-        stateDbCommands.updateElection(accessToken.userName, name, updates)
+        stateDbCommands.updateElection(accessToken.userName, electionName, updates)
     }
 
     private fun validateElectionUpdates(electionUpdates: ElectionUpdates): DbElectionUpdates {
         val dbElectionUpdates = electionUpdates.toDbElectionUpdates()
-        val newName = dbElectionUpdates.newName ?: return dbElectionUpdates
+        val newName = dbElectionUpdates.newElectionName ?: return dbElectionUpdates
         val validNewName = validateString(newName, "electionUpdates.newName", Validation.electionName)
-        return dbElectionUpdates.copy(newName = validNewName)
+        return dbElectionUpdates.copy(newElectionName = validNewName)
     }
 
-    override fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates) {
+    override fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates) {
         failUnlessPermission(accessToken, USE_APPLICATION)
-        failUnlessElectionOwner(accessToken, name)
+        failUnlessElectionOwner(accessToken, electionName)
         val validElectionUpdates = validateElectionUpdates(electionUpdates)
-        stateDbCommands.updateElection(accessToken.userName, name, validElectionUpdates)
+        stateDbCommands.updateElection(accessToken.userName, electionName, validElectionUpdates)
     }
 
-    override fun getElection(accessToken: AccessToken, name: String): ElectionDetail {
+    override fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail {
         failUnlessPermission(accessToken, USE_APPLICATION)
-        val electionRow = stateDbQueries.searchElectionByName(name)
-        val candidateCount = stateDbQueries.candidateCount(name)
-        val voterCount = stateDbQueries.voterCount(name)
-        failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
+        val electionRow = stateDbQueries.searchElectionByName(electionName)
+        val candidateCount = stateDbQueries.candidateCount(electionName)
+        val voterCount = stateDbQueries.voterCount(electionName)
+        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
         electionRow!!
         val election = electionRow.toDomain(candidateCount, voterCount)
         return election
     }
 
-    override fun deleteElection(accessToken: AccessToken, name: String) {
+    override fun deleteElection(accessToken: AccessToken, electionName: String) {
         failUnlessPermission(accessToken, USE_APPLICATION)
-        val electionRow = stateDbQueries.searchElectionByName(name)
-        failIf(electionRow == null, NOT_FOUND, "Election with name '$name' not found")
+        val electionRow = stateDbQueries.searchElectionByName(electionName)
+        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
         electionRow!!
         failIf(
             accessToken.userName != electionRow.owner,
             UNAUTHORIZED,
-            "User '${accessToken.userName}' is not allowed to delete election '$name' owned by user '${electionRow.owner}'"
+            "User '${accessToken.userName}' is not allowed to delete election '$electionName' owned by user '${electionRow.owner}'"
         )
-        stateDbCommands.deleteElection(accessToken.userName, name)
+        stateDbCommands.deleteElection(accessToken.userName, electionName)
     }
 
     override fun listElections(accessToken: AccessToken): List<ElectionSummary> {
@@ -193,15 +193,15 @@ class ServiceImpl(
         return eventDbQueries.eventCount()
     }
 
-    override fun tableData(accessToken: AccessToken, name: String): TableData {
+    override fun tableData(accessToken: AccessToken, tableName: String): TableData {
         failUnlessPermission(accessToken, VIEW_SECRETS)
-        val genericTable = stateDbQueries.tableData(StateSchema, name)
+        val genericTable = stateDbQueries.tableData(StateSchema, tableName)
         return genericTable.toTableData()
     }
 
-    override fun debugTableData(accessToken: AccessToken, name: String): TableData {
+    override fun debugTableData(accessToken: AccessToken, tableName: String): TableData {
         failUnlessPermission(accessToken, VIEW_SECRETS)
-        val genericTable = stateDbQueries.debugTableData(StateSchema, name)
+        val genericTable = stateDbQueries.debugTableData(StateSchema, tableName)
         return genericTable.toTableData()
     }
 

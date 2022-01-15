@@ -4,7 +4,7 @@ import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import java.time.Instant
 
 data class DbElectionUpdates(
-    val newName: String? = null,
+    val newElectionName: String? = null,
     val secretBallot: Boolean? = null,
     val clearNoVotingBefore: Boolean? = null,
     val noVotingBefore: Instant? = null,
@@ -15,7 +15,7 @@ data class DbElectionUpdates(
 ) {
     companion object {
         fun ElectionUpdates.toDbElectionUpdates(): DbElectionUpdates = DbElectionUpdates(
-            newName = newName,
+            newElectionName = newElectionName,
             secretBallot = secretBallot,
             clearNoVotingBefore = clearNoVotingBefore,
             noVotingBefore = noVotingBefore,

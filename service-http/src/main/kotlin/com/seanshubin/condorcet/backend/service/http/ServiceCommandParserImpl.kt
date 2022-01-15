@@ -63,8 +63,8 @@ class ServiceCommandParserImpl : ServiceCommandParser {
     private fun parseUpdateElection(json: String): ServiceCommand.UpdateElection {
         val map = JsonMappers.parse<Map<String, Any?>>(json)
         return ServiceCommand.UpdateElection(
-            name = map["name"] as String,
-            newName = map["newName"] as String?,
+            electionName = map["electionName"] as String,
+            newElectionName = map["newElectionName"] as String?,
             secretBallot = map["secretBallot"] as Boolean?,
             clearNoVotingBefore = map.containsKey("noVotingBefore") && map["noVotingBefore"] == null,
             noVotingBefore = map["noVotingBefore"].toInstant(),

@@ -5,25 +5,25 @@ import com.seanshubin.condorcet.backend.domain.*
 interface Service {
     fun synchronize()
     fun refresh(refreshToken: RefreshToken): Tokens
-    fun register(name: String, email: String, password: String): Tokens
+    fun register(userName: String, email: String, password: String): Tokens
     fun authenticate(nameOrEmail: String, password: String): Tokens
-    fun setRole(accessToken: AccessToken, name: String, role: Role)
-    fun removeUser(accessToken: AccessToken, name: String)
+    fun setRole(accessToken: AccessToken, userName: String, role: Role)
+    fun removeUser(accessToken: AccessToken, userName: String)
     fun listUsers(accessToken: AccessToken): List<UserNameRole>
-    fun addElection(accessToken: AccessToken, name: String)
-    fun launchElection(accessToken:AccessToken, name:String, allowEdit:Boolean)
-    fun finalizeElection(accessToken:AccessToken, name:String)
-    fun updateElection(accessToken: AccessToken, name: String, electionUpdates: ElectionUpdates)
-    fun getElection(accessToken: AccessToken, name: String): ElectionDetail
-    fun deleteElection(accessToken: AccessToken, name: String)
+    fun addElection(accessToken: AccessToken, electionName: String)
+    fun launchElection(accessToken:AccessToken, electionName:String, allowEdit:Boolean)
+    fun finalizeElection(accessToken:AccessToken, electionName:String)
+    fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates)
+    fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail
+    fun deleteElection(accessToken: AccessToken, electionName: String)
     fun listElections(accessToken: AccessToken): List<ElectionSummary>
     fun listTables(accessToken: AccessToken): List<String>
     fun userCount(accessToken: AccessToken): Int
     fun electionCount(accessToken: AccessToken): Int
     fun tableCount(accessToken: AccessToken): Int
     fun eventCount(accessToken: AccessToken): Int
-    fun tableData(accessToken: AccessToken, name: String): TableData
-    fun debugTableData(accessToken: AccessToken, name: String): TableData
+    fun tableData(accessToken: AccessToken, tableName: String): TableData
+    fun debugTableData(accessToken: AccessToken, tableName: String): TableData
     fun eventData(accessToken: AccessToken): TableData
     fun setCandidates(accessToken: AccessToken, electionName: String, candidateNames: List<String>)
     fun listCandidates(accessToken: AccessToken, electionName: String): List<String>
