@@ -156,7 +156,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
 
     private fun createBallot(ballotSummary: BallotSummary, rankingList: List<RankingRow>): Ballot =
         Ballot(
-            ballotSummary.userName,
+            ballotSummary.voterName,
             ballotSummary.electionName,
             ballotSummary.confirmation,
             ballotSummary.whenCast,

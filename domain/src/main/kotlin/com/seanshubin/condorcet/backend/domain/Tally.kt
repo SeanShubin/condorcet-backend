@@ -42,12 +42,12 @@ data class Tally(
                 val preferences = rawBallots.map { it.rankings }.fold(emptyPreferences, ::accumulateRankings)
                 val strongestPaths = preferences.strongestPaths()
                 val places = strongestPaths.places(candidates)
-                val whoVoted = rawBallots.map { it.userName }.sorted()
+                val whoVoted = rawBallots.map { it.voterName }.sorted()
                 val rankSortedBallots = rawBallots.sortRankingsByName()
                 val ballots = if (secretBallot) {
                     rankSortedBallots.map { it.makeSecret() }.sortedBy { it.confirmation }
                 } else {
-                    rankSortedBallots.sortedBy { it.userName }
+                    rankSortedBallots.sortedBy { it.voterName }
                 }
                 return Tally(candidates, secretBallot, ballots, preferences, strongestPaths, places, whoVoted)
             }

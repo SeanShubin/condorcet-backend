@@ -577,7 +577,7 @@ Content-Type: application/json
   "candidateNames" : [ "Butter Pecan", "Chocolate", "Chocolate Chip", "Mint", "Neapolitan", "Vanilla" ],
   "secretBallot" : true,
   "ballots" : [ {
-    "userName" : "<redacted>",
+    "voterName" : "<redacted>",
     "electionName" : "Favorite Ice Cream",
     "confirmation" : "8c9fd5ac-7f5b-44bf-ab33-4542452dbceb",
     "whenCast" : "2022-01-11T22:35:21.903940Z",
@@ -601,7 +601,7 @@ Content-Type: application/json
       "rank" : 5
     } ]
   }, {
-    "userName" : "<redacted>",
+    "voterName" : "<redacted>",
     "electionName" : "Favorite Ice Cream",
     "confirmation" : "afee81f2-21cc-4fab-b630-770a08721686",
     "whenCast" : "2021-12-30T03:47:50.768159Z",
@@ -625,7 +625,7 @@ Content-Type: application/json
       "rank" : 4
     } ]
   }, {
-    "userName" : "<redacted>",
+    "voterName" : "<redacted>",
     "electionName" : "Favorite Ice Cream",
     "confirmation" : "e1c1dfe0-0423-43f2-bfec-430782b04545",
     "whenCast" : "2022-01-10T18:26:27.787505Z",
@@ -1115,7 +1115,7 @@ Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.
 200
 Content-Type: application/json
 {
-  "userName" : "Alice",
+  "voterName" : "Alice",
   "electionName" : "Favorite Ice Cream",
   "confirmation" : "afee81f2-21cc-4fab-b630-770a08721686",
   "whenCast" : "2021-12-30T03:47:50.768159Z"
