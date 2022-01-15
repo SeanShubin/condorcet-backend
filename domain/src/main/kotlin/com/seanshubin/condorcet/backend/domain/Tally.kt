@@ -8,6 +8,7 @@ import com.seanshubin.condorcet.backend.domain.Ranking.Companion.prefers
 
 data class Tally(
     val candidateNames: List<String>,
+    val secretBallot:Boolean,
     val ballots: List<Ballot>,
     val preferences: List<List<Preference>>,
     val strongestPathMatrix: List<List<Preference>>,
@@ -48,7 +49,7 @@ data class Tally(
                 } else {
                     rankSortedBallots.sortedBy { it.userName }
                 }
-                return Tally(candidates, ballots, preferences, strongestPaths, places, whoVoted)
+                return Tally(candidates, secretBallot, ballots, preferences, strongestPaths, places, whoVoted)
             }
 
             fun createEmptyPreferences(): List<List<Preference>> =

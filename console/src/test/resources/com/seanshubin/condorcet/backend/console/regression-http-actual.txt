@@ -575,6 +575,7 @@ Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.
 Content-Type: application/json
 {
   "candidateNames" : [ "Butter Pecan", "Chocolate", "Chocolate Chip", "Mint", "Neapolitan", "Vanilla" ],
+  "secretBallot" : true,
   "ballots" : [ {
     "userName" : "<redacted>",
     "electionName" : "Favorite Ice Cream",
