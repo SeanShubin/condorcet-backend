@@ -39,4 +39,6 @@ interface StateDbCommands {
     fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>)
 
     fun setRankings(authority: String, electionName:String, ballotConfirmation:String, rankings: List<Ranking>)
+
+    fun updateWhenCast(authority:String, ballotConfirmation: String)
 }

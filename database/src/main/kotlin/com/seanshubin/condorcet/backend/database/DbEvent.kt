@@ -76,6 +76,12 @@ interface DbEvent {
         }
     }
 
+    data class UpdateWhenCast(val ballotConfirmation: String) : DbEvent {
+        override fun exec(authority: String, stateDbCommands: StateDbCommands) {
+            stateDbCommands.updateWhenCast(authority, ballotConfirmation)
+        }
+    }
+
     data class SetRankings(val voterName: String, val electionName: String, val rankings: List<Ranking>) : DbEvent {
         override fun exec(authority: String, stateDbCommands: StateDbCommands) {
             stateDbCommands.setRankings(authority, voterName, electionName, rankings)

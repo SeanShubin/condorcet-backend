@@ -252,12 +252,13 @@ class ServiceImpl(
             )
         }
         val effectiveRankings = rankings.effectiveRankings()
-        val ballotRow = stateDbQueries.searchBallot(voterName, electionName)
-        if (ballotRow == null) {
+        val ballotSummary = stateDbQueries.searchBallot(voterName, electionName)
+        if (ballotSummary == null) {
             stateDbCommands.castBallot(accessToken.userName, voterName, electionName, effectiveRankings)
         } else {
-            val ballotConfirmation = ballotRow.confirmation
+            val ballotConfirmation = ballotSummary.confirmation
             stateDbCommands.setRankings(accessToken.userName, electionName, ballotConfirmation, effectiveRankings)
+            stateDbCommands.updateWhenCast(accessToken.userName, ballotConfirmation)
         }
     }
 

@@ -756,6 +756,15 @@ values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc
 update int_variable
 set value = 19
 where name = 'last-synced';
+select value
+from int_variable
+where name = 'last-synced';
+update ballot
+set when_cast = '2021-12-30 19:21:10.807202'
+where confirmation = 'afee81f2-21cc-4fab-b630-770a08721686';
+update int_variable
+set value = 20
+where name = 'last-synced';
 select role, permission
 from role_permission
 where role = 'OWNER'
@@ -782,7 +791,7 @@ update
 set allow_vote = 0
 where name = 'Favorite Ice Cream';
 update int_variable
-set value = 20
+set value = 21
 where name = 'last-synced';
 select role, permission
 from role_permission
@@ -850,7 +859,7 @@ delete
 from election
 where name = 'Delete Me';
 update int_variable
-set value = 21
+set value = 22
 where name = 'last-synced';
 select role, permission
 from role_permission
@@ -963,7 +972,7 @@ insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Bob'),
         (select id from election where name = 'Favorite Ice Cream'),
         'e1c1dfe0-0423-43f2-bfec-430782b04545',
-        '2022-01-10 18:26:27.787505');
+        '2022-01-11 22:35:21.90394');
 delete from ranking
 where ballot_id = (select id from ballot where confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545');
 insert into ranking (ballot_id, candidate_id, `rank`)
@@ -1021,7 +1030,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423
               and candidate.name = 'Neapolitan'),
         6);
 update int_variable
-set value = 22
+set value = 23
 where name = 'last-synced';
 select name,
        email,
@@ -1063,7 +1072,7 @@ insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Dave'),
         (select id from election where name = 'Favorite Ice Cream'),
         '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb',
-        '2022-01-11 22:35:21.90394');
+        '2022-01-12 05:39:32.078075');
 delete from ranking
 where ballot_id = (select id from ballot where confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb');
 insert into ranking (ballot_id, candidate_id, `rank`)
@@ -1121,7 +1130,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b
               and candidate.name = 'Butter Pecan'),
         6);
 update int_variable
-set value = 23
+set value = 24
 where name = 'last-synced';
 select role, permission
 from role_permission

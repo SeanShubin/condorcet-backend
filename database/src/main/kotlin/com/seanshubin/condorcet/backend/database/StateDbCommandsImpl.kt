@@ -96,6 +96,11 @@ class StateDbCommandsImpl(
         setRankings(authority, electionName, ballotConfirmation, rankings)
     }
 
+    override fun updateWhenCast(authority: String, ballotConfirmation: String) {
+        val now = clock.instant()
+        update("ballot-update-when-cast", now, ballotConfirmation)
+    }
+
     override fun setRankings(
         authority: String,
         electionName: String,
