@@ -1,15 +1,12 @@
 package com.seanshubin.condorcet.backend.database
 
-import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
-import java.time.Clock
+import java.time.Instant
 
 class StateDbCommandsImpl(
-    genericDatabase: GenericDatabase,
-    private val clock: Clock,
-    private val uniqueIdGenerator: UniqueIdGenerator
+    genericDatabase: GenericDatabase
 ) : StateDbCommands, GenericDatabase by genericDatabase {
     override fun setLastSynced(lastSynced: Int) {
         update("variable-update-last-synced", lastSynced)
@@ -89,28 +86,25 @@ class StateDbCommandsImpl(
         }
     }
 
-    override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
-        val now = clock.instant()
-        val ballotConfirmation = uniqueIdGenerator.uniqueId()
-        update("ballot-insert", voterName, electionName, ballotConfirmation, now)
-        setRankings(authority, electionName, ballotConfirmation, rankings)
+    override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>, confirmation:String, now:Instant) {
+        update("ballot-insert", voterName, electionName, confirmation, now)
+        setRankings(authority, confirmation, electionName, rankings)
     }
 
-    override fun updateWhenCast(authority: String, ballotConfirmation: String) {
-        val now = clock.instant()
-        update("ballot-update-when-cast", now, ballotConfirmation)
+    override fun updateWhenCast(authority: String, confirmation: String, now: Instant) {
+        update("ballot-update-when-cast", now, confirmation)
     }
 
     override fun setRankings(
         authority: String,
+        confirmation: String,
         electionName: String,
-        ballotConfirmation: String,
         rankings: List<Ranking>
     ) {
-        update("ranking-delete-by-ballot-confirmation", ballotConfirmation)
+        update("ranking-delete-by-confirmation", confirmation)
         rankings.forEach { (candidateName, rank) ->
             if (rank != null) {
-                update("ranking-insert", ballotConfirmation, electionName, candidateName, rank)
+                update("ranking-insert", confirmation, electionName, candidateName, rank)
             }
         }
     }

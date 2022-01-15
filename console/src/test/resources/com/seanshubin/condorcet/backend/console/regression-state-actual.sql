@@ -597,7 +597,7 @@ insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Alice'),
         (select id from election where name = 'Favorite Ice Cream'),
         'afee81f2-21cc-4fab-b630-770a08721686',
-        '2021-12-30 03:47:50.768159');
+        '2021-12-30 03:47:50.52543');
 delete from ranking
 where ballot_id = (select id from ballot where confirmation = 'afee81f2-21cc-4fab-b630-770a08721686');
 insert into ranking (ballot_id, candidate_id, `rank`)
@@ -760,7 +760,7 @@ select value
 from int_variable
 where name = 'last-synced';
 update ballot
-set when_cast = '2021-12-30 19:21:10.807202'
+set when_cast = '2021-12-30 18:52:08.756192'
 where confirmation = 'afee81f2-21cc-4fab-b630-770a08721686';
 update int_variable
 set value = 20
@@ -972,7 +972,7 @@ insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Bob'),
         (select id from election where name = 'Favorite Ice Cream'),
         'e1c1dfe0-0423-43f2-bfec-430782b04545',
-        '2022-01-11 22:35:21.90394');
+        '2022-01-10 18:26:27.791247');
 delete from ranking
 where ballot_id = (select id from ballot where confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545');
 insert into ranking (ballot_id, candidate_id, `rank`)
@@ -1072,7 +1072,7 @@ insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Dave'),
         (select id from election where name = 'Favorite Ice Cream'),
         '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb',
-        '2022-01-12 05:39:32.078075');
+        '2022-01-12 05:38:01.188406');
 delete from ranking
 where ballot_id = (select id from ballot where confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb');
 insert into ranking (ballot_id, candidate_id, `rank`)

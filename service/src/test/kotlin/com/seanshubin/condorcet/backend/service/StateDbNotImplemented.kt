@@ -5,6 +5,7 @@ import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
 import java.sql.ResultSet
+import java.time.Instant
 
 interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     override fun setLastSynced(lastSynced: Int) {
@@ -178,11 +179,22 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
+    override fun castBallot(
+        authority: String,
+        voterName: String,
+        electionName: String,
+        rankings: List<Ranking>,
+        confirmation: String,
+        now: Instant
+    ) {
         throw UnsupportedOperationException("not implemented")
     }
 
     override fun setRankings(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun updateWhenCast(authority: String, confirmation: String, now: Instant) {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -231,10 +243,6 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     }
 
     override fun listVotersForElection(electionName: String): List<String> {
-        throw UnsupportedOperationException("not implemented")
-    }
-
-    override fun updateWhenCast(authority: String, ballotConfirmation: String) {
         throw UnsupportedOperationException("not implemented")
     }
 }

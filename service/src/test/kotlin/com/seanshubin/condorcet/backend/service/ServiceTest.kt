@@ -78,6 +78,7 @@ class ServiceTest {
 
     class Tester(sample: Sample) {
         val uniqueIdGenerator = UniqueIdGeneratorStub(sample)
+        private val clock = ClockStub()
         private val oneWayHash: OneWayHash = OneWayHashStub(sample)
         private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
         private val eventDbFake = EventDbFake()
@@ -90,7 +91,9 @@ class ServiceTest {
             stateDbFake,
             stateDbFake,
             synchronizer,
-            random
+            random,
+            clock,
+            uniqueIdGenerator
         )
     }
 }

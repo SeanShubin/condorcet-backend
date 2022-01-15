@@ -2,6 +2,7 @@ package com.seanshubin.condorcet.backend.service
 
 import arrow.core.Either
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
+import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.database.DbElectionUpdates.Companion.toDbElectionUpdates
 import com.seanshubin.condorcet.backend.domain.*
@@ -16,6 +17,7 @@ import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.ex
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
 import com.seanshubin.condorcet.backend.service.DataTransfer.toDomain
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
+import java.time.Clock
 import kotlin.random.Random
 
 class ServiceImpl(
@@ -24,7 +26,9 @@ class ServiceImpl(
     private val stateDbQueries: StateDbQueries,
     private val stateDbCommands: StateDbCommands,
     private val synchronizer: Synchronizer,
-    private val random: Random
+    private val random: Random,
+    private val clock: Clock,
+    private val uniqueIdGenerator: UniqueIdGenerator
 ) : Service {
     override fun synchronize() {
         synchronizer.synchronize()
@@ -253,12 +257,20 @@ class ServiceImpl(
         }
         val effectiveRankings = rankings.effectiveRankings()
         val ballotSummary = stateDbQueries.searchBallot(voterName, electionName)
+        val now = clock.instant()
         if (ballotSummary == null) {
-            stateDbCommands.castBallot(accessToken.userName, voterName, electionName, effectiveRankings)
+            val confirmation = uniqueIdGenerator.uniqueId()
+            stateDbCommands.castBallot(
+                accessToken.userName,
+                voterName,
+                electionName,
+                effectiveRankings,
+                confirmation,
+                now)
         } else {
-            val ballotConfirmation = ballotSummary.confirmation
-            stateDbCommands.setRankings(accessToken.userName, electionName, ballotConfirmation, effectiveRankings)
-            stateDbCommands.updateWhenCast(accessToken.userName, ballotConfirmation)
+            val confirmation = ballotSummary.confirmation
+            stateDbCommands.setRankings(accessToken.userName, confirmation, electionName, effectiveRankings)
+            stateDbCommands.updateWhenCast(accessToken.userName, confirmation, now)
         }
     }
 

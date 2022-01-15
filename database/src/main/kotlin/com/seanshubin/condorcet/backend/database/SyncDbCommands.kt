@@ -3,6 +3,7 @@ package com.seanshubin.condorcet.backend.database
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.json.JsonMappers
+import java.time.Instant
 
 class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbCommands {
     override fun setLastSynced(lastSynced: Int) {
@@ -53,16 +54,16 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
         processEvent(authority, DbEvent.RemoveVoters(electionName, voterNames))
     }
 
-    override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
-        processEvent(authority, DbEvent.CastBallot(voterName, electionName, rankings))
+    override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>, confirmation:String, now:Instant) {
+        processEvent(authority, DbEvent.CastBallot(voterName, electionName, rankings, confirmation, now))
     }
 
-    override fun updateWhenCast(authority: String, ballotConfirmation: String) {
-        processEvent(authority, DbEvent.UpdateWhenCast(ballotConfirmation))
+    override fun updateWhenCast(authority: String, confirmation: String, now: Instant) {
+        processEvent(authority, DbEvent.UpdateWhenCast(confirmation, now))
     }
 
-    override fun setRankings(authority: String, voterName: String, electionName: String, rankings: List<Ranking>) {
-        processEvent(authority, DbEvent.SetRankings(voterName, electionName, rankings))
+    override fun setRankings(authority: String, confirmation: String, electionName: String, rankings: List<Ranking>) {
+        processEvent(authority, DbEvent.SetRankings(confirmation, electionName, rankings))
     }
 
     private fun processEvent(authority: String, dbEvent: DbEvent) {

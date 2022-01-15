@@ -1,8 +1,8 @@
 package com.seanshubin.condorcet.backend.database
 
-import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
+import java.time.Instant
 
 interface StateDbCommands {
     fun setLastSynced(lastSynced: Int)
@@ -36,9 +36,9 @@ interface StateDbCommands {
 
     fun removeVoters(authority: String, electionName: String, voterNames: List<String>)
 
-    fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>)
+    fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>, confirmation:String, now: Instant)
 
-    fun setRankings(authority: String, electionName:String, ballotConfirmation:String, rankings: List<Ranking>)
+    fun setRankings(authority: String, confirmation:String, electionName:String, rankings: List<Ranking>)
 
-    fun updateWhenCast(authority:String, ballotConfirmation: String)
+    fun updateWhenCast(authority:String, confirmation: String, now:Instant)
 }

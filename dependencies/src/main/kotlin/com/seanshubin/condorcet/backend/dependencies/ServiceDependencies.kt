@@ -32,11 +32,7 @@ class ServiceDependencies(
         queryLoader
     )
     private val clock: Clock = integration.clock
-    private val stateDbCommands: StateDbCommands = StateDbCommandsImpl(
-        stateGenericDatabase,
-        clock,
-        uniqueIdGenerator
-    )
+    private val stateDbCommands: StateDbCommands = StateDbCommandsImpl(stateGenericDatabase)
     private val dbEventParser: DbEventParser = DbEventParserImpl()
     private val stateDbQueries: StateDbQueries = StateDbQueriesImpl(stateGenericDatabase)
     private val synchronizer: Synchronizer = SynchronizerImpl(
@@ -57,6 +53,8 @@ class ServiceDependencies(
         stateDbQueries,
         syncDbCommands,
         synchronizer,
-        random
+        random,
+        clock,
+        uniqueIdGenerator
     )
 }
