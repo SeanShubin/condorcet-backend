@@ -271,6 +271,14 @@ interface ServiceCommand {
             }
     }
 
+    data class GetBallot(val voterName:String, val electionName: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                val ballot = environment.service.getBallot(accessToken, voterName, electionName)
+                responseBuilder().json(ballot).build()
+            }
+    }
+
     data class ListEligibility(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->

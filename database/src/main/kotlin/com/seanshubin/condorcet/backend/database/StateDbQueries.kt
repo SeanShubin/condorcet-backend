@@ -1,9 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
-import com.seanshubin.condorcet.backend.domain.Ballot
-import com.seanshubin.condorcet.backend.domain.Permission
-import com.seanshubin.condorcet.backend.domain.Ranking
-import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 
 interface StateDbQueries : GenericDatabase {
@@ -23,7 +20,7 @@ interface StateDbQueries : GenericDatabase {
     fun listCandidates(electionName: String): List<String>
     fun listRankings(voterName: String, electionName: String): List<Ranking>
     fun listRankings(electionName: String): List<VoterElectionRankingRow>
-    fun searchBallot(voterName: String, electionName: String): BallotRow?
+    fun searchBallot(voterName: String, electionName: String): BallotSummary?
     fun listBallots(electionName: String): List<Ballot>
     fun listVoterNames():List<String>
     fun listVotersForElection(electionName:String):List<String>

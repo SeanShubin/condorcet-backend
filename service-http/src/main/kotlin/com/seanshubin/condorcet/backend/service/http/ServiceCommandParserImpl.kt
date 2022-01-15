@@ -47,6 +47,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "SetEligibleVoters" -> JsonMappers.parse<ServiceCommand.SetEligibleVoters>(json)
             "ListEligibility" -> JsonMappers.parse<ServiceCommand.ListEligibility>(json)
             "IsEligible" -> JsonMappers.parse<ServiceCommand.IsEligible>(json)
+            "GetBallot" -> JsonMappers.parse<ServiceCommand.GetBallot>(json)
             else -> ServiceCommand.Unsupported(name, json)
         }
     }

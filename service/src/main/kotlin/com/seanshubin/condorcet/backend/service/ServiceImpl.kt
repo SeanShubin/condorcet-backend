@@ -310,6 +310,12 @@ class ServiceImpl(
         }
     }
 
+    override fun getBallot(accessToken: AccessToken, voterName: String, electionName: String): BallotSummary? {
+        failUnlessPermission(accessToken, USE_APPLICATION)
+        val ballotSummary = stateDbQueries.searchBallot(voterName, electionName)
+        return ballotSummary
+    }
+
     override fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean {
         failUnlessPermission(accessToken, USE_APPLICATION)
         val eligibleVoters = stateDbQueries.listVotersForElection(electionName)

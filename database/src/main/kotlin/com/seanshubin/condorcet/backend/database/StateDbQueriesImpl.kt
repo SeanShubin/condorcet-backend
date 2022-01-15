@@ -1,9 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
-import com.seanshubin.condorcet.backend.domain.Ballot
-import com.seanshubin.condorcet.backend.domain.Permission
-import com.seanshubin.condorcet.backend.domain.Ranking
-import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.sql.ResultSet
 import java.time.Instant
@@ -67,7 +64,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun listRankings(voterName: String, electionName: String): List<Ranking> =
         query(::createRanking, "ranking-select-by-user-election", voterName, electionName)
 
-    override fun searchBallot(voterName: String, electionName: String): BallotRow? {
+    override fun searchBallot(voterName: String, electionName: String): BallotSummary? {
         return queryZeroOrOneRow(this::createBallot, "ballot-select-by-user-election", voterName, electionName)
     }
 
@@ -76,7 +73,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
 
     override fun listBallots(electionName: String): List<Ballot> =
         queryJoin(
-            ::createBallotRow,
+            ::createBallotSummary,
             ::createRankingRow,
             ::createBallotRankingKey,
             ::createBallot,
@@ -115,12 +112,12 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         )
     }
 
-    private fun createBallot(resultSet: ResultSet): BallotRow {
+    private fun createBallot(resultSet: ResultSet): BallotSummary {
         val userName:String = resultSet.getString("user_name")
         val electionName:String = resultSet.getString("election_name")
         val confirmation:String = resultSet.getString("confirmation")
         val whenCast: Instant = resultSet.getTimestamp("when_cast").toInstant()
-        return BallotRow(userName, electionName, confirmation, whenCast)
+        return BallotSummary(userName, electionName, confirmation, whenCast)
     }
 
     private fun createName(resultSet: ResultSet): String =
@@ -140,8 +137,8 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
             resultSet.getInt("rank")
         )
 
-    private fun createBallotRow(resultSet: ResultSet): BallotRow =
-        BallotRow(
+    private fun createBallotSummary(resultSet: ResultSet): BallotSummary =
+        BallotSummary(
             resultSet.getString("user"),
             resultSet.getString("election"),
             resultSet.getString("confirmation"),
@@ -157,11 +154,11 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     private fun createBallotRankingKey(resultSet: ResultSet): Int =
         resultSet.getInt("ballot.id")
 
-    private fun createBallot(ballot: BallotRow, rankingList: List<RankingRow>): Ballot =
+    private fun createBallot(ballotSummary: BallotSummary, rankingList: List<RankingRow>): Ballot =
         Ballot(
-            ballot.user,
-            ballot.election,
-            ballot.confirmation,
-            ballot.whenCast,
+            ballotSummary.userName,
+            ballotSummary.electionName,
+            ballotSummary.confirmation,
+            ballotSummary.whenCast,
             rankingList.map { Ranking(it.candidate, it.rank) })
 }

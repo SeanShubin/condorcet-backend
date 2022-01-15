@@ -1105,3 +1105,19 @@ Content-Type: application/json
   "whoVoted" : [ "Alice", "Bob", "Dave" ]
 }
 
+/GetBallot
+{
+  "voterName" : "Alice",
+  "electionName" : "Favorite Ice Cream"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiRGF2ZSJ9.VxJu7jXQSM_8c2_k32YEEV24cTYp4fpYM2tH25XZvRFrBF8HeNRZCA0Yn2rJsbv3PKYrqoKgZmXxCWqk4uI1_l371MurA7OpwC6LbEAyWBTSiV-Ac6qPQkn7Uroz1q4gKM2YX0XvsobEPJC101NGHt0iRl6ZkB1-4zTo8Zhf51c
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmUifQ.cBY2ntXT5xAmYHEqTgBfmworW40vzpldRD6cCfeLkaEeNk43LShdOmJ1JN6_L9ZjYVT5Cih097vWFPmWJLL4XCfWv3VV8yy_Yr-IoeSTzgHXfoEQYEF_dUeBfhydL3VFHZmZHcF408R8kK1DA2kmwPmhbchS1JSMRugB69udo2s
+200
+Content-Type: application/json
+{
+  "userName" : "Alice",
+  "electionName" : "Favorite Ice Cream",
+  "confirmation" : "afee81f2-21cc-4fab-b630-770a08721686",
+  "whenCast" : "2021-12-30T03:47:50.768159Z"
+}
+

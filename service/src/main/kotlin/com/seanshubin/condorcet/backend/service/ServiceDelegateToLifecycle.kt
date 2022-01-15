@@ -115,6 +115,9 @@ class ServiceDelegateToLifecycle(
     override fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean =
         withService { it.isEligible(accessToken, userName, electionName) }
 
+    override fun getBallot(accessToken: AccessToken, voterName: String, electionName: String): BallotSummary? =
+        withService { it.getBallot(accessToken, voterName, electionName) }
+
     private fun <T> withService(f: (Service) -> T): T =
         eventConnectionLifecycle.withValue { eventConnection ->
             stateConnectionLifecycle.withValue { stateConnection ->
