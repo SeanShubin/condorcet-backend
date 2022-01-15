@@ -155,7 +155,7 @@ class TallyTest {
         clockStub: ClockStub
     ): (Int, Array<out String>) -> List<Ballot> {
         fun createRankings(quantity: Int, vararg candidates: String): List<Ballot> {
-            val rankings = candidates.mapIndexed { index, candidate -> Ranking(candidate, index + 1) }
+            val rankings = candidates.mapIndexed { index, candidate -> Ranking(candidate, index + 1) }.sortedBy { it.candidateName }
             return (1..quantity).map {
                 val user = userRepository.newUser()
                 val election = "some election"
@@ -186,12 +186,12 @@ class TallyTest {
 
     class UserRepository {
         var index = 0
-        fun newUser(): String = "user-${++index}"
+        fun newUser(): String = "user-%02d".format(++index)
     }
 
     class ConfirmationRepository {
         var index = 0
-        fun newConfirmation(): String = "confirmation-${++index}"
+        fun newConfirmation(): String = "confirmation-%02d".format(++index)
     }
 
     class ClockStub : Clock() {
