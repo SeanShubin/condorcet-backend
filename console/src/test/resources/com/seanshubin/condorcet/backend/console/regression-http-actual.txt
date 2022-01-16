@@ -169,15 +169,15 @@ Content-Type: application/json
 }, {
   "userName" : "Bob",
   "role" : "USER",
-  "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  "allowedRoles" : [ "UNASSIGNED", "OBSERVER", "USER", "ADMIN", "AUDITOR", "OWNER" ]
 }, {
   "userName" : "Dave",
   "role" : "USER",
-  "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  "allowedRoles" : [ "UNASSIGNED", "OBSERVER", "USER", "ADMIN", "AUDITOR", "OWNER" ]
 }, {
   "userName" : "Eve",
   "role" : "USER",
-  "allowedRoles" : [ "AUDITOR", "ADMIN", "USER", "OBSERVER", "UNASSIGNED" ]
+  "allowedRoles" : [ "UNASSIGNED", "OBSERVER", "USER", "ADMIN", "AUDITOR", "OWNER" ]
 } ]
 
 /AddElection

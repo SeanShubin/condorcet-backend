@@ -1,6 +1,8 @@
 package com.seanshubin.condorcet.backend.service
 
 import arrow.core.Either
+import arrow.core.Either.Left
+import arrow.core.Either.Right
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
@@ -16,6 +18,7 @@ import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
 import com.seanshubin.condorcet.backend.service.DataTransfer.toDomain
+import com.seanshubin.condorcet.backend.service.ServiceException.Category
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import java.time.Clock
 import kotlin.random.Random
@@ -74,14 +77,11 @@ class ServiceImpl(
     }
 
     override fun setRole(accessToken: AccessToken, userName: String, role: Role) {
-        val userRow = searchUserByName(userName)
-        failIf(userRow == null, NOT_FOUND, "User with name '$userName' does not exist")
-        userRow!!
-        failUnlessPermission(accessToken, MANAGE_USERS)
-        val isChangingSelfRole = isSelf(accessToken, userRow) && accessToken.role != role
-        failIf(isChangingSelfRole, UNAUTHORIZED, "Not allowed to change role for self")
-        failUnless(roleIsGreater(accessToken, userRow), UNAUTHORIZED, "Must have greater role than target")
-        failUnless(roleIsGreater(accessToken, role), UNAUTHORIZED, "Not allowed to set roles greater or equal to self")
+        val self = findUserRolePermissions(accessToken.userName)
+        val targetUser = findUser(userName)
+        val userRole = UserRole(targetUser.name, targetUser.role)
+        val canChangeRole = self.canChangeRole(userRole, role)
+        requireEitherRight(UNAUTHORIZED, canChangeRole)
         stateDbCommands.setRole(accessToken.userName, userName, role)
     }
 
@@ -100,11 +100,11 @@ class ServiceImpl(
 
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> {
         failUnlessPermission(accessToken, MANAGE_USERS)
+        val self = findUserRolePermissions(accessToken.userName)
         val userRows = stateDbQueries.listUsers()
         val list = userRows.map { row ->
-            val allowedRoles = Role.values().filter {
-                allowedToChangeRoleTo(accessToken, row, it)
-            }
+            val userRole = UserRole(row.name, row.role)
+            val allowedRoles = self.listedRolesFor(userRole)
             UserNameRole(row.name, row.role, allowedRoles)
         }
         return list
@@ -339,6 +339,14 @@ class ServiceImpl(
         return eligibleVoters.contains(userName)
     }
 
+    private fun findUserRolePermissions(userName:String):UserRolePermissions {
+        val user =  findUser(userName)
+        val permissions = permissionsForRole(user.role)
+        return UserRolePermissions(userName, user.role, permissions)
+    }
+    private fun findUser(userName:String):UserRow {
+        return stateDbQueries.findUserByName(userName)
+    }
     private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
     private fun userEmailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
     private fun electionNameExists(name: String): Boolean = stateDbQueries.searchElectionByName(name) != null
@@ -346,7 +354,7 @@ class ServiceImpl(
         roleIsGreater(accessToken.role, userRow.role)
 
     private fun roleIsGreater(accessToken: AccessToken, role: Role): Boolean = roleIsGreater(accessToken.role, role)
-    private fun roleIsGreater(first: Role, second: Role): Boolean = first.ordinal < second.ordinal
+    private fun roleIsGreater(first: Role, second: Role): Boolean = first.ordinal > second.ordinal
     private fun hasPermission(role: Role, permission: Permission): Boolean =
         stateDbQueries.roleHasPermission(role, permission)
 
@@ -373,15 +381,6 @@ class ServiceImpl(
             "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permission"
         )
 
-    }
-
-    private fun allowedToChangeRoleTo(accessToken: AccessToken, userRow: UserRow, role: Role): Boolean {
-        if (userRow.role == role) return true
-        if (!hasPermission(accessToken, MANAGE_USERS)) return false
-        if (isSelf(accessToken, userRow)) return false
-        if (!roleIsGreater(accessToken, userRow)) return false
-        if (!roleIsGreater(accessToken, role)) return false
-        return true
     }
 
     private fun searchUserByName(name: String): UserRow? = stateDbQueries.searchUserByName(name)
@@ -439,6 +438,13 @@ class ServiceImpl(
         if (invalidNames.isNotEmpty()) {
             val invalidNamesString = invalidNames.joinToString("', '", "'", "'")
             fail(UNSUPPORTED, "The following are not valid user names: $invalidNamesString")
+        }
+    }
+
+    private fun <T> requireEitherRight(category: Category, either:Either<String, T>):T{
+        when (either){
+            is Left -> fail(category, either.value)
+            is Right -> return either.value
         }
     }
 }
