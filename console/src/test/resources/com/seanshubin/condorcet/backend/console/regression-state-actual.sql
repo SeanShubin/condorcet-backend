@@ -38,6 +38,9 @@ select name,
        role
 from user
 where name = 'Alice';
+select permission
+from role_permission
+where role = 'OWNER';
 select name,
        email,
        salt,
@@ -73,6 +76,9 @@ select name,
        role
 from user
 where name = 'Bob';
+select permission
+from role_permission
+where role = 'UNASSIGNED';
 select name,
        email,
        salt,
@@ -108,6 +114,9 @@ select name,
        role
 from user
 where name = 'Carol';
+select permission
+from role_permission
+where role = 'UNASSIGNED';
 select name,
        email,
        salt,
@@ -143,6 +152,9 @@ select name,
        role
 from user
 where name = 'Dave';
+select permission
+from role_permission
+where role = 'UNASSIGNED';
 select name,
        email,
        salt,
@@ -178,6 +190,9 @@ select name,
        role
 from user
 where name = 'Eve';
+select permission
+from role_permission
+where role = 'UNASSIGNED';
 select name,
        email,
        salt,
@@ -185,6 +200,9 @@ select name,
        role
 from user
 where name = 'Alice';
+select permission
+from role_permission
+where role = 'OWNER';
 select name,
        email,
        salt,
@@ -192,6 +210,9 @@ select name,
        role
 from user
 where name = 'Alice';
+select permission
+from role_permission
+where role = 'OWNER';
 select name,
        email,
        salt,
@@ -939,6 +960,9 @@ select name,
        role
 from user
 where name = 'Bob';
+select permission
+from role_permission
+where role = 'USER';
 select role, permission
 from role_permission
 where role = 'USER'
@@ -1039,6 +1063,9 @@ select name,
        role
 from user
 where name = 'Dave';
+select permission
+from role_permission
+where role = 'USER';
 select role, permission
 from role_permission
 where role = 'USER'

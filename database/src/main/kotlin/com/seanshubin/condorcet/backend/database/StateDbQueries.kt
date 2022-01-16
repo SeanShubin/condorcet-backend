@@ -25,4 +25,5 @@ interface StateDbQueries : GenericDatabase {
     fun listVoterNames():List<String>
     fun listVotersForElection(electionName:String):List<String>
     fun listUserNames():List<String>
+    fun listPermissions(role:Role):List<Permission>
 }

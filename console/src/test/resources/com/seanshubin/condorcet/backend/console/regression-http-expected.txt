@@ -10,7 +10,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWN
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
   "userName" : "Alice",
-  "role" : "OWNER"
+  "role" : "OWNER",
+  "permissions" : [ "TRANSFER_OWNER", "VIEW_SECRETS", "MANAGE_USERS", "USE_APPLICATION", "VIEW_APPLICATION" ]
 }
 
 /Register
@@ -27,7 +28,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQm9iIn0.UyaLZsnsO1LxIg_BBVehcBfQQZu6sxgq_tOS8XaMAbAzuiK9vle2xcZ0qoUGL5ricCpNlvoxt6issD_y8ucetWEMWVkq5cBEPMv8cAjSg9qHhgdlSmfis4mqrBxu1sn-8LWrvKKPeNrGtmYq_cklIYzGYGjah3057lGRY9xOlaw",
   "userName" : "Bob",
-  "role" : "UNASSIGNED"
+  "role" : "UNASSIGNED",
+  "permissions" : [ ]
 }
 
 /Register
@@ -44,7 +46,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkNhcm9
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiQ2Fyb2wifQ.flyBEGdpBWecOSTY0t-EXp48wtDxiy5R1_QGT0ZD-k7TcXvciVE0vios2XiqsfZ8ejMicLwR7iiRuOTUlOeExI1YKfeLhK-OoGvf0po9WfCxrRwWMa9EN8YRKc5zokLGnidjqlS8tc5wDMqUCMvDta6kFDS5u-n_ZWFgfa5yB4c",
   "userName" : "Carol",
-  "role" : "UNASSIGNED"
+  "role" : "UNASSIGNED",
+  "permissions" : [ ]
 }
 
 /Register
@@ -61,7 +64,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmU
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRGF2ZSJ9.FYdxZ9GbsR9HbB5pxD1eV4aFVVMH34_7hBSoNQ8HAIPe98fvpdKYK-Mi2borTpD9dzz9W15cPHA0dPR-EuKjV0jpt3Z8bjBa0-EXHj-nyg6X67ksisBPLK4mt77r3VqIIg8CyD5jHOeOsqh_ztjlGayrzA7ady6P0or1A641fy0",
   "userName" : "Dave",
-  "role" : "UNASSIGNED"
+  "role" : "UNASSIGNED",
+  "permissions" : [ ]
 }
 
 /Register
@@ -78,7 +82,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkV2ZSJ
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVU5BU1NJR05FRCIsInVzZXJOYW1lIjoiRXZlIn0.HX7SrmlWRHaTUiiXxnQgN7-97J1PhUO4DFYEramw8OItMqrTbADoVpHPxlaUq-IpLa965qKux3GToXt4wtxRW9CCTCHgjnt5UHc6ENaMGzejCRGfW1JA1H0auqCOfji8ht_mdvRHsl-bBq5vVeIC2W19Lmog1xkn1bWP0UFZFnk",
   "userName" : "Eve",
-  "role" : "UNASSIGNED"
+  "role" : "UNASSIGNED",
+  "permissions" : [ ]
 }
 
 /Logout
@@ -100,7 +105,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWN
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
   "userName" : "Alice",
-  "role" : "OWNER"
+  "role" : "OWNER",
+  "permissions" : [ "TRANSFER_OWNER", "VIEW_SECRETS", "MANAGE_USERS", "USE_APPLICATION", "VIEW_APPLICATION" ]
 }
 
 /Refresh
@@ -112,7 +118,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWN
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJ1c2VyTmFtZSI6IkFsaWNlIn0.Y_1bjGnsxpXABD6x8OnXYoiCVkTOXsLrbJQRMJ-SkeaitfU12uedqtJtS7RTLWNljzGBoHgjpRA0hFCZ2_GgNfKKq6ZTnTQyHdoC_vQblSabfM8ZiU1z8zXG9tOHDwnJ7OL9zBreGxinsKClcfBNlYIn1KC2R3CbkDxICrR_DcA",
   "userName" : "Alice",
-  "role" : "OWNER"
+  "role" : "OWNER",
+  "permissions" : [ "TRANSFER_OWNER", "VIEW_SECRETS", "MANAGE_USERS", "USE_APPLICATION", "VIEW_APPLICATION" ]
 }
 
 /SetRole
@@ -490,7 +497,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkJvYiJ
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiQm9iIn0.UOTkG6oD54FgGPmT__N483ONWaW80miGWGDgWUY16wQDvz7MjEg2k25Lu9g1KTRj6YICNki5tkKju5QHWBgIE7tRquDDRt4NaTAaZvvabKj0tVmzbAYOZ6OCQCKEyAnAxxlDeRXLhZcKZuc2fjo3Hf6IBLLOxx3gzR_UmCmu0H4",
   "userName" : "Bob",
-  "role" : "USER"
+  "role" : "USER",
+  "permissions" : [ "USE_APPLICATION", "VIEW_APPLICATION" ]
 }
 
 /CastBallot
@@ -534,7 +542,8 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkRhdmU
 {
   "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInVzZXJOYW1lIjoiRGF2ZSJ9.VxJu7jXQSM_8c2_k32YEEV24cTYp4fpYM2tH25XZvRFrBF8HeNRZCA0Yn2rJsbv3PKYrqoKgZmXxCWqk4uI1_l371MurA7OpwC6LbEAyWBTSiV-Ac6qPQkn7Uroz1q4gKM2YX0XvsobEPJC101NGHt0iRl6ZkB1-4zTo8Zhf51c",
   "userName" : "Dave",
-  "role" : "USER"
+  "role" : "USER",
+  "permissions" : [ "USE_APPLICATION", "VIEW_APPLICATION" ]
 }
 
 /CastBallot

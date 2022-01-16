@@ -22,6 +22,9 @@ class ServiceDelegateToLifecycle(
     override fun authenticate(nameOrEmail: String, password: String): Tokens =
         withService { it.authenticate(nameOrEmail, password) }
 
+    override fun permissionsForRole(role: Role): List<Permission> =
+        withService { it.permissionsForRole(role) }
+
     override fun setRole(accessToken: AccessToken, userName: String, role: Role) {
         withService { it.setRole(accessToken, userName, role) }
     }

@@ -2,6 +2,7 @@ package com.seanshubin.condorcet.backend.service.http
 
 import com.auth0.jwt.exceptions.JWTDecodeException
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
+import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.http.*
@@ -24,7 +25,8 @@ interface ServiceCommand {
                 responseBuilder().unauthorized("No valid refresh token").build()
             } else {
                 val tokens = environment.service.refresh(refreshToken)
-                tokenResponse(tokens, environment.cipher)
+                val permissions = environment.service.permissionsForRole(tokens.accessToken.role)
+                tokenResponse(tokens, permissions, environment.cipher)
             }
         }
 
@@ -34,14 +36,16 @@ interface ServiceCommand {
     data class Register(val userName: String, val email: String, val password: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             val tokens = environment.service.register(userName, email, password)
-            return tokenResponse(tokens, environment.cipher)
+            val permissions = environment.service.permissionsForRole(tokens.accessToken.role)
+            return tokenResponse(tokens, permissions, environment.cipher)
         }
     }
 
     data class Authenticate(val nameOrEmail: String, val password: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             val tokens = environment.service.authenticate(nameOrEmail, password)
-            return tokenResponse(tokens, environment.cipher)
+            val permissions = environment.service.permissionsForRole(tokens.accessToken.role)
+            return tokenResponse(tokens, permissions, environment.cipher)
         }
     }
 
@@ -426,7 +430,7 @@ interface ServiceCommand {
             return AccessToken(userName, role)
         }
 
-        private fun tokenResponse(tokens: Tokens, cipher: Cipher): ResponseValue {
+        private fun tokenResponse(tokens: Tokens, permissions:List<Permission>, cipher: Cipher): ResponseValue {
             val refreshTokenString = cipher.encode(mapOf("userName" to tokens.refreshToken.userName))
             val accessTokenString = cipher.encode(
                 mapOf(
@@ -437,7 +441,8 @@ interface ServiceCommand {
             val tokenResponse = mapOf(
                 "accessToken" to accessTokenString,
                 "userName" to tokens.accessToken.userName,
-                "role" to tokens.accessToken.role.name
+                "role" to tokens.accessToken.role.name,
+                "permissions" to permissions
             )
             return responseBuilder().refreshToken(refreshTokenString).json(tokenResponse).build()
         }

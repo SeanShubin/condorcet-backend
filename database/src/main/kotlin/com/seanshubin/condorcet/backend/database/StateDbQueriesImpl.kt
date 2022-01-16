@@ -90,6 +90,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun listUserNames(): List<String> =
         query(::createName, "user-select")
 
+    override fun listPermissions(role: Role): List<Permission> =
+        query(::createPermission, "role-permission-select-by-role", role.toString())
+
     private fun createUser(resultSet: ResultSet): UserRow {
         val name = resultSet.getString("name")
         val email = resultSet.getString("email")
@@ -122,6 +125,9 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
 
     private fun createName(resultSet: ResultSet): String =
         resultSet.getString("name")
+
+    private fun createPermission(resultSet: ResultSet): Permission =
+        Permission.valueOf(resultSet.getString("permission"))
 
     private fun createRanking(resultSet: ResultSet): Ranking =
         Ranking(

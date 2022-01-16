@@ -245,4 +245,8 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
     override fun listVotersForElection(electionName: String): List<String> {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun listPermissions(role: Role): List<Permission> {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

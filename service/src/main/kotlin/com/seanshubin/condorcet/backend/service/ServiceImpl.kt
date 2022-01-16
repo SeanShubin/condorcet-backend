@@ -69,6 +69,10 @@ class ServiceImpl(
         return createTokens(userRow)
     }
 
+    override fun permissionsForRole(role: Role): List<Permission> {
+        return stateDbQueries.listPermissions(role)
+    }
+
     override fun setRole(accessToken: AccessToken, userName: String, role: Role) {
         val userRow = searchUserByName(userName)
         failIf(userRow == null, NOT_FOUND, "User with name '$userName' does not exist")

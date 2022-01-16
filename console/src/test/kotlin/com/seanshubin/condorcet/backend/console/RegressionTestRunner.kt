@@ -25,6 +25,11 @@ class RegressionTestRunner(
         val request = RequestStub(fakeBrowser, target, command)
         val response = ResponseStub()
         dependencies.handler.handle(target, baseRequest, request, response)
+        if(response.status != 200){
+            val header = "Regression test is for happy path only, only responses with status 200 expected"
+            val lines = listOf(header) + request.toLines() + listOf("") + response.toLines()
+            throw RuntimeException(lines.joinToString("\n"))
+        }
         fakeBrowser.handleResponse(response)
     }
 
