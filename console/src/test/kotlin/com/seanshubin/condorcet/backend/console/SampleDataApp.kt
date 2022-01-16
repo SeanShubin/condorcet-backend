@@ -27,6 +27,11 @@ object SampleDataApp {
         service.register("Heidi", "heidi@email.com", "pass").accessToken
         service.register("Ivy", "ivy@email.com", "pass").accessToken
         service.register("Judy", "judy@email.com", "pass").accessToken
+        service.register("Mallory", "mallory@email.com", "pass").accessToken
+        service.register("Trent", "trent@email.com", "pass").accessToken
+        service.register("Walter", "walter@email.com", "pass").accessToken
+        service.register("Peggy", "peggy@email.com", "pass").accessToken
+        service.register("Victor", "victor@email.com", "pass").accessToken
         service.setRole(aliceAccessToken, "Bob", Role.AUDITOR)
         val bobAccessToken = service.authenticate("Bob", "pass").accessToken
         service.setRole(aliceAccessToken, "Carol", Role.ADMIN)
@@ -45,6 +50,9 @@ object SampleDataApp {
         val ivyAccessToken = service.authenticate("Ivy", "pass").accessToken
         service.setRole(daveAccessToken, "Judy", Role.USER)
         val judyAccessToken = service.authenticate("Judy", "pass").accessToken
+        service.setRole(daveAccessToken, "Mallory", Role.OBSERVER)
+        service.setRole(daveAccessToken, "Trent", Role.OBSERVER)
+        service.setRole(daveAccessToken, "Peggy", Role.OBSERVER)
         service.addElection(aliceAccessToken, "Cycle Test")
         service.setCandidates(aliceAccessToken, "Cycle Test", listOf("Rock", "Paper", "Scissors"))
         service.setEligibleVoters(aliceAccessToken, "Cycle Test", listOf("Alice", "Bob", "Carol", "Dave", "Eve"))
