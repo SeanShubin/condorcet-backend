@@ -219,11 +219,17 @@ select name,
        hash,
        role
 from user
-where name = 'Bob';
-select role, permission
+where name = 'Alice';
+select permission
 from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
+where role = 'OWNER';
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Bob';
 select value
 from int_variable
 where name = 'last-synced';
@@ -239,11 +245,17 @@ select name,
        hash,
        role
 from user
-where name = 'Dave';
-select role, permission
+where name = 'Alice';
+select permission
 from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
+where role = 'OWNER';
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Dave';
 select value
 from int_variable
 where name = 'last-synced';
@@ -259,11 +271,17 @@ select name,
        hash,
        role
 from user
-where name = 'Eve';
-select role, permission
+where name = 'Alice';
+select permission
 from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
+where role = 'OWNER';
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Eve';
 select value
 from int_variable
 where name = 'last-synced';
@@ -297,89 +315,19 @@ select role, permission
 from role_permission
 where role = 'OWNER'
   and permission = 'MANAGE_USERS';
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Alice';
+select permission
+from role_permission
+where role = 'OWNER';
 select name, email, salt, hash, role
 from user
 order by name;
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
 select role, permission
 from role_permission
 where role = 'OWNER'
