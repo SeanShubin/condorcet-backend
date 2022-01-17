@@ -7,4 +7,9 @@ enum class Role(val description: String) {
     ADMIN("Can manage users, can do anything a USER can do"),
     AUDITOR("Can see secrets, can do anything a ADMIN can do"),
     OWNER("Only 1 owner, can transfer OWNER to another user, can do anything AUDITOR can do");
+    companion object{
+        val PRIMARY_ROLE = OWNER
+        val SECONDARY_ROLE = AUDITOR
+        val DEFAULT_ROLE = UNASSIGNED
+    }
 }

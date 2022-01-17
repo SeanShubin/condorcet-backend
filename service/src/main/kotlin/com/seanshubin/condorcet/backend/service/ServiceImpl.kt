@@ -12,8 +12,9 @@ import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.effectiveRankings
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
-import com.seanshubin.condorcet.backend.domain.Role.OWNER
-import com.seanshubin.condorcet.backend.domain.Role.UNASSIGNED
+import com.seanshubin.condorcet.backend.domain.Role.Companion.SECONDARY_ROLE
+import com.seanshubin.condorcet.backend.domain.Role.Companion.PRIMARY_ROLE
+import com.seanshubin.condorcet.backend.domain.Role.Companion.DEFAULT_ROLE
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
@@ -52,9 +53,9 @@ class ServiceImpl(
         failIf(userNameExists(validName), CONFLICT, "User with name '$validName' already exists")
         failIf(userEmailExists(validEmail), CONFLICT, "User with email '$validEmail' already exists")
         val role = if (stateDbQueries.userCount() == 0) {
-            OWNER
+            PRIMARY_ROLE
         } else {
-            UNASSIGNED
+            DEFAULT_ROLE
         }
         val (salt, hash) = passwordUtil.createSaltAndHash(validPassword)
         val authority = validName
@@ -82,6 +83,9 @@ class ServiceImpl(
         val userRole = UserRole(targetUser.name, targetUser.role)
         val canChangeRole = self.canChangeRole(userRole, role)
         requireEitherRight(UNAUTHORIZED, canChangeRole)
+        if(role == PRIMARY_ROLE){
+            stateDbCommands.setRole(accessToken.userName, accessToken.userName, SECONDARY_ROLE)
+        }
         stateDbCommands.setRole(accessToken.userName, userName, role)
     }
 
