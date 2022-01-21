@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.domain
 
 enum class Role(val description: String) {
-    UNASSIGNED("Waiting for ADMIN to promote"),
+    NO_ACCESS("Waiting for ADMIN to promote"),
     OBSERVER("Can navigate the application"),
     USER("Can use the application, can do anything an OBSERVER can do"),
     ADMIN("Can manage users, can do anything a USER can do"),
@@ -10,6 +10,6 @@ enum class Role(val description: String) {
     companion object{
         val PRIMARY_ROLE = OWNER
         val SECONDARY_ROLE = AUDITOR
-        val DEFAULT_ROLE = UNASSIGNED
+        val DEFAULT_ROLE = OBSERVER
     }
 }

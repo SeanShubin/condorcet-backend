@@ -5,7 +5,7 @@ import com.seanshubin.condorcet.backend.domain.ElectionDetail
 import com.seanshubin.condorcet.backend.domain.ElectionSummary
 
 object DataTransfer {
-    fun ElectionRow.toDomain(): ElectionSummary =
+    fun ElectionRow.toElectionSummary(): ElectionSummary =
         ElectionSummary(
             owner,
             name,
@@ -15,7 +15,7 @@ object DataTransfer {
             allowEdit,
             allowVote
         )
-    fun ElectionRow.toDomain(candidateCount:Int, voterCount:Int): ElectionDetail =
+    fun ElectionRow.toElectionDetail(candidateCount:Int, voterCount:Int): ElectionDetail =
         ElectionDetail(
             owner,
             name,

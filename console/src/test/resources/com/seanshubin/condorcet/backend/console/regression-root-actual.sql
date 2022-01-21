@@ -26,7 +26,7 @@ create table int_variable (
 );
 create table role_permission (
     id int not null auto_increment,
-    role ENUM('UNASSIGNED','OBSERVER','USER','ADMIN','AUDITOR','OWNER') not null,
+    role ENUM('NO_ACCESS','OBSERVER','USER','ADMIN','AUDITOR','OWNER') not null,
     permission ENUM('TRANSFER_OWNER','VIEW_SECRETS','MANAGE_USERS','USE_APPLICATION','VIEW_APPLICATION') not null,
     primary key(id)
 );
@@ -34,7 +34,7 @@ create table user (
     id int not null auto_increment,
     name varchar(255) not null unique,
     email varchar(255) not null unique,
-    role ENUM('UNASSIGNED','OBSERVER','USER','ADMIN','AUDITOR','OWNER') not null,
+    role ENUM('NO_ACCESS','OBSERVER','USER','ADMIN','AUDITOR','OWNER') not null,
     salt varchar(255) not null,
     hash varchar(255) not null,
     primary key(id)

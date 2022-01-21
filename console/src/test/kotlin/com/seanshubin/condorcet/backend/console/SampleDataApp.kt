@@ -56,6 +56,7 @@ object SampleDataApp {
         service.addElection(aliceAccessToken, "Cycle Test")
         service.setCandidates(aliceAccessToken, "Cycle Test", listOf("Rock", "Paper", "Scissors"))
         service.setEligibleVoters(aliceAccessToken, "Cycle Test", listOf("Alice", "Bob", "Carol", "Dave", "Eve"))
+        service.launchElection(aliceAccessToken, "Cycle Test", allowEdit = true)
         service.castBallot(
             aliceAccessToken, "Alice", "Cycle Test",
             listOf(Ranking("Rock", 1), Ranking("Scissors", 2), Ranking("Paper", 3))
@@ -97,9 +98,9 @@ object SampleDataApp {
             listOf(Ranking("Paper", 1), Ranking("Rock", 2), Ranking("Scissors", 3))
         )
 
-        service.addElection(eveAccessToken, "Favorite Ice Cream Flavor")
+        service.addElection(eveAccessToken, "Favorite Ice Cream")
         service.setCandidates(
-            eveAccessToken, "Favorite Ice Cream Flavor", listOf(
+            eveAccessToken, "Favorite Ice Cream", listOf(
                 "Chocolate Chip",
                 "Neapolitan",
                 "Chocolate",
@@ -109,24 +110,12 @@ object SampleDataApp {
             )
         )
         service.updateElection(
-            eveAccessToken, "Favorite Ice Cream Flavor",
+            eveAccessToken, "Favorite Ice Cream",
             ElectionUpdates(
-                newElectionName = "Favorite Ice Cream",
-                secretBallot = true,
-                clearNoVotingBefore = null,
-                noVotingBefore = ZonedDateTime.of(
-                    LocalDate.of(2021, 2, 3),
-                    LocalTime.of(4, 55, 30),
-                    ZoneId.of("UTC")
-                ).toInstant(),
-                clearNoVotingAfter = null,
-                noVotingAfter = ZonedDateTime.of(
-                    LocalDate.of(2022, 2, 3),
-                    LocalTime.of(4, 55, 30),
-                    ZoneId.of("UTC")
-                ).toInstant()
+                secretBallot = true
             ),
         )
+        service.launchElection(eveAccessToken, "Favorite Ice Cream", allowEdit = false)
 
         service.addElection(frankAccessToken, "Government")
         service.setCandidates(

@@ -72,17 +72,9 @@ class RegressionTest {
                 newElectionName = "Favorite Ice Cream",
                 secretBallot = true,
                 clearNoVotingBefore = false,
-                noVotingBefore = ZonedDateTime.of(
-                    LocalDate.of(2021, 2, 3),
-                    LocalTime.of(4, 55, 30),
-                    ZoneId.of("UTC")
-                ).toInstant(),
+                noVotingBefore = null,
                 clearNoVotingAfter = false,
-                noVotingAfter = ZonedDateTime.of(
-                    LocalDate.of(2022, 2, 3),
-                    LocalTime.of(4, 55, 30),
-                    ZoneId.of("UTC")
-                ).toInstant()
+                noVotingAfter = null
             ),
             SetCandidates(
                 electionName = "Favorite Ice Cream",
@@ -100,7 +92,7 @@ class RegressionTest {
                 userName = "Alice"
             ),
             LaunchElection(
-                electionName="Favorite Ice Cream",
+                electionName = "Favorite Ice Cream",
                 allowEdit = true
             ),
             CastBallot(
@@ -133,9 +125,6 @@ class RegressionTest {
                     Ranking("Butter Pecan", 5),
                     Ranking("Mint", 6),
                 )
-            ),
-            FinalizeElection(
-                electionName="Favorite Ice Cream"
             ),
             ListRankings(
                 voterName = "Alice",
@@ -187,6 +176,13 @@ class RegressionTest {
                     Ranking("Butter Pecan", 6),
                 )
             ),
+            Authenticate(
+                nameOrEmail = "Alice",
+                password = "alice-password"
+            ),
+            FinalizeElection(
+                electionName = "Favorite Ice Cream"
+            ),
             Tally(
                 electionName = "Favorite Ice Cream"
             ),
@@ -221,12 +217,12 @@ class RegressionTest {
         private val newLineRegex = Regex("""\r\n|\r|\n""")
         private val tableCharsRegex = Regex("[║│╔═╗╤╚╝╧╟─╢┼]")
 
-        private fun String.replaceTableCharsWithWhitespace():String = replace(tableCharsRegex, " ")
+        private fun String.replaceTableCharsWithWhitespace(): String = replace(tableCharsRegex, " ")
 
-        private fun String.collapseWhitespace():String =
+        private fun String.collapseWhitespace(): String =
             replace(RegexConstants.whitespaceBlock, " ")
 
-        private fun String.collapseMultilineWhitespace():String =
+        private fun String.collapseMultilineWhitespace(): String =
             split(newLineRegex).joinToString("\n") { it.replaceTableCharsWithWhitespace().collapseWhitespace() }
 
         fun compareActualWithExpected() {

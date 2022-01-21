@@ -18,10 +18,12 @@ import com.seanshubin.condorcet.backend.domain.Role.Companion.DEFAULT_ROLE
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
-import com.seanshubin.condorcet.backend.service.DataTransfer.toDomain
+import com.seanshubin.condorcet.backend.service.DataTransfer.toElectionDetail
+import com.seanshubin.condorcet.backend.service.DataTransfer.toElectionSummary
 import com.seanshubin.condorcet.backend.service.ServiceException.Category
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import java.time.Clock
+import java.time.Instant
 import kotlin.random.Random
 
 class ServiceImpl(
@@ -39,74 +41,60 @@ class ServiceImpl(
     }
 
     override fun refresh(refreshToken: RefreshToken): Tokens {
-        val userRow = searchUserByName(refreshToken.userName)
-        failIf(userRow == null, NOT_FOUND, "User with name '${refreshToken.userName}' not found")
-        userRow!!
-        val accessToken = AccessToken(userRow.name, userRow.role)
+        val user = findUser(refreshToken.userName)
+        val accessToken = AccessToken(user.name, user.role)
         return Tokens(refreshToken, accessToken)
     }
 
     override fun register(userName: String, email: String, password: String): Tokens {
-        val validName = validateString(userName, "name", Validation.userName)
-        val validEmail = validateString(email, "email", Validation.email)
-        val validPassword = validateString(password, "password", Validation.password)
-        failIf(userNameExists(validName), CONFLICT, "User with name '$validName' already exists")
-        failIf(userEmailExists(validEmail), CONFLICT, "User with email '$validEmail' already exists")
-        val role = if (stateDbQueries.userCount() == 0) {
+        val validName = validateUserName(userName)
+        val validEmail = validateEmail(email)
+        val validPassword = validatePassword(password)
+        requireUserDoesNotExist(validName)
+        requireEmailDoesNotExist(validEmail)
+        val role = if (userCount() == 0) {
             PRIMARY_ROLE
         } else {
             DEFAULT_ROLE
         }
-        val (salt, hash) = passwordUtil.createSaltAndHash(validPassword)
-        val authority = validName
-        stateDbCommands.createUser(authority, validName, validEmail, salt, hash, role)
-        val user = stateDbQueries.findUserByName(validName)
+        createUser(validName, validEmail, validPassword, role)
+        val user = findUser(validName)
         return createTokens(user)
     }
 
     override fun authenticate(nameOrEmail: String, password: String): Tokens {
-        val userRow = searchUserByNameOrEmail(nameOrEmail)
-        failIf(userRow == null, NOT_FOUND, "User with name or email '$nameOrEmail' does not exist")
-        userRow!!
-        val passwordMatches = passwordUtil.passwordMatches(password, userRow.salt, userRow.hash)
-        failUnless(passwordMatches, UNAUTHORIZED, "Authentication failed for user with name or email '$nameOrEmail'")
-        return createTokens(userRow)
+        val user = findUserByNameOrEmail(nameOrEmail)
+        requirePasswordMatches(nameOrEmail, password, user.salt, user.hash)
+        return createTokens(user)
     }
 
-    override fun permissionsForRole(role: Role): List<Permission> {
-        return stateDbQueries.listPermissions(role)
-    }
+    override fun permissionsForRole(role: Role): List<Permission> =
+        stateDbQueries.listPermissions(role)
 
     override fun setRole(accessToken: AccessToken, userName: String, role: Role) {
-        val self = findUserRolePermissions(accessToken.userName)
-        val targetUser = findUser(userName)
-        val userRole = UserRole(targetUser.name, targetUser.role)
-        val canChangeRole = self.canChangeRole(userRole, role)
-        requireEitherRight(UNAUTHORIZED, canChangeRole)
-        if(role == PRIMARY_ROLE){
+        requirePermission(accessToken, MANAGE_USERS)
+        requireCanChangeRole(accessToken.userName, userName, role)
+        if (role == PRIMARY_ROLE) {
             stateDbCommands.setRole(accessToken.userName, accessToken.userName, SECONDARY_ROLE)
         }
         stateDbCommands.setRole(accessToken.userName, userName, role)
     }
 
     override fun removeUser(accessToken: AccessToken, userName: String) {
-        val userRow = searchUserByName(userName)
-        failIf(userRow == null, NOT_FOUND, "User with name '$userName' does not exist")
-        userRow!!
-        failUnlessPermission(accessToken, MANAGE_USERS)
-        failIf(
-            isSelf(accessToken, userRow) && stateDbQueries.tableCount() > 1, UNAUTHORIZED,
-            "Not allowed to remove self unless you are the only user"
-        )
-        failUnless(roleIsGreater(accessToken, userRow), UNAUTHORIZED, "Must have greater role than target")
+        requirePermission(accessToken, MANAGE_USERS)
+        val user = findUser(userName)
+        requireGreaterRole(accessToken, user)
+        if(isSelf(accessToken, user) && userCount() > 1){
+            fail(UNSUPPORTED,"Can not remove yourself unless you are the only user")
+        }
         stateDbCommands.removeUser(accessToken.userName, userName)
     }
 
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> {
-        failUnlessPermission(accessToken, MANAGE_USERS)
+        requirePermission(accessToken, MANAGE_USERS)
         val self = findUserRolePermissions(accessToken.userName)
-        val userRows = stateDbQueries.listUsers()
-        val list = userRows.map { row ->
+        val user = stateDbQueries.listUsers()
+        val list = user.map { row ->
             val userRole = UserRole(row.name, row.role)
             val allowedRoles = self.listedRolesFor(userRole)
             UserNameRole(row.name, row.role, allowedRoles)
@@ -115,119 +103,105 @@ class ServiceImpl(
     }
 
     override fun addElection(accessToken: AccessToken, electionName: String) {
-        val validName = validateString(electionName, "name", Validation.electionName)
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        failIf(electionNameExists(validName), CONFLICT, "Election with name '$validName' already exists")
-        stateDbCommands.addElection(accessToken.userName, accessToken.userName, validName)
+        requirePermission(accessToken, USE_APPLICATION)
+        val validElectionName = validateElectionName(electionName)
+        requireElectionNameDoesNotExist(electionName)
+        stateDbCommands.addElection(accessToken.userName, accessToken.userName, validElectionName)
     }
 
     override fun launchElection(accessToken: AccessToken, electionName: String, allowEdit: Boolean) {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        failUnlessElectionOwner(accessToken, electionName)
+        requirePermission(accessToken, USE_APPLICATION)
+        requireIsElectionOwner(accessToken, electionName)
         val updates = DbElectionUpdates(allowVote = true, allowEdit = allowEdit)
         stateDbCommands.updateElection(accessToken.userName, electionName, updates)
     }
 
     override fun finalizeElection(accessToken: AccessToken, electionName: String) {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        failUnlessElectionOwner(accessToken, electionName)
+        requirePermission(accessToken, USE_APPLICATION)
+        val election = findElection(electionName)
+        requireIsElectionOwner(accessToken, election)
+        requireHasNoEndDate(election, "Only elections with no end date can be manually finalized")
         val updates = DbElectionUpdates(allowVote = false, allowEdit = false)
         stateDbCommands.updateElection(accessToken.userName, electionName, updates)
     }
 
-    private fun validateElectionUpdates(electionUpdates: ElectionUpdates): DbElectionUpdates {
-        val dbElectionUpdates = electionUpdates.toDbElectionUpdates()
-        val newName = dbElectionUpdates.newElectionName ?: return dbElectionUpdates
-        val validNewName = validateString(newName, "electionUpdates.newName", Validation.electionName)
-        return dbElectionUpdates.copy(newElectionName = validNewName)
-    }
-
     override fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates) {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        failUnlessElectionOwner(accessToken, electionName)
+        requirePermission(accessToken, USE_APPLICATION)
+        requireIsElectionOwner(accessToken, electionName)
         val validElectionUpdates = validateElectionUpdates(electionUpdates)
         stateDbCommands.updateElection(accessToken.userName, electionName, validElectionUpdates)
     }
 
     override fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        val electionRow = stateDbQueries.searchElectionByName(electionName)
+        requirePermission(accessToken, VIEW_APPLICATION)
+        val election = findElection(electionName)
         val candidateCount = stateDbQueries.candidateCount(electionName)
         val voterCount = stateDbQueries.voterCount(electionName)
-        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
-        electionRow!!
-        val election = electionRow.toDomain(candidateCount, voterCount)
-        return election
+        val electionDetail = election.toElectionDetail(candidateCount, voterCount)
+        return electionDetail
     }
 
     override fun deleteElection(accessToken: AccessToken, electionName: String) {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        val electionRow = stateDbQueries.searchElectionByName(electionName)
-        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
-        electionRow!!
-        failIf(
-            accessToken.userName != electionRow.owner,
-            UNAUTHORIZED,
-            "User '${accessToken.userName}' is not allowed to delete election '$electionName' owned by user '${electionRow.owner}'"
-        )
+        requirePermission(accessToken, USE_APPLICATION)
+        requireIsElectionOwner(accessToken, electionName)
         stateDbCommands.deleteElection(accessToken.userName, electionName)
     }
 
     override fun listElections(accessToken: AccessToken): List<ElectionSummary> {
-        failUnlessPermission(accessToken, USE_APPLICATION)
+        requirePermission(accessToken, VIEW_APPLICATION)
         val rows = stateDbQueries.listElections()
-        val list = rows.map { it.toDomain() }
+        val list = rows.map { it.toElectionSummary() }
         return list
     }
 
     override fun listTables(accessToken: AccessToken): List<String> {
-        failUnlessPermission(accessToken, VIEW_SECRETS)
+        requirePermission(accessToken, VIEW_SECRETS)
         return stateDbQueries.tableNames(StateSchema)
     }
 
     override fun userCount(accessToken: AccessToken): Int {
-        failUnlessPermission(accessToken, VIEW_APPLICATION)
+        requirePermission(accessToken, VIEW_APPLICATION)
         return stateDbQueries.userCount()
     }
 
     override fun electionCount(accessToken: AccessToken): Int {
-        failUnlessPermission(accessToken, VIEW_APPLICATION)
+        requirePermission(accessToken, VIEW_APPLICATION)
         return stateDbQueries.electionCount()
     }
 
     override fun tableCount(accessToken: AccessToken): Int {
-        failUnlessPermission(accessToken, VIEW_APPLICATION)
+        requirePermission(accessToken, VIEW_SECRETS)
         return stateDbQueries.tableCount()
     }
 
     override fun eventCount(accessToken: AccessToken): Int {
-        failUnlessPermission(accessToken, VIEW_APPLICATION)
+        requirePermission(accessToken, VIEW_SECRETS)
         return eventDbQueries.eventCount()
     }
 
     override fun tableData(accessToken: AccessToken, tableName: String): TableData {
-        failUnlessPermission(accessToken, VIEW_SECRETS)
+        requirePermission(accessToken, VIEW_SECRETS)
         val genericTable = stateDbQueries.tableData(StateSchema, tableName)
         return genericTable.toTableData()
     }
 
     override fun debugTableData(accessToken: AccessToken, tableName: String): TableData {
-        failUnlessPermission(accessToken, VIEW_SECRETS)
+        requirePermission(accessToken, VIEW_SECRETS)
         val genericTable = stateDbQueries.debugTableData(StateSchema, tableName)
         return genericTable.toTableData()
     }
 
     override fun eventData(accessToken: AccessToken): TableData {
-        failUnlessPermission(accessToken, VIEW_SECRETS)
+        requirePermission(accessToken, VIEW_SECRETS)
         val genericTable = eventDbQueries.tableData(EventSchema, "event")
         return genericTable.toTableData()
     }
 
     override fun setCandidates(accessToken: AccessToken, electionName: String, candidateNames: List<String>) {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        failUnlessElectionOwner(accessToken, electionName)
-        val validCandidateNames = validateStringList(candidateNames, "candidate", Validation.candidateName)
-        val originalCandidates = stateDbQueries.listCandidates(electionName)
+        requirePermission(accessToken, USE_APPLICATION)
+        requireIsElectionOwner(accessToken, electionName)
+        val validCandidateNames = validateCandidateNames(candidateNames)
+        val originalCandidates = validateCandidateNames(stateDbQueries.listCandidates(electionName))
         val candidatesToDelete = originalCandidates.missing(validCandidateNames)
         val candidatesToAdd = originalCandidates.extra(validCandidateNames)
         if (candidatesToDelete.isNotEmpty()) {
@@ -239,7 +213,7 @@ class ServiceImpl(
     }
 
     override fun listCandidates(accessToken: AccessToken, electionName: String): List<String> {
-        failUnlessPermission(accessToken, USE_APPLICATION)
+        requirePermission(accessToken, VIEW_APPLICATION)
         val candidateNames = stateDbQueries.listCandidates(electionName)
         return candidateNames
     }
@@ -250,55 +224,40 @@ class ServiceImpl(
         electionName: String,
         rankings: List<Ranking>
     ) {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        val electionRow = stateDbQueries.searchElectionByName(electionName)
-        failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
-        electionRow!!
-        val voterRow = stateDbQueries.searchUserByName(voterName)
-        failIf(voterRow == null, NOT_FOUND, "Voter with name '$voterName' not found")
-        voterRow!!
-        if (accessToken.userName != voterName) {
-            throw ServiceException(
-                UNAUTHORIZED,
-                "User '${accessToken.userName}' not allowed to cast a ballot on behalf of voter '$voterName'"
-            )
-        }
-        val effectiveRankings = rankings.effectiveRankings()
-        val ballotSummary = stateDbQueries.searchBallot(voterName, electionName)
-        val now = clock.instant()
+        requirePermission(accessToken, USE_APPLICATION)
+        requireElectionIsAllowingVotes(electionName)
+        requireIsUser(
+            accessToken,
+            voterName,
+            "User '${accessToken.userName}' not allowed to cast a ballot on behalf of voter '$voterName'"
+        )
+        val ballotSummary = searchBallotSummary(voterName, electionName)
         if (ballotSummary == null) {
-            val confirmation = uniqueIdGenerator.uniqueId()
-            stateDbCommands.castBallot(
-                accessToken.userName,
-                voterName,
-                electionName,
-                effectiveRankings,
-                confirmation,
-                now)
+            castNewBallot(voterName, electionName, rankings)
         } else {
             val confirmation = ballotSummary.confirmation
-            stateDbCommands.setRankings(accessToken.userName, confirmation, electionName, effectiveRankings)
-            stateDbCommands.updateWhenCast(accessToken.userName, confirmation, now)
+            updateExistingBallot(voterName, electionName, confirmation, rankings)
         }
     }
 
     override fun listRankings(accessToken: AccessToken, voterName: String, electionName: String): List<Ranking> {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        if (accessToken.userName != voterName) {
-            throw ServiceException(
-                UNAUTHORIZED,
-                "User '${accessToken.userName}' not allowed to see a ballot cast by voter '$voterName'"
-            )
-        }
+        requirePermission(accessToken, VIEW_APPLICATION)
+        requireIsUser(
+            accessToken,
+            voterName,
+            "User '${accessToken.userName}' not allowed to see ballot cast by voter '$voterName'"
+        )
         val candidates = stateDbQueries.listCandidates(electionName)
         val rankings = stateDbQueries.listRankings(voterName, electionName)
         return rankings.addMissingCandidates(candidates).voterBiasedOrdering(random)
     }
 
     override fun tally(accessToken: AccessToken, electionName: String): Tally {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        val electionRow = findElection(electionName)
-        val secretBallot = electionRow.secretBallot
+        requirePermission(accessToken, VIEW_APPLICATION)
+        val now = clock.instant()
+        requireTallyAvailable(electionName, now)
+        val election = findElection(electionName)
+        val secretBallot = election.secretBallot
         val candidates = stateDbQueries.listCandidates(electionName)
         val ballots = stateDbQueries.listBallots(electionName)
         val tally = Tally.countBallots(secretBallot, candidates, ballots)
@@ -306,7 +265,7 @@ class ServiceImpl(
     }
 
     override fun listEligibility(accessToken: AccessToken, electionName: String): List<VoterEligibility> {
-        failUnlessPermission(accessToken, USE_APPLICATION)
+        requirePermission(accessToken, VIEW_APPLICATION)
         val allVoters = stateDbQueries.listVoterNames()
         val eligibleVoters = stateDbQueries.listVotersForElection(electionName)
         val list = allVoters.map {
@@ -317,8 +276,8 @@ class ServiceImpl(
     }
 
     override fun setEligibleVoters(accessToken: AccessToken, electionName: String, voterNames: List<String>) {
-        failUnlessPermission(accessToken, USE_APPLICATION)
-        failUnlessElectionOwner(accessToken, electionName)
+        requirePermission(accessToken, USE_APPLICATION)
+        requireIsElectionOwner(accessToken, electionName)
         validateVoterNames(voterNames)
         val originalVoters = stateDbQueries.listVotersForElection(electionName)
         val votersToDelete = originalVoters.missing(voterNames)
@@ -332,32 +291,37 @@ class ServiceImpl(
     }
 
     override fun getBallot(accessToken: AccessToken, voterName: String, electionName: String): BallotSummary? {
-        failUnlessPermission(accessToken, USE_APPLICATION)
+        requirePermission(accessToken, VIEW_APPLICATION)
+        val now = clock.instant()
+        requireCanSeeBallot(accessToken, voterName, electionName, now)
         val ballotSummary = stateDbQueries.searchBallot(voterName, electionName)
         return ballotSummary
     }
 
     override fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean {
-        failUnlessPermission(accessToken, USE_APPLICATION)
+        requirePermission(accessToken, VIEW_APPLICATION)
         val eligibleVoters = stateDbQueries.listVotersForElection(electionName)
         return eligibleVoters.contains(userName)
     }
 
-    private fun findUserRolePermissions(userName:String):UserRolePermissions {
-        val user =  findUser(userName)
+    private fun requireIsUser(accessToken: AccessToken, userName: String, message: String) {
+        if (accessToken.userName != userName) {
+            fail(UNAUTHORIZED, message)
+        }
+    }
+
+    private fun findUserRolePermissions(userName: String): UserRolePermissions {
+        val user = findUser(userName)
         val permissions = permissionsForRole(user.role)
         return UserRolePermissions(userName, user.role, permissions)
     }
-    private fun findUser(userName:String):UserRow {
+
+    private fun findUser(userName: String): UserRow {
         return stateDbQueries.findUserByName(userName)
     }
-    private fun userNameExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
-    private fun userEmailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
-    private fun electionNameExists(name: String): Boolean = stateDbQueries.searchElectionByName(name) != null
-    private fun roleIsGreater(accessToken: AccessToken, userRow: UserRow): Boolean =
-        roleIsGreater(accessToken.role, userRow.role)
 
-    private fun roleIsGreater(accessToken: AccessToken, role: Role): Boolean = roleIsGreater(accessToken.role, role)
+    private fun userExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
+    private fun emailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
     private fun roleIsGreater(first: Role, second: Role): Boolean = first.ordinal > second.ordinal
     private fun hasPermission(role: Role, permission: Permission): Boolean =
         stateDbQueries.roleHasPermission(role, permission)
@@ -379,12 +343,19 @@ class ServiceImpl(
         failIf(!shouldNotFail, category, message)
     }
 
-    private fun failUnlessPermission(accessToken: AccessToken, permission: Permission) {
+    private fun requirePermission(accessToken: AccessToken, permission: Permission) {
         failUnless(
             hasPermission(accessToken, permission), UNAUTHORIZED,
             "User ${accessToken.userName} with role ${accessToken.role} does not have permission $permission"
         )
 
+    }
+
+    private fun searchBallotSummary(
+        voterName: String,
+        electionName: String
+    ): BallotSummary? {
+        return stateDbQueries.searchBallot(voterName, electionName)
     }
 
     private fun searchUserByName(name: String): UserRow? = stateDbQueries.searchUserByName(name)
@@ -410,8 +381,8 @@ class ServiceImpl(
 
     private fun validateString(original: String, caption: String, rule: (String) -> Either<String, String>): String =
         when (val validated = rule(original)) {
-            is Either.Right -> validated.value
-            is Either.Left -> fail(UNSUPPORTED, "Invalid $caption, ${validated.value}")
+            is Right -> validated.value
+            is Left -> fail(UNSUPPORTED, "Invalid $caption, ${validated.value}")
         }
 
     private fun validateStringList(
@@ -421,19 +392,10 @@ class ServiceImpl(
     ): List<String> =
         original.filter { it.trim() != "" }.map { validateString(it, "$caption '$it'", rule) }
 
-    private fun findElection(electionName:String):ElectionRow {
+    private fun findElection(electionName: String): ElectionRow {
         val electionRow = stateDbQueries.searchElectionByName(electionName)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
         return electionRow!!
-    }
-
-    private fun failUnlessElectionOwner(accessToken: AccessToken, electionName: String) {
-        val electionRow = findElection(electionName)
-        failIf(
-            accessToken.userName != electionRow.owner,
-            UNAUTHORIZED,
-            "User '${accessToken.userName}' does not own election '$electionName', it is owned by user '${electionRow.owner}'"
-        )
     }
 
     private fun validateVoterNames(voterNames: List<String>) {
@@ -445,10 +407,185 @@ class ServiceImpl(
         }
     }
 
-    private fun <T> requireEitherRight(category: Category, either:Either<String, T>):T{
-        when (either){
-            is Left -> fail(category, either.value)
-            is Right -> return either.value
+    private fun castNewBallot(
+        voterName: String,
+        electionName: String,
+        rankings: List<Ranking>
+    ) {
+        val effectiveRankings = rankings.effectiveRankings()
+        val now = clock.instant()
+        val confirmation = uniqueIdGenerator.uniqueId()
+        stateDbCommands.castBallot(
+            voterName,
+            voterName,
+            electionName,
+            effectiveRankings,
+            confirmation,
+            now
+        )
+    }
+
+    private fun updateExistingBallot(
+        voterName: String,
+        electionName: String,
+        confirmation: String,
+        rankings: List<Ranking>
+    ) {
+        val effectiveRankings = rankings.effectiveRankings()
+        val now = clock.instant()
+        stateDbCommands.setRankings(voterName, confirmation, electionName, effectiveRankings)
+        stateDbCommands.updateWhenCast(voterName, confirmation, now)
+    }
+
+    private fun requireElectionIsAllowingVotes(electionName: String) {
+        val election = findElection(electionName)
+        if (!election.allowVote) {
+            if (election.allowEdit) {
+                fail(UNAUTHORIZED, "Election $electionName is not accepting votes yet")
+            } else {
+                fail(UNAUTHORIZED, "Election $electionName is no longer accepting votes")
+            }
         }
+    }
+
+    private fun requireUserDoesNotExist(userName: String) {
+        if (userExists(userName)) {
+            fail(CONFLICT, "User with name '$userName' already exists")
+        }
+    }
+
+    private fun requireEmailDoesNotExist(email: String) {
+        if (emailExists(email)) {
+            fail(CONFLICT, "User with email '$email' already exists")
+        }
+    }
+
+    private fun createUser(userName: String, email: String, password: String, role: Role) {
+        val (salt, hash) = passwordUtil.createSaltAndHash(password)
+        stateDbCommands.createUser(userName, userName, email, salt, hash, role)
+    }
+
+    private fun validateUserName(userName:String):String =
+        validateString(userName, "name", Validation.userName)
+    private fun validateEmail(email:String):String =
+        validateString(email, "email", Validation.email)
+    private fun validatePassword(password:String):String =
+        validateString(password, "password", Validation.password)
+
+    private fun userCount():Int = stateDbQueries.userCount()
+
+    private fun findUserByNameOrEmail(nameOrEmail:String):UserRow {
+        return searchUserByNameOrEmail(nameOrEmail)
+            ?: fail(NOT_FOUND, "User with name or email '$nameOrEmail' does not exist")
+    }
+
+    private fun requirePasswordMatches(nameOrEmail:String, password:String, salt:String, hash:String){
+        if(!passwordUtil.passwordMatches(password, salt, hash)){
+            fail(UNAUTHORIZED, "Authentication failed for user with name or email '$nameOrEmail'")
+        }
+    }
+
+    private fun requireCanChangeRole(authorizingUserName:String, targetUserName:String, role:Role){
+        val authorizingUserRolePermissions = findUserRolePermissions(authorizingUserName)
+        val targetUser = findUser(targetUserName)
+        val targetUserRole = UserRole(targetUser.name, targetUser.role)
+        val canChangeRole = authorizingUserRolePermissions.canChangeRole(targetUserRole, role)
+        canChangeRole.mapLeft { message ->
+            fail(UNAUTHORIZED, message)
+        }
+    }
+
+    private fun requireGreaterRole(accessToken: AccessToken, user:UserRow){
+        if(accessToken.role <= user.role){
+            fail(UNAUTHORIZED, "${accessToken.userName} with role ${accessToken.role} does not have greater role than ${user.name} with role ${user.role}")
+        }
+    }
+
+    private fun validateElectionName(electionName:String):String =
+        validateString(electionName, "name", Validation.electionName)
+
+    private fun searchElection(electionName:String):ElectionRow? =
+        stateDbQueries.searchElectionByName(electionName)
+
+    private fun requireElectionNameDoesNotExist(electionName:String){
+        val election = searchElection(electionName)
+        if(election != null){
+            fail(CONFLICT, "Election named $electionName already exists")
+        }
+    }
+
+    private fun requireIsElectionOwner(accessToken: AccessToken, electionName:String){
+        val election = findElection(electionName)
+        requireIsElectionOwner(accessToken, election)
+    }
+
+    private fun requireIsElectionOwner(accessToken: AccessToken, election:ElectionRow){
+        if(accessToken.userName != election.owner){
+            fail(UNAUTHORIZED, "Election ${election.name} is owned by ${election.owner} not, ${accessToken.userName}")
+        }
+    }
+
+    private fun requireHasNoEndDate(election:ElectionRow, message:String){
+        if(election.noVotingAfter != null) {
+            fail(UNSUPPORTED, message)
+        }
+    }
+
+    private fun validateElectionUpdates(electionUpdates: ElectionUpdates): DbElectionUpdates {
+        val dbElectionUpdates = electionUpdates.toDbElectionUpdates()
+        val newName = dbElectionUpdates.newElectionName ?: return dbElectionUpdates
+        val validNewName = validateString(newName, "electionUpdates.newName", Validation.electionName)
+        return dbElectionUpdates.copy(newElectionName = validNewName)
+    }
+
+    private fun validateCandidateNames(candidateNames: List<String>):List<String> =
+        validateStringList(candidateNames, "candidate", Validation.candidateName)
+
+    private fun requireAfterElectionStarted(election:ElectionRow, now:Instant){
+        val noVotingBefore = election.noVotingBefore ?: return
+        if(now < noVotingBefore) {
+            fail(UNSUPPORTED, "Election ${election.name} has not started yet")
+        }
+    }
+
+    private fun requireAfterElectionEnded(election:ElectionRow, now:Instant){
+        val noVotingBefore = election.noVotingAfter ?: return
+        if(now < noVotingBefore) {
+            fail(UNSUPPORTED, "Election ${election.name} has not ended yet")
+        }
+    }
+
+    private fun requireElectionCanNotVote(election:ElectionRow){
+        if(election.allowVote) {
+            fail(UNSUPPORTED, "Election ${election.name} is still accepting votes")
+        }
+    }
+
+    private fun requireElectionCanNotEdit(election:ElectionRow){
+        if(election.allowEdit) {
+            if(election.allowVote){
+                fail(UNSUPPORTED, "Election ${election.name} has not launched yet")
+            } else {
+                fail(UNSUPPORTED, "Election ${election.name} has not been finalized yet")
+            }
+        }
+    }
+
+    private fun requireTallyAvailable(electionName:String, now: Instant){
+        val election = findElection(electionName)
+        requireAfterElectionStarted(election, now)
+        if(!election.secretBallot) return
+        requireAfterElectionEnded(election, now)
+        requireElectionCanNotVote(election)
+        requireElectionCanNotEdit(election)
+    }
+
+    private fun requireCanSeeBallot(accessToken: AccessToken, voterName:String, electionName:String, now:Instant){
+        if(accessToken.userName == voterName) return
+        val election = findElection(electionName)
+        if(election.secretBallot){
+            fail(UNAUTHORIZED, "Can only see your own ballot in secret ballot election $electionName")
+        }
+        requireTallyAvailable(electionName, now)
     }
 }

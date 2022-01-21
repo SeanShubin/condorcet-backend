@@ -27,7 +27,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Alice', 'alice@email.com', 'a09a049b-4228-4c21-b86d-35bc7a1ed3bb', '08DDCCEBFB8973647C97B56F04F5F24BDDBB3F164B4DF22B1DB6EC3DFB9B5398', 'OWNER');
+values ('Alice', 'alice@email.com', 'acb9ef15-ee53-4921-a8e3-0e345bb17ddd', 'C3AB0D8CD392C7AB6230C154449B898FB14A943C637229DB9B08A6A949C4822C', 'OWNER');
 update int_variable
 set value = 1
 where name = 'last-synced';
@@ -65,7 +65,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Bob', 'bob@email.com', '2ee67e26-d4d3-426a-9bcf-2b8b816ff2ce', 'DA6BCFE83821E48B41440D56EC9C34A9277520F69C26980E1ECD5ADE7B89813B', 'UNASSIGNED');
+values ('Bob', 'bob@email.com', '3396f2cb-79bd-4d33-b01c-e9b2656c3ffd', '81C48D4A77584F8099E1BBD23F892CBD0F7F96D122BC32F179E7D2DD8CF7004D', 'OBSERVER');
 update int_variable
 set value = 2
 where name = 'last-synced';
@@ -78,7 +78,7 @@ from user
 where name = 'Bob';
 select permission
 from role_permission
-where role = 'UNASSIGNED';
+where role = 'OBSERVER';
 select name,
        email,
        salt,
@@ -103,7 +103,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Carol', 'carol@email.com', '8c35dfe2-e4b9-4d66-8488-bb09a1f7451f', '8398C9E8F1030A6BEE2F524A91A3FDF3C8AF4468BBC5CA90712D2AEE70B65240', 'UNASSIGNED');
+values ('Carol', 'carol@email.com', '33b16b3e-1955-4fbc-9657-3d6f529786a1', '1451CCFCB4D6806DE07F859983265353C83F555ADD86E1DF8F3B43F2A19FAAF0', 'OBSERVER');
 update int_variable
 set value = 3
 where name = 'last-synced';
@@ -116,7 +116,7 @@ from user
 where name = 'Carol';
 select permission
 from role_permission
-where role = 'UNASSIGNED';
+where role = 'OBSERVER';
 select name,
        email,
        salt,
@@ -141,7 +141,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Dave', 'dave@email.com', '11baa435-610b-4776-84c7-7201dbdf3dc7', '2935594E22361D0DC1AB0118A6D589ECDF5119390FD408FBCAD60AFB22E2996E', 'UNASSIGNED');
+values ('Dave', 'dave@email.com', '8a844e78-61de-4b0d-9ffc-a9dfa2fe25ea', 'B8136925AF6F728CC31023CD0482A62F1EE2C3A876C70A4C020CA494B687AC0B', 'OBSERVER');
 update int_variable
 set value = 4
 where name = 'last-synced';
@@ -154,7 +154,7 @@ from user
 where name = 'Dave';
 select permission
 from role_permission
-where role = 'UNASSIGNED';
+where role = 'OBSERVER';
 select name,
        email,
        salt,
@@ -179,7 +179,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Eve', 'eve@email.com', '3b12bd5b-0e7d-4519-86ff-0629ecdd5afb', '00313095B4583C6B2498847968E56379891E7476C052DE7B104979CE004F141B', 'UNASSIGNED');
+values ('Eve', 'eve@email.com', '39ff9e68-45e9-439d-9c15-8781473dc04f', 'AF1753C62BD200523B3ECE11AC3FB79B064318841AFE0E6678FE51DCE5037BAD', 'OBSERVER');
 update int_variable
 set value = 5
 where name = 'last-synced';
@@ -192,7 +192,7 @@ from user
 where name = 'Eve';
 select permission
 from role_permission
-where role = 'UNASSIGNED';
+where role = 'OBSERVER';
 select name,
        email,
        salt,
@@ -213,6 +213,10 @@ where name = 'Alice';
 select permission
 from role_permission
 where role = 'OWNER';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
 select name,
        email,
        salt,
@@ -239,6 +243,10 @@ where name = 'Bob';
 update int_variable
 set value = 6
 where name = 'last-synced';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
 select name,
        email,
        salt,
@@ -265,6 +273,10 @@ where name = 'Dave';
 update int_variable
 set value = 7
 where name = 'last-synced';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
 select name,
        email,
        salt,
@@ -291,6 +303,10 @@ where name = 'Eve';
 update int_variable
 set value = 8
 where name = 'last-synced';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'MANAGE_USERS';
 select name,
        email,
        salt,
@@ -298,10 +314,6 @@ select name,
        role
 from user
 where name = 'Carol';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'MANAGE_USERS';
 select value
 from int_variable
 where name = 'last-synced';
@@ -399,11 +411,11 @@ set secret_ballot = 1
 where name = 'Favorite Ice Cream';
 update
     election
-set no_voting_before = '2021-02-03 04:55:30'
+set no_voting_before = null
 where name = 'Favorite Ice Cream';
 update
     election
-set no_voting_after = '2022-02-03 04:55:30'
+set no_voting_after = null
 where name = 'Favorite Ice Cream';
 update int_variable
 set value = 12
@@ -483,7 +495,7 @@ where name = 'last-synced';
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VIEW_APPLICATION';
 select user.name
 from user
          inner join role_permission on user.role = role_permission.role
@@ -498,7 +510,7 @@ order by user.name;
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VIEW_APPLICATION';
 select user.name
 from user
      inner join voter on user.id = voter.user_id
@@ -547,13 +559,6 @@ select user.name as owner,
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
-select name,
-       email,
-       salt,
-       hash,
-       role
-from user
-where name = 'Alice';
 select user.name as user_name, election.name as election_name, confirmation, when_cast
 from ballot
 inner join user on ballot.user_id = user.id
@@ -565,12 +570,12 @@ where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Alice'),
         (select id from election where name = 'Favorite Ice Cream'),
-        'afee81f2-21cc-4fab-b630-770a08721686',
-        '2021-12-30 03:47:50.52543');
+        '2266d672-8185-4bab-9c96-e488b98ccd70',
+        '2022-01-21 06:18:26.35079');
 delete from ranking
-where ballot_id = (select id from ballot where confirmation = 'afee81f2-21cc-4fab-b630-770a08721686');
+where ballot_id = (select id from ballot where confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
+values ((select ballot.id from ballot where ballot.confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70'),
         (
             select candidate.id
             from candidate
@@ -579,7 +584,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc
               and candidate.name = 'Vanilla'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
+values ((select ballot.id from ballot where ballot.confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70'),
         (
             select candidate.id
             from candidate
@@ -651,13 +656,6 @@ select user.name as owner,
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
-select name,
-       email,
-       salt,
-       hash,
-       role
-from user
-where name = 'Alice';
 select user.name as user_name, election.name as election_name, confirmation, when_cast
 from ballot
 inner join user on ballot.user_id = user.id
@@ -667,9 +665,9 @@ select value
 from int_variable
 where name = 'last-synced';
 delete from ranking
-where ballot_id = (select id from ballot where confirmation = 'afee81f2-21cc-4fab-b630-770a08721686');
+where ballot_id = (select id from ballot where confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
+values ((select ballot.id from ballot where ballot.confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70'),
         (
             select candidate.id
             from candidate
@@ -678,7 +676,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc
               and candidate.name = 'Chocolate Chip'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
+values ((select ballot.id from ballot where ballot.confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70'),
         (
             select candidate.id
             from candidate
@@ -687,7 +685,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc
               and candidate.name = 'Neapolitan'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
+values ((select ballot.id from ballot where ballot.confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70'),
         (
             select candidate.id
             from candidate
@@ -696,7 +694,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc
               and candidate.name = 'Chocolate'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
+values ((select ballot.id from ballot where ballot.confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70'),
         (
             select candidate.id
             from candidate
@@ -705,7 +703,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc
               and candidate.name = 'Vanilla'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
+values ((select ballot.id from ballot where ballot.confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70'),
         (
             select candidate.id
             from candidate
@@ -714,7 +712,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc
               and candidate.name = 'Butter Pecan'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'afee81f2-21cc-4fab-b630-770a08721686'),
+values ((select ballot.id from ballot where ballot.confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70'),
         (
             select candidate.id
             from candidate
@@ -729,43 +727,15 @@ select value
 from int_variable
 where name = 'last-synced';
 update ballot
-set when_cast = '2021-12-30 18:52:08.756192'
-where confirmation = 'afee81f2-21cc-4fab-b630-770a08721686';
+set when_cast = '2022-01-21 06:18:26.481986'
+where confirmation = '2266d672-8185-4bab-9c96-e488b98ccd70';
 update int_variable
 set value = 20
 where name = 'last-synced';
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
-select user.name as owner,
-       election.name,
-       election.secret_ballot,
-       election.no_voting_before,
-       election.no_voting_after,
-       election.allow_edit,
-       election.allow_vote
-from election
-         inner join user on election.owner_id = user.id
-where election.name = 'Favorite Ice Cream';
-select value
-from int_variable
-where name = 'last-synced';
-update
-    election
-set allow_edit = 0
-where name = 'Favorite Ice Cream';
-update
-    election
-set allow_vote = 0
-where name = 'Favorite Ice Cream';
-update int_variable
-set value = 21
-where name = 'last-synced';
-select role, permission
-from role_permission
-where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VIEW_APPLICATION';
 select candidate.name
 from candidate
          inner join election
@@ -782,7 +752,7 @@ where user.name = 'Alice'
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VIEW_APPLICATION';
 select user.name as owner,
        election.name,
        election.secret_ballot,
@@ -828,12 +798,12 @@ delete
 from election
 where name = 'Delete Me';
 update int_variable
-set value = 22
+set value = 21
 where name = 'last-synced';
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VIEW_APPLICATION';
 select user.name as owner,
        election.name,
        election.secret_ballot,
@@ -847,7 +817,7 @@ order by election.name;
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VIEW_APPLICATION';
 select candidate.name
 from candidate
          inner join election
@@ -872,11 +842,11 @@ from election;
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'VIEW_APPLICATION';
+  and permission = 'VIEW_SECRETS';
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'VIEW_APPLICATION';
+  and permission = 'VIEW_SECRETS';
 select role, permission
 from role_permission
 where role = 'OWNER'
@@ -925,13 +895,6 @@ select user.name as owner,
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
-select name,
-       email,
-       salt,
-       hash,
-       role
-from user
-where name = 'Bob';
 select user.name as user_name, election.name as election_name, confirmation, when_cast
 from ballot
 inner join user on ballot.user_id = user.id
@@ -943,12 +906,12 @@ where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Bob'),
         (select id from election where name = 'Favorite Ice Cream'),
-        'e1c1dfe0-0423-43f2-bfec-430782b04545',
-        '2022-01-10 18:26:27.791247');
+        '8f208935-c86b-408d-a7e5-9547ba866f97',
+        '2022-01-21 06:18:27.194641');
 delete from ranking
-where ballot_id = (select id from ballot where confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545');
+where ballot_id = (select id from ballot where confirmation = '8f208935-c86b-408d-a7e5-9547ba866f97');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
+values ((select ballot.id from ballot where ballot.confirmation = '8f208935-c86b-408d-a7e5-9547ba866f97'),
         (
             select candidate.id
             from candidate
@@ -957,7 +920,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423
               and candidate.name = 'Chocolate'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
+values ((select ballot.id from ballot where ballot.confirmation = '8f208935-c86b-408d-a7e5-9547ba866f97'),
         (
             select candidate.id
             from candidate
@@ -966,7 +929,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423
               and candidate.name = 'Chocolate Chip'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
+values ((select ballot.id from ballot where ballot.confirmation = '8f208935-c86b-408d-a7e5-9547ba866f97'),
         (
             select candidate.id
             from candidate
@@ -975,7 +938,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423
               and candidate.name = 'Vanilla'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
+values ((select ballot.id from ballot where ballot.confirmation = '8f208935-c86b-408d-a7e5-9547ba866f97'),
         (
             select candidate.id
             from candidate
@@ -984,7 +947,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423
               and candidate.name = 'Mint'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
+values ((select ballot.id from ballot where ballot.confirmation = '8f208935-c86b-408d-a7e5-9547ba866f97'),
         (
             select candidate.id
             from candidate
@@ -993,7 +956,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423
               and candidate.name = 'Butter Pecan'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423-43f2-bfec-430782b04545'),
+values ((select ballot.id from ballot where ballot.confirmation = '8f208935-c86b-408d-a7e5-9547ba866f97'),
         (
             select candidate.id
             from candidate
@@ -1002,7 +965,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'e1c1dfe0-0423
               and candidate.name = 'Neapolitan'),
         6);
 update int_variable
-set value = 23
+set value = 22
 where name = 'last-synced';
 select name,
        email,
@@ -1028,13 +991,6 @@ select user.name as owner,
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
-select name,
-       email,
-       salt,
-       hash,
-       role
-from user
-where name = 'Dave';
 select user.name as user_name, election.name as election_name, confirmation, when_cast
 from ballot
 inner join user on ballot.user_id = user.id
@@ -1046,12 +1002,12 @@ where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Dave'),
         (select id from election where name = 'Favorite Ice Cream'),
-        '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb',
-        '2022-01-12 05:38:01.188406');
+        '26e73b89-e82a-4194-ae52-31ec033ee04f',
+        '2022-01-21 06:18:27.304843');
 delete from ranking
-where ballot_id = (select id from ballot where confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb');
+where ballot_id = (select id from ballot where confirmation = '26e73b89-e82a-4194-ae52-31ec033ee04f');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
+values ((select ballot.id from ballot where ballot.confirmation = '26e73b89-e82a-4194-ae52-31ec033ee04f'),
         (
             select candidate.id
             from candidate
@@ -1060,7 +1016,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b
               and candidate.name = 'Mint'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
+values ((select ballot.id from ballot where ballot.confirmation = '26e73b89-e82a-4194-ae52-31ec033ee04f'),
         (
             select candidate.id
             from candidate
@@ -1069,7 +1025,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b
               and candidate.name = 'Chocolate Chip'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
+values ((select ballot.id from ballot where ballot.confirmation = '26e73b89-e82a-4194-ae52-31ec033ee04f'),
         (
             select candidate.id
             from candidate
@@ -1078,7 +1034,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b
               and candidate.name = 'Neapolitan'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
+values ((select ballot.id from ballot where ballot.confirmation = '26e73b89-e82a-4194-ae52-31ec033ee04f'),
         (
             select candidate.id
             from candidate
@@ -1087,7 +1043,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b
               and candidate.name = 'Chocolate'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
+values ((select ballot.id from ballot where ballot.confirmation = '26e73b89-e82a-4194-ae52-31ec033ee04f'),
         (
             select candidate.id
             from candidate
@@ -1096,7 +1052,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b
               and candidate.name = 'Vanilla'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b-44bf-ab33-4542452dbceb'),
+values ((select ballot.id from ballot where ballot.confirmation = '26e73b89-e82a-4194-ae52-31ec033ee04f'),
         (
             select candidate.id
             from candidate
@@ -1105,12 +1061,60 @@ values ((select ballot.id from ballot where ballot.confirmation = '8c9fd5ac-7f5b
               and candidate.name = 'Butter Pecan'),
         6);
 update int_variable
+set value = 23
+where name = 'last-synced';
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Alice';
+select permission
+from role_permission
+where role = 'OWNER';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select user.name as owner,
+       election.name,
+       election.secret_ballot,
+       election.no_voting_before,
+       election.no_voting_after,
+       election.allow_edit,
+       election.allow_vote
+from election
+         inner join user on election.owner_id = user.id
+where election.name = 'Favorite Ice Cream';
+select value
+from int_variable
+where name = 'last-synced';
+update
+    election
+set allow_edit = 0
+where name = 'Favorite Ice Cream';
+update
+    election
+set allow_vote = 0
+where name = 'Favorite Ice Cream';
+update int_variable
 set value = 24
 where name = 'last-synced';
 select role, permission
 from role_permission
-where role = 'USER'
-  and permission = 'USE_APPLICATION';
+where role = 'OWNER'
+  and permission = 'VIEW_APPLICATION';
+select user.name as owner,
+       election.name,
+       election.secret_ballot,
+       election.no_voting_before,
+       election.no_voting_after,
+       election.allow_edit,
+       election.allow_vote
+from election
+         inner join user on election.owner_id = user.id
+where election.name = 'Favorite Ice Cream';
 select user.name as owner,
        election.name,
        election.secret_ballot,
@@ -1143,8 +1147,8 @@ where election.name = 'Favorite Ice Cream'
 order by ballot.confirmation, ranking.rank, candidate.name;
 select role, permission
 from role_permission
-where role = 'USER'
-  and permission = 'USE_APPLICATION';
+where role = 'OWNER'
+  and permission = 'VIEW_APPLICATION';
 select user.name as user_name, election.name as election_name, confirmation, when_cast
 from ballot
 inner join user on ballot.user_id = user.id

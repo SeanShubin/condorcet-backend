@@ -9,7 +9,7 @@ import com.seanshubin.condorcet.backend.domain.Role.ADMIN
 import com.seanshubin.condorcet.backend.domain.Role.AUDITOR
 import com.seanshubin.condorcet.backend.domain.Role.USER
 import com.seanshubin.condorcet.backend.domain.Role.OBSERVER
-import com.seanshubin.condorcet.backend.domain.Role.UNASSIGNED
+import com.seanshubin.condorcet.backend.domain.Role.NO_ACCESS
 import kotlin.test.assertEquals
 
 class UserRolePermissionsTest {
@@ -22,10 +22,10 @@ class UserRolePermissionsTest {
         val someAdmin = UserRolePermissions("admin", ADMIN, allPermissions)
         val someUser = UserRole("user", USER)
         val someObserver = UserRole("observer", OBSERVER)
-        val someUnassigned= UserRole("unassigned", UNASSIGNED)
+        val someNoAccess= UserRole("no-access", NO_ACCESS)
         verifyCanChangeRoleTo(someOwner, someUser, AUDITOR, Right(Unit))
-        verifyCanChangeRoleTo(someAuditor, someObserver, UNASSIGNED, Right(Unit))
-        verifyCanChangeRoleTo(someAdmin, someUnassigned, USER, Right(Unit))
+        verifyCanChangeRoleTo(someAuditor, someObserver, NO_ACCESS, Right(Unit))
+        verifyCanChangeRoleTo(someAdmin, someNoAccess, USER, Right(Unit))
     }
 
     @Test
@@ -69,10 +69,10 @@ class UserRolePermissionsTest {
         val someAdmin = UserRolePermissions("admin", ADMIN, allPermissionsExceptManageUsers)
         val someUser = UserRole("user", USER)
         val someObserver = UserRole("observer", OBSERVER)
-        val someUnassigned= UserRole("unassigned", UNASSIGNED)
+        val someNoAccess= UserRole("no-access", NO_ACCESS)
         verifyCanChangeRoleTo(someOwner, someUser, AUDITOR, Left("must have MANAGE_USERS permission"))
-        verifyCanChangeRoleTo(someAuditor, someObserver, UNASSIGNED, Left("must have MANAGE_USERS permission"))
-        verifyCanChangeRoleTo(someAdmin, someUnassigned, USER, Left("must have MANAGE_USERS permission"))
+        verifyCanChangeRoleTo(someAuditor, someObserver, NO_ACCESS, Left("must have MANAGE_USERS permission"))
+        verifyCanChangeRoleTo(someAdmin, someNoAccess, USER, Left("must have MANAGE_USERS permission"))
     }
 
     @Test
@@ -82,10 +82,10 @@ class UserRolePermissionsTest {
         val someAdmin = UserRolePermissions("admin", ADMIN, allPermissions)
         val someUser = UserRole("user", USER)
         val someObserver = UserRole("observer", OBSERVER)
-        val someUnassigned= UserRole("unassigned", UNASSIGNED)
-        verifyListedRolesFor(someOwner, someUser, listOf(UNASSIGNED, OBSERVER, USER, ADMIN, AUDITOR, OWNER))
-        verifyListedRolesFor(someAuditor, someObserver,  listOf(UNASSIGNED, OBSERVER, USER, ADMIN))
-        verifyListedRolesFor(someAdmin, someUnassigned, listOf(UNASSIGNED, OBSERVER, USER))
+        val someNoAccess= UserRole("unassigned", NO_ACCESS)
+        verifyListedRolesFor(someOwner, someUser, listOf(NO_ACCESS, OBSERVER, USER, ADMIN, AUDITOR, OWNER))
+        verifyListedRolesFor(someAuditor, someObserver,  listOf(NO_ACCESS, OBSERVER, USER, ADMIN))
+        verifyListedRolesFor(someAdmin, someNoAccess, listOf(NO_ACCESS, OBSERVER, USER))
     }
 
     fun verifyListedRolesFor(self:UserRolePermissions, target:UserRole, expected: List<Role>){
