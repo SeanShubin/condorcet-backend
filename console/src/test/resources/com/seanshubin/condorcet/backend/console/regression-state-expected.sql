@@ -531,6 +531,13 @@ select user.name as owner,
 from election
          inner join user on election.owner_id = user.id
 where election.name = 'Favorite Ice Cream';
+select
+       count(candidate.id)
+from candidate
+    inner join election
+        on candidate.election_id = election.id
+where
+      election.name = 'Favorite Ice Cream';
 select value
 from int_variable
 where name = 'last-synced';
