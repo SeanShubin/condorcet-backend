@@ -20,4 +20,6 @@ class LogGroup(
         }
         return LineEmittingAndFileLogger(initialize, emit, files, baseDir.resolve(relativePath))
     }
+
+    fun createNop():Logger = NoOperationLogger()
 }
