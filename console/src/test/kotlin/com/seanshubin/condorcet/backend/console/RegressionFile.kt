@@ -2,6 +2,7 @@ package com.seanshubin.condorcet.backend.console
 
 enum class RegressionFile(val fileName: String, val extension: String) {
     HTTP("http", "txt"),
+    SERVICE("service", "txt"),
     ROOT("root", "sql"),
     EVENT("event", "sql"),
     EVENT_TABLE("event-table", "txt"),

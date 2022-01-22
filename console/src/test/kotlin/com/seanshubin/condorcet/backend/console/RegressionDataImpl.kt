@@ -34,6 +34,8 @@ class RegressionDataImpl(
         val eventTableLogger: Logger = createLogger(logGroup, RegressionFile.EVENT_TABLE)
         val stateTableLogger: Logger = createLogger(logGroup, RegressionFile.STATE_TABLE)
         val httpLogger: Logger = createLogger(logGroup, RegressionFile.HTTP)
+        val serviceRequestLogger:Logger = logGroup.createNop()
+        val serviceResponseLogger:Logger = createLogger(logGroup, RegressionFile.SERVICE)
         val topLevelExceptionLogger: Logger = logGroup.create("top-level-exception")
         val sqlExceptionLogger: Logger = logGroup.create("sql-exception")
         return LoggingNotifications(
@@ -43,6 +45,8 @@ class RegressionDataImpl(
             eventTableLogger,
             stateTableLogger,
             httpLogger,
+            serviceRequestLogger,
+            serviceResponseLogger,
             topLevelExceptionLogger,
             sqlExceptionLogger
         )

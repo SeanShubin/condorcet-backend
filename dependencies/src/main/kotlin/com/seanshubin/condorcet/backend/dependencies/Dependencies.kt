@@ -36,8 +36,8 @@ class Dependencies(
     private val eventDatabaseEvent: (String) -> Unit = integration.eventDatabaseEvent
     private val stateDatabaseEvent: (String) -> Unit = integration.stateDatabaseEvent
     private val sqlException: (String, String, SQLException) -> Unit = integration.sqlException
-    private val requestEvent: (RequestValue) -> Unit = integration.requestEvent
-    private val responseEvent: (ResponseValue) -> Unit = integration.responseEvent
+    private val requestEvent: (RequestValue) -> Unit = integration.httpRequestEvent
+    private val responseEvent: (ResponseValue) -> Unit = integration.httpResponseEvent
     private val topLevelException: (Throwable) -> Unit = integration.topLevelException
     private val rootConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         ConnectionLifecycle(host, user, password, rootDatabaseEvent, sqlException)

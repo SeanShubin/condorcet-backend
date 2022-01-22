@@ -15,6 +15,8 @@ class LoggingNotifications(
     private val eventTableLogger: Logger,
     private val stateTableLogger: Logger,
     private val httpLogger: Logger,
+    private val serviceRequestLogger:Logger,
+    private val serviceResponseLogger:Logger,
     private val topLevelExceptionLogger:Logger,
     private val sqlExceptionLogger:Logger
 ) : Notifications {
@@ -38,13 +40,23 @@ class LoggingNotifications(
         table.toLines().forEach(stateTableLogger::log)
     }
 
-    override fun requestEvent(request: RequestValue) {
+    override fun httpRequestEvent(request: RequestValue) {
         request.toLines().forEach(httpLogger::log)
     }
 
-    override fun responseEvent(response: ResponseValue) {
+    override fun httpResponseEvent(response: ResponseValue) {
         response.toLines().forEach(httpLogger::log)
         httpLogger.log("")
+    }
+
+    override fun serviceRequestEvent(request: String) {
+        serviceRequestLogger.log(request)
+    }
+
+    override fun serviceResponseEvent(request: String, response: String) {
+        serviceResponseLogger.log(request)
+        serviceResponseLogger.log(response)
+        serviceResponseLogger.log("")
     }
 
     override fun topLevelException(throwable: Throwable) {

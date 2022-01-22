@@ -7,7 +7,8 @@ import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.service.Service
-import com.seanshubin.condorcet.backend.service.ServiceImpl
+import com.seanshubin.condorcet.backend.service.BaseService
+import com.seanshubin.condorcet.backend.service.RecordingService
 import java.time.Clock
 
 class ServiceDependencies(
@@ -15,6 +16,8 @@ class ServiceDependencies(
     eventConnection: ConnectionWrapper,
     stateConnection: ConnectionWrapper
 ) {
+    private val serviceRequestEvent:(String)->Unit = integration.serviceRequestEvent
+    private val serviceResponseEvent:(String, String)->Unit = integration.serviceResponseEvent
     private val queryLoader: QueryLoader = QueryLoaderFromResource()
     private val oneWayHash: OneWayHash = Sha256Hash()
     private val uniqueIdGenerator: UniqueIdGenerator = integration.uniqueIdGenerator
@@ -47,7 +50,7 @@ class ServiceDependencies(
         clock
     )
     private val syncDbCommands: StateDbCommands = SyncDbCommands(eventDbCommands)
-    val service: Service = ServiceImpl(
+    private val baseService: Service = BaseService(
         passwordUtil,
         eventDbQueries,
         stateDbQueries,
@@ -57,4 +60,5 @@ class ServiceDependencies(
         clock,
         uniqueIdGenerator
     )
+    val service:Service = RecordingService(baseService, serviceRequestEvent, serviceResponseEvent)
 }

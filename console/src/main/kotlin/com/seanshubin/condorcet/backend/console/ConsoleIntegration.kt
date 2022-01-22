@@ -29,8 +29,10 @@ class ConsoleIntegration : Integration {
     override val stateDatabaseEvent: (String) -> Unit = notifications::stateDatabaseEvent
     override val eventTableEvent: (GenericTable) -> Unit = notifications::eventTableEvent
     override val stateTableEvent: (GenericTable) -> Unit = notifications::stateTableEvent
-    override val requestEvent: (RequestValue) -> Unit = notifications::requestEvent
-    override val responseEvent: (ResponseValue) -> Unit = notifications::responseEvent
+    override val httpRequestEvent: (RequestValue) -> Unit = notifications::httpRequestEvent
+    override val httpResponseEvent: (ResponseValue) -> Unit = notifications::httpResponseEvent
+    override val serviceRequestEvent: (String) -> Unit = notifications::serviceRequestEvent
+    override val serviceResponseEvent: (String, String) -> Unit = notifications::serviceResponseEvent
     override val topLevelException: (Throwable) -> Unit = notifications::topLevelException
     override val sqlException: (String, String, SQLException) -> Unit = notifications::sqlException
     override val uniqueIdGenerator: UniqueIdGenerator = Uuid4()

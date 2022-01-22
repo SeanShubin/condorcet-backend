@@ -20,13 +20,12 @@ import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.ex
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
 import com.seanshubin.condorcet.backend.service.DataTransfer.toElectionDetail
 import com.seanshubin.condorcet.backend.service.DataTransfer.toElectionSummary
-import com.seanshubin.condorcet.backend.service.ServiceException.Category
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import java.time.Clock
 import java.time.Instant
 import kotlin.random.Random
 
-class ServiceImpl(
+class BaseService(
     private val passwordUtil: PasswordUtil,
     private val eventDbQueries: EventDbQueries,
     private val stateDbQueries: StateDbQueries,

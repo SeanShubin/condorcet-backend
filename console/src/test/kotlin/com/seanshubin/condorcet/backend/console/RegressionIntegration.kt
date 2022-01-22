@@ -47,8 +47,10 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val rootDatabaseEvent: (String) -> Unit = regressionNotifications::rootDatabaseEvent
     override val eventDatabaseEvent: (String) -> Unit = regressionNotifications::eventDatabaseEvent
     override val stateDatabaseEvent: (String) -> Unit = regressionNotifications::stateDatabaseEvent
-    override val requestEvent: (RequestValue) -> Unit = regressionNotifications::requestEvent
-    override val responseEvent: (ResponseValue) -> Unit = regressionNotifications::responseEvent
+    override val httpRequestEvent: (RequestValue) -> Unit = regressionNotifications::httpRequestEvent
+    override val httpResponseEvent: (ResponseValue) -> Unit = regressionNotifications::httpResponseEvent
+    override val serviceRequestEvent: (String) -> Unit = regressionNotifications::serviceRequestEvent
+    override val serviceResponseEvent: (String, String) -> Unit = regressionNotifications::serviceResponseEvent
     override val eventTableEvent: (GenericTable) -> Unit = regressionNotifications::eventTableEvent
     override val stateTableEvent: (GenericTable) -> Unit = regressionNotifications::stateTableEvent
     override val topLevelException: (Throwable) -> Unit = regressionNotifications::topLevelException

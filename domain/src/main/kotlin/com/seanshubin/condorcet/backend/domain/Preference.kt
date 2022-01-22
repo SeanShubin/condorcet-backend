@@ -51,12 +51,6 @@ class Preference private constructor(val path: List<String>, val strengths: List
         return parts.joinToString("")
     }
 
-    fun toKotlinString(): String =
-        path.windowed(2).zip(strengths).joinToString(" + ") { (ab, c) ->
-            val (a, b) = ab
-            """Preference("$a", $c, "$b")"""
-        }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -134,9 +128,5 @@ class Preference private constructor(val path: List<String>, val strengths: List
         }
 
         fun List<List<Preference>>.toLines(): List<String> = RowStyleTableFormatter.minimal.format(this)
-
-        fun List<List<Preference>>.toKotlinString(): String = this.map { row ->
-            row.joinToString(", ", "  listOf(", ")") { it.toKotlinString() }
-        }.joinToString(",\n", "listOf(\n", "\n)")
     }
 }
