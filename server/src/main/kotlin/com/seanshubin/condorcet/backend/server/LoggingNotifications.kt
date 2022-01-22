@@ -1,9 +1,14 @@
 package com.seanshubin.condorcet.backend.server
 
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
+import com.seanshubin.condorcet.backend.domain.Ranking
+import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.logger.Logger
+import com.seanshubin.condorcet.backend.service.AccessToken
+import com.seanshubin.condorcet.backend.service.Tokens
 import java.io.PrintWriter
 import java.io.StringWriter
 import java.sql.SQLException
@@ -20,6 +25,21 @@ class LoggingNotifications(
     private val topLevelExceptionLogger:Logger,
     private val sqlExceptionLogger:Logger
 ) : Notifications {
+    private val serviceRequestsToMonitor = listOf(
+        "register",
+        "setRole",
+        "removeUser",
+        "addElection",
+        "launchElection",
+        "finalizeElection",
+        "updateElection",
+        "deleteElection",
+        "setCandidates",
+        "castBallot",
+        "setEligibleVoters"
+        )
+
+
     override fun rootDatabaseEvent(statement: String) {
         rootDatabaseLogger.log("${statement.trim()};")
     }
@@ -50,7 +70,9 @@ class LoggingNotifications(
     }
 
     override fun serviceRequestEvent(name:String, request: String) {
-        serviceRequestLogger.log("$name($request)")
+        if(serviceRequestsToMonitor.contains(name)){
+            serviceRequestLogger.log("$name($request)")
+        }
     }
 
     override fun serviceResponseEvent(name:String, request: String, response: String) {
