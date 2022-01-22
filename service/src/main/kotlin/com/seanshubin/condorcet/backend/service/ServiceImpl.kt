@@ -112,6 +112,7 @@ class ServiceImpl(
     override fun launchElection(accessToken: AccessToken, electionName: String, allowEdit: Boolean) {
         requirePermission(accessToken, USE_APPLICATION)
         requireIsElectionOwner(accessToken, electionName)
+        requireHasMoreThanOneCandidate(electionName)
         val updates = DbElectionUpdates(allowVote = true, allowEdit = allowEdit)
         stateDbCommands.updateElection(accessToken.userName, electionName, updates)
     }
@@ -127,7 +128,9 @@ class ServiceImpl(
 
     override fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates) {
         requirePermission(accessToken, USE_APPLICATION)
-        requireIsElectionOwner(accessToken, electionName)
+        val election = findElection(electionName)
+        requireIsElectionOwner(accessToken, election)
+        requireNotLaunched(election)
         val validElectionUpdates = validateElectionUpdates(electionUpdates)
         stateDbCommands.updateElection(accessToken.userName, electionName, validElectionUpdates)
     }
@@ -199,7 +202,9 @@ class ServiceImpl(
 
     override fun setCandidates(accessToken: AccessToken, electionName: String, candidateNames: List<String>) {
         requirePermission(accessToken, USE_APPLICATION)
-        requireIsElectionOwner(accessToken, electionName)
+        val election = findElection(electionName)
+        requireIsElectionOwner(accessToken, election)
+        requireElectionCanEdit(election)
         val validCandidateNames = validateCandidateNames(candidateNames)
         val originalCandidates = validateCandidateNames(stateDbQueries.listCandidates(electionName))
         val candidatesToDelete = originalCandidates.missing(validCandidateNames)
@@ -277,7 +282,9 @@ class ServiceImpl(
 
     override fun setEligibleVoters(accessToken: AccessToken, electionName: String, voterNames: List<String>) {
         requirePermission(accessToken, USE_APPLICATION)
-        requireIsElectionOwner(accessToken, electionName)
+        val election = findElection(electionName)
+        requireIsElectionOwner(accessToken, election)
+        requireElectionCanEdit(election)
         validateVoterNames(voterNames)
         val originalVoters = stateDbQueries.listVotersForElection(electionName)
         val votersToDelete = originalVoters.missing(voterNames)
@@ -571,6 +578,30 @@ class ServiceImpl(
         }
     }
 
+    private fun requireElectionCanEdit(election:ElectionRow){
+        if(!election.allowEdit) {
+            if(election.allowVote){
+                fail(UNSUPPORTED, "Election ${election.name} is closed for edits once launched")
+            } else {
+                fail(UNSUPPORTED, "Election ${election.name} can not be edited once it has been finalized")
+            }
+        }
+    }
+
+    private fun requireNotLaunched(election:ElectionRow){
+        if(election.allowEdit) {
+            if(election.allowVote){
+                fail(UNSUPPORTED, "Election ${election.name} is closed for edits once launched")
+            }
+        } else {
+            if(election.allowVote){
+                fail(UNSUPPORTED, "Election ${election.name} is closed for edits once launched")
+            } else {
+                fail(UNSUPPORTED, "Election ${election.name} can not be edited once it has been finalized")
+            }
+        }
+    }
+
     private fun requireTallyAvailable(electionName:String, now: Instant){
         val election = findElection(electionName)
         requireAfterElectionStarted(election, now)
@@ -587,5 +618,15 @@ class ServiceImpl(
             fail(UNAUTHORIZED, "Can only see your own ballot in secret ballot election $electionName")
         }
         requireTallyAvailable(electionName, now)
+    }
+
+    private fun candidateCount(electionName:String):Int =
+        stateDbQueries.candidateCount(electionName)
+
+    private fun requireHasMoreThanOneCandidate(electionName: String){
+        val candidateCount = candidateCount(electionName)
+        if(candidateCount < 2){
+            fail(UNSUPPORTED, "Election can not be launched with less than 2 candidates, has $candidateCount")
+        }
     }
 }
