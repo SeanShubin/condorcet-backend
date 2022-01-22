@@ -49,12 +49,12 @@ class LoggingNotifications(
         httpLogger.log("")
     }
 
-    override fun serviceRequestEvent(request: String) {
-        serviceRequestLogger.log(request)
+    override fun serviceRequestEvent(name:String, request: String) {
+        serviceRequestLogger.log("$name($request)")
     }
 
-    override fun serviceResponseEvent(request: String, response: String) {
-        serviceResponseLogger.log(request)
+    override fun serviceResponseEvent(name:String, request: String, response: String) {
+        serviceResponseLogger.log("$name($request)")
         serviceResponseLogger.log(response)
         serviceResponseLogger.log("")
     }

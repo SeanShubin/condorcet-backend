@@ -13,8 +13,8 @@ interface Notifications {
     fun stateTableEvent(table: GenericTable)
     fun httpRequestEvent(request: RequestValue)
     fun httpResponseEvent(response: ResponseValue)
-    fun serviceRequestEvent(request: String)
-    fun serviceResponseEvent(request:String, response: String)
+    fun serviceRequestEvent(name:String, request: String)
+    fun serviceResponseEvent(name:String, request:String, response: String)
     fun topLevelException(throwable:Throwable)
     fun sqlException(name:String, sqlCode:String, ex:SQLException)
 }

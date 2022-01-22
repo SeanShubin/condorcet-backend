@@ -16,8 +16,8 @@ class ServiceDependencies(
     eventConnection: ConnectionWrapper,
     stateConnection: ConnectionWrapper
 ) {
-    private val serviceRequestEvent:(String)->Unit = integration.serviceRequestEvent
-    private val serviceResponseEvent:(String, String)->Unit = integration.serviceResponseEvent
+    private val serviceRequestEvent:(String, String)->Unit = integration.serviceRequestEvent
+    private val serviceResponseEvent:(String, String, String)->Unit = integration.serviceResponseEvent
     private val queryLoader: QueryLoader = QueryLoaderFromResource()
     private val oneWayHash: OneWayHash = Sha256Hash()
     private val uniqueIdGenerator: UniqueIdGenerator = integration.uniqueIdGenerator

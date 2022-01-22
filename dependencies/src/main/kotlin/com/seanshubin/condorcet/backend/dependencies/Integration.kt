@@ -25,8 +25,8 @@ interface Integration {
     val stateTableEvent: (GenericTable) -> Unit
     val httpRequestEvent: (RequestValue) -> Unit
     val httpResponseEvent: (ResponseValue) -> Unit
-    val serviceRequestEvent: (String) -> Unit
-    val serviceResponseEvent: (String, String) -> Unit
+    val serviceRequestEvent: (String, String) -> Unit
+    val serviceResponseEvent: (String, String, String) -> Unit
     val topLevelException: (Throwable) -> Unit
     val uniqueIdGenerator: UniqueIdGenerator
     val clock: Clock

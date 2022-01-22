@@ -7,213 +7,213 @@ import java.time.ZoneOffset
 
 class RecordingService(
     private val service: Service,
-    private val serviceRequestEvent: (String) -> Unit,
-    private val serviceResponseEvent: (String, String) -> Unit
+    private val serviceRequestEvent: (String, String) -> Unit,
+    private val serviceResponseEvent: (String, String, String) -> Unit
 ) : Service {
     override fun synchronize() {
-        val requestString = "synchronize()"
-        serviceRequestEvent(requestString)
+        val requestString = ""
+        serviceRequestEvent("synchronize", requestString)
         val response = service.synchronize()
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("synchronize", requestString, response.toKotlinString())
         return response
     }
 
     override fun refresh(refreshToken: RefreshToken): Tokens {
-        val requestString = "refresh(${refreshToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = refreshToken.toKotlinString()
+        serviceRequestEvent("refresh", requestString)
         val response = service.refresh(refreshToken)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("refresh", requestString, response.toKotlinString())
         return response
     }
 
     override fun register(userName: String, email: String, password: String): Tokens {
         val requestString =
-            "register(${userName.toKotlinString()}, ${email.toKotlinString()}, ${password.toKotlinString()})"
-        serviceRequestEvent(requestString)
+            "${userName.toKotlinString()}, ${email.toKotlinString()}, ${password.toKotlinString()}"
+        serviceRequestEvent("register",requestString)
         val response = service.register(userName, email, password)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("register",requestString, response.toKotlinString())
         return response
     }
 
     override fun authenticate(nameOrEmail: String, password: String): Tokens {
-        val requestString = "authenticate(${nameOrEmail.toKotlinString()}, ${password.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${nameOrEmail.toKotlinString()}, ${password.toKotlinString()}"
+        serviceRequestEvent("authenticate", requestString)
         val response = service.authenticate(nameOrEmail, password)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("authenticate", requestString, response.toKotlinString())
         return response
     }
 
     override fun permissionsForRole(role: Role): List<Permission> {
-        val requestString = "permissionsForRole(${role.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = role.toKotlinString()
+        serviceRequestEvent("permissionsForRole", requestString)
         val response = service.permissionsForRole(role)
-        serviceResponseEvent(requestString, response.map { it.toKotlinString() }.toKotlinString())
+        serviceResponseEvent("permissionsForRole", requestString, response.map { it.toKotlinString() }.toKotlinString())
         return response
     }
 
     override fun setRole(accessToken: AccessToken, userName: String, role: Role) {
         val requestString =
-            "setRole(${accessToken.toKotlinString()}, ${userName.toKotlinString()}, ${role.toKotlinString()})"
-        serviceRequestEvent(requestString)
+            "${accessToken.toKotlinString()}, ${userName.toKotlinString()}, ${role.toKotlinString()}"
+        serviceRequestEvent("setRole", requestString)
         val response = service.setRole(accessToken, userName, role)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("setRole", requestString, response.toKotlinString())
         return response
     }
 
     override fun removeUser(accessToken: AccessToken, userName: String) {
-        val requestString = "removeUser(${accessToken.toKotlinString()}, ${userName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${userName.toKotlinString()}"
+        serviceRequestEvent("removeUser", requestString)
         val response = service.removeUser(accessToken, userName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("removeUser", requestString, response.toKotlinString())
         return response
     }
 
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> {
-        val requestString = "listUsers(${accessToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("listUsers", requestString)
         val response = service.listUsers(accessToken)
-        serviceResponseEvent(requestString, response.map { it.toKotlinString() }.toKotlinString())
+        serviceResponseEvent("listUsers", requestString, response.map { it.toKotlinString() }.toKotlinString())
         return response
     }
 
     override fun addElection(accessToken: AccessToken, electionName: String) {
-        val requestString = "addElection(${accessToken.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("addElection", requestString)
         val response = service.addElection(accessToken, electionName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("addElection", requestString, response.toKotlinString())
         return response
     }
 
     override fun launchElection(accessToken: AccessToken, electionName: String, allowEdit: Boolean) {
         val requestString =
-            "launchElection(${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${allowEdit.toKotlinString()})"
-        serviceRequestEvent(requestString)
+            "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${allowEdit.toKotlinString()}"
+        serviceRequestEvent("launchElection", requestString)
         val response = service.launchElection(accessToken, electionName, allowEdit)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("launchElection", requestString, response.toKotlinString())
         return response
     }
 
     override fun finalizeElection(accessToken: AccessToken, electionName: String) {
         val requestString =
-            "finalizeElection(${accessToken.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+            "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("finalizeElection", requestString)
         val response = service.finalizeElection(accessToken, electionName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("finalizeElection", requestString, response.toKotlinString())
         return response
     }
 
     override fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates) {
         val requestString =
-            "updateElection(${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${electionUpdates.toKotlinString()})"
-        serviceRequestEvent(requestString)
+            "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${electionUpdates.toKotlinString()}"
+        serviceRequestEvent("updateElection", requestString)
         val response = service.updateElection(accessToken, electionName, electionUpdates)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("updateElection", requestString, response.toKotlinString())
         return response
     }
 
     override fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail {
-        val requestString = "getElection(${accessToken.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("getElection", requestString)
         val response = service.getElection(accessToken, electionName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("getElection", requestString, response.toKotlinString())
         return response
     }
 
     override fun deleteElection(accessToken: AccessToken, electionName: String) {
-        val requestString = "deleteElection(${accessToken.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("deleteElection", requestString)
         val response = service.deleteElection(accessToken, electionName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("deleteElection", requestString, response.toKotlinString())
         return response
     }
 
     override fun listElections(accessToken: AccessToken): List<ElectionSummary> {
-        val requestString = "listElections(${accessToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("listElections", requestString)
         val response = service.listElections(accessToken)
-        serviceResponseEvent(requestString, response.map { it.toKotlinString() }.toKotlinString())
+        serviceResponseEvent("listElections", requestString, response.map { it.toKotlinString() }.toKotlinString())
         return response
     }
 
     override fun listTables(accessToken: AccessToken): List<String> {
-        val requestString = "listTables(${accessToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("listTables", requestString)
         val response = service.listTables(accessToken)
-        serviceResponseEvent(requestString, response.map { it.toKotlinString() }.toKotlinString())
+        serviceResponseEvent("listTables", requestString, response.map { it.toKotlinString() }.toKotlinString())
         return response
     }
 
     override fun userCount(accessToken: AccessToken): Int {
-        val requestString = "userCount(${accessToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("userCount", requestString)
         val response = service.userCount(accessToken)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("userCount", requestString, response.toKotlinString())
         return response
     }
 
     override fun electionCount(accessToken: AccessToken): Int {
-        val requestString = "electionCount(${accessToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("electionCount", requestString)
         val response = service.electionCount(accessToken)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("electionCount", requestString, response.toKotlinString())
         return response
     }
 
     override fun tableCount(accessToken: AccessToken): Int {
-        val requestString = "tableCount(${accessToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("tableCount", requestString)
         val response = service.tableCount(accessToken)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("tableCount", requestString, response.toKotlinString())
         return response
     }
 
     override fun eventCount(accessToken: AccessToken): Int {
-        val requestString = "eventCount(${accessToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("eventCount", requestString)
         val response = service.eventCount(accessToken)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("eventCount", requestString, response.toKotlinString())
         return response
     }
 
     override fun tableData(accessToken: AccessToken, tableName: String): TableData {
-        val requestString = "tableData(${accessToken.toKotlinString()}, ${tableName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${tableName.toKotlinString()}"
+        serviceRequestEvent("tableData", requestString)
         val response = service.tableData(accessToken, tableName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("tableData", requestString, response.toKotlinString())
         return response
     }
 
     override fun debugTableData(accessToken: AccessToken, tableName: String): TableData {
-        val requestString = "debugTableData(${accessToken.toKotlinString()}, ${tableName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${tableName.toKotlinString()}"
+        serviceRequestEvent("debugTableData", requestString)
         val response = service.debugTableData(accessToken, tableName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("debugTableData", requestString, response.toKotlinString())
         return response
     }
 
     override fun eventData(accessToken: AccessToken): TableData {
-        val requestString = "eventData(${accessToken.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("eventData", requestString)
         val response = service.eventData(accessToken)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("eventData", requestString, response.toKotlinString())
         return response
     }
 
     override fun setCandidates(accessToken: AccessToken, electionName: String, candidateNames: List<String>) {
-        val requestString = "setCandidates(${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${
+        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${
             candidateNames.map { it.toKotlinString() }.toKotlinString()
-        })"
-        serviceRequestEvent(requestString)
+        }"
+        serviceRequestEvent("setCandidates", requestString)
         val response = service.setCandidates(accessToken, electionName, candidateNames)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("setCandidates", requestString, response.toKotlinString())
         return response
     }
 
     override fun listCandidates(accessToken: AccessToken, electionName: String): List<String> {
-        val requestString = "listCandidates(${accessToken.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("listCandidates", requestString)
         val response = service.listCandidates(accessToken, electionName)
-        serviceResponseEvent(requestString, response.map { it.toKotlinString() }.toKotlinString())
+        serviceResponseEvent("listCandidates", requestString, response.map { it.toKotlinString() }.toKotlinString())
         return response
     }
 
@@ -224,65 +224,65 @@ class RecordingService(
         rankings: List<Ranking>
     ) {
         val requestString =
-            "castBallot(${accessToken.toKotlinString()}, ${voterName.toKotlinString()}, ${electionName.toKotlinString()}, ${
+            "${accessToken.toKotlinString()}, ${voterName.toKotlinString()}, ${electionName.toKotlinString()}, ${
                 rankings.map { it.toKotlinString() }.toKotlinString()
-            })"
-        serviceRequestEvent(requestString)
+            }"
+        serviceRequestEvent("castBallot", requestString)
         val response = service.castBallot(accessToken, voterName, electionName, rankings)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("castBallot", requestString, response.toKotlinString())
         return response
     }
 
     override fun listRankings(accessToken: AccessToken, voterName: String, electionName: String): List<Ranking> {
         val requestString =
-            "listRankings(${accessToken.toKotlinString()}, ${voterName.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+            "${accessToken.toKotlinString()}, ${voterName.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("listRankings", requestString)
         val response = service.listRankings(accessToken, voterName, electionName)
-        serviceResponseEvent(requestString, response.map { it.toKotlinString() }.toKotlinString())
+        serviceResponseEvent("listRankings", requestString, response.map { it.toKotlinString() }.toKotlinString())
         return response
     }
 
     override fun tally(accessToken: AccessToken, electionName: String): Tally {
-        val requestString = "tally(${accessToken.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("tally", requestString)
         val response = service.tally(accessToken, electionName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("tally", requestString, response.toKotlinString())
         return response
     }
 
     override fun listEligibility(accessToken: AccessToken, electionName: String): List<VoterEligibility> {
-        val requestString = "listEligibility(${accessToken.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("listEligibility", requestString)
         val response = service.listEligibility(accessToken, electionName)
-        serviceResponseEvent(requestString, response.map { it.toKotlinString() }.toKotlinString())
+        serviceResponseEvent("listEligibility", requestString, response.map { it.toKotlinString() }.toKotlinString())
         return response
     }
 
     override fun setEligibleVoters(accessToken: AccessToken, electionName: String, userNames: List<String>) {
-        val requestString = "setEligibleVoters(${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${
+        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${
             userNames.map { it.toKotlinString() }.toKotlinString()
-        })"
-        serviceRequestEvent(requestString)
+        }"
+        serviceRequestEvent("setEligibleVoters", requestString)
         val response = service.setEligibleVoters(accessToken, electionName, userNames)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("setEligibleVoters", requestString, response.toKotlinString())
         return response
     }
 
     override fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean {
         val requestString =
-            "isEligible(${accessToken.toKotlinString()}, ${userName.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+            "${accessToken.toKotlinString()}, ${userName.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("isEligible", requestString)
         val response = service.isEligible(accessToken, userName, electionName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("isEligible", requestString, response.toKotlinString())
         return response
     }
 
     override fun getBallot(accessToken: AccessToken, voterName: String, electionName: String): BallotSummary? {
         val requestString =
-            "getBallot(${accessToken.toKotlinString()}, ${voterName.toKotlinString()}, ${electionName.toKotlinString()})"
-        serviceRequestEvent(requestString)
+            "${accessToken.toKotlinString()}, ${voterName.toKotlinString()}, ${electionName.toKotlinString()}"
+        serviceRequestEvent("getBallot", requestString)
         val response = service.getBallot(accessToken, voterName, electionName)
-        serviceResponseEvent(requestString, response.toKotlinString())
+        serviceResponseEvent("getBallot", requestString, response.toKotlinString())
         return response
     }
 
