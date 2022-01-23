@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.domain
 
+import com.seanshubin.condorcet.backend.domain.Ballot.Companion.effectiveRankings
 import com.seanshubin.condorcet.backend.domain.Ballot.Companion.sortRankingsByName
 import com.seanshubin.condorcet.backend.domain.Preference.Companion.places
 import com.seanshubin.condorcet.backend.domain.Preference.Companion.strongestPaths
@@ -43,7 +44,7 @@ data class Tally(
                 val strongestPaths = preferences.strongestPaths()
                 val places = strongestPaths.places(candidates)
                 val whoVoted = rawBallots.map { it.voterName }.sorted()
-                val rankSortedBallots = rawBallots.sortRankingsByName()
+                val rankSortedBallots = rawBallots.effectiveRankings(candidates).sortRankingsByName()
                 val ballots = if (secretBallot) {
                     rankSortedBallots.map { it.makeSecret() }.sortedBy { it.confirmation }
                 } else {
@@ -76,6 +77,5 @@ data class Tally(
                     }
                 }
         }
-
     }
 }

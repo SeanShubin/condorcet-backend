@@ -34,7 +34,7 @@ data class Ranking(val candidateName: String, val rank: Int?) {
             return this + newRankings
         }
 
-        fun List<Ranking>.effectiveRankings():List<Ranking> {
+        fun List<Ranking>.normalizeRankings():List<Ranking> {
             val distinctOrderedRanks = this.mapNotNull { it.rank }.distinct().sorted()
             val normalized =(1..distinctOrderedRanks.size)
             val newRankMap = distinctOrderedRanks.zip(normalized).toMap()
@@ -45,5 +45,8 @@ data class Ranking(val candidateName: String, val rank: Int?) {
             }
             return result
         }
+
+        fun List<Ranking>.effectiveRankings(candidateNames:List<String>):List<Ranking> =
+            addMissingCandidates(candidateNames).normalizeRankings()
     }
 }

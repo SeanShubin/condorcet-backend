@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.domain
 
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.effectiveRankings
 import java.time.Instant
 
 data class Ballot(
@@ -13,5 +14,7 @@ data class Ballot(
     companion object{
         fun List<Ballot>.sortRankingsByName():List<Ballot> =
             map{ ballot -> ballot.copy(rankings = ballot.rankings.sortedBy { it.candidateName })}
+        fun List<Ballot>.effectiveRankings(candidateNames:List<String>):List<Ballot> =
+            map{ ballot -> ballot.copy(rankings = ballot.rankings.effectiveRankings(candidateNames).sortedBy { it.candidateName })}
     }
 }

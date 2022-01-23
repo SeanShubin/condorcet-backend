@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.domain
 
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
-import com.seanshubin.condorcet.backend.domain.Ranking.Companion.effectiveRankings
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankings
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import kotlin.random.Random
 import kotlin.test.Test
@@ -43,7 +43,7 @@ class RankingTest {
     }
 
     @Test
-    fun effectiveRankings() {
+    fun normalizeRankings() {
         val a = Ranking("a", -4)
         val b = Ranking("b", 9)
         val c = Ranking("c", 2)
@@ -55,7 +55,7 @@ class RankingTest {
         val i = Ranking("i", 0)
         val j = Ranking("j", 2)
         val input = listOf(a, b, c, d, e, f, g, h, i, j)
-        val actual = input.effectiveRankings()
+        val actual = input.normalizeRankings()
         val expected = listOf(
             Ranking("a", 1),
             Ranking("b", 6),

@@ -10,7 +10,7 @@ import com.seanshubin.condorcet.backend.database.DbElectionUpdates.Companion.toD
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
-import com.seanshubin.condorcet.backend.domain.Ranking.Companion.effectiveRankings
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankings
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import com.seanshubin.condorcet.backend.domain.Role.Companion.SECONDARY_ROLE
 import com.seanshubin.condorcet.backend.domain.Role.Companion.PRIMARY_ROLE
@@ -418,7 +418,7 @@ class BaseService(
         electionName: String,
         rankings: List<Ranking>
     ) {
-        val effectiveRankings = rankings.effectiveRankings()
+        val effectiveRankings = rankings.normalizeRankings()
         val now = clock.instant()
         val confirmation = uniqueIdGenerator.uniqueId()
         stateDbCommands.castBallot(
@@ -437,7 +437,7 @@ class BaseService(
         confirmation: String,
         rankings: List<Ranking>
     ) {
-        val effectiveRankings = rankings.effectiveRankings()
+        val effectiveRankings = rankings.normalizeRankings()
         val now = clock.instant()
         stateDbCommands.setRankings(voterName, confirmation, electionName, effectiveRankings)
         stateDbCommands.updateWhenCast(voterName, confirmation, now)
