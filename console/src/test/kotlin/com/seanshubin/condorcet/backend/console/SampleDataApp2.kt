@@ -98,5 +98,15 @@ object SampleDataApp2 {
         service.castBallot(eve, "Eve", "Credible Compromise", listOf(Ranking("Obscure C", 1),Ranking("Wide Appeal", 2)))
         service.finalizeElection(ivy, "Credible Compromise")
 
+        // Pets
+        service.addElection(judy, "Pets")
+        service.updateElection(judy, "Pets", ElectionUpdates(secretBallot = false))
+        service.setCandidates(judy, "Pets", listOf("Cat", "Dog", "Fish", "Bird", "Snake", "Spider", "Lizard", "Ferret"))
+        service.launchElection(judy, "Pets", allowEdit = false)
+        service.castBallot(alice, "Alice", "Pets", listOf(Ranking("Dog", 1),Ranking("Cat", 2),Ranking("Lizard", 3),Ranking("Fish", 4),Ranking("Spider", 5),Ranking("Snake", 6),Ranking("Bird", 7),Ranking("Ferret", 8)))
+        service.castBallot(bob, "Bob", "Pets", listOf(Ranking("Dog", 1),Ranking("Snake", 2),Ranking("Spider", 3),Ranking("Lizard", 4),Ranking("Cat", 5),Ranking("Fish", 6),Ranking("Bird", 7),Ranking("Ferret", 8)))
+        service.castBallot(carol, "Carol", "Pets", listOf(Ranking("Spider", 1),Ranking("Snake", 2),Ranking("Ferret", 3),Ranking("Cat", 4),Ranking("Dog", 5),Ranking("Lizard", 6),Ranking("Bird", 7),Ranking("Fish", 8)))
+        service.castBallot(dave, "Dave", "Pets", listOf(Ranking("Fish", 2),Ranking("Bird", 1),Ranking("Lizard", 3),Ranking("Dog", 4),Ranking("Spider", 8),Ranking("Ferret", 6),Ranking("Cat", 7),Ranking("Snake", 5)))
+        service.finalizeElection(judy, "Pets")
     }
 }

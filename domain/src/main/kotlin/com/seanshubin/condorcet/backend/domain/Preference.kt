@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.domain
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
+import com.seanshubin.condorcet.backend.domain.Place.Companion.adjustForTies
 import com.seanshubin.condorcet.backend.table.RowStyleTableFormatter
 
 @JsonPropertyOrder("path", "strengths", "origin", "strength", "destination")
@@ -124,7 +125,7 @@ class Preference private constructor(val path: List<String>, val strengths: List
                     Place(rank, candidates[index])
                 }.sortedBy { it.candidateName }
             }
-            return placeList
+            return placeList.adjustForTies()
         }
 
         fun List<List<Preference>>.toLines(): List<String> = RowStyleTableFormatter.minimal.format(this)

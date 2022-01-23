@@ -372,6 +372,8 @@ class RecordingService(
     private fun listListPreferenceToKotlinString(list: List<List<Preference>>): String =
         list.map { listPreferenceToKotlinString(it) }.toKotlinString()
 
+    private fun Place.toKotlinString(): String = """Place($rank, "$candidateName")"""
+
     private fun Tally.toKotlinString(): String =
         "Tally(" +
                 "${candidateNames.map { it.toKotlinString() }.toKotlinString()}, " +
