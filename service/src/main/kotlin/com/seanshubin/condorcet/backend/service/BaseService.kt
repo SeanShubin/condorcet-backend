@@ -527,7 +527,7 @@ class BaseService(
 
     private fun requireIsElectionOwner(accessToken: AccessToken, election:ElectionRow){
         if(accessToken.userName != election.owner){
-            fail(UNAUTHORIZED, "Election ${election.name} is owned by ${election.owner} not, ${accessToken.userName}")
+            fail(UNAUTHORIZED, "Election ${election.name} is owned by ${election.owner}, not ${accessToken.userName}")
         }
     }
 
