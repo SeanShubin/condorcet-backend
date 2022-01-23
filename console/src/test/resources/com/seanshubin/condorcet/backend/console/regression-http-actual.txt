@@ -600,7 +600,7 @@ Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyTmFtZSI6IkFsaWNlIn0
 200
 Content-Type: application/json
 {
-  "candidateNames" : [ "Butter Pecan", "Chocolate", "Chocolate Chip", "Mint", "Neapolitan", "Vanilla" ],
+  "candidateNames" : [ "Chocolate Chip", "Chocolate", "Mint", "Neapolitan", "Vanilla", "Butter Pecan" ],
   "secretBallot" : true,
   "ballots" : [ {
     "voterName" : "<redacted>",
@@ -676,59 +676,53 @@ Content-Type: application/json
     } ]
   } ],
   "preferences" : [ [ {
-    "path" : [ "Butter Pecan", "Butter Pecan" ],
+    "path" : [ "Chocolate Chip", "Chocolate Chip" ],
     "strengths" : [ 0 ],
-    "origin" : "Butter Pecan",
-    "strength" : 0,
-    "destination" : "Butter Pecan"
-  }, {
-    "path" : [ "Butter Pecan", "Chocolate" ],
-    "strengths" : [ 0 ],
-    "origin" : "Butter Pecan",
-    "strength" : 0,
-    "destination" : "Chocolate"
-  }, {
-    "path" : [ "Butter Pecan", "Chocolate Chip" ],
-    "strengths" : [ 0 ],
-    "origin" : "Butter Pecan",
+    "origin" : "Chocolate Chip",
     "strength" : 0,
     "destination" : "Chocolate Chip"
   }, {
-    "path" : [ "Butter Pecan", "Mint" ],
-    "strengths" : [ 1 ],
-    "origin" : "Butter Pecan",
-    "strength" : 1,
+    "path" : [ "Chocolate Chip", "Chocolate" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 2,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Chocolate Chip", "Mint" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 2,
     "destination" : "Mint"
   }, {
-    "path" : [ "Butter Pecan", "Neapolitan" ],
-    "strengths" : [ 1 ],
-    "origin" : "Butter Pecan",
-    "strength" : 1,
+    "path" : [ "Chocolate Chip", "Neapolitan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
     "destination" : "Neapolitan"
   }, {
-    "path" : [ "Butter Pecan", "Vanilla" ],
-    "strengths" : [ 0 ],
-    "origin" : "Butter Pecan",
-    "strength" : 0,
-    "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Chocolate", "Butter Pecan" ],
+    "path" : [ "Chocolate Chip", "Vanilla" ],
     "strengths" : [ 3 ],
-    "origin" : "Chocolate",
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
+    "destination" : "Vanilla"
+  }, {
+    "path" : [ "Chocolate Chip", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
     "strength" : 3,
     "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Chocolate", "Chocolate Chip" ],
+    "strengths" : [ 1 ],
+    "origin" : "Chocolate",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Chocolate", "Chocolate" ],
     "strengths" : [ 0 ],
     "origin" : "Chocolate",
     "strength" : 0,
     "destination" : "Chocolate"
-  }, {
-    "path" : [ "Chocolate", "Chocolate Chip" ],
-    "strengths" : [ 1 ],
-    "origin" : "Chocolate",
-    "strength" : 1,
-    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Chocolate", "Mint" ],
     "strengths" : [ 2 ],
@@ -747,60 +741,24 @@ Content-Type: application/json
     "origin" : "Chocolate",
     "strength" : 3,
     "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Chocolate Chip", "Butter Pecan" ],
+  }, {
+    "path" : [ "Chocolate", "Butter Pecan" ],
     "strengths" : [ 3 ],
-    "origin" : "Chocolate Chip",
+    "origin" : "Chocolate",
     "strength" : 3,
     "destination" : "Butter Pecan"
-  }, {
-    "path" : [ "Chocolate Chip", "Chocolate" ],
-    "strengths" : [ 2 ],
-    "origin" : "Chocolate Chip",
-    "strength" : 2,
-    "destination" : "Chocolate"
-  }, {
-    "path" : [ "Chocolate Chip", "Chocolate Chip" ],
-    "strengths" : [ 0 ],
-    "origin" : "Chocolate Chip",
-    "strength" : 0,
-    "destination" : "Chocolate Chip"
-  }, {
-    "path" : [ "Chocolate Chip", "Mint" ],
-    "strengths" : [ 2 ],
-    "origin" : "Chocolate Chip",
-    "strength" : 2,
-    "destination" : "Mint"
-  }, {
-    "path" : [ "Chocolate Chip", "Neapolitan" ],
-    "strengths" : [ 3 ],
-    "origin" : "Chocolate Chip",
-    "strength" : 3,
-    "destination" : "Neapolitan"
-  }, {
-    "path" : [ "Chocolate Chip", "Vanilla" ],
-    "strengths" : [ 3 ],
-    "origin" : "Chocolate Chip",
-    "strength" : 3,
-    "destination" : "Vanilla"
   } ], [ {
-    "path" : [ "Mint", "Butter Pecan" ],
-    "strengths" : [ 2 ],
+    "path" : [ "Mint", "Chocolate Chip" ],
+    "strengths" : [ 1 ],
     "origin" : "Mint",
-    "strength" : 2,
-    "destination" : "Butter Pecan"
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Mint", "Chocolate" ],
     "strengths" : [ 1 ],
     "origin" : "Mint",
     "strength" : 1,
     "destination" : "Chocolate"
-  }, {
-    "path" : [ "Mint", "Chocolate Chip" ],
-    "strengths" : [ 1 ],
-    "origin" : "Mint",
-    "strength" : 1,
-    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Mint", "Mint" ],
     "strengths" : [ 0 ],
@@ -819,24 +777,24 @@ Content-Type: application/json
     "origin" : "Mint",
     "strength" : 1,
     "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Neapolitan", "Butter Pecan" ],
+  }, {
+    "path" : [ "Mint", "Butter Pecan" ],
     "strengths" : [ 2 ],
-    "origin" : "Neapolitan",
+    "origin" : "Mint",
     "strength" : 2,
     "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Neapolitan", "Chocolate Chip" ],
+    "strengths" : [ 0 ],
+    "origin" : "Neapolitan",
+    "strength" : 0,
+    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Neapolitan", "Chocolate" ],
     "strengths" : [ 2 ],
     "origin" : "Neapolitan",
     "strength" : 2,
     "destination" : "Chocolate"
-  }, {
-    "path" : [ "Neapolitan", "Chocolate Chip" ],
-    "strengths" : [ 0 ],
-    "origin" : "Neapolitan",
-    "strength" : 0,
-    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Neapolitan", "Mint" ],
     "strengths" : [ 1 ],
@@ -855,24 +813,24 @@ Content-Type: application/json
     "origin" : "Neapolitan",
     "strength" : 2,
     "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Vanilla", "Butter Pecan" ],
-    "strengths" : [ 3 ],
-    "origin" : "Vanilla",
-    "strength" : 3,
+  }, {
+    "path" : [ "Neapolitan", "Butter Pecan" ],
+    "strengths" : [ 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
     "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Vanilla", "Chocolate Chip" ],
+    "strengths" : [ 0 ],
+    "origin" : "Vanilla",
+    "strength" : 0,
+    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Vanilla", "Chocolate" ],
     "strengths" : [ 0 ],
     "origin" : "Vanilla",
     "strength" : 0,
     "destination" : "Chocolate"
-  }, {
-    "path" : [ "Vanilla", "Chocolate Chip" ],
-    "strengths" : [ 0 ],
-    "origin" : "Vanilla",
-    "strength" : 0,
-    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Vanilla", "Mint" ],
     "strengths" : [ 2 ],
@@ -891,25 +849,24 @@ Content-Type: application/json
     "origin" : "Vanilla",
     "strength" : 0,
     "destination" : "Vanilla"
-  } ] ],
-  "strongestPathMatrix" : [ [ {
-    "path" : [ "Butter Pecan", "Butter Pecan" ],
+  }, {
+    "path" : [ "Vanilla", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Vanilla",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Butter Pecan", "Chocolate Chip" ],
     "strengths" : [ 0 ],
     "origin" : "Butter Pecan",
     "strength" : 0,
-    "destination" : "Butter Pecan"
-  }, {
-    "path" : [ "Butter Pecan", "Mint", "Chocolate" ],
-    "strengths" : [ 1, 1 ],
-    "origin" : "Butter Pecan",
-    "strength" : 1,
-    "destination" : "Chocolate"
-  }, {
-    "path" : [ "Butter Pecan", "Mint", "Chocolate Chip" ],
-    "strengths" : [ 1, 1 ],
-    "origin" : "Butter Pecan",
-    "strength" : 1,
     "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Butter Pecan", "Chocolate" ],
+    "strengths" : [ 0 ],
+    "origin" : "Butter Pecan",
+    "strength" : 0,
+    "destination" : "Chocolate"
   }, {
     "path" : [ "Butter Pecan", "Mint" ],
     "strengths" : [ 1 ],
@@ -923,65 +880,30 @@ Content-Type: application/json
     "strength" : 1,
     "destination" : "Neapolitan"
   }, {
-    "path" : [ "Butter Pecan", "Mint", "Vanilla" ],
-    "strengths" : [ 1, 1 ],
-    "origin" : "Butter Pecan",
-    "strength" : 1,
-    "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Chocolate", "Butter Pecan" ],
-    "strengths" : [ 3 ],
-    "origin" : "Chocolate",
-    "strength" : 3,
-    "destination" : "Butter Pecan"
-  }, {
-    "path" : [ "Chocolate", "Chocolate" ],
+    "path" : [ "Butter Pecan", "Vanilla" ],
     "strengths" : [ 0 ],
-    "origin" : "Chocolate",
+    "origin" : "Butter Pecan",
     "strength" : 0,
-    "destination" : "Chocolate"
-  }, {
-    "path" : [ "Chocolate", "Chocolate Chip" ],
-    "strengths" : [ 1 ],
-    "origin" : "Chocolate",
-    "strength" : 1,
-    "destination" : "Chocolate Chip"
-  }, {
-    "path" : [ "Chocolate", "Mint" ],
-    "strengths" : [ 2 ],
-    "origin" : "Chocolate",
-    "strength" : 2,
-    "destination" : "Mint"
-  }, {
-    "path" : [ "Chocolate", "Mint", "Neapolitan" ],
-    "strengths" : [ 2, 2 ],
-    "origin" : "Chocolate",
-    "strength" : 2,
-    "destination" : "Neapolitan"
-  }, {
-    "path" : [ "Chocolate", "Vanilla" ],
-    "strengths" : [ 3 ],
-    "origin" : "Chocolate",
-    "strength" : 3,
     "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Chocolate Chip", "Butter Pecan" ],
-    "strengths" : [ 3 ],
-    "origin" : "Chocolate Chip",
-    "strength" : 3,
+  }, {
+    "path" : [ "Butter Pecan", "Butter Pecan" ],
+    "strengths" : [ 0 ],
+    "origin" : "Butter Pecan",
+    "strength" : 0,
     "destination" : "Butter Pecan"
+  } ] ],
+  "strongestPathMatrix" : [ [ {
+    "path" : [ "Chocolate Chip", "Chocolate Chip" ],
+    "strengths" : [ 0 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 0,
+    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Chocolate Chip", "Chocolate" ],
     "strengths" : [ 2 ],
     "origin" : "Chocolate Chip",
     "strength" : 2,
     "destination" : "Chocolate"
-  }, {
-    "path" : [ "Chocolate Chip", "Chocolate Chip" ],
-    "strengths" : [ 0 ],
-    "origin" : "Chocolate Chip",
-    "strength" : 0,
-    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Chocolate Chip", "Mint" ],
     "strengths" : [ 2 ],
@@ -1000,24 +922,60 @@ Content-Type: application/json
     "origin" : "Chocolate Chip",
     "strength" : 3,
     "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Mint", "Butter Pecan" ],
-    "strengths" : [ 2 ],
-    "origin" : "Mint",
-    "strength" : 2,
+  }, {
+    "path" : [ "Chocolate Chip", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate Chip",
+    "strength" : 3,
     "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Chocolate", "Chocolate Chip" ],
+    "strengths" : [ 1 ],
+    "origin" : "Chocolate",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Chocolate", "Chocolate" ],
+    "strengths" : [ 0 ],
+    "origin" : "Chocolate",
+    "strength" : 0,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Chocolate", "Mint" ],
+    "strengths" : [ 2 ],
+    "origin" : "Chocolate",
+    "strength" : 2,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Chocolate", "Mint", "Neapolitan" ],
+    "strengths" : [ 2, 2 ],
+    "origin" : "Chocolate",
+    "strength" : 2,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Chocolate", "Vanilla" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate",
+    "strength" : 3,
+    "destination" : "Vanilla"
+  }, {
+    "path" : [ "Chocolate", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Chocolate",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Mint", "Chocolate Chip" ],
+    "strengths" : [ 1 ],
+    "origin" : "Mint",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Mint", "Neapolitan", "Chocolate" ],
     "strengths" : [ 2, 2 ],
     "origin" : "Mint",
     "strength" : 2,
     "destination" : "Chocolate"
-  }, {
-    "path" : [ "Mint", "Chocolate Chip" ],
-    "strengths" : [ 1 ],
-    "origin" : "Mint",
-    "strength" : 1,
-    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Mint", "Mint" ],
     "strengths" : [ 0 ],
@@ -1036,24 +994,24 @@ Content-Type: application/json
     "origin" : "Mint",
     "strength" : 2,
     "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Neapolitan", "Butter Pecan" ],
+  }, {
+    "path" : [ "Mint", "Butter Pecan" ],
     "strengths" : [ 2 ],
-    "origin" : "Neapolitan",
+    "origin" : "Mint",
     "strength" : 2,
     "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Neapolitan", "Chocolate", "Chocolate Chip" ],
+    "strengths" : [ 2, 1 ],
+    "origin" : "Neapolitan",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Neapolitan", "Chocolate" ],
     "strengths" : [ 2 ],
     "origin" : "Neapolitan",
     "strength" : 2,
     "destination" : "Chocolate"
-  }, {
-    "path" : [ "Neapolitan", "Chocolate", "Chocolate Chip" ],
-    "strengths" : [ 2, 1 ],
-    "origin" : "Neapolitan",
-    "strength" : 1,
-    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Neapolitan", "Chocolate", "Mint" ],
     "strengths" : [ 2, 2 ],
@@ -1072,24 +1030,24 @@ Content-Type: application/json
     "origin" : "Neapolitan",
     "strength" : 2,
     "destination" : "Vanilla"
-  } ], [ {
-    "path" : [ "Vanilla", "Butter Pecan" ],
-    "strengths" : [ 3 ],
-    "origin" : "Vanilla",
-    "strength" : 3,
+  }, {
+    "path" : [ "Neapolitan", "Butter Pecan" ],
+    "strengths" : [ 2 ],
+    "origin" : "Neapolitan",
+    "strength" : 2,
     "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Vanilla", "Mint", "Chocolate Chip" ],
+    "strengths" : [ 2, 1 ],
+    "origin" : "Vanilla",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Vanilla", "Mint", "Neapolitan", "Chocolate" ],
     "strengths" : [ 2, 2, 2 ],
     "origin" : "Vanilla",
     "strength" : 2,
     "destination" : "Chocolate"
-  }, {
-    "path" : [ "Vanilla", "Mint", "Chocolate Chip" ],
-    "strengths" : [ 2, 1 ],
-    "origin" : "Vanilla",
-    "strength" : 1,
-    "destination" : "Chocolate Chip"
   }, {
     "path" : [ "Vanilla", "Mint" ],
     "strengths" : [ 2 ],
@@ -1108,6 +1066,48 @@ Content-Type: application/json
     "origin" : "Vanilla",
     "strength" : 0,
     "destination" : "Vanilla"
+  }, {
+    "path" : [ "Vanilla", "Butter Pecan" ],
+    "strengths" : [ 3 ],
+    "origin" : "Vanilla",
+    "strength" : 3,
+    "destination" : "Butter Pecan"
+  } ], [ {
+    "path" : [ "Butter Pecan", "Mint", "Chocolate Chip" ],
+    "strengths" : [ 1, 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Chocolate Chip"
+  }, {
+    "path" : [ "Butter Pecan", "Mint", "Chocolate" ],
+    "strengths" : [ 1, 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Chocolate"
+  }, {
+    "path" : [ "Butter Pecan", "Mint" ],
+    "strengths" : [ 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Mint"
+  }, {
+    "path" : [ "Butter Pecan", "Neapolitan" ],
+    "strengths" : [ 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Neapolitan"
+  }, {
+    "path" : [ "Butter Pecan", "Mint", "Vanilla" ],
+    "strengths" : [ 1, 1 ],
+    "origin" : "Butter Pecan",
+    "strength" : 1,
+    "destination" : "Vanilla"
+  }, {
+    "path" : [ "Butter Pecan", "Butter Pecan" ],
+    "strengths" : [ 0 ],
+    "origin" : "Butter Pecan",
+    "strength" : 0,
+    "destination" : "Butter Pecan"
   } ] ],
   "places" : [ {
     "rank" : 1,

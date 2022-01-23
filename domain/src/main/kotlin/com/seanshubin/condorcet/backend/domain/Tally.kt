@@ -34,8 +34,19 @@ data class Tally(
 
     companion object {
         fun countBallots(secretBallot: Boolean, candidates: List<String>, ballots: List<Ballot>): Tally {
-            return BallotCounter(secretBallot, candidates, ballots).countBallots()
+            val initialTally = BallotCounter(secretBallot, candidates, ballots).countBallots()
+            val candidatesSortedByPlaceThenAlpha = initialTally.places.map {it.candidateName}
+            val sortedTallyToMakeItEasierToExplainResults = BallotCounter(secretBallot, candidatesSortedByPlaceThenAlpha, ballots).countBallots()
+            placesBetterNotHaveChangedOrAlgorithmIsBroken(initialTally.places, sortedTallyToMakeItEasierToExplainResults.places)
+            return sortedTallyToMakeItEasierToExplainResults
         }
+
+        private fun placesBetterNotHaveChangedOrAlgorithmIsBroken(first: List<Place>, second: List<Place>) {
+            require(first == second){
+                "Changing the order of candidates affected the results, something is wrong with the algorithm\n$first\n$second"
+            }
+        }
+
 
         class BallotCounter(val secretBallot: Boolean, val candidates: List<String>, val rawBallots: List<Ballot>) {
             fun countBallots(): Tally {

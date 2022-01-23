@@ -122,7 +122,7 @@ class Preference private constructor(val path: List<String>, val strengths: List
                 groupedByPlace[placeIndex].map { index ->
                     val rank = sizes.take(placeIndex).sum() + 1
                     Place(rank, candidates[index])
-                }
+                }.sortedBy { it.candidateName }
             }
             return placeList
         }
