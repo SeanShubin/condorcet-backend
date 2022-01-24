@@ -48,5 +48,10 @@ data class Ranking(val candidateName: String, val rank: Int?) {
 
         fun List<Ranking>.effectiveRankings(candidateNames:List<String>):List<Ranking> =
             addMissingCandidates(candidateNames).normalizeRankings()
+
+        fun List<Ranking>.matchOrderToCandidates(candidateNames:List<String>):List<Ranking> {
+            val byCandidate = this.associateBy { it.candidateName }
+            return candidateNames.map{byCandidate.getValue(it)}
+        }
     }
 }
