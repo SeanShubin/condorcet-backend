@@ -89,14 +89,6 @@ create table ranking (
     primary key(id)
 );
 alter table ranking add unique unique_ranking(ballot_id, candidate_id);
-create table tally (
-    id int not null auto_increment,
-    election_id int not null,
-    foreign key fk_election(election_id) references election(id),
-    report text not null,
-    primary key(id)
-);
-alter table tally add unique unique_tally(election_id);
 insert into role_permission (role, permission)
 values ('OWNER', 'TRANSFER_OWNER');
 insert into role_permission (role, permission)
@@ -138,7 +130,6 @@ select * from candidate;
 select * from voter;
 select * from ballot;
 select * from ranking;
-select * from tally;
 use condorcet_regression_test_event_can_be_purged;
 select event.id,
        event.`when`,
@@ -212,10 +203,3 @@ from ranking
 order by election.name,
          user.name,
          ranking.rank;
-select tally.id,
-       election.name election,
-       tally.report,
-       tally.election_id
-from tally
-         inner join election on tally.election_id = election.id
-order by tally.id;
