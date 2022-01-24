@@ -132,10 +132,6 @@ select * from ranking
 ╟──┼─────────┼────────────┼────╢
 ║20│        3│           4│   6║
 ╚══╧═════════╧════════════╧════╝
-select * from tally
-╔══╤═══════════╤══════╗
-║id│election_id│report║
-╚══╧═══════════╧══════╝
 select *
 from int_variable
 
@@ -334,14 +330,3 @@ order by election.name,
 ╟──┼──────────────────┼─────┼──────────────┼────┼────────────────────────────────────┼──────────────────────────┼───────────┼─────────┼────────────┼───────╢
 ║20│Favorite Ice Cream│Dave │Butter Pecan  │   6│26e73b89-e82a-4194-ae52-31ec033ee04f│2022-01-21T06:18:27.304843│          2│        3│           4│      4║
 ╚══╧══════════════════╧═════╧══════════════╧════╧════════════════════════════════════╧══════════════════════════╧═══════════╧═════════╧════════════╧═══════╝
-select tally.id,
-       election.name election,
-       tally.report,
-       tally.election_id
-from tally
-         inner join election on tally.election_id = election.id
-order by tally.id
-
-╔══╤════════╤══════╤═══════════╗
-║id│election│report│election_id║
-╚══╧════════╧══════╧═══════════╝

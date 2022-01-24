@@ -104,7 +104,7 @@ listCandidates(AccessToken("Alice", OWNER), "Favorite Ice Cream")
 listOf("Butter Pecan","Chocolate","Chocolate Chip","Mint","Neapolitan","Vanilla")
 
 listTables(AccessToken("Alice", OWNER))
-listOf("int_variable","role_permission","user","election","candidate","voter","ballot","ranking","tally")
+listOf("int_variable","role_permission","user","election","candidate","voter","ballot","ranking")
 
 userCount(AccessToken("Alice", OWNER))
 4
@@ -113,7 +113,7 @@ electionCount(AccessToken("Alice", OWNER))
 1
 
 tableCount(AccessToken("Alice", OWNER))
-9
+8
 
 eventCount(AccessToken("Alice", OWNER))
 21

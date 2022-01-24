@@ -66,13 +66,6 @@ object StateSchema : Schema {
         columns = listOf(rankingBallot, rankingCandidate, rankingRank),
         unique = listOf(rankingBallot, rankingCandidate)
     )
-    val tallyElection = ForeignKey("election", election)
-    val tallyReport = Field("report", TEXT)
-    val tally = Table(
-        "tally",
-        columns = listOf(tallyElection, tallyReport),
-        unique = listOf(tallyElection)
-    )
     override val tables = listOf(
         intVariable,
         rolePermission,
@@ -81,8 +74,7 @@ object StateSchema : Schema {
         candidate,
         voter,
         ballot,
-        ranking,
-        tally
+        ranking
     )
     override val initializeQueryName: String? = "state-db-initialize"
 }
