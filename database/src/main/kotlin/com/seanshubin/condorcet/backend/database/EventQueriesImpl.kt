@@ -3,7 +3,7 @@ package com.seanshubin.condorcet.backend.database
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.sql.ResultSet
 
-class EventDbQueriesImpl(genericDatabase: GenericDatabase) : EventDbQueries, GenericDatabase by genericDatabase {
+class EventQueriesImpl(genericDatabase: GenericDatabase) : EventQueries, GenericDatabase by genericDatabase {
     override fun eventsToSync(lastEventSynced: Int): List<EventRow> =
         query(::createEvent, "event-select-unsynced", lastEventSynced)
 

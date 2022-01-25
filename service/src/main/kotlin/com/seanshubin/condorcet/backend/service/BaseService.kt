@@ -24,9 +24,9 @@ import kotlin.random.Random
 
 class BaseService(
     private val passwordUtil: PasswordUtil,
-    private val eventDbQueries: EventDbQueries,
-    private val stateDbQueries: StateDbQueries,
-    private val stateDbCommands: StateDbCommands,
+    private val eventQueries: EventQueries,
+    private val stateQueries: StateQueries,
+    private val stateCommands: StateCommands,
     private val synchronizer: Synchronizer,
     private val random: Random,
     private val clock: Clock,
@@ -65,15 +65,15 @@ class BaseService(
     }
 
     override fun permissionsForRole(role: Role): List<Permission> =
-        stateDbQueries.listPermissions(role)
+        stateQueries.listPermissions(role)
 
     override fun setRole(accessToken: AccessToken, userName: String, role: Role) {
         requirePermission(accessToken, MANAGE_USERS)
         requireCanChangeRole(accessToken.userName, userName, role)
         if (role == PRIMARY_ROLE) {
-            stateDbCommands.setRole(accessToken.userName, accessToken.userName, SECONDARY_ROLE)
+            stateCommands.setRole(accessToken.userName, accessToken.userName, SECONDARY_ROLE)
         }
-        stateDbCommands.setRole(accessToken.userName, userName, role)
+        stateCommands.setRole(accessToken.userName, userName, role)
     }
 
     override fun removeUser(accessToken: AccessToken, userName: String) {
@@ -83,13 +83,13 @@ class BaseService(
         if(isSelf(accessToken, user) && userCount() > 1){
             fail(UNSUPPORTED,"Can not remove yourself unless you are the only user")
         }
-        stateDbCommands.removeUser(accessToken.userName, userName)
+        stateCommands.removeUser(accessToken.userName, userName)
     }
 
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> {
         requirePermission(accessToken, MANAGE_USERS)
         val self = findUserRolePermissions(accessToken.userName)
-        val user = stateDbQueries.listUsers()
+        val user = stateQueries.listUsers()
         val list = user.map { row ->
             val userRole = UserRole(row.name, row.role)
             val allowedRoles = self.listedRolesFor(userRole)
@@ -102,7 +102,7 @@ class BaseService(
         requirePermission(accessToken, USE_APPLICATION)
         val validElectionName = validateElectionName(electionName)
         requireElectionNameDoesNotExist(electionName)
-        stateDbCommands.addElection(accessToken.userName, accessToken.userName, validElectionName)
+        stateCommands.addElection(accessToken.userName, accessToken.userName, validElectionName)
     }
 
     override fun launchElection(accessToken: AccessToken, electionName: String, allowEdit: Boolean) {
@@ -110,7 +110,7 @@ class BaseService(
         requireIsElectionOwner(accessToken, electionName)
         requireHasMoreThanOneCandidate(electionName)
         val updates = ElectionUpdates(allowVote = true, allowEdit = allowEdit)
-        stateDbCommands.updateElection(accessToken.userName, electionName, updates)
+        stateCommands.updateElection(accessToken.userName, electionName, updates)
     }
 
     override fun finalizeElection(accessToken: AccessToken, electionName: String) {
@@ -119,7 +119,7 @@ class BaseService(
         requireIsElectionOwner(accessToken, election)
         requireHasNoEndDate(election, "Only elections with no end date can be manually finalized")
         val updates = ElectionUpdates(allowVote = false, allowEdit = false)
-        stateDbCommands.updateElection(accessToken.userName, electionName, updates)
+        stateCommands.updateElection(accessToken.userName, electionName, updates)
     }
 
     override fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates) {
@@ -128,14 +128,14 @@ class BaseService(
         requireIsElectionOwner(accessToken, election)
         requireNotLaunched(election)
         val validElectionUpdates = validateElectionUpdates(electionUpdates)
-        stateDbCommands.updateElection(accessToken.userName, electionName, validElectionUpdates)
+        stateCommands.updateElection(accessToken.userName, electionName, validElectionUpdates)
     }
 
     override fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail {
         requirePermission(accessToken, VIEW_APPLICATION)
         val election = findElection(electionName)
-        val candidateCount = stateDbQueries.candidateCount(electionName)
-        val voterCount = stateDbQueries.voterCount(electionName)
+        val candidateCount = stateQueries.candidateCount(electionName)
+        val voterCount = stateQueries.voterCount(electionName)
         val electionDetail = election.toElectionDetail(candidateCount, voterCount)
         return electionDetail
     }
@@ -143,55 +143,55 @@ class BaseService(
     override fun deleteElection(accessToken: AccessToken, electionName: String) {
         requirePermission(accessToken, USE_APPLICATION)
         requireIsElectionOwner(accessToken, electionName)
-        stateDbCommands.deleteElection(accessToken.userName, electionName)
+        stateCommands.deleteElection(accessToken.userName, electionName)
     }
 
     override fun listElections(accessToken: AccessToken): List<ElectionSummary> {
         requirePermission(accessToken, VIEW_APPLICATION)
-        val elections = stateDbQueries.listElections()
+        val elections = stateQueries.listElections()
         return elections
     }
 
     override fun listTables(accessToken: AccessToken): List<String> {
         requirePermission(accessToken, VIEW_SECRETS)
-        return stateDbQueries.tableNames(StateSchema)
+        return stateQueries.tableNames(StateSchema)
     }
 
     override fun userCount(accessToken: AccessToken): Int {
         requirePermission(accessToken, VIEW_APPLICATION)
-        return stateDbQueries.userCount()
+        return stateQueries.userCount()
     }
 
     override fun electionCount(accessToken: AccessToken): Int {
         requirePermission(accessToken, VIEW_APPLICATION)
-        return stateDbQueries.electionCount()
+        return stateQueries.electionCount()
     }
 
     override fun tableCount(accessToken: AccessToken): Int {
         requirePermission(accessToken, VIEW_SECRETS)
-        return stateDbQueries.tableCount()
+        return stateQueries.tableCount()
     }
 
     override fun eventCount(accessToken: AccessToken): Int {
         requirePermission(accessToken, VIEW_SECRETS)
-        return eventDbQueries.eventCount()
+        return eventQueries.eventCount()
     }
 
     override fun tableData(accessToken: AccessToken, tableName: String): TableData {
         requirePermission(accessToken, VIEW_SECRETS)
-        val genericTable = stateDbQueries.tableData(StateSchema, tableName)
+        val genericTable = stateQueries.tableData(StateSchema, tableName)
         return genericTable.toTableData()
     }
 
     override fun debugTableData(accessToken: AccessToken, tableName: String): TableData {
         requirePermission(accessToken, VIEW_SECRETS)
-        val genericTable = stateDbQueries.debugTableData(StateSchema, tableName)
+        val genericTable = stateQueries.debugTableData(StateSchema, tableName)
         return genericTable.toTableData()
     }
 
     override fun eventData(accessToken: AccessToken): TableData {
         requirePermission(accessToken, VIEW_SECRETS)
-        val genericTable = eventDbQueries.tableData(EventSchema, "event")
+        val genericTable = eventQueries.tableData(EventSchema, "event")
         return genericTable.toTableData()
     }
 
@@ -201,20 +201,20 @@ class BaseService(
         requireIsElectionOwner(accessToken, election)
         requireElectionCanEdit(election)
         val validCandidateNames = validateCandidateNames(candidateNames)
-        val originalCandidates = validateCandidateNames(stateDbQueries.listCandidates(electionName))
+        val originalCandidates = validateCandidateNames(stateQueries.listCandidates(electionName))
         val candidatesToDelete = originalCandidates.missing(validCandidateNames)
         val candidatesToAdd = originalCandidates.extra(validCandidateNames)
         if (candidatesToDelete.isNotEmpty()) {
-            stateDbCommands.removeCandidates(accessToken.userName, electionName, candidatesToDelete)
+            stateCommands.removeCandidates(accessToken.userName, electionName, candidatesToDelete)
         }
         if (candidatesToAdd.isNotEmpty()) {
-            stateDbCommands.addCandidates(accessToken.userName, electionName, candidatesToAdd)
+            stateCommands.addCandidates(accessToken.userName, electionName, candidatesToAdd)
         }
     }
 
     override fun listCandidates(accessToken: AccessToken, electionName: String): List<String> {
         requirePermission(accessToken, VIEW_APPLICATION)
-        val candidateNames = stateDbQueries.listCandidates(electionName)
+        val candidateNames = stateQueries.listCandidates(electionName)
         return candidateNames
     }
 
@@ -247,8 +247,8 @@ class BaseService(
             voterName,
             "User '${accessToken.userName}' not allowed to see ballot cast by voter '$voterName'"
         )
-        val candidates = stateDbQueries.listCandidates(electionName)
-        val rankings = stateDbQueries.listRankings(voterName, electionName)
+        val candidates = stateQueries.listCandidates(electionName)
+        val rankings = stateQueries.listRankings(voterName, electionName)
         return rankings.addMissingCandidates(candidates).voterBiasedOrdering(random)
     }
 
@@ -258,16 +258,16 @@ class BaseService(
         requireTallyAvailable(electionName, now)
         val election = findElection(electionName)
         val secretBallot = election.secretBallot
-        val candidates = stateDbQueries.listCandidates(electionName)
-        val ballots = stateDbQueries.listBallots(electionName)
+        val candidates = stateQueries.listCandidates(electionName)
+        val ballots = stateQueries.listBallots(electionName)
         val tally = Tally.countBallots(secretBallot, candidates, ballots)
         return tally
     }
 
     override fun listEligibility(accessToken: AccessToken, electionName: String): List<VoterEligibility> {
         requirePermission(accessToken, VIEW_APPLICATION)
-        val allVoters = stateDbQueries.listVoterNames()
-        val eligibleVoters = stateDbQueries.listVotersForElection(electionName)
+        val allVoters = stateQueries.listVoterNames()
+        val eligibleVoters = stateQueries.listVotersForElection(electionName)
         val list = allVoters.map {
             val eligible = eligibleVoters.contains(it)
             VoterEligibility(it, eligible)
@@ -281,14 +281,14 @@ class BaseService(
         requireIsElectionOwner(accessToken, election)
         requireElectionCanEdit(election)
         validateVoterNames(voterNames)
-        val originalVoters = stateDbQueries.listVotersForElection(electionName)
+        val originalVoters = stateQueries.listVotersForElection(electionName)
         val votersToDelete = originalVoters.missing(voterNames)
         val votersToAdd = originalVoters.extra(voterNames)
         if (votersToDelete.isNotEmpty()) {
-            stateDbCommands.removeVoters(accessToken.userName, electionName, votersToDelete)
+            stateCommands.removeVoters(accessToken.userName, electionName, votersToDelete)
         }
         if (votersToAdd.isNotEmpty()) {
-            stateDbCommands.addVoters(accessToken.userName, electionName, votersToAdd)
+            stateCommands.addVoters(accessToken.userName, electionName, votersToAdd)
         }
     }
 
@@ -296,13 +296,13 @@ class BaseService(
         requirePermission(accessToken, VIEW_APPLICATION)
         val now = clock.instant()
         requireCanSeeBallot(accessToken, voterName, electionName, now)
-        val ballotSummary = stateDbQueries.searchBallot(voterName, electionName)
+        val ballotSummary = stateQueries.searchBallot(voterName, electionName)
         return ballotSummary
     }
 
     override fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean {
         requirePermission(accessToken, VIEW_APPLICATION)
-        val eligibleVoters = stateDbQueries.listVotersForElection(electionName)
+        val eligibleVoters = stateQueries.listVotersForElection(electionName)
         return eligibleVoters.contains(userName)
     }
 
@@ -319,14 +319,14 @@ class BaseService(
     }
 
     private fun findUser(userName: String): UserRow {
-        return stateDbQueries.findUserByName(userName)
+        return stateQueries.findUserByName(userName)
     }
 
-    private fun userExists(name: String): Boolean = stateDbQueries.searchUserByName(name) != null
-    private fun emailExists(email: String): Boolean = stateDbQueries.searchUserByEmail(email) != null
+    private fun userExists(name: String): Boolean = stateQueries.searchUserByName(name) != null
+    private fun emailExists(email: String): Boolean = stateQueries.searchUserByEmail(email) != null
     private fun roleIsGreater(first: Role, second: Role): Boolean = first.ordinal > second.ordinal
     private fun hasPermission(role: Role, permission: Permission): Boolean =
-        stateDbQueries.roleHasPermission(role, permission)
+        stateQueries.roleHasPermission(role, permission)
 
     private fun hasPermission(accessToken: AccessToken, permission: Permission): Boolean =
         hasPermission(accessToken.role, permission)
@@ -357,11 +357,11 @@ class BaseService(
         voterName: String,
         electionName: String
     ): BallotSummary? {
-        return stateDbQueries.searchBallot(voterName, electionName)
+        return stateQueries.searchBallot(voterName, electionName)
     }
 
-    private fun searchUserByName(name: String): UserRow? = stateDbQueries.searchUserByName(name)
-    private fun searchUserByEmail(email: String): UserRow? = stateDbQueries.searchUserByEmail(email)
+    private fun searchUserByName(name: String): UserRow? = stateQueries.searchUserByName(name)
+    private fun searchUserByEmail(email: String): UserRow? = stateQueries.searchUserByEmail(email)
     private fun searchUserByNameOrEmail(nameOrEmail: String): UserRow? {
         val byName = searchUserByName(nameOrEmail)
         if (byName != null) return byName
@@ -395,13 +395,13 @@ class BaseService(
         original.filter { it.trim() != "" }.map { validateString(it, "$caption '$it'", rule) }
 
     private fun findElection(electionName: String): ElectionSummary {
-        val electionRow = stateDbQueries.searchElectionByName(electionName)
+        val electionRow = stateQueries.searchElectionByName(electionName)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
         return electionRow!!
     }
 
     private fun validateVoterNames(voterNames: List<String>) {
-        val userNames = stateDbQueries.listUserNames()
+        val userNames = stateQueries.listUserNames()
         val invalidNames = voterNames.filterNot { userNames.contains(it) }
         if (invalidNames.isNotEmpty()) {
             val invalidNamesString = invalidNames.joinToString("', '", "'", "'")
@@ -417,7 +417,7 @@ class BaseService(
         val effectiveRankings = rankings.normalizeRankings()
         val now = clock.instant()
         val confirmation = uniqueIdGenerator.uniqueId()
-        stateDbCommands.castBallot(
+        stateCommands.castBallot(
             voterName,
             voterName,
             electionName,
@@ -435,8 +435,8 @@ class BaseService(
     ) {
         val effectiveRankings = rankings.normalizeRankings()
         val now = clock.instant()
-        stateDbCommands.setRankings(voterName, confirmation, electionName, effectiveRankings)
-        stateDbCommands.updateWhenCast(voterName, confirmation, now)
+        stateCommands.setRankings(voterName, confirmation, electionName, effectiveRankings)
+        stateCommands.updateWhenCast(voterName, confirmation, now)
     }
 
     private fun requireElectionIsAllowingVotes(electionName: String) {
@@ -464,7 +464,7 @@ class BaseService(
 
     private fun createUser(userName: String, email: String, password: String, role: Role) {
         val (salt, hash) = passwordUtil.createSaltAndHash(password)
-        stateDbCommands.createUser(userName, userName, email, salt, hash, role)
+        stateCommands.createUser(userName, userName, email, salt, hash, role)
     }
 
     private fun validateUserName(userName:String):String =
@@ -474,7 +474,7 @@ class BaseService(
     private fun validatePassword(password:String):String =
         validateString(password, "password", Validation.password)
 
-    private fun userCount():Int = stateDbQueries.userCount()
+    private fun userCount():Int = stateQueries.userCount()
 
     private fun findUserByNameOrEmail(nameOrEmail:String):UserRow {
         return searchUserByNameOrEmail(nameOrEmail)
@@ -507,7 +507,7 @@ class BaseService(
         validateString(electionName, "name", Validation.electionName)
 
     private fun searchElection(electionName:String):ElectionSummary? =
-        stateDbQueries.searchElectionByName(electionName)
+        stateQueries.searchElectionByName(electionName)
 
     private fun requireElectionNameDoesNotExist(electionName:String){
         val election = searchElection(electionName)
@@ -615,7 +615,7 @@ class BaseService(
     }
 
     private fun candidateCount(electionName:String):Int =
-        stateDbQueries.candidateCount(electionName)
+        stateQueries.candidateCount(electionName)
 
     private fun requireHasMoreThanOneCandidate(electionName: String){
         val candidateCount = candidateCount(electionName)

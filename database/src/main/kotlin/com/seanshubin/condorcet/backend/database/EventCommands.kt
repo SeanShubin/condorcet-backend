@@ -1,5 +1,5 @@
 package com.seanshubin.condorcet.backend.database
 
-interface EventDbCommands {
+interface EventCommands {
     fun addEvent(authority: String, type: String, body: String)
 }

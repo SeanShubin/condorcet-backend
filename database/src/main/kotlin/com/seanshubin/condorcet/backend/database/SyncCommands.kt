@@ -6,7 +6,7 @@ import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.json.JsonMappers
 import java.time.Instant
 
-class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbCommands {
+class SyncCommands(private val eventCommands: EventCommands) : StateCommands {
     override fun setLastSynced(lastSynced: Int) {
         // do not sync the commands used to sync the commands
     }
@@ -16,62 +16,62 @@ class SyncDbCommands(private val eventDbCommands: EventDbCommands) : StateDbComm
     }
 
     override fun createUser(authority: String, name: String, email: String, salt: String, hash: String, role: Role) {
-        processEvent(authority, DbEvent.AddUser(name, email, salt, hash, role))
+        processEvent(authority, Event.AddUser(name, email, salt, hash, role))
     }
 
     override fun setRole(authority: String, name: String, role: Role) {
-        processEvent(authority, DbEvent.SetRole(name, role))
+        processEvent(authority, Event.SetRole(name, role))
     }
 
     override fun removeUser(authority: String, name: String) {
-        processEvent(authority, DbEvent.RemoveUser(name))
+        processEvent(authority, Event.RemoveUser(name))
     }
 
     override fun addElection(authority: String, owner: String, name: String) {
-        processEvent(authority, DbEvent.AddElection(owner, name))
+        processEvent(authority, Event.AddElection(owner, name))
     }
 
     override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
-        processEvent(authority, DbEvent.UpdateElection(name, updates))
+        processEvent(authority, Event.UpdateElection(name, updates))
     }
 
     override fun deleteElection(authority: String, name: String) {
-        processEvent(authority, DbEvent.DeleteElection(name))
+        processEvent(authority, Event.DeleteElection(name))
     }
 
     override fun addCandidates(authority: String, electionName: String, candidateNames: List<String>) {
-        processEvent(authority, DbEvent.AddCandidates(electionName, candidateNames))
+        processEvent(authority, Event.AddCandidates(electionName, candidateNames))
     }
 
     override fun removeCandidates(authority: String, electionName: String, candidateNames: List<String>) {
-        processEvent(authority, DbEvent.RemoveCandidates(electionName, candidateNames))
+        processEvent(authority, Event.RemoveCandidates(electionName, candidateNames))
     }
 
     override fun addVoters(authority: String, electionName: String, voterNames: List<String>) {
-        processEvent(authority, DbEvent.AddVoters(electionName, voterNames))
+        processEvent(authority, Event.AddVoters(electionName, voterNames))
     }
 
     override fun removeVoters(authority: String, electionName: String, voterNames: List<String>) {
-        processEvent(authority, DbEvent.RemoveVoters(electionName, voterNames))
+        processEvent(authority, Event.RemoveVoters(electionName, voterNames))
     }
 
     override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>, confirmation:String, now:Instant) {
-        processEvent(authority, DbEvent.CastBallot(voterName, electionName, rankings, confirmation, now))
+        processEvent(authority, Event.CastBallot(voterName, electionName, rankings, confirmation, now))
     }
 
     override fun updateWhenCast(authority: String, confirmation: String, now: Instant) {
-        processEvent(authority, DbEvent.UpdateWhenCast(confirmation, now))
+        processEvent(authority, Event.UpdateWhenCast(confirmation, now))
     }
 
     override fun setRankings(authority: String, confirmation: String, electionName: String, rankings: List<Ranking>) {
-        processEvent(authority, DbEvent.SetRankings(confirmation, electionName, rankings))
+        processEvent(authority, Event.SetRankings(confirmation, electionName, rankings))
     }
 
-    private fun processEvent(authority: String, dbEvent: DbEvent) {
-        eventDbCommands.addEvent(
+    private fun processEvent(authority: String, event: Event) {
+        eventCommands.addEvent(
             authority,
-            dbEvent.javaClass.simpleName,
-            JsonMappers.compact.writeValueAsString(dbEvent)
+            event.javaClass.simpleName,
+            JsonMappers.compact.writeValueAsString(event)
         )
     }
 }

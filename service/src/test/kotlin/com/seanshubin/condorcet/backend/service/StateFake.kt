@@ -3,7 +3,7 @@ package com.seanshubin.condorcet.backend.service
 import com.seanshubin.condorcet.backend.database.UserRow
 import com.seanshubin.condorcet.backend.domain.Role
 
-class StateDbFake : StateDbNotImplemented {
+class StateFake : StateNotImplemented {
     val userRows = mutableListOf<UserRow>()
     override fun createUser(authority: String, name: String, email: String, salt: String, hash: String, role: Role) {
         userRows.add(UserRow(name, email, salt, hash, role))

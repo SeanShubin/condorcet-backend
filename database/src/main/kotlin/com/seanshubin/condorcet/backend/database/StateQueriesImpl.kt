@@ -5,7 +5,7 @@ import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.sql.ResultSet
 import java.time.Instant
 
-class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
+class StateQueriesImpl(genericDatabase: GenericDatabase) : StateQueries,
     GenericDatabase by genericDatabase {
     override fun findUserByName(name: String): UserRow =
         queryExactlyOneRow(

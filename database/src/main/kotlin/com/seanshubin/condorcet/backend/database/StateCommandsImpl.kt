@@ -6,9 +6,9 @@ import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.time.Instant
 
-class StateDbCommandsImpl(
+class StateCommandsImpl(
     genericDatabase: GenericDatabase
-) : StateDbCommands, GenericDatabase by genericDatabase {
+) : StateCommands, GenericDatabase by genericDatabase {
     override fun setLastSynced(lastSynced: Int) {
         update("variable-update-last-synced", lastSynced)
     }

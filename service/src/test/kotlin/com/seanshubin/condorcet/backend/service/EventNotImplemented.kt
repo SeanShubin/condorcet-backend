@@ -1,13 +1,13 @@
 package com.seanshubin.condorcet.backend.service
 
-import com.seanshubin.condorcet.backend.database.EventDbCommands
-import com.seanshubin.condorcet.backend.database.EventDbQueries
+import com.seanshubin.condorcet.backend.database.EventCommands
+import com.seanshubin.condorcet.backend.database.EventQueries
 import com.seanshubin.condorcet.backend.database.EventRow
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
 import java.sql.ResultSet
 
-interface EventDbNotImplemented : EventDbQueries, EventDbCommands {
+interface EventNotImplemented : EventQueries, EventCommands {
     override fun addEvent(authority: String, type: String, body: String) {
         throw UnsupportedOperationException("not implemented")
     }

@@ -1,25 +1,25 @@
 package com.seanshubin.condorcet.backend.database
 
 class SynchronizerImpl(
-    private val eventDbQueries: EventDbQueries,
-    private val stateDbQueries: StateDbQueries,
-    private val stateDbCommands: StateDbCommands,
-    private val eventParser: DbEventParser
+    private val eventQueries: EventQueries,
+    private val stateQueries: StateQueries,
+    private val stateCommands: StateCommands,
+    private val eventParser: EventParser
 ) : Synchronizer {
     override tailrec fun synchronize() {
-        val lastSynced = stateDbQueries.lastSynced()
+        val lastSynced = stateQueries.lastSynced()
         if (lastSynced == null) {
-            stateDbCommands.initializeLastSynced(0)
+            stateCommands.initializeLastSynced(0)
             synchronize()
         } else {
-            val eventsToSync = eventDbQueries.eventsToSync(lastSynced)
+            val eventsToSync = eventQueries.eventsToSync(lastSynced)
             eventsToSync.forEach(::synchronizeEventRow)
         }
     }
 
     private fun synchronizeEventRow(eventRow: EventRow) {
         val event = eventParser.parse(eventRow.type, eventRow.text)
-        event.exec(eventRow.authority, stateDbCommands)
-        stateDbCommands.setLastSynced(eventRow.id)
+        event.exec(eventRow.authority, stateCommands)
+        stateCommands.setLastSynced(eventRow.id)
     }
 }

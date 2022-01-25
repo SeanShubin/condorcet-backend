@@ -3,11 +3,11 @@ package com.seanshubin.condorcet.backend.database
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.time.Clock
 
-class EventDbCommandsImpl(
+class EventCommandsImpl(
     genericDatabase: GenericDatabase,
     private val synchronizer: Synchronizer,
     private val clock: Clock
-) : EventDbCommands, GenericDatabase by genericDatabase {
+) : EventCommands, GenericDatabase by genericDatabase {
     override fun addEvent(authority: String, type: String, body: String) {
         update(
             "event-insert",
