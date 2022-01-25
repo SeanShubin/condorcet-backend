@@ -6,7 +6,6 @@ import arrow.core.Either.Right
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
-import com.seanshubin.condorcet.backend.database.DbElectionUpdates.Companion.toDbElectionUpdates
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
@@ -110,7 +109,7 @@ class BaseService(
         requirePermission(accessToken, USE_APPLICATION)
         requireIsElectionOwner(accessToken, electionName)
         requireHasMoreThanOneCandidate(electionName)
-        val updates = DbElectionUpdates(allowVote = true, allowEdit = allowEdit)
+        val updates = ElectionUpdates(allowVote = true, allowEdit = allowEdit)
         stateDbCommands.updateElection(accessToken.userName, electionName, updates)
     }
 
@@ -119,7 +118,7 @@ class BaseService(
         val election = findElection(electionName)
         requireIsElectionOwner(accessToken, election)
         requireHasNoEndDate(election, "Only elections with no end date can be manually finalized")
-        val updates = DbElectionUpdates(allowVote = false, allowEdit = false)
+        val updates = ElectionUpdates(allowVote = false, allowEdit = false)
         stateDbCommands.updateElection(accessToken.userName, electionName, updates)
     }
 
@@ -534,11 +533,10 @@ class BaseService(
         }
     }
 
-    private fun validateElectionUpdates(electionUpdates: ElectionUpdates): DbElectionUpdates {
-        val dbElectionUpdates = electionUpdates.toDbElectionUpdates()
-        val newName = dbElectionUpdates.newElectionName ?: return dbElectionUpdates
+    private fun validateElectionUpdates(electionUpdates: ElectionUpdates): ElectionUpdates {
+        val newName = electionUpdates.newElectionName ?: return electionUpdates
         val validNewName = validateString(newName, "electionUpdates.newName", Validation.electionName)
-        return dbElectionUpdates.copy(newElectionName = validNewName)
+        return electionUpdates.copy(newElectionName = validNewName)
     }
 
     private fun validateCandidateNames(candidateNames: List<String>):List<String> =

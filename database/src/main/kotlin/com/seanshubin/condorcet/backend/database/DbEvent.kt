@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import java.time.Instant
@@ -32,7 +33,7 @@ interface DbEvent {
         }
     }
 
-    data class UpdateElection(val name: String, val updates: DbElectionUpdates) :
+    data class UpdateElection(val name: String, val updates: ElectionUpdates) :
         DbEvent {
         override fun exec(authority: String, stateDbCommands: StateDbCommands) {
             stateDbCommands.updateElection(authority, name, updates)

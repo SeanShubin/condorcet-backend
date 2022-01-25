@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
@@ -32,7 +33,7 @@ class StateDbCommandsImpl(
         update("election-insert", owner, name)
     }
 
-    override fun updateElection(authority: String, name: String, updates: DbElectionUpdates) {
+    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
         val updatedName = updates.newElectionName ?: name
         if (updates.newElectionName != null) {
             update("election-update-name", updates.newElectionName, name)

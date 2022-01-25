@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
+import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import java.time.Instant
@@ -24,7 +25,7 @@ interface StateDbCommands {
 
     fun addElection(authority: String, owner: String, name: String)
 
-    fun updateElection(authority: String, name: String, updates: DbElectionUpdates)
+    fun updateElection(authority: String, name: String, updates: ElectionUpdates)
 
     fun deleteElection(authority: String, name: String)
 

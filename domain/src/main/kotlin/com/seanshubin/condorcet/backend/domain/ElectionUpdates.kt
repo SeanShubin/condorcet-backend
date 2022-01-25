@@ -8,5 +8,7 @@ data class ElectionUpdates(
     val clearNoVotingBefore: Boolean? = null,
     val noVotingBefore: Instant? = null,
     val clearNoVotingAfter: Boolean? = null,
-    val noVotingAfter: Instant? = null
+    val noVotingAfter: Instant? = null,
+    val allowVote: Boolean? = null,
+    val allowEdit: Boolean? = null
 )

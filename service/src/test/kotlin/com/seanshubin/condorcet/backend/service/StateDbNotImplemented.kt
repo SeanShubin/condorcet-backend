@@ -40,7 +40,7 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun updateElection(authority: String, name: String, updates: DbElectionUpdates) {
+    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
         throw UnsupportedOperationException("not implemented")
     }
 
