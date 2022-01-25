@@ -36,7 +36,7 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun listElections(): List<ElectionRow> {
+    override fun listElections(): List<ElectionSummary> {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -92,7 +92,7 @@ interface StateDbNotImplemented : StateDbQueries, StateDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun searchElectionByName(name: String): ElectionRow? {
+    override fun searchElectionByName(name: String): ElectionSummary? {
         throw UnsupportedOperationException("not implemented")
     }
 

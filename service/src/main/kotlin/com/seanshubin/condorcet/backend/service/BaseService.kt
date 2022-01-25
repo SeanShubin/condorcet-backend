@@ -18,8 +18,6 @@ import com.seanshubin.condorcet.backend.domain.Role.Companion.DEFAULT_ROLE
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
-import com.seanshubin.condorcet.backend.service.DataTransfer.toElectionDetail
-import com.seanshubin.condorcet.backend.service.DataTransfer.toElectionSummary
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import java.time.Clock
 import java.time.Instant
@@ -151,9 +149,8 @@ class BaseService(
 
     override fun listElections(accessToken: AccessToken): List<ElectionSummary> {
         requirePermission(accessToken, VIEW_APPLICATION)
-        val rows = stateDbQueries.listElections()
-        val list = rows.map { it.toElectionSummary() }
-        return list
+        val elections = stateDbQueries.listElections()
+        return elections
     }
 
     override fun listTables(accessToken: AccessToken): List<String> {
@@ -398,7 +395,7 @@ class BaseService(
     ): List<String> =
         original.filter { it.trim() != "" }.map { validateString(it, "$caption '$it'", rule) }
 
-    private fun findElection(electionName: String): ElectionRow {
+    private fun findElection(electionName: String): ElectionSummary {
         val electionRow = stateDbQueries.searchElectionByName(electionName)
         failIf(electionRow == null, NOT_FOUND, "Election with name '$electionName' not found")
         return electionRow!!
@@ -510,7 +507,7 @@ class BaseService(
     private fun validateElectionName(electionName:String):String =
         validateString(electionName, "name", Validation.electionName)
 
-    private fun searchElection(electionName:String):ElectionRow? =
+    private fun searchElection(electionName:String):ElectionSummary? =
         stateDbQueries.searchElectionByName(electionName)
 
     private fun requireElectionNameDoesNotExist(electionName:String){
@@ -525,13 +522,13 @@ class BaseService(
         requireIsElectionOwner(accessToken, election)
     }
 
-    private fun requireIsElectionOwner(accessToken: AccessToken, election:ElectionRow){
-        if(accessToken.userName != election.owner){
-            fail(UNAUTHORIZED, "Election ${election.name} is owned by ${election.owner}, not ${accessToken.userName}")
+    private fun requireIsElectionOwner(accessToken: AccessToken, election:ElectionSummary){
+        if(accessToken.userName != election.ownerName){
+            fail(UNAUTHORIZED, "Election ${election.electionName} is owned by ${election.ownerName}, not ${accessToken.userName}")
         }
     }
 
-    private fun requireHasNoEndDate(election:ElectionRow, message:String){
+    private fun requireHasNoEndDate(election:ElectionSummary, message:String){
         if(election.noVotingAfter != null) {
             fail(UNSUPPORTED, message)
         }
@@ -547,56 +544,56 @@ class BaseService(
     private fun validateCandidateNames(candidateNames: List<String>):List<String> =
         validateStringList(candidateNames, "candidate", Validation.candidateName)
 
-    private fun requireAfterElectionStarted(election:ElectionRow, now:Instant){
+    private fun requireAfterElectionStarted(election:ElectionSummary, now:Instant){
         val noVotingBefore = election.noVotingBefore ?: return
         if(now < noVotingBefore) {
-            fail(UNSUPPORTED, "Election ${election.name} has not started yet")
+            fail(UNSUPPORTED, "Election ${election.electionName} has not started yet")
         }
     }
 
-    private fun requireAfterElectionEnded(election:ElectionRow, now:Instant){
+    private fun requireAfterElectionEnded(election:ElectionSummary, now:Instant){
         val noVotingBefore = election.noVotingAfter ?: return
         if(now < noVotingBefore) {
-            fail(UNSUPPORTED, "Election ${election.name} has not ended yet")
+            fail(UNSUPPORTED, "Election ${election.electionName} has not ended yet")
         }
     }
 
-    private fun requireElectionCanNotVote(election:ElectionRow){
+    private fun requireElectionCanNotVote(election:ElectionSummary){
         if(election.allowVote) {
-            fail(UNSUPPORTED, "Election ${election.name} is still accepting votes")
+            fail(UNSUPPORTED, "Election ${election.electionName} is still accepting votes")
         }
     }
 
-    private fun requireElectionCanNotEdit(election:ElectionRow){
+    private fun requireElectionCanNotEdit(election:ElectionSummary){
         if(election.allowEdit) {
             if(election.allowVote){
-                fail(UNSUPPORTED, "Election ${election.name} has not launched yet")
+                fail(UNSUPPORTED, "Election ${election.electionName} has not launched yet")
             } else {
-                fail(UNSUPPORTED, "Election ${election.name} has not been finalized yet")
+                fail(UNSUPPORTED, "Election ${election.electionName} has not been finalized yet")
             }
         }
     }
 
-    private fun requireElectionCanEdit(election:ElectionRow){
+    private fun requireElectionCanEdit(election:ElectionSummary){
         if(!election.allowEdit) {
             if(election.allowVote){
-                fail(UNSUPPORTED, "Election ${election.name} is closed for edits once launched")
+                fail(UNSUPPORTED, "Election ${election.electionName} is closed for edits once launched")
             } else {
-                fail(UNSUPPORTED, "Election ${election.name} can not be edited once it has been finalized")
+                fail(UNSUPPORTED, "Election ${election.electionName} can not be edited once it has been finalized")
             }
         }
     }
 
-    private fun requireNotLaunched(election:ElectionRow){
+    private fun requireNotLaunched(election:ElectionSummary){
         if(election.allowEdit) {
             if(election.allowVote){
-                fail(UNSUPPORTED, "Election ${election.name} is closed for edits once launched")
+                fail(UNSUPPORTED, "Election ${election.electionName} is closed for edits once launched")
             }
         } else {
             if(election.allowVote){
-                fail(UNSUPPORTED, "Election ${election.name} is closed for edits once launched")
+                fail(UNSUPPORTED, "Election ${election.electionName} is closed for edits once launched")
             } else {
-                fail(UNSUPPORTED, "Election ${election.name} can not be edited once it has been finalized")
+                fail(UNSUPPORTED, "Election ${election.electionName} can not be edited once it has been finalized")
             }
         }
     }

@@ -45,8 +45,8 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
     override fun listUsers(): List<UserRow> =
         query(::createUser, "user-select")
 
-    override fun listElections(): List<ElectionRow> =
-        query(::createElection, "election-select")
+    override fun listElections(): List<ElectionSummary> =
+        query(::createElectionSummary, "election-select")
 
     override fun roleHasPermission(role: Role, permission: Permission): Boolean {
         return queryExists("role-permission-exists", role.name, permission.name)
@@ -54,8 +54,8 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
 
     override fun lastSynced(): Int? = queryZeroOrOneInt("variable-select-last-synced")
 
-    override fun searchElectionByName(name: String): ElectionRow? {
-        return queryZeroOrOneRow(::createElection, "election-select-by-name", name)
+    override fun searchElectionByName(name: String): ElectionSummary? {
+        return queryZeroOrOneRow(::createElectionSummary, "election-select-by-name", name)
     }
 
     override fun listCandidates(electionName: String): List<String> =
@@ -102,7 +102,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         return UserRow(name, email, salt, hash, role)
     }
 
-    private fun createElection(resultSet: ResultSet): ElectionRow {
+    private fun createElectionSummary(resultSet: ResultSet): ElectionSummary {
         val owner = resultSet.getString("owner")
         val name: String = resultSet.getString("name")
         val secretBallot: Boolean = resultSet.getBoolean("secret_ballot")
@@ -110,7 +110,7 @@ class StateDbQueriesImpl(genericDatabase: GenericDatabase) : StateDbQueries,
         val noVotingAfter: Instant? = resultSet.getTimestamp("no_voting_after")?.toInstant()
         val allowEdit: Boolean = resultSet.getBoolean("allow_edit")
         val allowVote: Boolean = resultSet.getBoolean("allow_vote")
-        return ElectionRow(
+        return ElectionSummary(
             owner, name, secretBallot, noVotingBefore, noVotingAfter, allowEdit, allowVote
         )
     }

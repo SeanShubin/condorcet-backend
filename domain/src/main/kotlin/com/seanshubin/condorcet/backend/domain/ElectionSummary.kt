@@ -9,5 +9,17 @@ data class ElectionSummary(
     val noVotingBefore: Instant? = null,
     val noVotingAfter: Instant? = null,
     val allowEdit: Boolean = true,
-    val allowVote: Boolean = false,
-)
+    val allowVote: Boolean = false){
+    fun toElectionDetail(candidateCount:Int, voterCount:Int): ElectionDetail =
+        ElectionDetail(
+            ownerName,
+            electionName,
+            candidateCount,
+            voterCount,
+            secretBallot,
+            noVotingBefore,
+            noVotingAfter,
+            allowEdit,
+            allowVote
+        )
+}

@@ -13,10 +13,10 @@ interface StateDbQueries : GenericDatabase {
     fun voterCount(electionName:String):Int
     fun tableCount(): Int
     fun listUsers(): List<UserRow>
-    fun listElections(): List<ElectionRow>
+    fun listElections(): List<ElectionSummary>
     fun roleHasPermission(role: Role, permission: Permission): Boolean
     fun lastSynced(): Int?
-    fun searchElectionByName(name: String): ElectionRow?
+    fun searchElectionByName(name: String): ElectionSummary?
     fun listCandidates(electionName: String): List<String>
     fun listRankings(voterName: String, electionName: String): List<Ranking>
     fun listRankings(electionName: String): List<VoterElectionRankingRow>
