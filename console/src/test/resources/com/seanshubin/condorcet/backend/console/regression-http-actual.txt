@@ -608,14 +608,11 @@ Content-Type: application/json
     "confirmation" : "2266d672-8185-4bab-9c96-e488b98ccd70",
     "whenCast" : "2022-01-21T06:18:26.481986Z",
     "rankings" : [ {
-      "candidateName" : "Butter Pecan",
-      "rank" : 5
+      "candidateName" : "Chocolate Chip",
+      "rank" : 1
     }, {
       "candidateName" : "Chocolate",
       "rank" : 3
-    }, {
-      "candidateName" : "Chocolate Chip",
-      "rank" : 1
     }, {
       "candidateName" : "Mint",
       "rank" : 6
@@ -625,6 +622,9 @@ Content-Type: application/json
     }, {
       "candidateName" : "Vanilla",
       "rank" : 4
+    }, {
+      "candidateName" : "Butter Pecan",
+      "rank" : 5
     } ]
   }, {
     "voterName" : "<redacted>",
@@ -632,14 +632,11 @@ Content-Type: application/json
     "confirmation" : "26e73b89-e82a-4194-ae52-31ec033ee04f",
     "whenCast" : "2022-01-21T06:18:27.304843Z",
     "rankings" : [ {
-      "candidateName" : "Butter Pecan",
-      "rank" : 6
+      "candidateName" : "Chocolate Chip",
+      "rank" : 2
     }, {
       "candidateName" : "Chocolate",
       "rank" : 4
-    }, {
-      "candidateName" : "Chocolate Chip",
-      "rank" : 2
     }, {
       "candidateName" : "Mint",
       "rank" : 1
@@ -649,6 +646,9 @@ Content-Type: application/json
     }, {
       "candidateName" : "Vanilla",
       "rank" : 5
+    }, {
+      "candidateName" : "Butter Pecan",
+      "rank" : 6
     } ]
   }, {
     "voterName" : "<redacted>",
@@ -656,14 +656,11 @@ Content-Type: application/json
     "confirmation" : "8f208935-c86b-408d-a7e5-9547ba866f97",
     "whenCast" : "2022-01-21T06:18:27.194641Z",
     "rankings" : [ {
-      "candidateName" : "Butter Pecan",
-      "rank" : 5
+      "candidateName" : "Chocolate Chip",
+      "rank" : 2
     }, {
       "candidateName" : "Chocolate",
       "rank" : 1
-    }, {
-      "candidateName" : "Chocolate Chip",
-      "rank" : 2
     }, {
       "candidateName" : "Mint",
       "rank" : 4
@@ -673,6 +670,9 @@ Content-Type: application/json
     }, {
       "candidateName" : "Vanilla",
       "rank" : 3
+    }, {
+      "candidateName" : "Butter Pecan",
+      "rank" : 5
     } ]
   } ],
   "preferences" : [ [ {
