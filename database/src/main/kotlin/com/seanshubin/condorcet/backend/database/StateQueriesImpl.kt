@@ -74,7 +74,7 @@ class StateQueriesImpl(genericDatabase: GenericDatabase) : StateQueries,
     override fun listBallots(electionName: String): List<Ballot> =
         queryJoin(
             ::createBallotSummary,
-            ::createRankingRow,
+            ::createRanking,
             ::createBallotRankingKey,
             ::createBallot,
             "ranking-select-by-election",
@@ -151,20 +151,14 @@ class StateQueriesImpl(genericDatabase: GenericDatabase) : StateQueries,
             resultSet.getTimestamp("when_cast").toInstant()
         )
 
-    private fun createRankingRow(resultSet: ResultSet): RankingRow =
-        RankingRow(
-            resultSet.getString("candidate"),
-            resultSet.getInt("rank")
-        )
-
     private fun createBallotRankingKey(resultSet: ResultSet): Int =
         resultSet.getInt("ballot.id")
 
-    private fun createBallot(ballotSummary: BallotSummary, rankingList: List<RankingRow>): Ballot =
+    private fun createBallot(ballotSummary: BallotSummary, rankingList: List<Ranking>): Ballot =
         Ballot(
             ballotSummary.voterName,
             ballotSummary.electionName,
             ballotSummary.confirmation,
             ballotSummary.whenCast,
-            rankingList.map { Ranking(it.candidate, it.rank) })
+            rankingList.map { Ranking(it.candidateName, it.rank) })
 }
