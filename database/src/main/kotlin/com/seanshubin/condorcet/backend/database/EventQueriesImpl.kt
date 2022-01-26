@@ -4,19 +4,19 @@ import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.sql.ResultSet
 
 class EventQueriesImpl(genericDatabase: GenericDatabase) : EventQueries, GenericDatabase by genericDatabase {
-    override fun eventsToSync(lastEventSynced: Int): List<EventRow> =
+    override fun eventsToSync(lastEventSynced: Int): List<Event> =
         query(::createEvent, "event-select-unsynced", lastEventSynced)
 
     override fun eventCount(): Int =
         queryExactlyOneInt("event-count")
 
-    private fun createEvent(resultSet: ResultSet): EventRow {
+    private fun createEvent(resultSet: ResultSet): Event {
         val id = resultSet.getInt("id")
         val whenHappened = resultSet.getTimestamp("when").toInstant()
         val authority = resultSet.getString("authority")
         val type = resultSet.getString("type")
         val text = resultSet.getString("text")
-        return EventRow(id, whenHappened, authority, type, text)
+        return Event(id, whenHappened, authority, type, text)
     }
 
 }

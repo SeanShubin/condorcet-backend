@@ -36,13 +36,13 @@ class ServiceDependencies(
     )
     private val clock: Clock = integration.clock
     private val stateCommands: StateCommands = StateCommandsImpl(stateGenericDatabase)
-    private val eventParser: EventParser = EventParserImpl()
+    private val eventCommandParser: EventCommandParser = EventCommandParserImpl()
     private val stateQueries: StateQueries = StateQueriesImpl(stateGenericDatabase)
     private val synchronizer: Synchronizer = SynchronizerImpl(
         eventQueries,
         stateQueries,
         stateCommands,
-        eventParser
+        eventCommandParser
     )
     private val eventCommands: EventCommands = EventCommandsImpl(
         eventGenericDatabase,

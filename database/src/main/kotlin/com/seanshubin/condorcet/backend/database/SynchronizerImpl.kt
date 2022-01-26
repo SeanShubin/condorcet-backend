@@ -4,7 +4,7 @@ class SynchronizerImpl(
     private val eventQueries: EventQueries,
     private val stateQueries: StateQueries,
     private val stateCommands: StateCommands,
-    private val eventParser: EventParser
+    private val eventCommandParser: EventCommandParser
 ) : Synchronizer {
     override tailrec fun synchronize() {
         val lastSynced = stateQueries.lastSynced()
@@ -17,9 +17,9 @@ class SynchronizerImpl(
         }
     }
 
-    private fun synchronizeEventRow(eventRow: EventRow) {
-        val event = eventParser.parse(eventRow.type, eventRow.text)
-        event.exec(eventRow.authority, stateCommands)
-        stateCommands.setLastSynced(eventRow.id)
+    private fun synchronizeEventRow(event: Event) {
+        val eventCommand = eventCommandParser.parse(event.type, event.text)
+        eventCommand.exec(event.authority, stateCommands)
+        stateCommands.setLastSynced(event.id)
     }
 }

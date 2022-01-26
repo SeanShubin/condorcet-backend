@@ -2,7 +2,7 @@ package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.database.EventCommands
 import com.seanshubin.condorcet.backend.database.EventQueries
-import com.seanshubin.condorcet.backend.database.EventRow
+import com.seanshubin.condorcet.backend.database.Event
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
 import java.sql.ResultSet
@@ -12,7 +12,7 @@ interface EventNotImplemented : EventQueries, EventCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun eventsToSync(lastEventSynced: Int): List<EventRow> {
+    override fun eventsToSync(lastEventSynced: Int): List<Event> {
         throw UnsupportedOperationException("not implemented")
     }
 
