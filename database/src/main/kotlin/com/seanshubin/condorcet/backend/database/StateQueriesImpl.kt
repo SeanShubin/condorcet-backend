@@ -7,21 +7,21 @@ import java.time.Instant
 
 class StateQueriesImpl(genericDatabase: GenericDatabase) : StateQueries,
     GenericDatabase by genericDatabase {
-    override fun findUserByName(name: String): UserRow =
+    override fun findUserByName(name: String): User =
         queryExactlyOneRow(
             ::createUser,
             "user-select-by-name",
             name
         )
 
-    override fun searchUserByName(name: String): UserRow? =
+    override fun searchUserByName(name: String): User? =
         queryZeroOrOneRow(
             ::createUser,
             "user-select-by-name",
             name
         )
 
-    override fun searchUserByEmail(email: String): UserRow? =
+    override fun searchUserByEmail(email: String): User? =
         queryZeroOrOneRow(
             ::createUser,
             "user-select-by-email",
@@ -42,7 +42,7 @@ class StateQueriesImpl(genericDatabase: GenericDatabase) : StateQueries,
     override fun voterCount(electionName: String): Int =
         queryExactlyOneInt("voter-count-by-election", electionName)
 
-    override fun listUsers(): List<UserRow> =
+    override fun listUsers(): List<User> =
         query(::createUser, "user-select")
 
     override fun listElections(): List<ElectionSummary> =
@@ -93,13 +93,13 @@ class StateQueriesImpl(genericDatabase: GenericDatabase) : StateQueries,
     override fun listPermissions(role: Role): List<Permission> =
         query(::createPermission, "role-permission-select-by-role", role.toString())
 
-    private fun createUser(resultSet: ResultSet): UserRow {
+    private fun createUser(resultSet: ResultSet): User {
         val name = resultSet.getString("name")
         val email = resultSet.getString("email")
         val salt = resultSet.getString("salt")
         val hash = resultSet.getString("hash")
         val role = Role.valueOf(resultSet.getString("role"))
-        return UserRow(name, email, salt, hash, role)
+        return User(name, email, salt, hash, role)
     }
 
     private fun createElectionSummary(resultSet: ResultSet): ElectionSummary {

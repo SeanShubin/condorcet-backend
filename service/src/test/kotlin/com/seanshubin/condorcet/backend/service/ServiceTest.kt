@@ -25,8 +25,8 @@ class ServiceTest {
         )
 
         // then
-        val rows = tester.stateDbFake.userRows
-        assertEquals(1, tester.stateDbFake.userRows.size)
+        val rows = tester.stateDbFake.users
+        assertEquals(1, tester.stateDbFake.users.size)
         val row = rows[0]
         assertEquals(name, row.name)
         assertEquals(email, row.email)
@@ -49,8 +49,8 @@ class ServiceTest {
         )
 
         // then
-        val rows = tester.stateDbFake.userRows
-        assertEquals(1, tester.stateDbFake.userRows.size)
+        val rows = tester.stateDbFake.users
+        assertEquals(1, tester.stateDbFake.users.size)
         val row = rows[0]
         assertEquals("name with whitespace", row.name)
     }
@@ -70,8 +70,8 @@ class ServiceTest {
         )
 
         // then
-        val rows = tester.stateDbFake.userRows
-        assertEquals(1, tester.stateDbFake.userRows.size)
+        val rows = tester.stateDbFake.users
+        assertEquals(1, tester.stateDbFake.users.size)
         val row = rows[0]
         assertEquals("name with surrounding whitespace", row.name)
     }

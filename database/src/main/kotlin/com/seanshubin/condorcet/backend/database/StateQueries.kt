@@ -4,15 +4,15 @@ import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 
 interface StateQueries : GenericDatabase {
-    fun findUserByName(name: String): UserRow
-    fun searchUserByName(name: String): UserRow?
-    fun searchUserByEmail(email: String): UserRow?
+    fun findUserByName(name: String): User
+    fun searchUserByName(name: String): User?
+    fun searchUserByEmail(email: String): User?
     fun userCount(): Int
     fun electionCount(): Int
     fun candidateCount(electionName:String):Int
     fun voterCount(electionName:String):Int
     fun tableCount(): Int
-    fun listUsers(): List<UserRow>
+    fun listUsers(): List<User>
     fun listElections(): List<ElectionSummary>
     fun roleHasPermission(role: Role, permission: Permission): Boolean
     fun lastSynced(): Int?

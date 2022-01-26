@@ -318,7 +318,7 @@ class BaseService(
         return UserRolePermissions(userName, user.role, permissions)
     }
 
-    private fun findUser(userName: String): UserRow {
+    private fun findUser(userName: String): User {
         return stateQueries.findUserByName(userName)
     }
 
@@ -331,7 +331,7 @@ class BaseService(
     private fun hasPermission(accessToken: AccessToken, permission: Permission): Boolean =
         hasPermission(accessToken.role, permission)
 
-    private fun isSelf(accessToken: AccessToken, userRow: UserRow): Boolean = accessToken.userName == userRow.name
+    private fun isSelf(accessToken: AccessToken, user: User): Boolean = accessToken.userName == user.name
 
     private fun fail(category: ServiceException.Category, message: String): Nothing {
         throw ServiceException(category, message)
@@ -360,18 +360,18 @@ class BaseService(
         return stateQueries.searchBallot(voterName, electionName)
     }
 
-    private fun searchUserByName(name: String): UserRow? = stateQueries.searchUserByName(name)
-    private fun searchUserByEmail(email: String): UserRow? = stateQueries.searchUserByEmail(email)
-    private fun searchUserByNameOrEmail(nameOrEmail: String): UserRow? {
+    private fun searchUserByName(name: String): User? = stateQueries.searchUserByName(name)
+    private fun searchUserByEmail(email: String): User? = stateQueries.searchUserByEmail(email)
+    private fun searchUserByNameOrEmail(nameOrEmail: String): User? {
         val byName = searchUserByName(nameOrEmail)
         if (byName != null) return byName
         val byEmail = searchUserByEmail(nameOrEmail)
         return byEmail
     }
 
-    private fun createTokens(userRow: UserRow): Tokens {
-        val refreshToken = RefreshToken(userRow.name)
-        val accessToken = AccessToken(userRow.name, userRow.role)
+    private fun createTokens(user: User): Tokens {
+        val refreshToken = RefreshToken(user.name)
+        val accessToken = AccessToken(user.name, user.role)
         return Tokens(refreshToken, accessToken)
     }
 
@@ -476,7 +476,7 @@ class BaseService(
 
     private fun userCount():Int = stateQueries.userCount()
 
-    private fun findUserByNameOrEmail(nameOrEmail:String):UserRow {
+    private fun findUserByNameOrEmail(nameOrEmail:String): User {
         return searchUserByNameOrEmail(nameOrEmail)
             ?: fail(NOT_FOUND, "User with name or email '$nameOrEmail' does not exist")
     }
@@ -497,7 +497,7 @@ class BaseService(
         }
     }
 
-    private fun requireGreaterRole(accessToken: AccessToken, user:UserRow){
+    private fun requireGreaterRole(accessToken: AccessToken, user: User){
         if(accessToken.role <= user.role){
             fail(UNAUTHORIZED, "${accessToken.userName} with role ${accessToken.role} does not have greater role than ${user.name} with role ${user.role}")
         }

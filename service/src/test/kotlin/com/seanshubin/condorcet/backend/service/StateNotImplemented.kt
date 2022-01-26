@@ -48,15 +48,15 @@ interface StateNotImplemented : StateQueries, StateCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun findUserByName(name: String): UserRow {
+    override fun findUserByName(name: String): User {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun searchUserByName(name: String): UserRow? {
+    override fun searchUserByName(name: String): User? {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun searchUserByEmail(email: String): UserRow? {
+    override fun searchUserByEmail(email: String): User? {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -80,7 +80,7 @@ interface StateNotImplemented : StateQueries, StateCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun listUsers(): List<UserRow> {
+    override fun listUsers(): List<User> {
         throw UnsupportedOperationException("not implemented")
     }
 
