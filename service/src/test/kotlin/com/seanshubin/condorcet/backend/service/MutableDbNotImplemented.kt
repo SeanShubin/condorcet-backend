@@ -7,7 +7,7 @@ import com.seanshubin.condorcet.backend.genericdb.Schema
 import java.sql.ResultSet
 import java.time.Instant
 
-interface StateNotImplemented : StateQueries, StateCommands {
+interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
     override fun setLastSynced(lastSynced: Int) {
         throw UnsupportedOperationException("not implemented")
     }

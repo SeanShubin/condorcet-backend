@@ -1,5 +1,5 @@
 package com.seanshubin.condorcet.backend.database
 
-interface EventCommands {
+interface ImmutableDbCommands {
     fun addEvent(authority: String, type: String, body: String)
 }

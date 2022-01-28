@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.dependencies
 
-import com.seanshubin.condorcet.backend.database.EventSchema
-import com.seanshubin.condorcet.backend.database.StateSchema
+import com.seanshubin.condorcet.backend.database.ImmutableDbSchema
+import com.seanshubin.condorcet.backend.database.MutableDbSchema
 import com.seanshubin.condorcet.backend.genericdb.*
 
 class InitializerDependencies(
@@ -20,14 +20,14 @@ class InitializerDependencies(
         SchemaCreatorImpl(
             genericDatabase,
             eventSchemaName,
-            EventSchema,
+            ImmutableDbSchema,
             eventTableEvent
         )
     private val stateSchemaCreator: SchemaCreator =
         SchemaCreatorImpl(
             genericDatabase,
             stateSchemaName,
-            StateSchema,
+            MutableDbSchema,
             stateTableEvent
         )
     val schemaCreator: SchemaCreator = CompositeSchemaCreator(eventSchemaCreator, stateSchemaCreator)

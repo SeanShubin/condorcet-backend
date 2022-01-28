@@ -27,7 +27,7 @@ class ServiceDependencies(
         eventConnection,
         queryLoader
     )
-    private val eventQueries: EventQueries = EventQueriesImpl(
+    private val immutableDbQueries: ImmutableDbQueries = ImmutableDbQueriesImpl(
         eventGenericDatabase
     )
     private val stateGenericDatabase: GenericDatabase = GenericDatabaseImpl(
@@ -35,25 +35,25 @@ class ServiceDependencies(
         queryLoader
     )
     private val clock: Clock = integration.clock
-    private val stateCommands: StateCommands = StateCommandsImpl(stateGenericDatabase)
+    private val mutableDbCommands: MutableDbCommands = MutableDbCommandsImpl(stateGenericDatabase)
     private val eventCommandParser: EventCommandParser = EventCommandParserImpl()
-    private val stateQueries: StateQueries = StateQueriesImpl(stateGenericDatabase)
+    private val mutableDbQueries: MutableDbQueries = MutableDbQueriesImpl(stateGenericDatabase)
     private val synchronizer: Synchronizer = SynchronizerImpl(
-        eventQueries,
-        stateQueries,
-        stateCommands,
+        immutableDbQueries,
+        mutableDbQueries,
+        mutableDbCommands,
         eventCommandParser
     )
-    private val eventCommands: EventCommands = EventCommandsImpl(
+    private val immutableDbCommands: ImmutableDbCommands = ImmutableDbCommandsImpl(
         eventGenericDatabase,
         synchronizer,
         clock
     )
-    private val syncDbCommands: StateCommands = SyncCommands(eventCommands)
+    private val syncDbCommands: MutableDbCommands = SyncCommands(immutableDbCommands)
     private val baseService: Service = BaseService(
         passwordUtil,
-        eventQueries,
-        stateQueries,
+        immutableDbQueries,
+        mutableDbQueries,
         syncDbCommands,
         synchronizer,
         random,

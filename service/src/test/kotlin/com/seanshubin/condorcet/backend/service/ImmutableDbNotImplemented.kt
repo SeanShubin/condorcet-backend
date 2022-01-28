@@ -1,13 +1,13 @@
 package com.seanshubin.condorcet.backend.service
 
-import com.seanshubin.condorcet.backend.database.EventCommands
-import com.seanshubin.condorcet.backend.database.EventQueries
+import com.seanshubin.condorcet.backend.database.ImmutableDbCommands
+import com.seanshubin.condorcet.backend.database.ImmutableDbQueries
 import com.seanshubin.condorcet.backend.database.Event
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
 import java.sql.ResultSet
 
-interface EventNotImplemented : EventQueries, EventCommands {
+interface ImmutableDbNotImplemented : ImmutableDbQueries, ImmutableDbCommands {
     override fun addEvent(authority: String, type: String, body: String) {
         throw UnsupportedOperationException("not implemented")
     }

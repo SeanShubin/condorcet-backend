@@ -5,7 +5,7 @@ import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.genericdb.FieldType.*
 
-object StateSchema : Schema {
+object MutableDbSchema : Schema {
     val intVariableName = Field("name", STRING, unique = true)
     val intVariableValue = Field("value", INT)
     val intVariable = Table("int_variable", intVariableName, intVariableValue)

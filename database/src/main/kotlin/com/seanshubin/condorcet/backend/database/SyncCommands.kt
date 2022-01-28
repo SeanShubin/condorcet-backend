@@ -6,7 +6,7 @@ import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.json.JsonMappers
 import java.time.Instant
 
-class SyncCommands(private val eventCommands: EventCommands) : StateCommands {
+class SyncCommands(private val immutableDbCommands: ImmutableDbCommands) : MutableDbCommands {
     override fun setLastSynced(lastSynced: Int) {
         // do not sync the commands used to sync the commands
     }
@@ -68,7 +68,7 @@ class SyncCommands(private val eventCommands: EventCommands) : StateCommands {
     }
 
     private fun processEvent(authority: String, eventCommand: EventCommand) {
-        eventCommands.addEvent(
+        immutableDbCommands.addEvent(
             authority,
             eventCommand.javaClass.simpleName,
             JsonMappers.compact.writeValueAsString(eventCommand)

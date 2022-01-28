@@ -5,7 +5,7 @@ import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import java.time.Instant
 
-interface StateCommands {
+interface MutableDbCommands {
     fun setLastSynced(lastSynced: Int)
 
     fun initializeLastSynced(lastSynced: Int)

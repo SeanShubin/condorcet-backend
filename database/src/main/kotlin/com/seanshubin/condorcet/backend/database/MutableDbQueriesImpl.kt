@@ -5,7 +5,7 @@ import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.sql.ResultSet
 import java.time.Instant
 
-class StateQueriesImpl(genericDatabase: GenericDatabase) : StateQueries,
+class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     GenericDatabase by genericDatabase {
     override fun findUserByName(name: String): User =
         queryExactlyOneRow(
@@ -28,7 +28,7 @@ class StateQueriesImpl(genericDatabase: GenericDatabase) : StateQueries,
             email
         )
 
-    override fun tableCount(): Int = StateSchema.tables.size
+    override fun tableCount(): Int = MutableDbSchema.tables.size
 
     override fun userCount(): Int =
         queryExactlyOneInt("user-count")

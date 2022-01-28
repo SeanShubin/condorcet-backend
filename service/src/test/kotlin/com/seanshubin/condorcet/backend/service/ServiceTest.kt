@@ -81,8 +81,8 @@ class ServiceTest {
         private val clock = ClockStub()
         private val oneWayHash: OneWayHash = OneWayHashStub(sample)
         private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
-        private val eventDbFake = EventFake()
-        val stateDbFake = StateFake()
+        private val eventDbFake = ImmutableDbFake()
+        val stateDbFake = MutableDbFake()
         private val synchronizer = SynchronizerStub()
         private val random = RandomStub()
         val service: Service = BaseService(
