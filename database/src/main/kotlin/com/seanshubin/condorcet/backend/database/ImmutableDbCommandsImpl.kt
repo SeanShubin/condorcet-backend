@@ -2,16 +2,16 @@ package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 import java.time.Clock
+import java.time.Instant
 
 class ImmutableDbCommandsImpl(
     genericDatabase: GenericDatabase,
-    private val synchronizer: Synchronizer,
-    private val clock: Clock
+    private val synchronizer: Synchronizer
 ) : ImmutableDbCommands, GenericDatabase by genericDatabase {
-    override fun addEvent(authority: String, type: String, body: String) {
+    override fun addEvent(authority: String, type: String, body: String, now: Instant) {
         update(
             "event-insert",
-            clock.instant(),
+            now,
             authority,
             type,
             body

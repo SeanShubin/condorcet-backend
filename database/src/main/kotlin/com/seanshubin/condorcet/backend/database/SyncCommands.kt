@@ -4,9 +4,13 @@ import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.json.JsonMappers
+import java.time.Clock
 import java.time.Instant
 
-class SyncCommands(private val immutableDbCommands: ImmutableDbCommands) : MutableDbCommands {
+class SyncCommands(
+    private val immutableDbCommands: ImmutableDbCommands,
+    private val clock: Clock
+) : MutableDbCommands {
     override fun setLastSynced(lastSynced: Int) {
         // do not sync the commands used to sync the commands
     }
@@ -68,10 +72,12 @@ class SyncCommands(private val immutableDbCommands: ImmutableDbCommands) : Mutab
     }
 
     private fun processEvent(authority: String, eventCommand: EventCommand) {
+        val now = clock.instant()
         immutableDbCommands.addEvent(
             authority,
             eventCommand.javaClass.simpleName,
-            JsonMappers.compact.writeValueAsString(eventCommand)
+            JsonMappers.compact.writeValueAsString(eventCommand),
+            now
         )
     }
 }

@@ -46,10 +46,9 @@ class ServiceDependencies(
     )
     private val immutableDbCommands: ImmutableDbCommands = ImmutableDbCommandsImpl(
         eventGenericDatabase,
-        synchronizer,
-        clock
+        synchronizer
     )
-    private val syncDbCommands: MutableDbCommands = SyncCommands(immutableDbCommands)
+    private val syncDbCommands: MutableDbCommands = SyncCommands(immutableDbCommands, clock)
     private val baseService: Service = BaseService(
         passwordUtil,
         immutableDbQueries,

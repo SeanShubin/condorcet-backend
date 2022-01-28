@@ -6,9 +6,10 @@ import com.seanshubin.condorcet.backend.database.Event
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
 import java.sql.ResultSet
+import java.time.Instant
 
 interface ImmutableDbNotImplemented : ImmutableDbQueries, ImmutableDbCommands {
-    override fun addEvent(authority: String, type: String, body: String) {
+    override fun addEvent(authority: String, type: String, body: String, now: Instant) {
         throw UnsupportedOperationException("not implemented")
     }
 
