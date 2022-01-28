@@ -68,7 +68,7 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
         return queryZeroOrOneRow(this::createBallot, "ballot-select-by-user-election", voterName, electionName)
     }
 
-    override fun listRankings(electionName: String): List<VoterElectionRankingRow> =
+    override fun listRankings(electionName: String): List<VoterElectionCandidateRank> =
         query(::createVoterElectionRankingRow, "ranking-by-election", electionName)
 
     override fun listBallots(electionName: String): List<Ballot> =
@@ -135,8 +135,8 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
             resultSet.getInt("rank")
         )
 
-    private fun createVoterElectionRankingRow(resultSet: ResultSet): VoterElectionRankingRow =
-        VoterElectionRankingRow(
+    private fun createVoterElectionRankingRow(resultSet: ResultSet): VoterElectionCandidateRank =
+        VoterElectionCandidateRank(
             resultSet.getString("voter"),
             resultSet.getString("election"),
             resultSet.getString("candidate"),

@@ -210,7 +210,7 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun listRankings(electionName: String): List<VoterElectionRankingRow> {
+    override fun listRankings(electionName: String): List<VoterElectionCandidateRank> {
         throw UnsupportedOperationException("not implemented")
     }
 

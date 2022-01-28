@@ -19,7 +19,7 @@ interface MutableDbQueries : GenericDatabase {
     fun searchElectionByName(name: String): ElectionSummary?
     fun listCandidates(electionName: String): List<String>
     fun listRankings(voterName: String, electionName: String): List<Ranking>
-    fun listRankings(electionName: String): List<VoterElectionRankingRow>
+    fun listRankings(electionName: String): List<VoterElectionCandidateRank>
     fun searchBallot(voterName: String, electionName: String): BallotSummary?
     fun listBallots(electionName: String): List<Ballot>
     fun listVoterNames():List<String>
