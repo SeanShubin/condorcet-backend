@@ -9,7 +9,7 @@ class PasswordUtilTest {
     fun validPassword() {
         // given
         val password = "foo"
-        val uniqueIdGenerator = Uuid4()
+        val uniqueIdGenerator = SecureRandomIdGenerator()
         val oneWayHash = Sha256Hash()
         val passwordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
         val saltAndHash = passwordUtil.createSaltAndHash(password)
@@ -25,7 +25,7 @@ class PasswordUtilTest {
     fun invalidPassword() {
         // given
         val password = "foo"
-        val uniqueIdGenerator = Uuid4()
+        val uniqueIdGenerator = SecureRandomIdGenerator()
         val oneWayHash = Sha256Hash()
         val passwordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
         val saltAndHash = passwordUtil.createSaltAndHash(password)

@@ -2,8 +2,8 @@ package com.seanshubin.condorcet.backend.console
 
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.contract.FilesDelegate
+import com.seanshubin.condorcet.backend.crypto.SecureRandomIdGenerator
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
-import com.seanshubin.condorcet.backend.crypto.Uuid4
 import com.seanshubin.condorcet.backend.dependencies.Integration
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
@@ -23,7 +23,7 @@ class RegressionIntegration(phase: Phase) : Integration {
         Paths.get("src", "test", "resources", "com", "seanshubin", "condorcet", "backend", "console")
     val clockPath = regressionSnapshotDir.resolve("deterministic-clock.txt")
     val realClock = Clock.systemUTC()
-    val realUniqueIdGenerator: UniqueIdGenerator = Uuid4()
+    val realUniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator()
     val uniqueIdGeneratorPath = regressionSnapshotDir.resolve("deterministic-unique-id.txt")
     val randomPath = regressionSnapshotDir.resolve("deterministic-random.txt")
     val charset: Charset = StandardCharsets.UTF_8

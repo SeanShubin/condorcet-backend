@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.console
 
+import com.seanshubin.condorcet.backend.crypto.SecureRandomIdGenerator
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
-import com.seanshubin.condorcet.backend.crypto.Uuid4
 import com.seanshubin.condorcet.backend.dependencies.Integration
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
@@ -35,7 +35,7 @@ class ConsoleIntegration : Integration {
     override val serviceResponseEvent: (String, String, String) -> Unit = notifications::serviceResponseEvent
     override val topLevelException: (Throwable) -> Unit = notifications::topLevelException
     override val sqlException: (String, String, SQLException) -> Unit = notifications::sqlException
-    override val uniqueIdGenerator: UniqueIdGenerator = Uuid4()
+    override val uniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator()
     override val clock: Clock = Clock.systemUTC()
     override val whereKeysAreStored: Path = Paths.get("secrets")
     override val random: Random = Random.Default
