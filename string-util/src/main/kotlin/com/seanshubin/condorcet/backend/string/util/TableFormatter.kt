@@ -1,5 +1,6 @@
-package com.seanshubin.condorcet.backend.table
+package com.seanshubin.condorcet.backend.string.util
 
+import com.seanshubin.condorcet.backend.string.util.StringUtil.escape
 import java.io.BufferedReader
 import java.io.Reader
 
@@ -17,20 +18,6 @@ interface TableFormatter {
         private fun String.truncate(max: Int): String =
             if (this.length > max) "<${this.length} characters, showing first $max> ${this.substring(0, max)}"
             else this
-
-        private fun String.escape(): String = this.flatMap(::escapeCharToIterable).joinToString("")
-        private fun escapeCharToIterable(target: Char): Iterable<Char> = escapeCharToString(target).asIterable()
-        private fun escapeCharToString(target: Char): String =
-            when (target) {
-                '\n' -> "\\n"
-                '\b' -> "\\b"
-                '\t' -> "\\t"
-                '\r' -> "\\r"
-                '\"' -> "\\\""
-                '\'' -> "\\\'"
-                '\\' -> "\\\\"
-                else -> target.toString()
-            }
 
         val escapeString: (Any?) -> String = { cell ->
             when (cell) {

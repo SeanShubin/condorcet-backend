@@ -1,7 +1,7 @@
-package com.seanshubin.condorcet.backend.table
+package com.seanshubin.condorcet.backend.string.util
 
-import com.seanshubin.condorcet.backend.table.TableFormatter.Justify.Left
-import com.seanshubin.condorcet.backend.table.TableFormatter.Justify.Right
+import com.seanshubin.condorcet.backend.string.util.TableFormatter.Justify.Left
+import com.seanshubin.condorcet.backend.string.util.TableFormatter.Justify.Right
 import java.io.StringReader
 import kotlin.test.Test
 import kotlin.test.assertEquals

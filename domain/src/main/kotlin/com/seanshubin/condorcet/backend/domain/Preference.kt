@@ -2,7 +2,7 @@ package com.seanshubin.condorcet.backend.domain
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import com.seanshubin.condorcet.backend.domain.Place.Companion.adjustForTies
-import com.seanshubin.condorcet.backend.table.RowStyleTableFormatter
+import com.seanshubin.condorcet.backend.string.util.RowStyleTableFormatter
 
 @JsonPropertyOrder("path", "strengths", "origin", "strength", "destination")
 class Preference private constructor(val path: List<String>, val strengths: List<Int>) {

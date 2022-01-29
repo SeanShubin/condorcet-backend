@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.domain.*
+import com.seanshubin.condorcet.backend.string.util.StringUtil.escape
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -134,18 +135,4 @@ object ToKotlinString {
 
     fun List<String>.toKotlinString(): String =
         joinToString(",", "listOf(", ")") { it }
-
-    private fun String.escape(): String = this.flatMap(::escapeCharToIterable).joinToString("")
-    private fun escapeCharToIterable(target: Char): Iterable<Char> = escapeCharToString(target).asIterable()
-    private fun escapeCharToString(target: Char): String =
-        when (target) {
-            '\n' -> "\\n"
-            '\b' -> "\\b"
-            '\t' -> "\\t"
-            '\r' -> "\\r"
-            '\"' -> "\\\""
-            '\'' -> "\\\'"
-            '\\' -> "\\\\"
-            else -> target.toString()
-        }
 }

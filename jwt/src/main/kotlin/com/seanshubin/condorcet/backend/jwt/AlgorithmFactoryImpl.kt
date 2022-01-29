@@ -2,6 +2,8 @@ package com.seanshubin.condorcet.backend.jwt
 
 import com.auth0.jwt.algorithms.Algorithm
 import com.seanshubin.condorcet.backend.contract.FilesContract
+import com.seanshubin.condorcet.backend.string.util.HexFormat.fromHexToBytes
+import com.seanshubin.condorcet.backend.string.util.HexFormat.toPrettyHex
 import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Path
@@ -38,9 +40,9 @@ class AlgorithmFactoryImpl(
 
     private fun loadExistingKeyBytes(): Pair<ByteArray, ByteArray> {
         val publicKeyHex = files.readString(publicKeyPath)
-        val publicKeyBytes = HexFormatter.hexToBytes(publicKeyHex)
+        val publicKeyBytes = publicKeyHex.fromHexToBytes()
         val privateKeyHex = files.readString(privateKeyPath)
-        val privateKeyBytes = HexFormatter.hexToBytes(privateKeyHex)
+        val privateKeyBytes = privateKeyHex.fromHexToBytes()
         return Pair(publicKeyBytes, privateKeyBytes)
     }
 
@@ -53,8 +55,8 @@ class AlgorithmFactoryImpl(
         val privateKey: RSAPrivateKey = keyPair.private as RSAPrivateKey
         val publicKeyBytes: ByteArray = publicKey.encoded
         val privateKeyBytes: ByteArray = privateKey.encoded
-        val publicKeyHex = HexFormatter.Pretty.bytesToHex(publicKeyBytes)
-        val privateKeyHex = HexFormatter.Pretty.bytesToHex(privateKeyBytes)
+        val publicKeyHex = publicKeyBytes.toPrettyHex()
+        val privateKeyHex = privateKeyBytes.toPrettyHex()
         Files.writeString(publicKeyPath, publicKeyHex, charset)
         Files.writeString(privateKeyPath, privateKeyHex, charset)
         return loadExistingKeyBytes()

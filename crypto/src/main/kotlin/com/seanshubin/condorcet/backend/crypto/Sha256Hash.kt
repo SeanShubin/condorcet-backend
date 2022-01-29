@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.crypto
 
+import com.seanshubin.condorcet.backend.string.util.HexFormat.toCompactHex
 import java.security.MessageDigest
 
 class Sha256Hash : OneWayHash {
@@ -12,20 +13,7 @@ class Sha256Hash : OneWayHash {
     override fun hash(s: String): String {
         val inputBytes = s.toByteArray()
         val hashedBytes = messageDigest.digest(inputBytes)
-        val hashedString = hex(hashedBytes)
+        val hashedString = hashedBytes.toCompactHex()
         return hashedString
     }
-
-    private fun hex(byteArray: ByteArray): String = byteArray.joinToString("") { hex(it) }
-
-    private fun hex(byte: Byte): String {
-        val asInt = byte.toInt()
-        val digits = "0123456789ABCDEF"
-        val lowByte = asInt and 0b1111
-        val highByte = asInt shr 4 and 0b1111
-        val lowDigit = digits[lowByte]
-        val highDigit = digits[highByte]
-        return "" + highDigit + lowDigit
-    }
-
 }

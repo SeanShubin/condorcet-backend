@@ -12,7 +12,7 @@
         </dependency>
         <dependency>
             <groupId>com.seanshubin.condorcet.backend</groupId>
-            <artifactId>condorcet-backend-table</artifactId>
+            <artifactId>condorcet-backend-string-util</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

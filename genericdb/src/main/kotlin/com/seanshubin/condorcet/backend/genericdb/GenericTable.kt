@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.genericdb
 
-import com.seanshubin.condorcet.backend.table.RowStyleTableFormatter
-import com.seanshubin.condorcet.backend.table.TableFormatter.Companion.plainString
+import com.seanshubin.condorcet.backend.string.util.RowStyleTableFormatter
+import com.seanshubin.condorcet.backend.string.util.TableFormatter.Companion.plainString
 
 data class GenericTable(
     val queryString: String,
