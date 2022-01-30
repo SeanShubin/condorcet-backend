@@ -5,8 +5,20 @@ import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role.*
 import com.seanshubin.condorcet.backend.service.AccessToken
+import com.seanshubin.condorcet.backend.service.Service
 
 object SampleDataApp {
+    val alice = AccessToken("Alice", OWNER)
+    val bob = AccessToken("Bob", AUDITOR)
+    val carol = AccessToken("Carol", AUDITOR)
+    val dave = AccessToken("Dave", ADMIN)
+    val eve = AccessToken("Eve", ADMIN)
+    val frank = AccessToken("Frank", ADMIN)
+    val grace = AccessToken("Grace", USER)
+    val heidi = AccessToken("Heidi", USER)
+    val ivy = AccessToken("Ivy", USER)
+    val judy = AccessToken("Judy", USER)
+
     @JvmStatic
     fun main(args: Array<String>) {
         val dependencies = Dependencies(ConsoleIntegration())
@@ -14,16 +26,6 @@ object SampleDataApp {
         val service = dependencies.service
         initializer.purgeAllData()
         initializer.initialize()
-        val alice = AccessToken("Alice", OWNER)
-        val bob = AccessToken("Bob", AUDITOR)
-        val carol = AccessToken("Carol", AUDITOR)
-        val dave = AccessToken("Dave", ADMIN)
-        val eve = AccessToken("Eve", ADMIN)
-        val frank = AccessToken("Frank", ADMIN)
-        val grace = AccessToken("Grace", USER)
-        val heidi = AccessToken("Heidi", USER)
-        val ivy = AccessToken("Ivy", USER)
-        val judy = AccessToken("Judy", USER)
         service.register("Alice", "alice@email.com", "pass")
         service.register("Bob", "bob@email.com", "pass")
         service.register("Carol", "carol@email.com", "pass")
@@ -49,59 +51,282 @@ object SampleDataApp {
         service.setRole(alice, "Ivy", USER)
         service.setRole(alice, "Judy", USER)
 
-        // Spoiler Alert
-        service.addElection(grace, "Spoiler Alert")
-        service.setCandidates(grace, "Spoiler Alert", listOf("Minor Improvements","Status Quo","Radical Changes"))
-        service.launchElection(grace, "Spoiler Alert", false)
-        service.castBallot(alice, "Alice", "Spoiler Alert", listOf(Ranking("Status Quo", 2),Ranking("Radical Changes", null),Ranking("Minor Improvements", 1)))
-        service.castBallot(bob, "Bob", "Spoiler Alert", listOf(Ranking("Minor Improvements", 1),Ranking("Status Quo", 2),Ranking("Radical Changes", 3)))
-        service.castBallot(carol, "Carol", "Spoiler Alert", listOf(Ranking("Radical Changes", 4),Ranking("Minor Improvements", 1),Ranking("Status Quo", 2)))
-        service.castBallot(dave, "Dave", "Spoiler Alert", listOf(Ranking("Minor Improvements", 2),Ranking("Radical Changes", null),Ranking("Status Quo", 1)))
-        service.castBallot(eve, "Eve", "Spoiler Alert", listOf(Ranking("Status Quo", 1),Ranking("Radical Changes", 3),Ranking("Minor Improvements", 2)))
-        service.castBallot(frank, "Frank", "Spoiler Alert", listOf(Ranking("Radical Changes", 3),Ranking("Minor Improvements", 2),Ranking("Status Quo", 1)))
-        service.castBallot(grace, "Grace", "Spoiler Alert", listOf(Ranking("Radical Changes", 1),Ranking("Minor Improvements", 2),Ranking("Status Quo", 3)))
-        service.castBallot(heidi, "Heidi", "Spoiler Alert", listOf(Ranking("Status Quo", null),Ranking("Radical Changes", 1),Ranking("Minor Improvements", 2)))
-        service.castBallot(ivy, "Ivy", "Spoiler Alert", listOf(Ranking("Minor Improvements", 20),Ranking("Radical Changes", 10),Ranking("Status Quo", 30)))
-        service.castBallot(judy, "Judy", "Spoiler Alert", listOf(Ranking("Minor Improvements", 2),Ranking("Status Quo", 3),Ranking("Radical Changes", 1)))
+        val createElectionFunctions = listOf(
+            ::createSpoilerAlertElection,
+            ::createOpeningMoveElection,
+            ::createCredibleCompromiseElection,
+            ::createPetsElection,
+        )
 
-        // Opening Move
-        service.addElection(heidi, "Opening Move")
-        service.updateElection(heidi, "Opening Move", ElectionUpdates(secretBallot = false))
-        service.setCandidates(heidi, "Opening Move", listOf("Rock","Paper","Scissors"))
-        service.launchElection(heidi, "Opening Move", allowEdit = false)
-        service.castBallot(alice, "Alice", "Opening Move", listOf(Ranking("Rock", 1),Ranking("Paper", 2),Ranking("Scissors", 3)))
-        service.castBallot(bob, "Bob", "Opening Move", listOf(Ranking("Rock", 1),Ranking("Paper", 2),Ranking("Scissors", 3)))
-        service.castBallot(carol, "Carol", "Opening Move", listOf(Ranking("Rock", 1),Ranking("Paper", 2),Ranking("Scissors", 3)))
-        service.castBallot(dave, "Dave", "Opening Move", listOf(Ranking("Paper", 1),Ranking("Scissors", 2),Ranking("Rock", 3)))
-        service.castBallot(eve, "Eve", "Opening Move", listOf(Ranking("Paper", 1),Ranking("Scissors", 2),Ranking("Rock", 3)))
-        service.castBallot(frank, "Frank", "Opening Move", listOf(Ranking("Paper", 1),Ranking("Scissors", 2),Ranking("Rock", 3)))
-        service.castBallot(grace, "Grace", "Opening Move", listOf(Ranking("Scissors", 1),Ranking("Rock", 2),Ranking("Paper", 3)))
-        service.castBallot(heidi, "Heidi", "Opening Move", listOf(Ranking("Scissors", 1),Ranking("Rock", 2),Ranking("Paper", 3)))
-        service.castBallot(ivy, "Ivy", "Opening Move", listOf(Ranking("Scissors", 1),Ranking("Rock", 2),Ranking("Paper", 3)))
-        service.castBallot(judy, "Judy", "Opening Move", listOf(Ranking("Rock", 1),Ranking("Paper", 2),Ranking("Scissors", 3)))
-        service.finalizeElection(heidi, "Opening Move")
+        listOf(false,true).flatMap { secretBallot ->
+            createElectionFunctions.map { createElection ->
+                Pair(secretBallot, createElection)
+            }
+        }.forEachIndexed{ index, (secretBallot, createElection) ->
+            createElection(service, index+1, secretBallot)
+        }
+    }
 
-        // Credible Compromise
-        service.addElection(ivy, "Credible Compromise")
-        service.updateElection(ivy, "Credible Compromise", ElectionUpdates(secretBallot = false))
-        service.setCandidates(ivy, "Credible Compromise", listOf("Relatively Unknown","Wide Appeal","Obscure A", "Obscure B", "Obscure C"))
-        service.launchElection(ivy, "Credible Compromise", allowEdit = false)
-        service.castBallot(alice, "Alice", "Credible Compromise", listOf(Ranking("Relatively Unknown", 1),Ranking("Wide Appeal", 2)))
-        service.castBallot(bob, "Bob", "Credible Compromise", listOf(Ranking("Relatively Unknown", 1),Ranking("Wide Appeal", 2)))
-        service.castBallot(carol, "Carol", "Credible Compromise", listOf(Ranking("Obscure A", 1),Ranking("Wide Appeal", 2)))
-        service.castBallot(dave, "Dave", "Credible Compromise", listOf(Ranking("Obscure B", 1),Ranking("Wide Appeal", 2)))
-        service.castBallot(eve, "Eve", "Credible Compromise", listOf(Ranking("Obscure C", 1),Ranking("Wide Appeal", 2)))
-        service.finalizeElection(ivy, "Credible Compromise")
+    private fun annotateElectionName(electionName:String, index:Int, secretBallot: Boolean):String {
+        val secretBallotString = if(secretBallot) "secret ballot" else "public"
+        return "$index $electionName ($secretBallotString)"
+    }
 
-        // Pets
-        service.addElection(judy, "Pets")
-        service.updateElection(judy, "Pets", ElectionUpdates(secretBallot = false))
-        service.setCandidates(judy, "Pets", listOf("Cat", "Dog", "Fish", "Bird", "Snake", "Spider", "Lizard", "Ferret"))
-        service.launchElection(judy, "Pets", allowEdit = false)
-        service.castBallot(alice, "Alice", "Pets", listOf(Ranking("Dog", 1),Ranking("Cat", 2),Ranking("Lizard", 3),Ranking("Fish", 4),Ranking("Spider", 5),Ranking("Snake", 6),Ranking("Bird", 7),Ranking("Ferret", 8)))
-        service.castBallot(bob, "Bob", "Pets", listOf(Ranking("Dog", 1),Ranking("Snake", 2),Ranking("Spider", 3),Ranking("Lizard", 4),Ranking("Cat", 5),Ranking("Fish", 6),Ranking("Bird", 7),Ranking("Ferret", 8)))
-        service.castBallot(carol, "Carol", "Pets", listOf(Ranking("Spider", 1),Ranking("Snake", 2),Ranking("Ferret", 3),Ranking("Cat", 4),Ranking("Dog", 5),Ranking("Lizard", 6),Ranking("Bird", 7),Ranking("Fish", 8)))
-        service.castBallot(dave, "Dave", "Pets", listOf(Ranking("Fish", 2),Ranking("Bird", 1),Ranking("Lizard", 3),Ranking("Dog", 4),Ranking("Spider", 8),Ranking("Ferret", 6),Ranking("Cat", 7),Ranking("Snake", 5)))
-        service.finalizeElection(judy, "Pets")
+    private fun createSpoilerAlertElection(service: Service, index:Int, secretBallot: Boolean) {
+        val electionName = annotateElectionName("Spoiler Alert", index, secretBallot)
+        service.addElection(grace, electionName)
+        if(secretBallot){
+            service.updateElection(grace, electionName, ElectionUpdates(secretBallot = true))
+        }
+        service.setCandidates(grace, electionName, listOf("Minor Improvements", "Status Quo", "Radical Changes"))
+        service.launchElection(grace, electionName, false)
+        service.castBallot(
+            alice,
+            "Alice",
+            electionName,
+            listOf(Ranking("Status Quo", 2), Ranking("Radical Changes", null), Ranking("Minor Improvements", 1))
+        )
+        service.castBallot(
+            bob,
+            "Bob",
+            electionName,
+            listOf(Ranking("Minor Improvements", 1), Ranking("Status Quo", 2), Ranking("Radical Changes", 3))
+        )
+        service.castBallot(
+            carol,
+            "Carol",
+            electionName,
+            listOf(Ranking("Radical Changes", 4), Ranking("Minor Improvements", 1), Ranking("Status Quo", 2))
+        )
+        service.castBallot(
+            dave,
+            "Dave",
+            electionName,
+            listOf(Ranking("Minor Improvements", 2), Ranking("Radical Changes", null), Ranking("Status Quo", 1))
+        )
+        service.castBallot(
+            eve,
+            "Eve",
+            electionName,
+            listOf(Ranking("Status Quo", 1), Ranking("Radical Changes", 3), Ranking("Minor Improvements", 2))
+        )
+        service.castBallot(
+            frank,
+            "Frank",
+            electionName,
+            listOf(Ranking("Radical Changes", 3), Ranking("Minor Improvements", 2), Ranking("Status Quo", 1))
+        )
+        service.castBallot(
+            grace,
+            "Grace",
+            electionName,
+            listOf(Ranking("Radical Changes", 1), Ranking("Minor Improvements", 2), Ranking("Status Quo", 3))
+        )
+        service.castBallot(
+            heidi,
+            "Heidi",
+            electionName,
+            listOf(Ranking("Status Quo", null), Ranking("Radical Changes", 1), Ranking("Minor Improvements", 2))
+        )
+        service.castBallot(
+            ivy,
+            "Ivy",
+            electionName,
+            listOf(Ranking("Minor Improvements", 20), Ranking("Radical Changes", 10), Ranking("Status Quo", 30))
+        )
+        service.castBallot(
+            judy,
+            "Judy",
+            electionName,
+            listOf(Ranking("Minor Improvements", 2), Ranking("Status Quo", 3), Ranking("Radical Changes", 1))
+        )
+        service.finalizeElection(grace, electionName)
+    }
+    private fun createOpeningMoveElection(service: Service, index:Int, secretBallot: Boolean) {
+        val electionName = annotateElectionName("Biggest Problem", index, secretBallot)
+        service.addElection(heidi, electionName)
+        if(secretBallot){
+            service.updateElection(heidi, electionName, ElectionUpdates(secretBallot = true))
+        }
+        service.setCandidates(heidi, electionName, listOf("Price of Essentials", "Bureaucratic Obstacles", "Capital Gains Tax"))
+        service.launchElection(heidi, electionName, allowEdit = false)
+        service.castBallot(
+            alice,
+            "Alice",
+            electionName,
+            listOf(Ranking("Price of Essentials", 1), Ranking("Capital Gains Tax", 2), Ranking("Bureaucratic Obstacles", 3))
+        )
+        service.castBallot(
+            bob,
+            "Bob",
+            electionName,
+            listOf(Ranking("Price of Essentials", 1), Ranking("Capital Gains Tax", 2), Ranking("Bureaucratic Obstacles", 3))
+        )
+        service.castBallot(
+            carol,
+            "Carol",
+            electionName,
+            listOf(Ranking("Price of Essentials", 1), Ranking("Capital Gains Tax", 2), Ranking("Bureaucratic Obstacles", 3))
+        )
+        service.castBallot(
+            dave,
+            "Dave",
+            electionName,
+            listOf(Ranking("Bureaucratic Obstacles", 1), Ranking("Price of Essentials", 2), Ranking("Capital Gains Tax", 3))
+        )
+        service.castBallot(
+            eve,
+            "Eve",
+            electionName,
+            listOf(Ranking("Bureaucratic Obstacles", 1), Ranking("Price of Essentials", 2), Ranking("Capital Gains Tax", 3))
+        )
+        service.castBallot(
+            frank,
+            "Frank",
+            electionName,
+            listOf(Ranking("Bureaucratic Obstacles", 1), Ranking("Price of Essentials", 2), Ranking("Capital Gains Tax", 3))
+        )
+        service.castBallot(
+            grace,
+            "Grace",
+            electionName,
+            listOf(Ranking("Capital Gains Tax", 1), Ranking("Bureaucratic Obstacles", 2), Ranking("Price of Essentials", 3))
+        )
+        service.castBallot(
+            heidi,
+            "Heidi",
+            electionName,
+            listOf(Ranking("Capital Gains Tax", 1), Ranking("Bureaucratic Obstacles", 2), Ranking("Price of Essentials", 3))
+        )
+        service.castBallot(
+            ivy,
+            "Ivy",
+            electionName,
+            listOf(Ranking("Capital Gains Tax", 1), Ranking("Bureaucratic Obstacles", 2), Ranking("Price of Essentials", 3))
+        )
+        service.castBallot(
+            judy,
+            "Judy",
+            electionName,
+            listOf(Ranking("Price of Essentials", 1), Ranking("Capital Gains Tax", 2), Ranking("Bureaucratic Obstacles", 3))
+        )
+        service.finalizeElection(heidi, electionName)
+    }
+
+
+    private fun createCredibleCompromiseElection(service: Service, index:Int, secretBallot: Boolean) {
+        val electionName = annotateElectionName("Credible Compromise", index, secretBallot)
+        service.addElection(ivy, electionName)
+        if(secretBallot){
+            service.updateElection(ivy, electionName, ElectionUpdates(secretBallot = true))
+        }
+        service.setCandidates(
+            ivy,
+            electionName,
+            listOf("Relatively Unknown", "Wide Appeal", "Obscure A", "Obscure B", "Obscure C")
+        )
+        service.launchElection(ivy, electionName, allowEdit = false)
+        service.castBallot(
+            alice,
+            "Alice",
+            electionName,
+            listOf(Ranking("Relatively Unknown", 1), Ranking("Wide Appeal", 2))
+        )
+        service.castBallot(
+            bob,
+            "Bob",
+            electionName,
+            listOf(Ranking("Relatively Unknown", 1), Ranking("Wide Appeal", 2))
+        )
+        service.castBallot(
+            carol,
+            "Carol",
+            electionName,
+            listOf(Ranking("Obscure A", 1), Ranking("Wide Appeal", 2))
+        )
+        service.castBallot(
+            dave,
+            "Dave",
+            electionName,
+            listOf(Ranking("Obscure B", 1), Ranking("Wide Appeal", 2))
+        )
+        service.castBallot(
+            eve,
+            "Eve",
+            electionName,
+            listOf(Ranking("Obscure C", 1), Ranking("Wide Appeal", 2))
+        )
+        service.finalizeElection(ivy, electionName)
+    }
+
+    private fun createPetsElection(service: Service, index:Int, secretBallot: Boolean) {
+        val electionName = annotateElectionName("Pets", index, secretBallot)
+        service.addElection(judy, electionName)
+        if(secretBallot){
+            service.updateElection(judy, electionName, ElectionUpdates(secretBallot = true))
+        }
+        service.setCandidates(judy, electionName, listOf("Cat", "Dog", "Fish", "Bird", "Snake", "Spider", "Lizard", "Ferret"))
+        service.launchElection(judy, electionName, allowEdit = false)
+        service.castBallot(
+            alice,
+            "Alice",
+            electionName,
+            listOf(
+                Ranking("Dog", 1),
+                Ranking("Cat", 2),
+                Ranking("Lizard", 3),
+                Ranking("Fish", 4),
+                Ranking("Spider", 5),
+                Ranking("Snake", 6),
+                Ranking("Bird", 7),
+                Ranking("Ferret", 8)
+            )
+        )
+        service.castBallot(
+            bob,
+            "Bob",
+            electionName,
+            listOf(
+                Ranking("Dog", 1),
+                Ranking("Snake", 2),
+                Ranking("Spider", 3),
+                Ranking("Lizard", 4),
+                Ranking("Cat", 5),
+                Ranking("Fish", 6),
+                Ranking("Bird", 7),
+                Ranking("Ferret", 8)
+            )
+        )
+        service.castBallot(
+            carol,
+            "Carol",
+            electionName,
+            listOf(
+                Ranking("Spider", 1),
+                Ranking("Snake", 2),
+                Ranking("Ferret", 3),
+                Ranking("Cat", 4),
+                Ranking("Dog", 5),
+                Ranking("Lizard", 6),
+                Ranking("Bird", 7),
+                Ranking("Fish", 8)
+            )
+        )
+        service.castBallot(
+            dave,
+            "Dave",
+            electionName,
+            listOf(
+                Ranking("Fish", 2),
+                Ranking("Bird", 1),
+                Ranking("Lizard", 3),
+                Ranking("Dog", 4),
+                Ranking("Spider", 8),
+                Ranking("Ferret", 6),
+                Ranking("Cat", 7),
+                Ranking("Snake", 5)
+            )
+        )
+        service.finalizeElection(judy, electionName)
     }
 }
