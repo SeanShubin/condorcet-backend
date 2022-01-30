@@ -71,7 +71,7 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     override fun listRankings(electionName: String): List<VoterElectionCandidateRank> =
         query(::createVoterElectionRankingRow, "ranking-by-election", electionName)
 
-    override fun listBallots(electionName: String): List<Ballot> =
+    override fun listBallots(electionName: String): List<RevealedBallot> =
         queryJoin(
             ::createBallotSummary,
             ::createRanking,
@@ -154,8 +154,8 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     private fun createBallotRankingKey(resultSet: ResultSet): Int =
         resultSet.getInt("ballot.id")
 
-    private fun createBallot(ballotSummary: BallotSummary, rankingList: List<Ranking>): Ballot =
-        Ballot(
+    private fun createBallot(ballotSummary: BallotSummary, rankingList: List<Ranking>): RevealedBallot =
+        RevealedBallot(
             ballotSummary.voterName,
             ballotSummary.electionName,
             ballotSummary.confirmation,

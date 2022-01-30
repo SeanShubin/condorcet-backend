@@ -206,7 +206,7 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun listBallots(electionName: String): List<Ballot> {
+    override fun listBallots(electionName: String): List<RevealedBallot> {
         throw UnsupportedOperationException("not implemented")
     }
 

@@ -78,12 +78,25 @@ object ToKotlinString {
     fun Ranking.toKotlinString(): String =
         "Ranking(${candidateName.toKotlinString()}, ${rank.toKotlinString()})"
 
-    private fun Ballot.toKotlinString(): String =
-        "Ballot(" +
+    private fun Ballot.toKotlinString():String = when(this){
+        is SecretBallot -> this.toKotlinString()
+        is RevealedBallot -> this.toKotlinString()
+        else -> throw UnsupportedOperationException("Unknown Ballot type ${this.javaClass.name}")
+    }
+
+    private fun RevealedBallot.toKotlinString(): String =
+        "RevealedBallot(" +
                 "${voterName.toKotlinString()}, " +
                 "${electionName.toKotlinString()}, " +
                 "${confirmation.toKotlinString()}, " +
                 "${whenCast.toKotlinString()}, " +
+                rankings.map { it.toKotlinString() }.toKotlinString() +
+                ")"
+
+    private fun SecretBallot.toKotlinString(): String =
+        "SecretBallot(" +
+                "${electionName.toKotlinString()}, " +
+                "${confirmation.toKotlinString()}, " +
                 rankings.map { it.toKotlinString() }.toKotlinString() +
                 ")"
 

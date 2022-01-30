@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.domain
 
-import com.seanshubin.condorcet.backend.domain.Ballot.Companion.effectiveRankings
-import com.seanshubin.condorcet.backend.domain.Ballot.Companion.matchRankingsOrderToCandidates
+import com.seanshubin.condorcet.backend.domain.RevealedBallot.Companion.effectiveRankings
+import com.seanshubin.condorcet.backend.domain.RevealedBallot.Companion.matchRankingsOrderToCandidates
 import com.seanshubin.condorcet.backend.domain.Preference.Companion.places
 import com.seanshubin.condorcet.backend.domain.Preference.Companion.strongestPaths
 import com.seanshubin.condorcet.backend.domain.Preference.Companion.toLines
@@ -34,7 +34,7 @@ data class Tally(
     private val indent = { s: String -> "  $s" }
 
     companion object {
-        fun countBallots(electionName:String, secretBallot: Boolean, candidates: List<String>, ballots: List<Ballot>): Tally {
+        fun countBallots(electionName:String, secretBallot: Boolean, candidates: List<String>, ballots: List<RevealedBallot>): Tally {
             val initialTally = BallotCounter(electionName, secretBallot, candidates, ballots).countBallots()
             val candidatesSortedByPlaceThenAlpha = initialTally.places.map { it.candidateName }
             val sortedTallyToMakeItEasierToExplainResults =
@@ -53,7 +53,7 @@ data class Tally(
         }
 
 
-        class BallotCounter(val electionName:String, val secretBallot: Boolean, val candidates: List<String>, val rawBallots: List<Ballot>) {
+        class BallotCounter(val electionName:String, val secretBallot: Boolean, val candidates: List<String>, val rawBallots: List<RevealedBallot>) {
             fun countBallots(): Tally {
                 val emptyPreferences = createEmptyPreferences()
                 val preferences = rawBallots.map { it.rankings }.fold(emptyPreferences, ::accumulateRankings)
