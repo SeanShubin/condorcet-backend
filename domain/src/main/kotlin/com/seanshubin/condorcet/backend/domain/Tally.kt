@@ -8,8 +8,9 @@ import com.seanshubin.condorcet.backend.domain.Preference.Companion.toLines
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.prefers
 
 data class Tally(
+    val electionName: String,
     val candidateNames: List<String>,
-    val secretBallot:Boolean,
+    val secretBallot: Boolean,
     val ballots: List<Ballot>,
     val preferences: List<List<Preference>>,
     val strongestPathMatrix: List<List<Preference>>,
@@ -33,35 +34,40 @@ data class Tally(
     private val indent = { s: String -> "  $s" }
 
     companion object {
-        fun countBallots(secretBallot: Boolean, candidates: List<String>, ballots: List<Ballot>): Tally {
-            val initialTally = BallotCounter(secretBallot, candidates, ballots).countBallots()
-            val candidatesSortedByPlaceThenAlpha = initialTally.places.map {it.candidateName}
-            val sortedTallyToMakeItEasierToExplainResults = BallotCounter(secretBallot, candidatesSortedByPlaceThenAlpha, ballots).countBallots()
-            placesBetterNotHaveChangedOrAlgorithmIsBroken(initialTally.places, sortedTallyToMakeItEasierToExplainResults.places)
+        fun countBallots(electionName:String, secretBallot: Boolean, candidates: List<String>, ballots: List<Ballot>): Tally {
+            val initialTally = BallotCounter(electionName, secretBallot, candidates, ballots).countBallots()
+            val candidatesSortedByPlaceThenAlpha = initialTally.places.map { it.candidateName }
+            val sortedTallyToMakeItEasierToExplainResults =
+                BallotCounter(electionName, secretBallot, candidatesSortedByPlaceThenAlpha, ballots).countBallots()
+            placesBetterNotHaveChangedOrAlgorithmIsBroken(
+                initialTally.places,
+                sortedTallyToMakeItEasierToExplainResults.places
+            )
             return sortedTallyToMakeItEasierToExplainResults
         }
 
         private fun placesBetterNotHaveChangedOrAlgorithmIsBroken(first: List<Place>, second: List<Place>) {
-            require(first == second){
+            require(first == second) {
                 "Changing the order of candidates affected the results, something is wrong with the algorithm\n$first\n$second"
             }
         }
 
 
-        class BallotCounter(val secretBallot: Boolean, val candidates: List<String>, val rawBallots: List<Ballot>) {
+        class BallotCounter(val electionName:String, val secretBallot: Boolean, val candidates: List<String>, val rawBallots: List<Ballot>) {
             fun countBallots(): Tally {
                 val emptyPreferences = createEmptyPreferences()
                 val preferences = rawBallots.map { it.rankings }.fold(emptyPreferences, ::accumulateRankings)
                 val strongestPaths = preferences.strongestPaths()
                 val places = strongestPaths.places(candidates)
                 val whoVoted = rawBallots.map { it.voterName }.sorted()
-                val rankSortedBallots = rawBallots.effectiveRankings(candidates).matchRankingsOrderToCandidates(candidates)
+                val rankSortedBallots =
+                    rawBallots.effectiveRankings(candidates).matchRankingsOrderToCandidates(candidates)
                 val ballots = if (secretBallot) {
                     rankSortedBallots.map { it.makeSecret() }.sortedBy { it.confirmation }
                 } else {
                     rankSortedBallots.sortedBy { it.voterName }
                 }
-                return Tally(candidates, secretBallot, ballots, preferences, strongestPaths, places, whoVoted)
+                return Tally(electionName, candidates, secretBallot, ballots, preferences, strongestPaths, places, whoVoted)
             }
 
             fun createEmptyPreferences(): List<List<Preference>> =

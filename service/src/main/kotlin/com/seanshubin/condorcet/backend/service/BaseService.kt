@@ -260,7 +260,7 @@ class BaseService(
         val secretBallot = election.secretBallot
         val candidates = mutableDbQueries.listCandidates(electionName)
         val ballots = mutableDbQueries.listBallots(electionName)
-        val tally = Tally.countBallots(secretBallot, candidates, ballots)
+        val tally = Tally.countBallots(electionName, secretBallot, candidates, ballots)
         return tally
     }
 

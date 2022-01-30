@@ -7,6 +7,7 @@ import kotlin.test.assertEquals
 class TallyTest {
     @Test
     fun count() {
+        val electionName = "Rock, Paper, Scissors"
         val createBallotsFunction = newCreateBallotsFunction()
         fun createBallots(quantity: Int, vararg candidate: String): List<Ballot> =
             createBallotsFunction(quantity, candidate)
@@ -19,12 +20,13 @@ class TallyTest {
         val places = listOf(Place(1, "Rock"), Place(2, "Scissors"), Place(3, "Paper"))
 
         val secretBallot = false
-        val tally = Tally.countBallots(secretBallot, candidates, ballots)
+        val tally = Tally.countBallots(electionName, secretBallot, candidates, ballots)
         assertEquals(places, tally.places)
     }
 
     @Test
     fun ties() {
+        val electionName = "Ties"
         val createBallotsFunction = newCreateBallotsFunction()
         fun createBallots(quantity:Int, vararg candidate:String):List<Ballot> = createBallotsFunction(quantity, candidate)
         val candidates = listOf("a", "b", "c", "d", "e")
@@ -34,7 +36,7 @@ class TallyTest {
         val places = listOf(Place(1, "a"), Place(1, "b"), Place(3, "c"), Place(4, "d"), Place(4, "e"))
 
         val secretBallot = false
-        val tally = Tally.countBallots(secretBallot, candidates, ballots)
+        val tally = Tally.countBallots(electionName, secretBallot, candidates, ballots)
         assertEquals(places, tally.places)
     }
 
