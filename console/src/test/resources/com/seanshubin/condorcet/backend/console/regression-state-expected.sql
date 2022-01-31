@@ -1,7 +1,5 @@
 select count(id)
 from user;
-select count(id)
-from election;
 select name,
        email,
        salt,

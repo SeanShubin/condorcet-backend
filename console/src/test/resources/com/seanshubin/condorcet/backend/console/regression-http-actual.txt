@@ -2,8 +2,8 @@
 200
 Content-Type: application/json
 {
-  "users" : "0",
-  "elections" : "0"
+  "service" : "ok",
+  "database" : "ok"
 }
 
 /Register

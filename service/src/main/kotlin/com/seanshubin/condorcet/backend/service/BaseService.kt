@@ -37,11 +37,14 @@ class BaseService(
     }
 
     override fun health(): Map<String, String> {
-        val userCount = mutableDbQueries.userCount()
-        val electionCount = mutableDbQueries.electionCount()
+        val execResult: Result<Int> = kotlin.runCatching {
+            mutableDbQueries.userCount()
+        }
+        val service = "ok"
+        val database = execResult.exceptionOrNull()?.message ?: "ok"
         return mapOf(
-            "users" to userCount.toString(),
-            "elections" to electionCount.toString()
+            "service" to service,
+            "database" to database
         )
     }
 

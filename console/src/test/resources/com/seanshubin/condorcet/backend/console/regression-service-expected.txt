@@ -1,5 +1,5 @@
 health()
-mapOf(Pair("users", "0"), Pair("elections", "0"))
+mapOf(Pair("service", "ok"), Pair("database", "ok"))
 
 register("Alice", "alice@email.com", "alice-password")
 Tokens(RefreshToken("Alice"),AccessToken("Alice", OWNER))
