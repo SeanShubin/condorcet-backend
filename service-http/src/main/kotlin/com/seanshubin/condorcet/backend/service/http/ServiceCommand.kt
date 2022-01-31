@@ -18,6 +18,15 @@ import java.time.Instant
 interface ServiceCommand {
     fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue
 
+    object Health : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
+            val health = environment.service.health()
+            return responseBuilder().json(health).build()
+        }
+
+        override fun toString(): String = "Health"
+    }
+
     object Refresh : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             val refreshToken = request.refreshToken(environment.cipher)

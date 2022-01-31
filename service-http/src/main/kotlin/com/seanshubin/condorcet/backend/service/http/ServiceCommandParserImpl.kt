@@ -17,6 +17,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
 
     private fun parseJson(name: String, json: String): ServiceCommand {
         return when (name) {
+            "Health" -> ServiceCommand.Health
             "Refresh" -> ServiceCommand.Refresh
             "Register" -> JsonMappers.parse<ServiceCommand.Register>(json)
             "Logout" -> ServiceCommand.Logout

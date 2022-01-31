@@ -16,6 +16,14 @@ class RecordingService(
         return response
     }
 
+    override fun health(): Map<String, String> {
+        val requestString = ""
+        serviceRequestEvent("health", requestString)
+        val response = service.health()
+        serviceResponseEvent("health", requestString, response.toKotlinString())
+        return response
+    }
+
     override fun refresh(refreshToken: RefreshToken): Tokens {
         val requestString = refreshToken.toKotlinString()
         serviceRequestEvent("refresh", requestString)

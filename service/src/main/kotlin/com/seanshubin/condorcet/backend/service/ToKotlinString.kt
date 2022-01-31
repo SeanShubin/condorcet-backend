@@ -15,6 +15,15 @@ object ToKotlinString {
 
     fun Int?.toKotlinString(): String = if (this == null) "null" else "$this"
 
+    fun Pair<String, String>.toKotlinString(): String {
+        return "Pair(${first.toKotlinString()}, ${second.toKotlinString()})"
+    }
+
+    fun Map<String, String>.toKotlinString():String {
+        val pairs = map{it.toPair().toKotlinString()}.joinToString(", ")
+        return "mapOf(${pairs})"
+    }
+
     fun Instant?.toKotlinString(): String = if (this == null) "null" else "Instant.parse(\"$this\")"
 
     fun Permission.toKotlinString(): String = this.toString()

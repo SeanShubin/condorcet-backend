@@ -1,3 +1,6 @@
+health()
+mapOf(Pair("users", "0"), Pair("elections", "0"))
+
 register("Alice", "alice@email.com", "alice-password")
 Tokens(RefreshToken("Alice"),AccessToken("Alice", OWNER))
 

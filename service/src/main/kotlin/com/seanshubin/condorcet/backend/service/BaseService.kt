@@ -36,6 +36,15 @@ class BaseService(
         synchronizer.synchronize()
     }
 
+    override fun health(): Map<String, String> {
+        val userCount = mutableDbQueries.userCount()
+        val electionCount = mutableDbQueries.electionCount()
+        return mapOf(
+            "users" to userCount.toString(),
+            "elections" to electionCount.toString()
+        )
+    }
+
     override fun refresh(refreshToken: RefreshToken): Tokens {
         val user = findUser(refreshToken.userName)
         val accessToken = AccessToken(user.name, user.role)

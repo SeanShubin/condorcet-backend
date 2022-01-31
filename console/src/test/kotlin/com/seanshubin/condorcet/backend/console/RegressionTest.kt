@@ -20,6 +20,7 @@ class RegressionTest {
     fun tryTypicalPathForEveryApiCallAtLeastOnce() {
         // given
         val commands = listOf(
+            Health,
             Register(
                 userName = "Alice",
                 email = "alice@email.com",
