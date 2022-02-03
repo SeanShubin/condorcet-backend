@@ -29,7 +29,7 @@ class Dependencies(
 ) {
     private val host: String = integration.host
     private val user: String = integration.user
-    private val password: String = integration.password
+    private val secretsDir:Path = integration.secretsDir
     private val eventSchemaName: String = integration.eventSchemaName
     private val stateSchemaName: String = integration.stateSchemaName
     private val rootDatabaseEvent: (String) -> Unit = integration.rootDatabaseEvent
@@ -39,12 +39,15 @@ class Dependencies(
     private val requestEvent: (RequestValue) -> Unit = integration.httpRequestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.httpResponseEvent
     private val topLevelException: (Throwable) -> Unit = integration.topLevelException
+    private val files: FilesContract = FilesDelegate
+    private val secrets:Secrets = SecretsOnFileSystem(secretsDir, files)
+    private val lookupPassword:()->String = secrets::databasePassword
     private val rootConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, password, rootDatabaseEvent, sqlException)
+        ConnectionLifecycle(host, user, lookupPassword, rootDatabaseEvent, sqlException)
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        TransactionalConnectionLifecycle(host, user, password, eventSchemaName, eventDatabaseEvent, sqlException)
+        TransactionalConnectionLifecycle(host, user, lookupPassword, eventSchemaName, eventDatabaseEvent, sqlException)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        TransactionalConnectionLifecycle(host, user, password, stateSchemaName, stateDatabaseEvent, sqlException)
+        TransactionalConnectionLifecycle(host, user, lookupPassword, stateSchemaName, stateDatabaseEvent, sqlException)
     private val port: Int = 8080
     private val server: Server = Server(port)
     private val serverContract: ServerContract = JettyServer(server)
@@ -62,9 +65,8 @@ class Dependencies(
         stateConnectionLifecycle
     )
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
-    private val files: FilesContract = FilesDelegate
     private val charset: Charset = StandardCharsets.UTF_8
-    private val whereKeysAreStored: Path = integration.whereKeysAreStored
+    private val whereKeysAreStored: Path = integration.secretsDir
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, whereKeysAreStored)
     private val cipher: Cipher = CipherImpl(algorithmFactory)
     val handler: Handler = ApiHandler(

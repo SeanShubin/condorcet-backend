@@ -6,13 +6,14 @@ import java.sql.SQLException
 class TransactionalConnectionLifecycle(
     private val host: String,
     private val user: String,
-    private val password: String,
+    private val lookupPassword: () -> String,
     private val schemaName: String,
     private val sqlEvent: (String) -> Unit,
     private val sqlException: (String, String, SQLException) -> Unit
 ) : Lifecycle<ConnectionWrapper> {
     override fun <U> withValue(f: (ConnectionWrapper) -> U): U {
         val url = "jdbc:mysql://$host/$schemaName?serverTimezone=UTC"
+        val password = lookupPassword()
         return DriverManager.getConnection(url, user, password).use { connection ->
             connection.autoCommit = false
             val connectionWrapper = ConnectionWrapper(connection, sqlEvent, sqlException)

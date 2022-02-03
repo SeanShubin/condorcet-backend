@@ -41,7 +41,6 @@ class RegressionIntegration(phase: Phase) : Integration {
 
     override val host: String = "localhost"
     override val user: String = "root"
-    override val password: String = "insecure"
     override val eventSchemaName: String = "condorcet_regression_test_event_can_be_purged"
     override val stateSchemaName: String = "condorcet_regression_test_state_can_be_purged"
     override val rootDatabaseEvent: (String) -> Unit = regressionNotifications::rootDatabaseEvent
@@ -58,7 +57,7 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val uniqueIdGenerator: UniqueIdGenerator =
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)
-    override val whereKeysAreStored: Path = regressionSnapshotDir
+    override val secretsDir: Path = regressionSnapshotDir
     private val backingRandom = Random.Default
     override val random: Random = RememberingRandom(backingRandom, randomPath)
 }

@@ -21,7 +21,6 @@ class ConsoleIntegration : Integration {
     private val notifications: Notifications = createLoggingNotifications(logDir)
     override val host: String = "localhost"
     override val user: String = "root"
-    override val password: String = "insecure"
     override val eventSchemaName: String = "condorcet_development_event_can_be_purged"
     override val stateSchemaName: String = "condorcet_development_state_can_be_purged"
     override val rootDatabaseEvent: (String) -> Unit = notifications::rootDatabaseEvent
@@ -37,6 +36,6 @@ class ConsoleIntegration : Integration {
     override val sqlException: (String, String, SQLException) -> Unit = notifications::sqlException
     override val uniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator()
     override val clock: Clock = Clock.systemUTC()
-    override val whereKeysAreStored: Path = Paths.get("secrets")
+    override val secretsDir: Path = Paths.get("secrets")
     override val random: Random = Random.Default
 }
