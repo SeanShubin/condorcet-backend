@@ -1,6 +1,5 @@
 package com.seanshubin.condorcet.backend.dependencies
 
-import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
@@ -13,7 +12,6 @@ import kotlin.random.Random
 
 interface Integration {
     val createLoggingNotifications: (Path) -> Notifications
-    val host: String
     val user: String
     val eventSchemaName: String
     val stateSchemaName: String

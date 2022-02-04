@@ -19,7 +19,6 @@ class ConsoleIntegration : Integration {
     private val loggingNotificationsFactory: LoggingNotificationsFactory = LoggingNotificationsFactory()
     override val createLoggingNotifications: (Path) -> Notifications = loggingNotificationsFactory::createNotifications
     private val notifications: Notifications = createLoggingNotifications(logDir)
-    override val host: String = "localhost"
     override val user: String = "root"
     override val eventSchemaName: String = "condorcet_development_event_can_be_purged"
     override val stateSchemaName: String = "condorcet_development_state_can_be_purged"

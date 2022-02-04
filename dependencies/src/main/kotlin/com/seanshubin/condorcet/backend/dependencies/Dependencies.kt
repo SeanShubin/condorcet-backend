@@ -27,7 +27,6 @@ import java.sql.SQLException
 class Dependencies(
     integration: Integration
 ) {
-    private val host: String = integration.host
     private val user: String = integration.user
     private val secretsDir:Path = integration.secretsDir
     private val eventSchemaName: String = integration.eventSchemaName
@@ -41,13 +40,14 @@ class Dependencies(
     private val topLevelException: (Throwable) -> Unit = integration.topLevelException
     private val files: FilesContract = FilesDelegate
     private val secrets:Secrets = SecretsOnFileSystem(secretsDir, files)
+    private val lookupHost:()->String = secrets::databaseHost
     private val lookupPassword:()->String = secrets::databasePassword
     private val rootConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(host, user, lookupPassword, rootDatabaseEvent, sqlException)
+        ConnectionLifecycle(lookupHost, user, lookupPassword, rootDatabaseEvent, sqlException)
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        TransactionalConnectionLifecycle(host, user, lookupPassword, eventSchemaName, eventDatabaseEvent, sqlException)
+        TransactionalConnectionLifecycle(lookupHost, user, lookupPassword, eventSchemaName, eventDatabaseEvent, sqlException)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        TransactionalConnectionLifecycle(host, user, lookupPassword, stateSchemaName, stateDatabaseEvent, sqlException)
+        TransactionalConnectionLifecycle(lookupHost, user, lookupPassword, stateSchemaName, stateDatabaseEvent, sqlException)
     private val port: Int = 8080
     private val server: Server = Server(port)
     private val serverContract: ServerContract = JettyServer(server)
