@@ -10,7 +10,7 @@ class JsonFileConfiguration(
     private val configurationPath: Path,
     private val files: FilesContract
 ) : Configuration {
-    override fun createStringLookup(default:String, path: List<String>): () -> String {
+    override fun createStringLookup(default:Any, path: List<String>): () -> String {
         fun lookupString(): String {
             val theObject = loadObject(default, path)
             val theString = castToString(theObject, path)
@@ -18,8 +18,16 @@ class JsonFileConfiguration(
         }
         return ::lookupString
     }
+    override fun createIntLookup(default:Any, path: List<String>): () -> Int {
+        fun lookupInt(): Int {
+            val theObject = loadObject(default, path)
+            val theInt = castToInt(theObject, path)
+            return theInt
+        }
+        return ::lookupInt
+    }
 
-    private fun loadObject(default:String, path: List<String>): Any? {
+    private fun loadObject(default:Any, path: List<String>): Any? {
         if (!files.exists(configurationPath)) {
             storeObject(default, path)
         }
@@ -85,6 +93,13 @@ class JsonFileConfiguration(
             null -> throwCastError(null, "null", "String", path)
             is String ->  value
             else -> throwCastError(value, value.javaClass.simpleName,"String", path)
+        }
+
+    private fun castToInt(value:Any?, path:List<String>):Int =
+        when(value){
+            null -> throwCastError(null, "null", "Int", path)
+            is Int ->  value
+            else -> throwCastError(value, value.javaClass.simpleName,"Int", path)
         }
 
     @Suppress("UNCHECKED_CAST")

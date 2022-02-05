@@ -29,12 +29,12 @@ import java.sql.SQLException
 class Dependencies(
     integration: Integration
 ) {
-    private val user: String = integration.user
     private val configurationPath:Path = integration.configurationPath
     private val secretsConfigurationPath:Path = integration.secretsConfigurationPath
     private val files: FilesContract = FilesDelegate
     private val configuration: Configuration = JsonFileConfiguration(configurationPath, files)
     private val secretsConfiguration:Configuration = JsonFileConfiguration(secretsConfigurationPath, files)
+    private val configurationLookupFunctions:ConfigurationLookupFunctions = JsonConfigurationLookupFunctions(configuration, secretsConfiguration)
     private val eventSchemaName: String = integration.eventSchemaName
     private val stateSchemaName: String = integration.stateSchemaName
     private val rootDatabaseEvent: (String) -> Unit = integration.rootDatabaseEvent
@@ -44,16 +44,18 @@ class Dependencies(
     private val requestEvent: (RequestValue) -> Unit = integration.httpRequestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.httpResponseEvent
     private val topLevelException: (Throwable) -> Unit = integration.topLevelException
-    private val lookupHost:()->String = configuration.createStringLookup("database-host-here", listOf("database","host"))
-    private val lookupPassword:()->String = secretsConfiguration.createStringLookup("database-password-here", listOf("database", "password"))
+    private val lookupHost:()->String = configurationLookupFunctions.lookupDatabaseHost
+    private val lookupUser:()->String = configurationLookupFunctions.lookupDatabaseUser
+    private val lookupPassword:()->String = configurationLookupFunctions.lookupDatabasePassword
+    private val lookupDatabasePort:()->Int = configurationLookupFunctions.lookupDatabasePort
     private val rootConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(lookupHost, user, lookupPassword, rootDatabaseEvent, sqlException)
+        ConnectionLifecycle(lookupHost, lookupUser, lookupPassword, lookupDatabasePort, rootDatabaseEvent, sqlException)
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        TransactionalConnectionLifecycle(lookupHost, user, lookupPassword, eventSchemaName, eventDatabaseEvent, sqlException)
+        TransactionalConnectionLifecycle(lookupHost, lookupUser, lookupPassword, lookupDatabasePort,eventSchemaName, eventDatabaseEvent, sqlException)
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        TransactionalConnectionLifecycle(lookupHost, user, lookupPassword, stateSchemaName, stateDatabaseEvent, sqlException)
-    private val port: Int = 8080
-    private val server: Server = Server(port)
+        TransactionalConnectionLifecycle(lookupHost, lookupUser, lookupPassword, lookupDatabasePort,stateSchemaName, stateDatabaseEvent, sqlException)
+    private val lookupServerPort: ()->Int = configurationLookupFunctions.lookupServerPort
+    private val server: Server = Server(lookupServerPort())
     private val serverContract: ServerContract = JettyServer(server)
     private val createService: (ConnectionWrapper, ConnectionWrapper) -> Service = { eventConnection, stateConnection ->
         ServiceDependencies(integration, eventConnection, stateConnection).service
