@@ -71,7 +71,7 @@
     contract      []
     database      [ genericdb domain crypto ]
     domain        [ string-util json arrow ]
-    genericdb     [ mysql-jdbc io string-util contract ]
+    genericdb     [ mysql-jdbc io string-util contract json ]
     io            []
     crypto        [ string-util ]
     json          [ jackson jackson-time ]
