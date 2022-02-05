@@ -56,7 +56,9 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val uniqueIdGenerator: UniqueIdGenerator =
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)
-    override val secretsDir: Path = regressionSnapshotDir
+    override val configurationPath: Path = regressionSnapshotDir.resolve("configuration.json")
+    override val secretsConfigurationPath:Path = regressionSnapshotDir.resolve("secret-configuration.json")
+    override val whereKeysAreStored: Path = regressionSnapshotDir
     private val backingRandom = Random.Default
     override val random: Random = RememberingRandom(backingRandom, randomPath)
 }

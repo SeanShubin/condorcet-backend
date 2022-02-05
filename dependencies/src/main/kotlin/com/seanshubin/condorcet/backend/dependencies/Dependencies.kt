@@ -1,5 +1,7 @@
 package com.seanshubin.condorcet.backend.dependencies
 
+import com.seanshubin.condorcet.backend.configuration.Configuration
+import com.seanshubin.condorcet.backend.configuration.JsonFileConfiguration
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.contract.FilesDelegate
 import com.seanshubin.condorcet.backend.genericdb.*
@@ -28,7 +30,11 @@ class Dependencies(
     integration: Integration
 ) {
     private val user: String = integration.user
-    private val secretsDir:Path = integration.secretsDir
+    private val configurationPath:Path = integration.configurationPath
+    private val secretsConfigurationPath:Path = integration.secretsConfigurationPath
+    private val files: FilesContract = FilesDelegate
+    private val configuration: Configuration = JsonFileConfiguration(configurationPath, files)
+    private val secretsConfiguration:Configuration = JsonFileConfiguration(secretsConfigurationPath, files)
     private val eventSchemaName: String = integration.eventSchemaName
     private val stateSchemaName: String = integration.stateSchemaName
     private val rootDatabaseEvent: (String) -> Unit = integration.rootDatabaseEvent
@@ -38,10 +44,8 @@ class Dependencies(
     private val requestEvent: (RequestValue) -> Unit = integration.httpRequestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.httpResponseEvent
     private val topLevelException: (Throwable) -> Unit = integration.topLevelException
-    private val files: FilesContract = FilesDelegate
-    private val secrets:Secrets = SecretsOnFileSystem(secretsDir, files)
-    private val lookupHost:()->String = secrets::databaseHost
-    private val lookupPassword:()->String = secrets::databasePassword
+    private val lookupHost:()->String = configuration.createStringLookup("database-host-here", listOf("database","host"))
+    private val lookupPassword:()->String = secretsConfiguration.createStringLookup("database-password-here", listOf("database", "password"))
     private val rootConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         ConnectionLifecycle(lookupHost, user, lookupPassword, rootDatabaseEvent, sqlException)
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
@@ -66,7 +70,7 @@ class Dependencies(
     )
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val charset: Charset = StandardCharsets.UTF_8
-    private val whereKeysAreStored: Path = integration.secretsDir
+    private val whereKeysAreStored: Path = integration.whereKeysAreStored
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, whereKeysAreStored)
     private val cipher: Cipher = CipherImpl(algorithmFactory)
     val handler: Handler = ApiHandler(

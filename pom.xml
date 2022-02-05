@@ -94,6 +94,7 @@
         <module>crypto</module>
         <module>json</module>
         <module>string-util</module>
+        <module>configuration</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

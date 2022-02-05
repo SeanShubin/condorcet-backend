@@ -11,6 +11,9 @@ import java.time.Clock
 import kotlin.random.Random
 
 interface Integration {
+    val configurationPath:Path
+    val secretsConfigurationPath: Path
+    val whereKeysAreStored:Path
     val createLoggingNotifications: (Path) -> Notifications
     val user: String
     val eventSchemaName: String
@@ -28,6 +31,5 @@ interface Integration {
     val topLevelException: (Throwable) -> Unit
     val uniqueIdGenerator: UniqueIdGenerator
     val clock: Clock
-    val secretsDir: Path
     val random: Random
 }

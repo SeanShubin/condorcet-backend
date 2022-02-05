@@ -61,7 +61,7 @@
   global [ stdlib test ]
   modules {
     console       [ server dependencies ]
-    dependencies  [ server ]
+    dependencies  [ server configuration ]
     server        [ jetty service-http ]
     service-http  [ service http jwt ]
     jwt           [ java-jwt contract string-util ]
@@ -76,6 +76,7 @@
     crypto        [ string-util ]
     json          [ jackson jackson-time ]
     string-util   []
+    configuration [ json contract ]
   }
   detangler [console]
   consoleEntryPoint {
