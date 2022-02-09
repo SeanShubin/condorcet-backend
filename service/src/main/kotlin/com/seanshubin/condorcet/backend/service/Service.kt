@@ -5,7 +5,7 @@ import com.seanshubin.condorcet.backend.domain.Role.*
 
 interface Service {
     fun synchronize()
-    fun health():Map<String, String>
+    fun health():String
     fun refresh(refreshToken: RefreshToken): Tokens
     fun register(userName: String, email: String, password: String): Tokens
     fun authenticate(nameOrEmail: String, password: String): Tokens

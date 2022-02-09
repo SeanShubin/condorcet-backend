@@ -13,7 +13,7 @@ class ServiceDelegateToLifecycle(
         withService { it.synchronize() }
     }
 
-    override fun health(): Map<String, String> =
+    override fun health(): String =
         withService { it.health() }
 
     override fun refresh(refreshToken: RefreshToken): Tokens =

@@ -16,7 +16,7 @@ class RecordingService(
         return response
     }
 
-    override fun health(): Map<String, String> {
+    override fun health(): String {
         val requestString = ""
         serviceRequestEvent("health", requestString)
         val response = service.health()

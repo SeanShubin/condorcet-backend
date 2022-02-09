@@ -1,10 +1,7 @@
 /Health
 200
 Content-Type: application/json
-{
-  "service" : "ok",
-  "database" : "ok"
-}
+"ok"
 
 /Register
 {

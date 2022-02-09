@@ -36,16 +36,11 @@ class BaseService(
         synchronizer.synchronize()
     }
 
-    override fun health(): Map<String, String> {
+    override fun health(): String {
         val execResult: Result<Int> = kotlin.runCatching {
             mutableDbQueries.userCount()
         }
-        val service = "ok"
-        val database = execResult.exceptionOrNull()?.message ?: "ok"
-        return mapOf(
-            "service" to service,
-            "database" to database
-        )
+        return execResult.exceptionOrNull()?.message ?: "ok"
     }
 
     override fun refresh(refreshToken: RefreshToken): Tokens {
