@@ -231,7 +231,7 @@ class BaseService(
         electionName: String,
         rankings: List<Ranking>
     ) {
-        requirePermission(accessToken, USE_APPLICATION)
+        requirePermission(accessToken, VOTE)
         requireElectionIsAllowingVotes(electionName)
         requireIsUser(
             accessToken,
@@ -331,7 +331,6 @@ class BaseService(
 
     private fun userExists(name: String): Boolean = mutableDbQueries.searchUserByName(name) != null
     private fun emailExists(email: String): Boolean = mutableDbQueries.searchUserByEmail(email) != null
-    private fun roleIsGreater(first: Role, second: Role): Boolean = first.ordinal > second.ordinal
     private fun hasPermission(role: Role, permission: Permission): Boolean =
         mutableDbQueries.roleHasPermission(role, permission)
 
