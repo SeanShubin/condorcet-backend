@@ -5,43 +5,43 @@ register("Alice", "alice@email.com", "alice-password")
 Tokens(RefreshToken("Alice"),AccessToken("Alice", OWNER))
 
 permissionsForRole(OWNER)
-listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VIEW_APPLICATION)
+listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VOTE,VIEW_APPLICATION)
 
 register("Bob", "bob@email.com", "bob-password")
-Tokens(RefreshToken("Bob"),AccessToken("Bob", OBSERVER))
+Tokens(RefreshToken("Bob"),AccessToken("Bob", VOTER))
 
-permissionsForRole(OBSERVER)
-listOf(VIEW_APPLICATION)
+permissionsForRole(VOTER)
+listOf(VOTE,VIEW_APPLICATION)
 
 register("Carol", "carol@email.com", "carol-password")
-Tokens(RefreshToken("Carol"),AccessToken("Carol", OBSERVER))
+Tokens(RefreshToken("Carol"),AccessToken("Carol", VOTER))
 
-permissionsForRole(OBSERVER)
-listOf(VIEW_APPLICATION)
+permissionsForRole(VOTER)
+listOf(VOTE,VIEW_APPLICATION)
 
 register("Dave", "dave@email.com", "dave-password")
-Tokens(RefreshToken("Dave"),AccessToken("Dave", OBSERVER))
+Tokens(RefreshToken("Dave"),AccessToken("Dave", VOTER))
 
-permissionsForRole(OBSERVER)
-listOf(VIEW_APPLICATION)
+permissionsForRole(VOTER)
+listOf(VOTE,VIEW_APPLICATION)
 
 register("Eve", "eve@email.com", "eve-password")
-Tokens(RefreshToken("Eve"),AccessToken("Eve", OBSERVER))
+Tokens(RefreshToken("Eve"),AccessToken("Eve", VOTER))
 
-permissionsForRole(OBSERVER)
-listOf(VIEW_APPLICATION)
+permissionsForRole(VOTER)
+listOf(VOTE,VIEW_APPLICATION)
 
 authenticate("Alice", "alice-password")
 Tokens(RefreshToken("Alice"),AccessToken("Alice", OWNER))
 
 permissionsForRole(OWNER)
-listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VIEW_APPLICATION)
+listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VOTE,VIEW_APPLICATION)
 
 refresh(RefreshToken("Alice"))
 Tokens(RefreshToken("Alice"),AccessToken("Alice", OWNER))
 
 permissionsForRole(OWNER)
-listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VIEW_APPLICATION)
+listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VOTE,VIEW_APPLICATION)
 
 setRole(AccessToken("Alice", OWNER), "Bob", USER)
 Unit
@@ -56,7 +56,7 @@ removeUser(AccessToken("Alice", OWNER), "Carol")
 Unit
 
 listUsers(AccessToken("Alice", OWNER))
-listOf(UserNameRole("Alice", OWNER, listOf(OWNER)),UserNameRole("Bob", USER, listOf(NO_ACCESS,OBSERVER,USER,ADMIN,AUDITOR,OWNER)),UserNameRole("Dave", USER, listOf(NO_ACCESS,OBSERVER,USER,ADMIN,AUDITOR,OWNER)),UserNameRole("Eve", USER, listOf(NO_ACCESS,OBSERVER,USER,ADMIN,AUDITOR,OWNER)))
+listOf(UserNameRole("Alice", OWNER, listOf(OWNER)),UserNameRole("Bob", USER, listOf(NO_ACCESS,OBSERVER,VOTER,USER,ADMIN,AUDITOR,OWNER)),UserNameRole("Dave", USER, listOf(NO_ACCESS,OBSERVER,VOTER,USER,ADMIN,AUDITOR,OWNER)),UserNameRole("Eve", USER, listOf(NO_ACCESS,OBSERVER,VOTER,USER,ADMIN,AUDITOR,OWNER)))
 
 addElection(AccessToken("Alice", OWNER), "Delete Me")
 Unit
@@ -128,13 +128,13 @@ debugTableData(AccessToken("Alice", OWNER), "election")
 TableData(listOf("id","owner_id","owner","name","secret_ballot","no_voting_before","no_voting_after","allow_edit","allow_vote"), listOf(listOf(2,1,"Alice","Favorite Ice Cream",true,null,null,true,true)))
 
 eventData(AccessToken("Alice", OWNER))
-TableData(listOf("id","when","authority","type","text"), listOf(listOf(1,Instant.parse("2022-01-21T06:18:24.586708Z"),"Alice","AddUser","{\"name\":\"Alice\",\"email\":\"alice@email.com\",\"salt\":\"3EDA01A7D056605C3C778E0179EC2AE3\",\"hash\":\"4F9E9E2A359F92CAAFA507E7880638E15BF4F68D1A9250688CDA8B87221B68F8\",\"role\":\"OWNER\"}"),listOf(2,Instant.parse("2022-01-21T06:18:24.789737Z"),"Bob","AddUser","{\"name\":\"Bob\",\"email\":\"bob@email.com\",\"salt\":\"79E90A5258764397DA853AFCED2F88E7\",\"hash\":\"80C423B16D0C9AF27A95362F0878674736259463102B89CF9B2387E0F10EBB7C\",\"role\":\"OBSERVER\"}"),listOf(3,Instant.parse("2022-01-21T06:18:24.923599Z"),"Carol","AddUser","{\"name\":\"Carol\",\"email\":\"carol@email.com\",\"salt\":\"E79BFDA7276912CC49F1DC28BA2E8CBD\",\"hash\":\"5D3B307F0C357D4687FC3A658473C204DB825F831AB12B7DED00AF05E11EA914\",\"role\":\"OBSERVER\"}"),listOf(4,Instant.parse("2022-01-21T06:18:25.034614Z"),"Dave","AddUser","{\"name\":\"Dave\",\"email\":\"dave@email.com\",\"salt\":\"299B27AEEF6F189B4C56090474AC5239\",\"hash\":\"4BBF4E6580F022C50E1BFD10F9CF0DD3D310D1712BA4BE8F9296BEF3792C7CB5\",\"role\":\"OBSERVER\"}"),listOf(5,Instant.parse("2022-01-21T06:18:25.168424Z"),"Eve","AddUser","{\"name\":\"Eve\",\"email\":\"eve@email.com\",\"salt\":\"11DD7B4117C780908F18A402A48C8079\",\"hash\":\"98E94206D70222DCB5B7360C64E80898AF6BDC3ACEB046B8945A02B7515BB211\",\"role\":\"OBSERVER\"}"),listOf(6,Instant.parse("2022-01-21T06:18:25.470894Z"),"Alice","SetRole","{\"name\":\"Bob\",\"role\":\"USER\"}"),listOf(7,Instant.parse("2022-01-21T06:18:25.534425Z"),"Alice","SetRole","{\"name\":\"Dave\",\"role\":\"USER\"}"),listOf(8,Instant.parse("2022-01-21T06:18:25.585081Z"),"Alice","SetRole","{\"name\":\"Eve\",\"role\":\"USER\"}"),listOf(9,Instant.parse("2022-01-21T06:18:25.647237Z"),"Alice","RemoveUser","{\"name\":\"Carol\"}"),listOf(10,Instant.parse("2022-01-21T06:18:25.782896Z"),"Alice","AddElection","{\"owner\":\"Alice\",\"name\":\"Delete Me\"}"),listOf(11,Instant.parse("2022-01-21T06:18:25.834248Z"),"Alice","AddElection","{\"owner\":\"Alice\",\"name\":\"Favorite Ice Cream Flavor\"}"),listOf(12,Instant.parse("2022-01-21T06:18:25.955359Z"),"Alice","UpdateElection","{\"name\":\"Favorite Ice Cream Flavor\",\"updates\":{\"newElectionName\":\"Favorite Ice Cream\",\"secretBallot\":true,\"clearNoVotingBefore\":true,\"noVotingBefore\":null,\"clearNoVotingAfter\":true,\"noVotingAfter\":null,\"allowVote\":null,\"allowEdit\":null}}"),listOf(13,Instant.parse("2022-01-21T06:18:26.036475Z"),"Alice","AddCandidates","{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Chocolate\",\"Vanilla\",\"Strawberry\"]}"),listOf(14,Instant.parse("2022-01-21T06:18:26.115180Z"),"Alice","AddVoters","{\"electionName\":\"Favorite Ice Cream\",\"voterNames\":[\"Alice\",\"Bob\",\"Dave\"]}"),listOf(15,Instant.parse("2022-01-21T06:18:26.273102Z"),"Alice","UpdateElection","{\"name\":\"Favorite Ice Cream\",\"updates\":{\"newElectionName\":null,\"secretBallot\":null,\"clearNoVotingBefore\":null,\"noVotingBefore\":null,\"clearNoVotingAfter\":null,\"noVotingAfter\":null,\"allowVote\":true,\"allowEdit\":true}}"),listOf(16,Instant.parse("2022-01-21T06:18:26.362508Z"),"Alice","CastBallot","{\"voterName\":\"Alice\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"candidateName\":\"Vanilla\",\"rank\":1},{\"candidateName\":\"Chocolate\",\"rank\":2}],\"confirmation\":\"D7ED737E6DF479C9EA2E6B28B416A733\",\"now\":\"2022-01-21T06:18:26.350790Z\"}"),listOf(17,Instant.parse("2022-01-21T06:18:26.428303Z"),"Alice","RemoveCandidates","{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Strawberry\"]}"),listOf(18,Instant.parse("2022-01-21T06:18:26.437569Z"),"Alice","AddCandidates","{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Butter Pecan\",\"Neapolitan\",\"Mint\",\"Chocolate Chip\"]}"),listOf(19,Instant.parse("2022-01-21T06:18:26.488168Z"),"Alice","SetRankings","{\"confirmation\":\"D7ED737E6DF479C9EA2E6B28B416A733\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"candidateName\":\"Chocolate Chip\",\"rank\":1},{\"candidateName\":\"Neapolitan\",\"rank\":2},{\"candidateName\":\"Chocolate\",\"rank\":3},{\"candidateName\":\"Vanilla\",\"rank\":4},{\"candidateName\":\"Butter Pecan\",\"rank\":5},{\"candidateName\":\"Mint\",\"rank\":6}]}"),listOf(20,Instant.parse("2022-01-21T06:18:26.515328Z"),"Alice","UpdateWhenCast","{\"confirmation\":\"D7ED737E6DF479C9EA2E6B28B416A733\",\"now\":\"2022-01-21T06:18:26.481986Z\"}"),listOf(21,Instant.parse("2022-01-21T06:18:26.691208Z"),"Alice","DeleteElection","{\"name\":\"Delete Me\"}")))
+TableData(listOf("id","when","authority","type","text"), listOf(listOf(1,Instant.parse("2022-01-21T06:18:24.586708Z"),"Alice","AddUser","{\"name\":\"Alice\",\"email\":\"alice@email.com\",\"salt\":\"3EDA01A7D056605C3C778E0179EC2AE3\",\"hash\":\"4F9E9E2A359F92CAAFA507E7880638E15BF4F68D1A9250688CDA8B87221B68F8\",\"role\":\"OWNER\"}"),listOf(2,Instant.parse("2022-01-21T06:18:24.789737Z"),"Bob","AddUser","{\"name\":\"Bob\",\"email\":\"bob@email.com\",\"salt\":\"79E90A5258764397DA853AFCED2F88E7\",\"hash\":\"80C423B16D0C9AF27A95362F0878674736259463102B89CF9B2387E0F10EBB7C\",\"role\":\"VOTER\"}"),listOf(3,Instant.parse("2022-01-21T06:18:24.923599Z"),"Carol","AddUser","{\"name\":\"Carol\",\"email\":\"carol@email.com\",\"salt\":\"E79BFDA7276912CC49F1DC28BA2E8CBD\",\"hash\":\"5D3B307F0C357D4687FC3A658473C204DB825F831AB12B7DED00AF05E11EA914\",\"role\":\"VOTER\"}"),listOf(4,Instant.parse("2022-01-21T06:18:25.034614Z"),"Dave","AddUser","{\"name\":\"Dave\",\"email\":\"dave@email.com\",\"salt\":\"299B27AEEF6F189B4C56090474AC5239\",\"hash\":\"4BBF4E6580F022C50E1BFD10F9CF0DD3D310D1712BA4BE8F9296BEF3792C7CB5\",\"role\":\"VOTER\"}"),listOf(5,Instant.parse("2022-01-21T06:18:25.168424Z"),"Eve","AddUser","{\"name\":\"Eve\",\"email\":\"eve@email.com\",\"salt\":\"11DD7B4117C780908F18A402A48C8079\",\"hash\":\"98E94206D70222DCB5B7360C64E80898AF6BDC3ACEB046B8945A02B7515BB211\",\"role\":\"VOTER\"}"),listOf(6,Instant.parse("2022-01-21T06:18:25.470894Z"),"Alice","SetRole","{\"name\":\"Bob\",\"role\":\"USER\"}"),listOf(7,Instant.parse("2022-01-21T06:18:25.534425Z"),"Alice","SetRole","{\"name\":\"Dave\",\"role\":\"USER\"}"),listOf(8,Instant.parse("2022-01-21T06:18:25.585081Z"),"Alice","SetRole","{\"name\":\"Eve\",\"role\":\"USER\"}"),listOf(9,Instant.parse("2022-01-21T06:18:25.647237Z"),"Alice","RemoveUser","{\"name\":\"Carol\"}"),listOf(10,Instant.parse("2022-01-21T06:18:25.782896Z"),"Alice","AddElection","{\"owner\":\"Alice\",\"name\":\"Delete Me\"}"),listOf(11,Instant.parse("2022-01-21T06:18:25.834248Z"),"Alice","AddElection","{\"owner\":\"Alice\",\"name\":\"Favorite Ice Cream Flavor\"}"),listOf(12,Instant.parse("2022-01-21T06:18:25.955359Z"),"Alice","UpdateElection","{\"name\":\"Favorite Ice Cream Flavor\",\"updates\":{\"newElectionName\":\"Favorite Ice Cream\",\"secretBallot\":true,\"clearNoVotingBefore\":true,\"noVotingBefore\":null,\"clearNoVotingAfter\":true,\"noVotingAfter\":null,\"allowVote\":null,\"allowEdit\":null}}"),listOf(13,Instant.parse("2022-01-21T06:18:26.036475Z"),"Alice","AddCandidates","{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Chocolate\",\"Vanilla\",\"Strawberry\"]}"),listOf(14,Instant.parse("2022-01-21T06:18:26.115180Z"),"Alice","AddVoters","{\"electionName\":\"Favorite Ice Cream\",\"voterNames\":[\"Alice\",\"Bob\",\"Dave\"]}"),listOf(15,Instant.parse("2022-01-21T06:18:26.273102Z"),"Alice","UpdateElection","{\"name\":\"Favorite Ice Cream\",\"updates\":{\"newElectionName\":null,\"secretBallot\":null,\"clearNoVotingBefore\":null,\"noVotingBefore\":null,\"clearNoVotingAfter\":null,\"noVotingAfter\":null,\"allowVote\":true,\"allowEdit\":true}}"),listOf(16,Instant.parse("2022-01-21T06:18:26.362508Z"),"Alice","CastBallot","{\"voterName\":\"Alice\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"candidateName\":\"Vanilla\",\"rank\":1},{\"candidateName\":\"Chocolate\",\"rank\":2}],\"confirmation\":\"D7ED737E6DF479C9EA2E6B28B416A733\",\"now\":\"2022-01-21T06:18:26.350790Z\"}"),listOf(17,Instant.parse("2022-01-21T06:18:26.428303Z"),"Alice","RemoveCandidates","{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Strawberry\"]}"),listOf(18,Instant.parse("2022-01-21T06:18:26.437569Z"),"Alice","AddCandidates","{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Butter Pecan\",\"Neapolitan\",\"Mint\",\"Chocolate Chip\"]}"),listOf(19,Instant.parse("2022-01-21T06:18:26.488168Z"),"Alice","SetRankings","{\"confirmation\":\"D7ED737E6DF479C9EA2E6B28B416A733\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"candidateName\":\"Chocolate Chip\",\"rank\":1},{\"candidateName\":\"Neapolitan\",\"rank\":2},{\"candidateName\":\"Chocolate\",\"rank\":3},{\"candidateName\":\"Vanilla\",\"rank\":4},{\"candidateName\":\"Butter Pecan\",\"rank\":5},{\"candidateName\":\"Mint\",\"rank\":6}]}"),listOf(20,Instant.parse("2022-01-21T06:18:26.515328Z"),"Alice","UpdateWhenCast","{\"confirmation\":\"D7ED737E6DF479C9EA2E6B28B416A733\",\"now\":\"2022-01-21T06:18:26.481986Z\"}"),listOf(21,Instant.parse("2022-01-21T06:18:26.691208Z"),"Alice","DeleteElection","{\"name\":\"Delete Me\"}")))
 
 authenticate("Bob", "bob-password")
 Tokens(RefreshToken("Bob"),AccessToken("Bob", USER))
 
 permissionsForRole(USER)
-listOf(USE_APPLICATION,VIEW_APPLICATION)
+listOf(USE_APPLICATION,VOTE,VIEW_APPLICATION)
 
 castBallot(AccessToken("Bob", USER), "Bob", "Favorite Ice Cream", listOf(Ranking("Chocolate", 1),Ranking("Chocolate Chip", 2),Ranking("Vanilla", 3),Ranking("Mint", 4),Ranking("Butter Pecan", 5),Ranking("Neapolitan", 6)))
 Unit
@@ -143,7 +143,7 @@ authenticate("Dave", "dave-password")
 Tokens(RefreshToken("Dave"),AccessToken("Dave", USER))
 
 permissionsForRole(USER)
-listOf(USE_APPLICATION,VIEW_APPLICATION)
+listOf(USE_APPLICATION,VOTE,VIEW_APPLICATION)
 
 castBallot(AccessToken("Dave", USER), "Dave", "Favorite Ice Cream", listOf(Ranking("Mint", 1),Ranking("Chocolate Chip", 2),Ranking("Neapolitan", 3),Ranking("Chocolate", 4),Ranking("Vanilla", 5),Ranking("Butter Pecan", 6)))
 Unit
@@ -152,7 +152,7 @@ authenticate("Alice", "alice-password")
 Tokens(RefreshToken("Alice"),AccessToken("Alice", OWNER))
 
 permissionsForRole(OWNER)
-listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VIEW_APPLICATION)
+listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VOTE,VIEW_APPLICATION)
 
 finalizeElection(AccessToken("Alice", OWNER), "Favorite Ice Cream")
 Unit

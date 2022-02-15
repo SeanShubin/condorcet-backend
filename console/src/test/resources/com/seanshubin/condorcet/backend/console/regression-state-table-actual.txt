@@ -8,35 +8,47 @@ select * from role_permission
 ╔══╤════════╤════════════════╗
 ║id│role    │permission      ║
 ╟──┼────────┼────────────────╢
-║ 1│OWNER   │TRANSFER_OWNER  ║
+║ 1│OBSERVER│VIEW_APPLICATION║
 ╟──┼────────┼────────────────╢
-║ 2│OWNER   │VIEW_SECRETS    ║
+║ 2│VOTER   │VOTE            ║
 ╟──┼────────┼────────────────╢
-║ 3│OWNER   │MANAGE_USERS    ║
+║ 3│VOTER   │VIEW_APPLICATION║
 ╟──┼────────┼────────────────╢
-║ 4│OWNER   │USE_APPLICATION ║
+║ 4│USER    │USE_APPLICATION ║
 ╟──┼────────┼────────────────╢
-║ 5│OWNER   │VIEW_APPLICATION║
+║ 5│USER    │VOTE            ║
 ╟──┼────────┼────────────────╢
-║ 6│AUDITOR │VIEW_SECRETS    ║
+║ 6│USER    │VIEW_APPLICATION║
 ╟──┼────────┼────────────────╢
-║ 7│AUDITOR │MANAGE_USERS    ║
+║ 7│ADMIN   │MANAGE_USERS    ║
 ╟──┼────────┼────────────────╢
-║ 8│AUDITOR │USE_APPLICATION ║
+║ 8│ADMIN   │USE_APPLICATION ║
 ╟──┼────────┼────────────────╢
-║ 9│AUDITOR │VIEW_APPLICATION║
+║ 9│ADMIN   │VOTE            ║
 ╟──┼────────┼────────────────╢
-║10│ADMIN   │MANAGE_USERS    ║
+║10│ADMIN   │VIEW_APPLICATION║
 ╟──┼────────┼────────────────╢
-║11│ADMIN   │USE_APPLICATION ║
+║11│AUDITOR │VIEW_SECRETS    ║
 ╟──┼────────┼────────────────╢
-║12│ADMIN   │VIEW_APPLICATION║
+║12│AUDITOR │MANAGE_USERS    ║
 ╟──┼────────┼────────────────╢
-║13│USER    │USE_APPLICATION ║
+║13│AUDITOR │USE_APPLICATION ║
 ╟──┼────────┼────────────────╢
-║14│USER    │VIEW_APPLICATION║
+║14│AUDITOR │VOTE            ║
 ╟──┼────────┼────────────────╢
-║15│OBSERVER│VIEW_APPLICATION║
+║15│AUDITOR │VIEW_APPLICATION║
+╟──┼────────┼────────────────╢
+║16│OWNER   │TRANSFER_OWNER  ║
+╟──┼────────┼────────────────╢
+║17│OWNER   │VIEW_SECRETS    ║
+╟──┼────────┼────────────────╢
+║18│OWNER   │MANAGE_USERS    ║
+╟──┼────────┼────────────────╢
+║19│OWNER   │USE_APPLICATION ║
+╟──┼────────┼────────────────╢
+║20│OWNER   │VOTE            ║
+╟──┼────────┼────────────────╢
+║21│OWNER   │VIEW_APPLICATION║
 ╚══╧════════╧════════════════╝
 select * from user
 ╔══╤═════╤═══════════════╤═════╤════════════════════════════════╤════════════════════════════════════════════════════════════════╗
@@ -146,6 +158,36 @@ from role_permission
 ╔════════╤════════════════╗
 ║role    │permission      ║
 ╟────────┼────────────────╢
+║OBSERVER│VIEW_APPLICATION║
+╟────────┼────────────────╢
+║VOTER   │VOTE            ║
+╟────────┼────────────────╢
+║VOTER   │VIEW_APPLICATION║
+╟────────┼────────────────╢
+║USER    │USE_APPLICATION ║
+╟────────┼────────────────╢
+║USER    │VOTE            ║
+╟────────┼────────────────╢
+║USER    │VIEW_APPLICATION║
+╟────────┼────────────────╢
+║ADMIN   │MANAGE_USERS    ║
+╟────────┼────────────────╢
+║ADMIN   │USE_APPLICATION ║
+╟────────┼────────────────╢
+║ADMIN   │VOTE            ║
+╟────────┼────────────────╢
+║ADMIN   │VIEW_APPLICATION║
+╟────────┼────────────────╢
+║AUDITOR │VIEW_SECRETS    ║
+╟────────┼────────────────╢
+║AUDITOR │MANAGE_USERS    ║
+╟────────┼────────────────╢
+║AUDITOR │USE_APPLICATION ║
+╟────────┼────────────────╢
+║AUDITOR │VOTE            ║
+╟────────┼────────────────╢
+║AUDITOR │VIEW_APPLICATION║
+╟────────┼────────────────╢
 ║OWNER   │TRANSFER_OWNER  ║
 ╟────────┼────────────────╢
 ║OWNER   │VIEW_SECRETS    ║
@@ -154,27 +196,9 @@ from role_permission
 ╟────────┼────────────────╢
 ║OWNER   │USE_APPLICATION ║
 ╟────────┼────────────────╢
+║OWNER   │VOTE            ║
+╟────────┼────────────────╢
 ║OWNER   │VIEW_APPLICATION║
-╟────────┼────────────────╢
-║AUDITOR │VIEW_SECRETS    ║
-╟────────┼────────────────╢
-║AUDITOR │MANAGE_USERS    ║
-╟────────┼────────────────╢
-║AUDITOR │USE_APPLICATION ║
-╟────────┼────────────────╢
-║AUDITOR │VIEW_APPLICATION║
-╟────────┼────────────────╢
-║ADMIN   │MANAGE_USERS    ║
-╟────────┼────────────────╢
-║ADMIN   │USE_APPLICATION ║
-╟────────┼────────────────╢
-║ADMIN   │VIEW_APPLICATION║
-╟────────┼────────────────╢
-║USER    │USE_APPLICATION ║
-╟────────┼────────────────╢
-║USER    │VIEW_APPLICATION║
-╟────────┼────────────────╢
-║OBSERVER│VIEW_APPLICATION║
 ╚════════╧════════════════╝
 select *
 from user

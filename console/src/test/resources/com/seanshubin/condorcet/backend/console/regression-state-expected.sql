@@ -67,7 +67,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Bob', 'bob@email.com', '79E90A5258764397DA853AFCED2F88E7', '80C423B16D0C9AF27A95362F0878674736259463102B89CF9B2387E0F10EBB7C', 'OBSERVER');
+values ('Bob', 'bob@email.com', '79E90A5258764397DA853AFCED2F88E7', '80C423B16D0C9AF27A95362F0878674736259463102B89CF9B2387E0F10EBB7C', 'VOTER');
 update int_variable
 set value = 2
 where name = 'last-synced';
@@ -80,7 +80,7 @@ from user
 where name = 'Bob';
 select permission
 from role_permission
-where role = 'OBSERVER';
+where role = 'VOTER';
 select name,
        email,
        salt,
@@ -105,7 +105,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Carol', 'carol@email.com', 'E79BFDA7276912CC49F1DC28BA2E8CBD', '5D3B307F0C357D4687FC3A658473C204DB825F831AB12B7DED00AF05E11EA914', 'OBSERVER');
+values ('Carol', 'carol@email.com', 'E79BFDA7276912CC49F1DC28BA2E8CBD', '5D3B307F0C357D4687FC3A658473C204DB825F831AB12B7DED00AF05E11EA914', 'VOTER');
 update int_variable
 set value = 3
 where name = 'last-synced';
@@ -118,7 +118,7 @@ from user
 where name = 'Carol';
 select permission
 from role_permission
-where role = 'OBSERVER';
+where role = 'VOTER';
 select name,
        email,
        salt,
@@ -143,7 +143,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Dave', 'dave@email.com', '299B27AEEF6F189B4C56090474AC5239', '4BBF4E6580F022C50E1BFD10F9CF0DD3D310D1712BA4BE8F9296BEF3792C7CB5', 'OBSERVER');
+values ('Dave', 'dave@email.com', '299B27AEEF6F189B4C56090474AC5239', '4BBF4E6580F022C50E1BFD10F9CF0DD3D310D1712BA4BE8F9296BEF3792C7CB5', 'VOTER');
 update int_variable
 set value = 4
 where name = 'last-synced';
@@ -156,7 +156,7 @@ from user
 where name = 'Dave';
 select permission
 from role_permission
-where role = 'OBSERVER';
+where role = 'VOTER';
 select name,
        email,
        salt,
@@ -181,7 +181,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Eve', 'eve@email.com', '11DD7B4117C780908F18A402A48C8079', '98E94206D70222DCB5B7360C64E80898AF6BDC3ACEB046B8945A02B7515BB211', 'OBSERVER');
+values ('Eve', 'eve@email.com', '11DD7B4117C780908F18A402A48C8079', '98E94206D70222DCB5B7360C64E80898AF6BDC3ACEB046B8945A02B7515BB211', 'VOTER');
 update int_variable
 set value = 5
 where name = 'last-synced';
@@ -194,7 +194,7 @@ from user
 where name = 'Eve';
 select permission
 from role_permission
-where role = 'OBSERVER';
+where role = 'VOTER';
 select name,
        email,
        salt,

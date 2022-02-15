@@ -26,15 +26,15 @@ create table int_variable (
 );
 create table role_permission (
     id int not null auto_increment,
-    role ENUM('NO_ACCESS','OBSERVER','USER','ADMIN','AUDITOR','OWNER') not null,
-    permission ENUM('TRANSFER_OWNER','VIEW_SECRETS','MANAGE_USERS','USE_APPLICATION','VIEW_APPLICATION') not null,
+    role ENUM('NO_ACCESS','OBSERVER','VOTER','USER','ADMIN','AUDITOR','OWNER') not null,
+    permission ENUM('TRANSFER_OWNER','VIEW_SECRETS','MANAGE_USERS','USE_APPLICATION','VOTE','VIEW_APPLICATION') not null,
     primary key(id)
 );
 create table user (
     id int not null auto_increment,
     name varchar(255) not null unique,
     email varchar(255) not null unique,
-    role ENUM('NO_ACCESS','OBSERVER','USER','ADMIN','AUDITOR','OWNER') not null,
+    role ENUM('NO_ACCESS','OBSERVER','VOTER','USER','ADMIN','AUDITOR','OWNER') not null,
     salt varchar(255) not null,
     hash varchar(255) not null,
     primary key(id)
@@ -89,36 +89,27 @@ create table ranking (
     primary key(id)
 );
 alter table ranking add unique unique_ranking(ballot_id, candidate_id);
-insert into role_permission (role, permission)
-values ('OWNER', 'TRANSFER_OWNER');
-insert into role_permission (role, permission)
-values ('OWNER', 'VIEW_SECRETS');
-insert into role_permission (role, permission)
-values ('OWNER', 'MANAGE_USERS');
-insert into role_permission (role, permission)
-values ('OWNER', 'USE_APPLICATION');
-insert into role_permission (role, permission)
-values ('OWNER', 'VIEW_APPLICATION');
-insert into role_permission (role, permission)
-values ('AUDITOR', 'VIEW_SECRETS');
-insert into role_permission (role, permission)
-values ('AUDITOR', 'MANAGE_USERS');
-insert into role_permission (role, permission)
-values ('AUDITOR', 'USE_APPLICATION');
-insert into role_permission (role, permission)
-values ('AUDITOR', 'VIEW_APPLICATION');
-insert into role_permission (role, permission)
-values ('ADMIN', 'MANAGE_USERS');
-insert into role_permission (role, permission)
-values ('ADMIN', 'USE_APPLICATION');
-insert into role_permission (role, permission)
-values ('ADMIN', 'VIEW_APPLICATION');
-insert into role_permission (role, permission)
-values ('USER', 'USE_APPLICATION');
-insert into role_permission (role, permission)
-values ('USER', 'VIEW_APPLICATION');
-insert into role_permission (role, permission)
-values ('OBSERVER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('OBSERVER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('VOTER', 'VOTE');
+insert into role_permission (role, permission) values ('VOTER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('USER', 'USE_APPLICATION');
+insert into role_permission (role, permission) values ('USER', 'VOTE');
+insert into role_permission (role, permission) values ('USER', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('ADMIN', 'MANAGE_USERS');
+insert into role_permission (role, permission) values ('ADMIN', 'USE_APPLICATION');
+insert into role_permission (role, permission) values ('ADMIN', 'VOTE');
+insert into role_permission (role, permission) values ('ADMIN', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('AUDITOR', 'VIEW_SECRETS');
+insert into role_permission (role, permission) values ('AUDITOR', 'MANAGE_USERS');
+insert into role_permission (role, permission) values ('AUDITOR', 'USE_APPLICATION');
+insert into role_permission (role, permission) values ('AUDITOR', 'VOTE');
+insert into role_permission (role, permission) values ('AUDITOR', 'VIEW_APPLICATION');
+insert into role_permission (role, permission) values ('OWNER', 'TRANSFER_OWNER');
+insert into role_permission (role, permission) values ('OWNER', 'VIEW_SECRETS');
+insert into role_permission (role, permission) values ('OWNER', 'MANAGE_USERS');
+insert into role_permission (role, permission) values ('OWNER', 'USE_APPLICATION');
+insert into role_permission (role, permission) values ('OWNER', 'VOTE');
+insert into role_permission (role, permission) values ('OWNER', 'VIEW_APPLICATION');
 use condorcet_regression_test_event_can_be_purged;
 select * from event;
 use condorcet_regression_test_state_can_be_purged;

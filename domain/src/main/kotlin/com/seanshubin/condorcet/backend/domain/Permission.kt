@@ -5,5 +5,6 @@ enum class Permission {
     VIEW_SECRETS,
     MANAGE_USERS,
     USE_APPLICATION,
+    VOTE,
     VIEW_APPLICATION
 }
