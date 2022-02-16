@@ -3,13 +3,8 @@ package com.seanshubin.condorcet.backend.domain
 import arrow.core.Either
 import arrow.core.Either.Left
 import arrow.core.Either.Right
+import com.seanshubin.condorcet.backend.domain.Role.*
 import kotlin.test.Test
-import com.seanshubin.condorcet.backend.domain.Role.OWNER
-import com.seanshubin.condorcet.backend.domain.Role.ADMIN
-import com.seanshubin.condorcet.backend.domain.Role.AUDITOR
-import com.seanshubin.condorcet.backend.domain.Role.USER
-import com.seanshubin.condorcet.backend.domain.Role.OBSERVER
-import com.seanshubin.condorcet.backend.domain.Role.NO_ACCESS
 import kotlin.test.assertEquals
 
 class UserRolePermissionsTest {
@@ -82,10 +77,10 @@ class UserRolePermissionsTest {
         val someAdmin = UserRolePermissions("admin", ADMIN, allPermissions)
         val someUser = UserRole("user", USER)
         val someObserver = UserRole("observer", OBSERVER)
-        val someNoAccess= UserRole("unassigned", NO_ACCESS)
-        verifyListedRolesFor(someOwner, someUser, listOf(NO_ACCESS, OBSERVER, USER, ADMIN, AUDITOR, OWNER))
-        verifyListedRolesFor(someAuditor, someObserver,  listOf(NO_ACCESS, OBSERVER, USER, ADMIN))
-        verifyListedRolesFor(someAdmin, someNoAccess, listOf(NO_ACCESS, OBSERVER, USER))
+        val someNoAccess = UserRole("unassigned", NO_ACCESS)
+        verifyListedRolesFor(someOwner, someUser, listOf(NO_ACCESS, OBSERVER, VOTER, USER, ADMIN, AUDITOR, OWNER))
+        verifyListedRolesFor(someAuditor, someObserver, listOf(NO_ACCESS, OBSERVER, VOTER, USER, ADMIN))
+        verifyListedRolesFor(someAdmin, someNoAccess, listOf(NO_ACCESS, OBSERVER, VOTER, USER))
     }
 
     fun verifyListedRolesFor(self:UserRolePermissions, target:UserRole, expected: List<Role>){

@@ -557,7 +557,7 @@ where name = 'last-synced';
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VOTE';
 select user.name as owner,
        election.name,
        election.secret_ballot,
@@ -654,7 +654,7 @@ where name = 'last-synced';
 select role, permission
 from role_permission
 where role = 'OWNER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VOTE';
 select user.name as owner,
        election.name,
        election.secret_ballot,
@@ -893,7 +893,7 @@ where role = 'USER';
 select role, permission
 from role_permission
 where role = 'USER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VOTE';
 select user.name as owner,
        election.name,
        election.secret_ballot,
@@ -989,7 +989,7 @@ where role = 'USER';
 select role, permission
 from role_permission
 where role = 'USER'
-  and permission = 'USE_APPLICATION';
+  and permission = 'VOTE';
 select user.name as owner,
        election.name,
        election.secret_ballot,
