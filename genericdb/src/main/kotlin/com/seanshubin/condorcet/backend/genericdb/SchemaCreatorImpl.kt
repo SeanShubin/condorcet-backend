@@ -2,12 +2,12 @@ package com.seanshubin.condorcet.backend.genericdb
 
 class SchemaCreatorImpl(
     private val database: GenericDatabase,
-    private val schemaName: String,
+    private val lookupSchemaName: () -> String,
     private val schema: Schema,
     private val listTableEvent: (GenericTable) -> Unit
 ) : SchemaCreator {
     override fun purgeAllData() {
-        database.purgeDatabase(schemaName)
+        database.purgeDatabase(lookupSchemaName())
     }
 
     override fun initialize() {
@@ -38,15 +38,15 @@ class SchemaCreatorImpl(
     }
 
     private fun needsInitialize(): Boolean {
-        return database.queryExactlyOneInt("schema-count-table", schemaName) == 0
+        return database.queryExactlyOneInt("schema-count-table", lookupSchemaName()) == 0
     }
 
     private fun createDatabase() {
-        database.createDatabase(schemaName)
+        database.createDatabase(lookupSchemaName())
     }
 
     private fun useDatabase() {
-        database.useDatabase(schemaName)
+        database.useDatabase(lookupSchemaName())
     }
 
     private fun createSchema() {

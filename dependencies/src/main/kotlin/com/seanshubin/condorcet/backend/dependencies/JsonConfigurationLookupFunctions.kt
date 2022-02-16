@@ -10,5 +10,7 @@ class JsonConfigurationLookupFunctions(
     override val lookupDatabaseUser: () -> String = configuration.createStringLookup("root", listOf("database", "user"))
     override val lookupDatabasePassword: () -> String = secretsConfiguration.createStringLookup("database-password", listOf("database", "password"))
     override val lookupDatabasePort: () -> Int  = configuration.createIntLookup(3306, listOf("database", "port"))
+    override val lookupImmutableSchemaName: () -> String = configuration.createStringLookup("immutable", listOf("database", "immutable"))
+    override val lookupMutableSchemaName: () -> String = configuration.createStringLookup("mutable", listOf("database", "mutable"))
     override val lookupServerPort: () -> Int  = configuration.createIntLookup(8080, listOf("server", "port"))
 }

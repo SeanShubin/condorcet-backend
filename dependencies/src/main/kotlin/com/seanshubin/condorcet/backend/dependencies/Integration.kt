@@ -15,8 +15,6 @@ interface Integration {
     val secretsConfigurationPath: Path
     val whereKeysAreStored:Path
     val createLoggingNotifications: (Path) -> Notifications
-    val eventSchemaName: String
-    val stateSchemaName: String
     val rootDatabaseEvent: (String) -> Unit
     val eventDatabaseEvent: (String) -> Unit
     val stateDatabaseEvent: (String) -> Unit

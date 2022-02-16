@@ -2,7 +2,9 @@
   "database" : {
     "host" : "localhost",
     "user" : "root",
-    "port" : 3306
+    "port" : 3306,
+    "immutable" : "condorcet_development_event_can_be_purged",
+    "mutable" : "condorcet_development_state_can_be_purged"
   },
   "server" : {
     "port" : 8080

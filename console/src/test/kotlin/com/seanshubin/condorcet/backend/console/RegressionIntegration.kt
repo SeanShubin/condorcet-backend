@@ -38,9 +38,6 @@ class RegressionIntegration(phase: Phase) : Integration {
     )
     private val regressionNotifications: Notifications = regressionData.createNotifications(regressionSnapshotDir)
     override val createLoggingNotifications: (Path) -> Notifications = regressionData::createNotifications
-
-    override val eventSchemaName: String = "condorcet_regression_test_event_can_be_purged"
-    override val stateSchemaName: String = "condorcet_regression_test_state_can_be_purged"
     override val rootDatabaseEvent: (String) -> Unit = regressionNotifications::rootDatabaseEvent
     override val eventDatabaseEvent: (String) -> Unit = regressionNotifications::eventDatabaseEvent
     override val stateDatabaseEvent: (String) -> Unit = regressionNotifications::stateDatabaseEvent

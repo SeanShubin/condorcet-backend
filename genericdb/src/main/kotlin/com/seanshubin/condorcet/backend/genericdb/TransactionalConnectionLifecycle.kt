@@ -8,7 +8,7 @@ class TransactionalConnectionLifecycle(
     private val lookupUser: () -> String,
     private val lookupPassword: () -> String,
     private val lookupPort: () -> Int,
-    private val schemaName: String,
+    private val lookupSchemaName: () -> String,
     private val sqlEvent: (String) -> Unit,
     private val sqlException: (String, String, SQLException) -> Unit
 ) : Lifecycle<ConnectionWrapper> {
@@ -17,6 +17,7 @@ class TransactionalConnectionLifecycle(
         val user = lookupUser()
         val password = lookupPassword()
         val port = lookupPort()
+        val schemaName = lookupSchemaName()
         val url = "jdbc:mysql://$host:$port/$schemaName?serverTimezone=UTC"
         return DriverManager.getConnection(url, user, password).use { connection ->
             connection.autoCommit = false
