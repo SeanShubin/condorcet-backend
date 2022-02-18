@@ -3,10 +3,22 @@
     "port" : 8080
   },
   "database" : {
-    "host" : "localhost",
-    "user" : "root",
-    "port" : 3306,
-    "immutable" : "condorcet_regression_test_event_can_be_purged",
-    "mutable" : "condorcet_regression_test_state_can_be_purged"
+    "root" : {
+      "host" : "localhost",
+      "user" : "root",
+      "port" : 3306
+    },
+    "immutable" : {
+      "name" : "condorcet_regression_test_event_can_be_purged",
+      "host" : "localhost",
+      "user" : "root",
+      "port" : 3306
+    },
+    "mutable" : {
+      "name" : "condorcet_regression_test_state_can_be_purged",
+      "host" : "localhost",
+      "user" : "root",
+      "port" : 3306
+    }
   }
 }

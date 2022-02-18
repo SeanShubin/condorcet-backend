@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.dependencies
 
-import com.seanshubin.condorcet.backend.configuration.Configuration
-import com.seanshubin.condorcet.backend.configuration.JsonFileConfiguration
+import com.seanshubin.condorcet.backend.configuration.ConfigurationFactory
+import com.seanshubin.condorcet.backend.configuration.JsonFileConfigurationFactory
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.contract.FilesDelegate
 import com.seanshubin.condorcet.backend.genericdb.*
@@ -32,12 +32,10 @@ class Dependencies(
     private val configurationPath: Path = integration.configurationPath
     private val secretsConfigurationPath: Path = integration.secretsConfigurationPath
     private val files: FilesContract = FilesDelegate
-    private val configuration: Configuration = JsonFileConfiguration(configurationPath, files)
-    private val secretsConfiguration: Configuration = JsonFileConfiguration(secretsConfigurationPath, files)
-    private val configurationLookupFunctions: ConfigurationLookupFunctions =
-        JsonConfigurationLookupFunctions(configuration, secretsConfiguration)
-    private val lookupImmutableSchemaName: () -> String = configurationLookupFunctions.lookupImmutableSchemaName
-    private val lookupMutableSchemaName: () -> String = configurationLookupFunctions.lookupMutableSchemaName
+    private val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(configurationPath, files)
+    private val secretsConfigurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(secretsConfigurationPath, files)
+    private val configuration: Configuration =
+        JsonConfiguration(configurationFactory, secretsConfigurationFactory)
     private val rootDatabaseEvent: (String) -> Unit = integration.rootDatabaseEvent
     private val eventDatabaseEvent: (String) -> Unit = integration.eventDatabaseEvent
     private val stateDatabaseEvent: (String) -> Unit = integration.stateDatabaseEvent
@@ -45,33 +43,21 @@ class Dependencies(
     private val requestEvent: (RequestValue) -> Unit = integration.httpRequestEvent
     private val responseEvent: (ResponseValue) -> Unit = integration.httpResponseEvent
     private val topLevelException: (Throwable) -> Unit = integration.topLevelException
-    private val lookupHost: () -> String = configurationLookupFunctions.lookupDatabaseHost
-    private val lookupUser: () -> String = configurationLookupFunctions.lookupDatabaseUser
-    private val lookupPassword: () -> String = configurationLookupFunctions.lookupDatabasePassword
-    private val lookupDatabasePort: () -> Int = configurationLookupFunctions.lookupDatabasePort
     private val rootConnectionLifecycle: Lifecycle<ConnectionWrapper> =
-        ConnectionLifecycle(lookupHost, lookupUser, lookupPassword, lookupDatabasePort, rootDatabaseEvent, sqlException)
+        ConnectionLifecycle(configuration.rootDatabase, rootDatabaseEvent, sqlException)
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         TransactionalConnectionLifecycle(
-            lookupHost,
-            lookupUser,
-            lookupPassword,
-            lookupDatabasePort,
-            lookupImmutableSchemaName,
+            configuration.immutableDatabase,
             eventDatabaseEvent,
             sqlException
         )
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper> =
         TransactionalConnectionLifecycle(
-            lookupHost,
-            lookupUser,
-            lookupPassword,
-            lookupDatabasePort,
-            lookupMutableSchemaName,
+            configuration.mutableDatabase,
             stateDatabaseEvent,
             sqlException
         )
-    private val lookupServerPort: () -> Int = configurationLookupFunctions.lookupServerPort
+    private val lookupServerPort: () -> Int = configuration.serverPort
     private val server: Server = Server(lookupServerPort())
     private val serverContract: ServerContract = JettyServer(server)
     private val createService: (ConnectionWrapper, ConnectionWrapper) -> Service = { eventConnection, stateConnection ->
@@ -81,8 +67,8 @@ class Dependencies(
         InitializerDependencies(
             integration,
             connection,
-            lookupImmutableSchemaName,
-            lookupMutableSchemaName).schemaCreator
+            configuration.immutableDatabase.lookupSchemaName,
+            configuration.mutableDatabase.lookupSchemaName).schemaCreator
     }
     val schemaCreator: SchemaCreator =
         SchemaCreatorDelegateToLifecycle(createSchemaCreator, rootConnectionLifecycle)

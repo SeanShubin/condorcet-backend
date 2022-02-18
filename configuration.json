@@ -1,12 +1,24 @@
 {
-  "database" : {
-    "host" : "localhost",
-    "user" : "root",
-    "port" : 3306,
-    "immutable" : "condorcet_development_event_can_be_purged",
-    "mutable" : "condorcet_development_state_can_be_purged"
-  },
   "server" : {
     "port" : 8080
+  },
+  "database" : {
+    "root" : {
+      "host" : "localhost",
+      "user" : "root",
+      "port" : 3306
+    },
+    "immutable" : {
+      "name" : "condorcet_development_event_can_be_purged",
+      "host" : "localhost",
+      "user" : "root",
+      "port" : 3306
+    },
+    "mutable" : {
+      "name" : "condorcet_development_state_can_be_purged",
+      "host" : "localhost",
+      "user" : "root",
+      "port" : 3306
+    }
   }
 }

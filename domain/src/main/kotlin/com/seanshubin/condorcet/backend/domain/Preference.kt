@@ -128,6 +128,6 @@ class Preference private constructor(val path: List<String>, val strengths: List
             return placeList.adjustForTies()
         }
 
-        fun List<List<Preference>>.toLines(): List<String> = RowStyleTableFormatter.minimal.format(this)
+        fun List<List<Preference>>.toLines(): List<String> = RowStyleTableFormatter.boxDrawing.format(this)
     }
 }

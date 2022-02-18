@@ -6,10 +6,10 @@ import com.seanshubin.condorcet.backend.json.JsonMappers
 import java.lang.ClassCastException
 import java.nio.file.Path
 
-class JsonFileConfiguration(
+class JsonFileConfigurationFactory(
     private val configurationPath: Path,
     private val files: FilesContract
-) : Configuration {
+) : ConfigurationFactory {
     override fun createStringLookup(default:Any, path: List<String>): () -> String {
         fun lookupString(): String {
             val theObject = loadObject(default, path)
