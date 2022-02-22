@@ -127,113 +127,88 @@ object SampleDataApp {
     }
 
     private fun createOpeningMoveElection(service: Service) {
-        val electionName = "Biggest Problem"
+        val electionName = "Priorities for Savers, Speculators, and Restaurant Owners"
         service.addElection(heidi, electionName)
         service.setCandidates(
             heidi,
             electionName,
-            listOf("Price of Essentials", "Bureaucratic Obstacles", "Capital Gains Tax")
+            listOf("Cheaper Food", "Less Regulations", "Lower Taxes")
         )
         service.launchElection(heidi, electionName, allowEdit = false)
+        val saverPreference = listOf(
+            Ranking("Cheaper Food", 1),
+            Ranking("Lower Taxes", 2),
+            Ranking("Less Regulations", 3)
+        )
+        val restaurantOwnerPreferences = listOf(
+            Ranking("Less Regulations", 1),
+            Ranking("Cheaper Food", 2),
+            Ranking("Lower Taxes", 3)
+        )
+        val speculatorPreferences = listOf(
+            Ranking("Lower Taxes", 1),
+            Ranking("Less Regulations", 2),
+            Ranking("Cheaper Food", 3)
+        )
         service.castBallot(
             alice,
             "Alice",
             electionName,
-            listOf(
-                Ranking("Price of Essentials", 1),
-                Ranking("Capital Gains Tax", 2),
-                Ranking("Bureaucratic Obstacles", 3)
-            )
+            saverPreference
         )
         service.castBallot(
             bob,
             "Bob",
             electionName,
-            listOf(
-                Ranking("Price of Essentials", 1),
-                Ranking("Capital Gains Tax", 2),
-                Ranking("Bureaucratic Obstacles", 3)
-            )
+            saverPreference
         )
         service.castBallot(
             carol,
             "Carol",
             electionName,
-            listOf(
-                Ranking("Price of Essentials", 1),
-                Ranking("Capital Gains Tax", 2),
-                Ranking("Bureaucratic Obstacles", 3)
-            )
+            saverPreference
         )
         service.castBallot(
             dave,
             "Dave",
             electionName,
-            listOf(
-                Ranking("Bureaucratic Obstacles", 1),
-                Ranking("Price of Essentials", 2),
-                Ranking("Capital Gains Tax", 3)
-            )
+            restaurantOwnerPreferences
         )
         service.castBallot(
             eve,
             "Eve",
             electionName,
-            listOf(
-                Ranking("Bureaucratic Obstacles", 1),
-                Ranking("Price of Essentials", 2),
-                Ranking("Capital Gains Tax", 3)
-            )
+            restaurantOwnerPreferences
         )
         service.castBallot(
             frank,
             "Frank",
             electionName,
-            listOf(
-                Ranking("Bureaucratic Obstacles", 1),
-                Ranking("Price of Essentials", 2),
-                Ranking("Capital Gains Tax", 3)
-            )
+            restaurantOwnerPreferences
         )
         service.castBallot(
             grace,
             "Grace",
             electionName,
-            listOf(
-                Ranking("Capital Gains Tax", 1),
-                Ranking("Bureaucratic Obstacles", 2),
-                Ranking("Price of Essentials", 3)
-            )
+            speculatorPreferences
         )
         service.castBallot(
             heidi,
             "Heidi",
             electionName,
-            listOf(
-                Ranking("Capital Gains Tax", 1),
-                Ranking("Bureaucratic Obstacles", 2),
-                Ranking("Price of Essentials", 3)
-            )
+            speculatorPreferences
         )
         service.castBallot(
             ivy,
             "Ivy",
             electionName,
-            listOf(
-                Ranking("Capital Gains Tax", 1),
-                Ranking("Bureaucratic Obstacles", 2),
-                Ranking("Price of Essentials", 3)
-            )
+            speculatorPreferences
         )
         service.castBallot(
             judy,
             "Judy",
             electionName,
-            listOf(
-                Ranking("Price of Essentials", 1),
-                Ranking("Capital Gains Tax", 2),
-                Ranking("Bureaucratic Obstacles", 3)
-            )
+            saverPreference
         )
         service.finalizeElection(heidi, electionName)
     }
