@@ -30,27 +30,13 @@ class RestoreRunner(
                             eventConnection,
                             stateConnection
                         )
-                        fun eventCount(tryAgain: Boolean = true): Int {
-                            return try {
-                                immutableDbQueries.eventCount()
-                            } catch (ex: SQLException) {
-                                if (tryAgain) {
-                                    if (SchemaCreator.isDatabaseMissing(ex)) {
-                                        val schemaCreator = createSchemaCreator(rootConnection)
-                                        schemaCreator.initialize()
-                                    }
-                                    eventCount(tryAgain = false)
-                                } else {
-                                    throw ex
-                                }
-                            }
-                        }
-                        if (eventCount() > 0) {
+                        if(immutableDbQueries.eventCount() > 0) {
                             throw RuntimeException("Can not restore from $backupFilePath, immutable database not empty")
                         }
                         files.newBufferedReader(backupFilePath, charset).use { bufferedReader ->
                             var line: String? = bufferedReader.readLine()
                             while (line != null) {
+                                if(line.isBlank()) continue
                                 val event = Event.fromLine(line)
                                 immutableDbCommands.addEvent(
                                     event.authority,
