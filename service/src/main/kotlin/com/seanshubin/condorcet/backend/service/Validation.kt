@@ -62,4 +62,7 @@ object Validation {
     val password: (String) -> Either<String, String> = { s: String ->
         trim(s).flatMap(min1).flatMap(max200)
     }
+    val nameOrEmail: (String) -> Either<String, String> = { s: String ->
+        trim(s).flatMap(collapseWhitespace)
+    }
 }

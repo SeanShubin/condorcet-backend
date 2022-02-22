@@ -66,8 +66,9 @@ class BaseService(
     }
 
     override fun authenticate(nameOrEmail: String, password: String): Tokens {
-        val user = findUserByNameOrEmail(nameOrEmail)
-        requirePasswordMatches(nameOrEmail, password, user.salt, user.hash)
+        val validNameOrEmail = validateNameOrEmail(nameOrEmail)
+        val user = findUserByNameOrEmail(validNameOrEmail)
+        requirePasswordMatches(validNameOrEmail, password, user.salt, user.hash)
         return createTokens(user)
     }
 
@@ -479,6 +480,8 @@ class BaseService(
         validateString(email, "email", Validation.email)
     private fun validatePassword(password:String):String =
         validateString(password, "password", Validation.password)
+    private fun validateNameOrEmail(nameOrEmail:String):String =
+        validateString(nameOrEmail, "nameOrEmail", Validation.nameOrEmail)
 
     private fun userCount():Int = mutableDbQueries.userCount()
 
