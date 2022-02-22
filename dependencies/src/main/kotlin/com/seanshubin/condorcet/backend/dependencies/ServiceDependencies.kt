@@ -27,7 +27,7 @@ class ServiceDependencies(
         eventConnection,
         queryLoader
     )
-    private val immutableDbQueries: ImmutableDbQueries = ImmutableDbQueriesImpl(
+    val immutableDbQueries: ImmutableDbQueries = ImmutableDbQueriesImpl(
         eventGenericDatabase
     )
     private val stateGenericDatabase: GenericDatabase = GenericDatabaseImpl(
@@ -44,7 +44,7 @@ class ServiceDependencies(
         mutableDbCommands,
         eventCommandParser
     )
-    private val immutableDbCommands: ImmutableDbCommands = ImmutableDbCommandsImpl(
+    val immutableDbCommands: ImmutableDbCommands = ImmutableDbCommandsImpl(
         eventGenericDatabase,
         synchronizer
     )

@@ -249,4 +249,13 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
     override fun listPermissions(role: Role): List<Permission> {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun <T> queryStreaming(
+        createFunction: (ResultSet) -> T,
+        processFunction: (T) -> Unit,
+        name: String,
+        vararg parameters: Any?
+    ) {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

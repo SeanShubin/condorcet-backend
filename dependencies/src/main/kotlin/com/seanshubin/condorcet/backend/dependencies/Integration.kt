@@ -11,6 +11,7 @@ import java.time.Clock
 import kotlin.random.Random
 
 interface Integration {
+    val backupFilePath:Path
     val configurationPath:Path
     val secretsConfigurationPath: Path
     val whereKeysAreStored:Path

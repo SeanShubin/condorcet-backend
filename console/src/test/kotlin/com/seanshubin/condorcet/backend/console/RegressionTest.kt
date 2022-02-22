@@ -203,13 +203,13 @@ class RegressionTest {
         val regressionIntegrationExpected = RegressionIntegration(EXPECTED)
         val regressionIntegrationActual = RegressionIntegration(ACTUAL)
         fun generateMissingExpectations(commands: List<ServiceCommand>) {
-            val dependencies = Dependencies(regressionIntegrationExpected)
+            val dependencies = Dependencies(arrayOf(), regressionIntegrationExpected)
             val regressionTestRunner = RegressionTestRunner(dependencies, commands)
             regressionTestRunner.run()
         }
 
         fun generateActual(commands: List<ServiceCommand>) {
-            val dependencies = Dependencies(regressionIntegrationActual)
+            val dependencies = Dependencies(arrayOf(), regressionIntegrationActual)
             val regressionTestRunner = RegressionTestRunner(dependencies, commands)
             regressionTestRunner.run()
         }

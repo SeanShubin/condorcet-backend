@@ -55,7 +55,7 @@ class ApiHandler(
         } catch (ex: ServiceException) {
             ServiceCommand.ServiceExceptionCommand(ex).exec(environment, requestValue)
         } catch (ex: SQLException) {
-            if (ex.message?.contains("Unknown database", ignoreCase = true) == true) {
+            if (SchemaCreator.isDatabaseMissing(ex)) {
                 schemaCreator.initialize()
                 service.synchronize()
                 try {

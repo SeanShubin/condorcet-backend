@@ -19,15 +19,21 @@ class ConnectionWrapper(
 
     fun <T> queryList(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> T): List<T> {
         val list = mutableListOf<T>()
+        queryStreaming(name, code, *parameters){ resultSet ->
+            list.add(f(resultSet))
+        }
+        return list
+    }
+
+    fun queryStreaming(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> Unit) {
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(name, parameters, statement)
         statement.use {
             val resultSet = executeQuery(name, statement)
-            while (resultSet.next()) {
-                list.add(f(resultSet))
+            while(resultSet.next()){
+                f(resultSet)
             }
         }
-        return list
     }
 
     fun queryExists(name: String, code: String, vararg parameters: Any?): Boolean {

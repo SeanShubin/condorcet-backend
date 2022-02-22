@@ -21,6 +21,7 @@ import kotlin.random.Random
 class RegressionIntegration(phase: Phase) : Integration {
     val regressionSnapshotDir =
         Paths.get("src", "test", "resources", "com", "seanshubin", "condorcet", "backend", "console")
+    override val backupFilePath: Path = regressionSnapshotDir.resolve("backup.txt")
     val clockPath = regressionSnapshotDir.resolve("deterministic-clock.txt")
     val realClock = Clock.systemUTC()
     val realUniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator()

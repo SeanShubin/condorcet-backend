@@ -39,6 +39,19 @@ class GenericDatabaseImpl(
         return connection.queryList(name, code, *parameters) { createFunction(it) }
     }
 
+    override fun <T> queryStreaming(
+        createFunction: (ResultSet) -> T,
+        processFunction: (T) -> Unit,
+        name: String,
+        vararg parameters: Any?
+    ) {
+        val code = queryLoader.load(name)
+        connection.queryStreaming(name, code, *parameters) { resultSet ->
+            val value = createFunction(resultSet)
+            processFunction(value)
+        }
+    }
+
     override fun queryUntyped(name: String, code: String, vararg parameters: Any?): GenericTable =
         connection.queryGenericTable(name, code)
 

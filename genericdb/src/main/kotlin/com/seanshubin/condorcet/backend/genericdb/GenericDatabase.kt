@@ -26,6 +26,12 @@ interface GenericDatabase {
         vararg parameters: Any?
     ): List<T>
 
+    fun <T> queryStreaming(
+        createFunction: (ResultSet) -> T,
+        processFunction: (T) -> Unit,
+        name:String,
+        vararg parameters:Any?)
+
     fun <ParentType, ChildType, KeyType, ResultType> queryJoin(
         parentFunction: (ResultSet) -> ParentType,
         childFunction: (ResultSet) -> ChildType,

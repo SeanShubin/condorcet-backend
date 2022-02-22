@@ -4,6 +4,8 @@ import com.seanshubin.condorcet.backend.configuration.ConfigurationFactory
 import com.seanshubin.condorcet.backend.configuration.JsonFileConfigurationFactory
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.contract.FilesDelegate
+import com.seanshubin.condorcet.backend.database.ImmutableDbOperations
+import com.seanshubin.condorcet.backend.database.ImmutableDbQueries
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
@@ -11,10 +13,7 @@ import com.seanshubin.condorcet.backend.jwt.AlgorithmFactory
 import com.seanshubin.condorcet.backend.jwt.AlgorithmFactoryImpl
 import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.jwt.CipherImpl
-import com.seanshubin.condorcet.backend.server.ApiHandler
-import com.seanshubin.condorcet.backend.server.JettyServer
-import com.seanshubin.condorcet.backend.server.ServerContract
-import com.seanshubin.condorcet.backend.server.ServerRunner
+import com.seanshubin.condorcet.backend.server.*
 import com.seanshubin.condorcet.backend.service.Service
 import com.seanshubin.condorcet.backend.service.ServiceDelegateToLifecycle
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
@@ -27,8 +26,10 @@ import java.nio.file.Path
 import java.sql.SQLException
 
 class Dependencies(
+    args:Array<String>,
     integration: Integration
 ) {
+    private val backupFilePath:Path = integration.backupFilePath
     private val configurationPath: Path = integration.configurationPath
     private val secretsConfigurationPath: Path = integration.secretsConfigurationPath
     private val files: FilesContract = FilesDelegate
@@ -63,6 +64,12 @@ class Dependencies(
     private val createService: (ConnectionWrapper, ConnectionWrapper) -> Service = { eventConnection, stateConnection ->
         ServiceDependencies(integration, eventConnection, stateConnection).service
     }
+    private val createImmutableDbOperations: (ConnectionWrapper, ConnectionWrapper) -> ImmutableDbOperations = { eventConnection, stateConnection ->
+        val serviceDependencies = ServiceDependencies(integration, eventConnection, stateConnection)
+        val immutableDbQueries = serviceDependencies.immutableDbQueries
+        val immutableDbCommands = serviceDependencies.immutableDbCommands
+        ImmutableDbOperations(immutableDbQueries, immutableDbCommands)
+    }
     private val createSchemaCreator: (ConnectionWrapper) -> SchemaCreator = { connection ->
         InitializerDependencies(
             integration,
@@ -91,5 +98,22 @@ class Dependencies(
         responseEvent,
         topLevelException
     )
-    val runner: Runnable = ServerRunner(serverContract, handler)
+    val serverRunner: Runnable = ServerRunner(serverContract, handler)
+    val backupRunner:Runnable = BackupRunner(
+        backupFilePath,
+        charset,
+        files,
+        eventConnectionLifecycle,
+        stateConnectionLifecycle,
+        createImmutableDbOperations)
+    val restoreRunner:Runnable = RestoreRunner(
+        backupFilePath,
+        charset,
+        files,
+        rootConnectionLifecycle,
+        eventConnectionLifecycle,
+        stateConnectionLifecycle,
+        createImmutableDbOperations,
+        createSchemaCreator)
+    val runner:Runnable = DispatchRunner(args, serverRunner, backupRunner, restoreRunner)
 }

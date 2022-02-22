@@ -5,6 +5,7 @@ import com.seanshubin.condorcet.backend.database.ImmutableDbQueries
 import com.seanshubin.condorcet.backend.database.Event
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
+import java.io.PrintWriter
 import java.sql.ResultSet
 import java.time.Instant
 
@@ -97,6 +98,19 @@ interface ImmutableDbNotImplemented : ImmutableDbQueries, ImmutableDbCommands {
     }
 
     override fun updateUsingSqlList(name: String, sqlList: List<String>) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun backupToWriter(writer: PrintWriter) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun <T> queryStreaming(
+        createFunction: (ResultSet) -> T,
+        processFunction: (T) -> Unit,
+        name: String,
+        vararg parameters: Any?
+    ) {
         throw UnsupportedOperationException("not implemented")
     }
 }

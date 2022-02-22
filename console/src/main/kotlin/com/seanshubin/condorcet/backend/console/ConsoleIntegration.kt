@@ -15,6 +15,7 @@ import java.time.Clock
 import kotlin.random.Random
 
 class ConsoleIntegration : Integration {
+    override val backupFilePath: Path = Paths.get("backup.txt")
     private val logDir: Path = Paths.get("out", "log")
     private val loggingNotificationsFactory: LoggingNotificationsFactory = LoggingNotificationsFactory()
     override val createLoggingNotifications: (Path) -> Notifications = loggingNotificationsFactory::createNotifications
