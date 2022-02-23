@@ -9,7 +9,7 @@ data class RevealedBallot(
     val electionName: String,
     val confirmation: String,
     val whenCast: Instant,
-    val rankings: List<Ranking>
+    override val rankings: List<Ranking>
 ):Ballot {
     fun makeSecret():SecretBallot = SecretBallot(electionName, confirmation, rankings)
     companion object{

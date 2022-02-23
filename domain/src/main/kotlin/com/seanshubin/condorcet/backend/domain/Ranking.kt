@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.domain
 
+import kotlin.math.max
 import kotlin.random.Random
 
 data class Ranking(val candidateName: String, val rank: Int?) {
@@ -52,6 +53,34 @@ data class Ranking(val candidateName: String, val rank: Int?) {
         fun List<Ranking>.matchOrderToCandidates(candidateNames:List<String>):List<Ranking> {
             val byCandidate = this.associateBy { it.candidateName }
             return candidateNames.map{byCandidate.getValue(it)}
+        }
+
+        object RankingListComparator:Comparator<List<Ranking>>{
+            override fun compare(firstRankingList: List<Ranking>, secondRankingList: List<Ranking>): Int {
+                val firstRankList = firstRankingList.mapNotNull { it.rank }
+                val secondRankList = secondRankingList.mapNotNull { it.rank }
+                return RankListComparator.compare(firstRankList, secondRankList)
+            }
+        }
+
+        object RankListComparator:Comparator<List<Int>>{
+            override fun compare(firstList: List<Int>, secondList: List<Int>): Int {
+                val maxSize = max(firstList.size, secondList.size)
+                var compareResult = 0
+                var index = 0
+                while(index < maxSize){
+                    val firstValue = firstList[index]
+                    val secondValue = secondList[index]
+                    compareResult = RankComparator.compare(firstValue, secondValue)
+                    if(compareResult != 0) break
+                    index++
+                }
+                return compareResult
+            }
+        }
+
+        object RankComparator:Comparator<Int>{
+            override fun compare(first: Int, second: Int): Int = first.compareTo(second)
         }
     }
 }

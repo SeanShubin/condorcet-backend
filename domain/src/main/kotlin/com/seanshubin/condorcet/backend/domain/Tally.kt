@@ -66,7 +66,7 @@ data class Tally(
                     rankSortedBallots.map { it.makeSecret() }.sortedBy { it.confirmation }
                 } else {
                     rankSortedBallots.sortedBy { it.voterName }
-                }
+                }.sortedWith(Ballot.Companion.BallotComparator)
                 return Tally(electionName, candidates, secretBallot, ballots, preferences, strongestPaths, places, whoVoted)
             }
 
