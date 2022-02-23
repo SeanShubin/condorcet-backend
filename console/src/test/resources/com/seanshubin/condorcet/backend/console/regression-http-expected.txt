@@ -610,25 +610,25 @@ Content-Type: application/json
   "secretBallot" : true,
   "ballots" : [ {
     "electionName" : "Favorite Ice Cream",
-    "confirmation" : "760D2BFB08D64A9F416FADDCAE168028",
+    "confirmation" : "D7ED737E6DF479C9EA2E6B28B416A733",
     "rankings" : [ {
       "candidateName" : "Chocolate Chip",
-      "rank" : 2
-    }, {
-      "candidateName" : "Chocolate",
-      "rank" : 4
-    }, {
-      "candidateName" : "Mint",
       "rank" : 1
     }, {
-      "candidateName" : "Neapolitan",
+      "candidateName" : "Chocolate",
       "rank" : 3
     }, {
+      "candidateName" : "Mint",
+      "rank" : 6
+    }, {
+      "candidateName" : "Neapolitan",
+      "rank" : 2
+    }, {
       "candidateName" : "Vanilla",
-      "rank" : 5
+      "rank" : 4
     }, {
       "candidateName" : "Butter Pecan",
-      "rank" : 6
+      "rank" : 5
     } ]
   }, {
     "electionName" : "Favorite Ice Cream",
@@ -654,25 +654,25 @@ Content-Type: application/json
     } ]
   }, {
     "electionName" : "Favorite Ice Cream",
-    "confirmation" : "D7ED737E6DF479C9EA2E6B28B416A733",
+    "confirmation" : "760D2BFB08D64A9F416FADDCAE168028",
     "rankings" : [ {
       "candidateName" : "Chocolate Chip",
-      "rank" : 1
-    }, {
-      "candidateName" : "Chocolate",
-      "rank" : 3
-    }, {
-      "candidateName" : "Mint",
-      "rank" : 6
-    }, {
-      "candidateName" : "Neapolitan",
       "rank" : 2
     }, {
-      "candidateName" : "Vanilla",
+      "candidateName" : "Chocolate",
       "rank" : 4
     }, {
-      "candidateName" : "Butter Pecan",
+      "candidateName" : "Mint",
+      "rank" : 1
+    }, {
+      "candidateName" : "Neapolitan",
+      "rank" : 3
+    }, {
+      "candidateName" : "Vanilla",
       "rank" : 5
+    }, {
+      "candidateName" : "Butter Pecan",
+      "rank" : 6
     } ]
   } ],
   "preferences" : [ [ {
