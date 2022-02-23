@@ -30,26 +30,27 @@ class RestoreRunner(
                             eventConnection,
                             stateConnection
                         )
-                        if(immutableDbQueries.eventCount() > 0) {
-                            throw RuntimeException("Can not restore from $backupFilePath, immutable database not empty")
-                        }
-                        files.newBufferedReader(backupFilePath, charset).use { bufferedReader ->
-                            var line: String? = bufferedReader.readLine()
-                            while (line != null) {
-                                if(line.isBlank()) continue
-                                val event = Event.fromLine(line)
-                                immutableDbCommands.addEvent(
-                                    event.authority,
-                                    event.type,
-                                    event.text,
-                                    event.whenHappened
-                                )
-                                line = bufferedReader.readLine()
+                        val eventCount = immutableDbQueries.eventCount()
+                        if(eventCount > 0) {
+                            println("Not restoring from $backupFilePath, immutable database not empty, it has $eventCount events")
+                        } else {
+                            files.newBufferedReader(backupFilePath, charset).use { bufferedReader ->
+                                var line: String? = bufferedReader.readLine()
+                                while (line != null) {
+                                    if (line.isBlank()) continue
+                                    val event = Event.fromLine(line)
+                                    immutableDbCommands.addEvent(
+                                        event.authority,
+                                        event.type,
+                                        event.text,
+                                        event.whenHappened
+                                    )
+                                    line = bufferedReader.readLine()
+                                }
                             }
                         }
                     }
                 }
-
             }
         }
     }
