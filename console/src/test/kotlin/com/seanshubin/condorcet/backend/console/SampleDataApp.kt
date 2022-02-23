@@ -127,7 +127,7 @@ object SampleDataApp {
     }
 
     private fun createOpeningMoveElection(service: Service) {
-        val electionName = "Priorities for Savers, Speculators, and Restaurant Owners"
+        val electionName = "Priorities for Savers, Restaurant Owners, and Speculators"
         service.addElection(heidi, electionName)
         service.setCandidates(
             heidi,
