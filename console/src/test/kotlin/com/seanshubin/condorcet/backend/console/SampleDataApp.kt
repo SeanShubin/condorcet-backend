@@ -52,7 +52,7 @@ object SampleDataApp {
         service.setRole(alice, "Judy", USER)
 
         createSpoilerAlertElection(service)
-        createOpeningMoveElection(service)
+        createElectionWithCycle(service)
         createCredibleCompromiseElection(service)
         createPetsElection(service)
     }
@@ -126,7 +126,7 @@ object SampleDataApp {
         service.finalizeElection(grace, electionName)
     }
 
-    private fun createOpeningMoveElection(service: Service) {
+    private fun createElectionWithCycle(service: Service) {
         val electionName = "Priorities for Savers, Restaurant Owners, and Speculators"
         service.addElection(heidi, electionName)
         service.setCandidates(
@@ -208,7 +208,7 @@ object SampleDataApp {
             judy,
             "Judy",
             electionName,
-            saverPreference
+            speculatorPreferences
         )
         service.finalizeElection(heidi, electionName)
     }
