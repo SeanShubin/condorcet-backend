@@ -15,6 +15,7 @@ import com.seanshubin.condorcet.backend.domain.Role.Companion.SECONDARY_ROLE
 import com.seanshubin.condorcet.backend.domain.Role.Companion.PRIMARY_ROLE
 import com.seanshubin.condorcet.backend.domain.Role.Companion.DEFAULT_ROLE
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
+import com.seanshubin.condorcet.backend.mail.MailService
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
@@ -30,7 +31,8 @@ class BaseService(
     private val synchronizer: Synchronizer,
     private val random: Random,
     private val clock: Clock,
-    private val uniqueIdGenerator: UniqueIdGenerator
+    private val uniqueIdGenerator: UniqueIdGenerator,
+    private val mailService: MailService
 ) : Service {
     override fun synchronize() {
         synchronizer.synchronize()

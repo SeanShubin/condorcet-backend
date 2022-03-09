@@ -1,11 +1,12 @@
 package com.seanshubin.condorcet.backend.dependencies
 
-import com.seanshubin.condorcet.backend.configuration.ConfigurationFactory
-import com.seanshubin.condorcet.backend.configuration.JsonFileConfigurationFactory
+import com.seanshubin.condorcet.backend.server.Configuration
+import com.seanshubin.condorcet.backend.server.JsonConfiguration
+import com.seanshubin.condorcet.backend.configuration.util.ConfigurationFactory
+import com.seanshubin.condorcet.backend.configuration.util.JsonFileConfigurationFactory
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.contract.FilesDelegate
 import com.seanshubin.condorcet.backend.database.ImmutableDbOperations
-import com.seanshubin.condorcet.backend.database.ImmutableDbQueries
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
@@ -13,6 +14,9 @@ import com.seanshubin.condorcet.backend.jwt.AlgorithmFactory
 import com.seanshubin.condorcet.backend.jwt.AlgorithmFactoryImpl
 import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.jwt.CipherImpl
+import com.seanshubin.condorcet.backend.mail.MailConfiguration
+import com.seanshubin.condorcet.backend.mail.MailService
+import com.seanshubin.condorcet.backend.mail.SmtpMailService
 import com.seanshubin.condorcet.backend.server.*
 import com.seanshubin.condorcet.backend.service.Service
 import com.seanshubin.condorcet.backend.service.ServiceDelegateToLifecycle
@@ -58,14 +62,15 @@ class Dependencies(
             stateDatabaseEvent,
             sqlException
         )
-    private val lookupServerPort: () -> Int = configuration.serverPort
+    private val lookupServerPort: () -> Int = configuration.server.lookupPort
     private val server: Server = Server(lookupServerPort())
     private val serverContract: ServerContract = JettyServer(server)
-    private val createService: (ConnectionWrapper, ConnectionWrapper) -> Service = { eventConnection, stateConnection ->
-        ServiceDependencies(integration, eventConnection, stateConnection).service
+    private val createService: (ConnectionWrapper, ConnectionWrapper, MailService) -> Service = {
+            eventConnection, stateConnection, mailService ->
+        ServiceDependencies(integration, eventConnection, stateConnection, mailService).service
     }
     private val createImmutableDbOperations: (ConnectionWrapper, ConnectionWrapper) -> ImmutableDbOperations = { eventConnection, stateConnection ->
-        val serviceDependencies = ServiceDependencies(integration, eventConnection, stateConnection)
+        val serviceDependencies = ServiceDependencies(integration, eventConnection, stateConnection, mailService)
         val immutableDbQueries = serviceDependencies.immutableDbQueries
         val immutableDbCommands = serviceDependencies.immutableDbCommands
         ImmutableDbOperations(immutableDbQueries, immutableDbCommands)
@@ -79,10 +84,13 @@ class Dependencies(
     }
     val schemaCreator: SchemaCreator =
         SchemaCreatorDelegateToLifecycle(createSchemaCreator, rootConnectionLifecycle)
+    private val mailConfiguration:MailConfiguration = configuration.mail
+    private val mailService:MailService = SmtpMailService(mailConfiguration)
     val service: Service = ServiceDelegateToLifecycle(
         createService,
         eventConnectionLifecycle,
-        stateConnectionLifecycle
+        stateConnectionLifecycle,
+        mailService
     )
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val charset: Charset = StandardCharsets.UTF_8
@@ -115,5 +123,5 @@ class Dependencies(
         stateConnectionLifecycle,
         createImmutableDbOperations,
         createSchemaCreator)
-    val runner:Runnable = DispatchRunner(args, serverRunner, backupRunner, restoreRunner)
+    val runner:Runnable = DispatchRunner(args, configuration, serverRunner, backupRunner, restoreRunner)
 }

@@ -2,6 +2,7 @@ package com.seanshubin.condorcet.backend.server
 
 class DispatchRunner(
     private val args:Array<String>,
+    private val configuration: Configuration,
     private val serverRunner: Runnable,
     private val backupRunner: Runnable,
     private val restoreRunner:Runnable
@@ -12,6 +13,7 @@ class DispatchRunner(
         "restore" to restoreRunner
     )
     override fun run() {
+        configuration.reify()
         val commandName = args.getOrNull(0) ?: "server"
         val command = commandMap[commandName]
         if(command == null){

@@ -3,11 +3,13 @@ package com.seanshubin.condorcet.backend.service
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.genericdb.ConnectionWrapper
 import com.seanshubin.condorcet.backend.genericdb.Lifecycle
+import com.seanshubin.condorcet.backend.mail.MailService
 
 class ServiceDelegateToLifecycle(
-    private val createService: (ConnectionWrapper, ConnectionWrapper) -> Service,
+    private val createService: (ConnectionWrapper, ConnectionWrapper, MailService) -> Service,
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper>,
-    private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper>
+    private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper>,
+    private val mailService: MailService
 ) : Service {
     override fun synchronize() {
         withService { it.synchronize() }
@@ -127,7 +129,7 @@ class ServiceDelegateToLifecycle(
     private fun <T> withService(f: (Service) -> T): T =
         eventConnectionLifecycle.withValue { eventConnection ->
             stateConnectionLifecycle.withValue { stateConnection ->
-                val service = createService(eventConnection, stateConnection)
+                val service = createService(eventConnection, stateConnection, mailService)
                 f(service)
             }
         }

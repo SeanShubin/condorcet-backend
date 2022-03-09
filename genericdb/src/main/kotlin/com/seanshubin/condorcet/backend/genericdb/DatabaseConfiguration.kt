@@ -6,4 +6,11 @@ interface DatabaseConfiguration {
     val lookupUser:()->String
     val lookupPassword:()->String
     val lookupPort:()->Int
+    fun reify(){
+        lookupSchemaName()
+        lookupHost()
+        lookupUser()
+        lookupPassword()
+        lookupPort()
+    }
 }

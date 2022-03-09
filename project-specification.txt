@@ -57,26 +57,31 @@
         group com.auth0
         artifact java-jwt
     }
+    java-mail {
+      group com.sun.mail
+      artifact javax.mail
+    }
   }
   global [ stdlib test ]
   modules {
-    console       [ server dependencies ]
-    dependencies  [ server configuration ]
-    server        [ jetty service-http ]
-    service-http  [ service http jwt ]
-    jwt           [ java-jwt contract string-util ]
-    http          []
-    service       [ crypto io database json logger ]
-    logger        [ contract ]
-    contract      []
-    database      [ genericdb domain crypto ]
-    domain        [ string-util json arrow ]
-    genericdb     [ mysql-jdbc io string-util contract json ]
-    io            []
-    crypto        [ string-util ]
-    json          [ jackson jackson-time ]
-    string-util   []
-    configuration [ json contract ]
+    console            [ server dependencies ]
+    dependencies       [ server ]
+    server             [ jetty service-http configuration-util ]
+    service-http       [ service http jwt ]
+    jwt                [ java-jwt contract string-util ]
+    http               []
+    service            [ crypto io database json logger mail ]
+    logger             [ contract ]
+    contract           []
+    database           [ genericdb domain crypto ]
+    domain             [ string-util json arrow ]
+    genericdb          [ mysql-jdbc io string-util contract json ]
+    io                 []
+    crypto             [ string-util ]
+    json               [ jackson jackson-time ]
+    string-util        []
+    mail               [ java-mail ]
+    configuration-util [ json contract]
   }
   detangler [console]
   consoleEntryPoint {

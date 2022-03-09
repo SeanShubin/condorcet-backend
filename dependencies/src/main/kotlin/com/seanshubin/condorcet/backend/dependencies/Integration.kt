@@ -4,6 +4,7 @@ import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
+import com.seanshubin.condorcet.backend.mail.MailService
 import com.seanshubin.condorcet.backend.server.Notifications
 import java.nio.file.Path
 import java.sql.SQLException

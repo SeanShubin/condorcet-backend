@@ -20,5 +20,9 @@
       "user" : "root",
       "port" : 3306
     }
+  },
+  "mail" : {
+    "host" : "email-host",
+    "user" : "email-user"
   }
 }

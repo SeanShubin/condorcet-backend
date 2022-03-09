@@ -85,6 +85,7 @@ class ServiceTest {
         val stateDbFake = MutableDbFake()
         private val synchronizer = SynchronizerStub()
         private val random = RandomStub()
+        private val mailService = MailServiceUnsupportedOperation()
         val service: Service = BaseService(
             passwordUtil,
             eventDbFake,
@@ -93,7 +94,8 @@ class ServiceTest {
             synchronizer,
             random,
             clock,
-            uniqueIdGenerator
+            uniqueIdGenerator,
+            mailService
         )
     }
 }

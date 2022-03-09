@@ -3,21 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>condorcet-backend-server</artifactId>
+    <artifactId>condorcet-backend-mail</artifactId>
     <dependencies>
         <dependency>
-            <groupId>com.seanshubin.condorcet.backend</groupId>
-            <artifactId>condorcet-backend-service-http</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.seanshubin.condorcet.backend</groupId>
-            <artifactId>condorcet-backend-configuration-util</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
         </dependency>
     </dependencies>
     <parent>

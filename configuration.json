@@ -6,7 +6,8 @@
     "root" : {
       "host" : "localhost",
       "user" : "root",
-      "port" : 3306
+      "port" : 3306,
+      "name" : "root"
     },
     "immutable" : {
       "name" : "condorcet_development_event_can_be_purged",
@@ -20,5 +21,10 @@
       "user" : "root",
       "port" : 3306
     }
+  },
+  "mail" : {
+    "host" : "email-smtp.us-east-1.amazonaws.com",
+    "user" : "AKIA6BGHPRKQM5GUHDUZ",
+    "from" : "system@pairwisevote.com"
   }
 }

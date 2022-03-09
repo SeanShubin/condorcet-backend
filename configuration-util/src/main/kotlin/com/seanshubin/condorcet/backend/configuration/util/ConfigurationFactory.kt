@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.configuration
+package com.seanshubin.condorcet.backend.configuration.util
 
 interface ConfigurationFactory {
     fun createStringLookup(default:Any, path:List<String>):() -> String

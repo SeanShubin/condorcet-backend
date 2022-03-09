@@ -1,4 +1,4 @@
-package com.seanshubin.condorcet.backend.configuration
+package com.seanshubin.condorcet.backend.configuration.util
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.seanshubin.condorcet.backend.contract.FilesContract

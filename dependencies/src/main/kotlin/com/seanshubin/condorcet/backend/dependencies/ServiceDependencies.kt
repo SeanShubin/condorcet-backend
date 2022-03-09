@@ -6,6 +6,8 @@ import com.seanshubin.condorcet.backend.crypto.Sha256Hash
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
+import com.seanshubin.condorcet.backend.mail.MailService
+import com.seanshubin.condorcet.backend.mail.SmtpMailService
 import com.seanshubin.condorcet.backend.service.Service
 import com.seanshubin.condorcet.backend.service.BaseService
 import com.seanshubin.condorcet.backend.service.RecordingService
@@ -14,7 +16,8 @@ import java.time.Clock
 class ServiceDependencies(
     integration: Integration,
     eventConnection: ConnectionWrapper,
-    stateConnection: ConnectionWrapper
+    stateConnection: ConnectionWrapper,
+    mailService: MailService
 ) {
     private val serviceRequestEvent:(String, String)->Unit = integration.serviceRequestEvent
     private val serviceResponseEvent:(String, String, String)->Unit = integration.serviceResponseEvent
@@ -57,7 +60,8 @@ class ServiceDependencies(
         synchronizer,
         random,
         clock,
-        uniqueIdGenerator
+        uniqueIdGenerator,
+        mailService
     )
     val service:Service = RecordingService(baseService, serviceRequestEvent, serviceResponseEvent)
 }
