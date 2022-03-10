@@ -425,7 +425,7 @@ interface ServiceCommand {
             val refreshTokenString = cookieValue("Refresh") ?: return null
             if (refreshTokenString.isBlank()) return null
             val decoded = cipher.decode(refreshTokenString)
-            val userName = decoded.claims["userName"]?.asString() ?: return null
+            val userName = decoded["userName"] ?: return null
             return RefreshToken(userName)
 
         }
@@ -433,8 +433,8 @@ interface ServiceCommand {
         private fun RequestValue.accessToken(cipher: Cipher): AccessToken? {
             val bearerToken = bearerToken() ?: return null
             val decoded = cipher.decode(bearerToken)
-            val userName = decoded.claims["userName"]?.asString() ?: return null
-            val roleName = decoded.claims["role"]?.asString() ?: return null
+            val userName = decoded["userName"] ?: return null
+            val roleName = decoded["role"] ?: return null
             val role = Role.valueOf(roleName)
             return AccessToken(userName, role)
         }

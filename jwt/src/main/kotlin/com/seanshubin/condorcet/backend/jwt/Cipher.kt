@@ -1,9 +1,6 @@
 package com.seanshubin.condorcet.backend.jwt
 
-import com.auth0.jwt.interfaces.DecodedJWT
-
 interface Cipher {
-    fun decode(token: String): DecodedJWT
+    fun decode(token: String): Map<String, String?>
     fun encode(map: Map<String, String>): String
-    fun encryptedTokenToMap(token: String): Map<String, String?>
 }

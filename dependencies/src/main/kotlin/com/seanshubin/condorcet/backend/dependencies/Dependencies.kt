@@ -10,10 +10,7 @@ import com.seanshubin.condorcet.backend.database.ImmutableDbOperations
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
-import com.seanshubin.condorcet.backend.jwt.AlgorithmFactory
-import com.seanshubin.condorcet.backend.jwt.AlgorithmFactoryImpl
-import com.seanshubin.condorcet.backend.jwt.Cipher
-import com.seanshubin.condorcet.backend.jwt.CipherImpl
+import com.seanshubin.condorcet.backend.jwt.*
 import com.seanshubin.condorcet.backend.mail.MailConfiguration
 import com.seanshubin.condorcet.backend.mail.MailService
 import com.seanshubin.condorcet.backend.mail.SmtpMailService
@@ -95,7 +92,8 @@ class Dependencies(
     private val serviceCommandParser: ServiceCommandParser = ServiceCommandParserImpl()
     private val charset: Charset = StandardCharsets.UTF_8
     private val whereKeysAreStored: Path = integration.whereKeysAreStored
-    private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(files, charset, whereKeysAreStored)
+    private val keyStore:KeyStore = KeyStoreImpl(files, charset, whereKeysAreStored)
+    private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(keyStore)
     private val cipher: Cipher = CipherImpl(algorithmFactory)
     val handler: Handler = ApiHandler(
         schemaCreator,
