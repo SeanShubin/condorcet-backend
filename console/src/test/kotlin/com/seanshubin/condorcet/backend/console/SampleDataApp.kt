@@ -59,7 +59,7 @@ object SampleDataApp {
 
     private fun createSpoilerAlertElection(service: Service) {
         val electionName = "Spoiler Alert"
-        service.addElection(grace, electionName)
+        service.addElection(grace, grace.userName, electionName)
         service.updateElection(grace, electionName, ElectionUpdates(secretBallot = true))
         service.setCandidates(grace, electionName, listOf("Minor Improvements", "Status Quo", "Radical Changes"))
         service.launchElection(grace, electionName, false)
@@ -128,7 +128,7 @@ object SampleDataApp {
 
     private fun createElectionWithCycle(service: Service) {
         val electionName = "Priorities for Savers, Restaurant Owners, and Speculators"
-        service.addElection(heidi, electionName)
+        service.addElection(heidi, heidi.userName, electionName)
         service.setCandidates(
             heidi,
             electionName,
@@ -216,7 +216,7 @@ object SampleDataApp {
 
     private fun createCredibleCompromiseElection(service: Service) {
         val electionName = "Credible Compromise"
-        service.addElection(ivy, electionName)
+        service.addElection(ivy, ivy.userName, electionName)
         service.setCandidates(
             ivy,
             electionName,
@@ -258,7 +258,7 @@ object SampleDataApp {
 
     private fun createPetsElection(service: Service) {
         val electionName = "Pets"
-        service.addElection(judy, electionName)
+        service.addElection(judy, judy.userName, electionName)
         service.setCandidates(
             judy,
             electionName,

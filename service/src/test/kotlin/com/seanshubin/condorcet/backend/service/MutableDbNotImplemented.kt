@@ -16,15 +16,15 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun createUser(authority: String, name: String, email: String, salt: String, hash: String, role: Role) {
+    override fun createUser(authority: String, userName: String, email: String, salt: String, hash: String, role: Role) {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun setRole(authority: String, name: String, role: Role) {
+    override fun setRole(authority: String, userName: String, role: Role) {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun removeUser(authority: String, name: String) {
+    override fun removeUser(authority: String, userName: String) {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -32,7 +32,7 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun addElection(authority: String, owner: String, name: String) {
+    override fun addElection(authority: String, owner: String, electionName: String) {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -40,11 +40,11 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
+    override fun updateElection(authority: String, electionName: String, updates: ElectionUpdates) {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun deleteElection(authority: String, name: String) {
+    override fun deleteElection(authority: String, electionName: String) {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -256,6 +256,10 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         name: String,
         vararg parameters: Any?
     ) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun setPassword(authority: String, userName: String, salt: String, hash:String) {
         throw UnsupportedOperationException("not implemented")
     }
 }

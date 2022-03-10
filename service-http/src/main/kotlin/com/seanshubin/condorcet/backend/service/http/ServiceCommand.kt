@@ -82,10 +82,10 @@ interface ServiceCommand {
             }
     }
 
-    data class AddElection(val electionName: String) : ServiceCommand {
+    data class AddElection(val userName:String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.addElection(accessToken, electionName)
+                environment.service.addElection(accessToken, userName, electionName)
                 responseBuilder().build()
             }
     }
@@ -284,7 +284,7 @@ interface ServiceCommand {
             }
     }
 
-    data class GetBallot(val voterName:String, val electionName: String) : ServiceCommand {
+    data class GetBallot(val voterName: String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 val ballot = environment.service.getBallot(accessToken, voterName, electionName)
@@ -308,6 +308,13 @@ interface ServiceCommand {
             }
     }
 
+    data class ChangePassword(val userName: String, val password: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.cipher) { accessToken ->
+                environment.service.changePassword(accessToken, userName, password)
+                responseBuilder().build()
+            }
+    }
 
     data class Unsupported(val commandName: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
@@ -439,7 +446,7 @@ interface ServiceCommand {
             return AccessToken(userName, role)
         }
 
-        private fun tokenResponse(tokens: Tokens, permissions:List<Permission>, cipher: Cipher): ResponseValue {
+        private fun tokenResponse(tokens: Tokens, permissions: List<Permission>, cipher: Cipher): ResponseValue {
             val refreshTokenString = cipher.encode(mapOf("userName" to tokens.refreshToken.userName))
             val accessTokenString = cipher.encode(
                 mapOf(

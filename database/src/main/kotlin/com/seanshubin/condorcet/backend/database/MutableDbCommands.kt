@@ -12,22 +12,22 @@ interface MutableDbCommands {
 
     fun createUser(
         authority: String,
-        name: String,
+        userName: String,
         email: String,
         salt: String,
         hash: String,
         role: Role
     )
 
-    fun setRole(authority: String, name: String, role: Role)
+    fun setRole(authority: String, userName: String, role: Role)
 
-    fun removeUser(authority: String, name: String)
+    fun removeUser(authority: String, userName: String)
 
-    fun addElection(authority: String, owner: String, name: String)
+    fun addElection(authority: String, owner: String, electionName: String)
 
-    fun updateElection(authority: String, name: String, updates: ElectionUpdates)
+    fun updateElection(authority: String, electionName: String, updates: ElectionUpdates)
 
-    fun deleteElection(authority: String, name: String)
+    fun deleteElection(authority: String, electionName: String)
 
     fun addCandidates(authority: String, electionName: String, candidateNames: List<String>)
 
@@ -42,4 +42,6 @@ interface MutableDbCommands {
     fun setRankings(authority: String, confirmation:String, electionName:String, rankings: List<Ranking>)
 
     fun updateWhenCast(authority:String, confirmation: String, now:Instant)
+
+    fun setPassword(authority:String, userName:String, salt:String, hash:String)
 }

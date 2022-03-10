@@ -19,28 +19,28 @@ class SyncCommands(
         // do not sync the commands used to sync the commands
     }
 
-    override fun createUser(authority: String, name: String, email: String, salt: String, hash: String, role: Role) {
-        processEvent(authority, EventCommand.AddUser(name, email, salt, hash, role))
+    override fun createUser(authority: String, userName: String, email: String, salt: String, hash: String, role: Role) {
+        processEvent(authority, EventCommand.AddUser(userName, email, salt, hash, role))
     }
 
-    override fun setRole(authority: String, name: String, role: Role) {
-        processEvent(authority, EventCommand.SetRole(name, role))
+    override fun setRole(authority: String, userName: String, role: Role) {
+        processEvent(authority, EventCommand.SetRole(userName, role))
     }
 
-    override fun removeUser(authority: String, name: String) {
-        processEvent(authority, EventCommand.RemoveUser(name))
+    override fun removeUser(authority: String, userName: String) {
+        processEvent(authority, EventCommand.RemoveUser(userName))
     }
 
-    override fun addElection(authority: String, owner: String, name: String) {
-        processEvent(authority, EventCommand.AddElection(owner, name))
+    override fun addElection(authority: String, owner: String, electionName: String) {
+        processEvent(authority, EventCommand.AddElection(owner, electionName))
     }
 
-    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
-        processEvent(authority, EventCommand.UpdateElection(name, updates))
+    override fun updateElection(authority: String, electionName: String, updates: ElectionUpdates) {
+        processEvent(authority, EventCommand.UpdateElection(electionName, updates))
     }
 
-    override fun deleteElection(authority: String, name: String) {
-        processEvent(authority, EventCommand.DeleteElection(name))
+    override fun deleteElection(authority: String, electionName: String) {
+        processEvent(authority, EventCommand.DeleteElection(electionName))
     }
 
     override fun addCandidates(authority: String, electionName: String, candidateNames: List<String>) {
@@ -69,6 +69,10 @@ class SyncCommands(
 
     override fun setRankings(authority: String, confirmation: String, electionName: String, rankings: List<Ranking>) {
         processEvent(authority, EventCommand.SetRankings(confirmation, electionName, rankings))
+    }
+
+    override fun setPassword(authority: String, userName: String, salt: String, hash:String) {
+        processEvent(authority, EventCommand.SetPassword(userName, salt, hash))
     }
 
     private fun processEvent(authority: String, eventCommand: EventCommand) {

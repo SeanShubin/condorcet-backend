@@ -1163,3 +1163,13 @@ from ballot
 inner join user on ballot.user_id = user.id
 inner join election on ballot.election_id = election.id
 where user.name = 'Alice' and election.name = 'Favorite Ice Cream';
+select value
+from int_variable
+where name = 'last-synced';
+update
+    user
+set salt = '13F7D3D7C224D1B50B32224CAE54C2D7', hash = 'D1B89516283393E9597D2697F67EBD06027B10F2646C4785BD1E88A1F19DE1C3'
+where name = 'Alice';
+update int_variable
+set value = 25
+where name = 'last-synced';

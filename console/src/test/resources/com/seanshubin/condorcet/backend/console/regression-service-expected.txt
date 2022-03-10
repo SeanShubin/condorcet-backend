@@ -163,3 +163,6 @@ Tally(listOf("Chocolate Chip","Chocolate","Mint","Neapolitan","Vanilla","Butter 
 getBallot(AccessToken("Alice", OWNER), "Alice", "Favorite Ice Cream")
 BallotSummary("Alice", "Favorite Ice Cream", "D7ED737E6DF479C9EA2E6B28B416A733", Instant.parse("2022-01-21T06:18:26.481986Z"))
 
+changePassword(AccessToken("Alice", OWNER), "Alice", "new-alice-password")
+Unit
+

@@ -13,7 +13,7 @@ interface Service {
     fun setRole(accessToken: AccessToken, userName: String, role: Role)
     fun removeUser(accessToken: AccessToken, userName: String)
     fun listUsers(accessToken: AccessToken): List<UserNameRole>
-    fun addElection(accessToken: AccessToken, electionName: String)
+    fun addElection(accessToken: AccessToken, userName:String, electionName: String)
     fun launchElection(accessToken:AccessToken, electionName:String, allowEdit:Boolean)
     fun finalizeElection(accessToken:AccessToken, electionName:String)
     fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates)
@@ -37,4 +37,5 @@ interface Service {
     fun setEligibleVoters(accessToken:AccessToken, electionName:String, userNames:List<String>)
     fun isEligible(accessToken:AccessToken, userName:String, electionName:String):Boolean
     fun getBallot(accessToken:AccessToken, voterName:String, electionName:String):BallotSummary?
+    fun changePassword(accessToken:AccessToken, userName:String, password:String)
 }

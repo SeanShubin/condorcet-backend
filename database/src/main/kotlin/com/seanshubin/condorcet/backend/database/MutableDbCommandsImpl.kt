@@ -17,26 +17,26 @@ class MutableDbCommandsImpl(
         update("variable-insert-last-synced", lastSynced)
     }
 
-    override fun createUser(authority: String, name: String, email: String, salt: String, hash: String, role: Role) {
-        update("user-insert", name, email, salt, hash, role.name)
+    override fun createUser(authority: String, userName: String, email: String, salt: String, hash: String, role: Role) {
+        update("user-insert", userName, email, salt, hash, role.name)
     }
 
-    override fun setRole(authority: String, name: String, role: Role) {
-        update("user-update-role", role.name, name)
+    override fun setRole(authority: String, userName: String, role: Role) {
+        update("user-update-role", role.name, userName)
     }
 
-    override fun removeUser(authority: String, name: String) {
-        update("delete-user", name)
+    override fun removeUser(authority: String, userName: String) {
+        update("delete-user", userName)
     }
 
-    override fun addElection(authority: String, owner: String, name: String) {
-        update("election-insert", owner, name)
+    override fun addElection(authority: String, owner: String, electionName: String) {
+        update("election-insert", owner, electionName)
     }
 
-    override fun updateElection(authority: String, name: String, updates: ElectionUpdates) {
-        val updatedName = updates.newElectionName ?: name
+    override fun updateElection(authority: String, electionName: String, updates: ElectionUpdates) {
+        val updatedName = updates.newElectionName ?: electionName
         if (updates.newElectionName != null) {
-            update("election-update-name", updates.newElectionName, name)
+            update("election-update-name", updates.newElectionName, electionName)
         }
         if (updates.secretBallot != null) {
             update("election-update-secret-ballot", updates.secretBallot, updatedName)
@@ -59,8 +59,8 @@ class MutableDbCommandsImpl(
         }
     }
 
-    override fun deleteElection(authority: String, name: String) {
-        update("delete-election", name)
+    override fun deleteElection(authority: String, electionName: String) {
+        update("delete-election", electionName)
     }
 
     override fun addCandidates(authority: String, electionName: String, candidateNames: List<String>) {
@@ -108,5 +108,9 @@ class MutableDbCommandsImpl(
                 update("ranking-insert", confirmation, electionName, candidateName, rank)
             }
         }
+    }
+
+    override fun setPassword(authority: String, userName: String, salt: String, hash:String) {
+        update("user-update-password", salt, hash, userName)
     }
 }

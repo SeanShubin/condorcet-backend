@@ -36,7 +36,8 @@ class LoggingNotifications(
         "deleteElection",
         "setCandidates",
         "castBallot",
-        "setEligibleVoters"
+        "setEligibleVoters",
+        "changePassword"
         )
 
 

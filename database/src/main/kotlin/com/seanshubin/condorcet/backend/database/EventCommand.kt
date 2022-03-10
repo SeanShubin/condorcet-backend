@@ -94,4 +94,10 @@ interface EventCommand {
             mutableDbCommands.setRankings(authority, confirmation, electionName, rankings)
         }
     }
+
+    data class SetPassword(val userName:String, val salt:String, val hash:String):EventCommand {
+        override fun exec(authority: String, mutableDbCommands: MutableDbCommands) {
+            mutableDbCommands.setPassword(authority, userName, salt, hash)
+        }
+    }
 }

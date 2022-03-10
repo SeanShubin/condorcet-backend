@@ -5,8 +5,8 @@ import com.seanshubin.condorcet.backend.domain.Role
 
 class MutableDbFake : MutableDbNotImplemented {
     val users = mutableListOf<User>()
-    override fun createUser(authority: String, name: String, email: String, salt: String, hash: String, role: Role) {
-        users.add(User(name, email, salt, hash, role))
+    override fun createUser(authority: String, userName: String, email: String, salt: String, hash: String, role: Role) {
+        users.add(User(userName, email, salt, hash, role))
     }
 
     override fun findUserByName(name: String): User =

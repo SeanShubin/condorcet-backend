@@ -145,3 +145,9 @@ select id, `when`, authority, type, text
 from event
 where id > 23
 order by id;
+insert into event (`when`, authority, type, text)
+values ('2022-03-10 17:44:01.658088', 'Alice', 'SetPassword', '{"userName":"Alice","salt":"13F7D3D7C224D1B50B32224CAE54C2D7","hash":"D1B89516283393E9597D2697F67EBD06027B10F2646C4785BD1E88A1F19DE1C3"}');
+select id, `when`, authority, type, text
+from event
+where id > 24
+order by id;

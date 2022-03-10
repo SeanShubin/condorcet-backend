@@ -81,7 +81,7 @@ class BaseService(
         requirePermission(accessToken, MANAGE_USERS)
         requireCanChangeRole(accessToken.userName, userName, role)
         if (role == PRIMARY_ROLE) {
-            mutableDbCommands.setRole(accessToken.userName, accessToken.userName, SECONDARY_ROLE)
+            mutableDbCommands.setRole(accessToken.userName, userName, SECONDARY_ROLE)
         }
         mutableDbCommands.setRole(accessToken.userName, userName, role)
     }
@@ -108,11 +108,11 @@ class BaseService(
         return list
     }
 
-    override fun addElection(accessToken: AccessToken, electionName: String) {
+    override fun addElection(accessToken: AccessToken, userName:String, electionName: String) {
         requirePermission(accessToken, USE_APPLICATION)
         val validElectionName = validateElectionName(electionName)
         requireElectionNameDoesNotExist(electionName)
-        mutableDbCommands.addElection(accessToken.userName, accessToken.userName, validElectionName)
+        mutableDbCommands.addElection(accessToken.userName, userName, validElectionName)
     }
 
     override fun launchElection(accessToken: AccessToken, electionName: String, allowEdit: Boolean) {
@@ -243,10 +243,10 @@ class BaseService(
         )
         val ballotSummary = searchBallotSummary(voterName, electionName)
         if (ballotSummary == null) {
-            castNewBallot(voterName, electionName, rankings)
+            castNewBallot(accessToken, voterName, electionName, rankings)
         } else {
             val confirmation = ballotSummary.confirmation
-            updateExistingBallot(voterName, electionName, confirmation, rankings)
+            updateExistingBallot(accessToken, electionName, confirmation, rankings)
         }
     }
 
@@ -314,6 +314,12 @@ class BaseService(
         requirePermission(accessToken, VIEW_APPLICATION)
         val eligibleVoters = mutableDbQueries.listVotersForElection(electionName)
         return eligibleVoters.contains(userName)
+    }
+
+    override fun changePassword(accessToken: AccessToken, userName: String, password: String) {
+        requireIsUser(accessToken, userName, "User '${accessToken.userName}' is not allowed to change password for user '$userName'")
+        val (salt, hash) = passwordUtil.createSaltAndHash(password)
+        mutableDbCommands.setPassword(accessToken.userName, userName, salt, hash)
     }
 
     private fun requireIsUser(accessToken: AccessToken, userName: String, message: String) {
@@ -419,7 +425,8 @@ class BaseService(
     }
 
     private fun castNewBallot(
-        voterName: String,
+        accessToken: AccessToken,
+        voterName:String,
         electionName: String,
         rankings: List<Ranking>
     ) {
@@ -427,7 +434,7 @@ class BaseService(
         val now = clock.instant()
         val confirmation = uniqueIdGenerator.uniqueId()
         mutableDbCommands.castBallot(
-            voterName,
+            accessToken.userName,
             voterName,
             electionName,
             effectiveRankings,
@@ -437,15 +444,15 @@ class BaseService(
     }
 
     private fun updateExistingBallot(
-        voterName: String,
+        accessToken: AccessToken,
         electionName: String,
         confirmation: String,
         rankings: List<Ranking>
     ) {
         val effectiveRankings = rankings.normalizeRankings()
         val now = clock.instant()
-        mutableDbCommands.setRankings(voterName, confirmation, electionName, effectiveRankings)
-        mutableDbCommands.updateWhenCast(voterName, confirmation, now)
+        mutableDbCommands.setRankings(accessToken.userName, confirmation, electionName, effectiveRankings)
+        mutableDbCommands.updateWhenCast(accessToken.userName, confirmation, now)
     }
 
     private fun requireElectionIsAllowingVotes(electionName: String) {

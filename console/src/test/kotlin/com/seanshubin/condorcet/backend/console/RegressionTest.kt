@@ -66,8 +66,8 @@ class RegressionTest {
             ),
             RemoveUser(userName = "Carol"),
             ListUsers,
-            AddElection(electionName = "Delete Me"),
-            AddElection(electionName = "Favorite Ice Cream Flavor"),
+            AddElection(userName = "Alice", electionName = "Delete Me"),
+            AddElection(userName = "Alice", electionName = "Favorite Ice Cream Flavor"),
             UpdateElection(
                 electionName = "Favorite Ice Cream Flavor",
                 newElectionName = "Favorite Ice Cream",
@@ -187,7 +187,8 @@ class RegressionTest {
             Tally(
                 electionName = "Favorite Ice Cream"
             ),
-            GetBallot(voterName = "Alice", electionName = "Favorite Ice Cream")
+            GetBallot(voterName = "Alice", electionName = "Favorite Ice Cream"),
+            ChangePassword(userName = "Alice", password = "new-alice-password")
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

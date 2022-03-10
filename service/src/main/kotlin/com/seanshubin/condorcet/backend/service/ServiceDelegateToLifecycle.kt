@@ -41,8 +41,8 @@ class ServiceDelegateToLifecycle(
     override fun listUsers(accessToken: AccessToken): List<UserNameRole> =
         withService { it.listUsers(accessToken) }
 
-    override fun addElection(accessToken: AccessToken, electionName: String) {
-        withService { it.addElection(accessToken, electionName) }
+    override fun addElection(accessToken: AccessToken, userName: String, electionName: String) {
+        withService { it.addElection(accessToken, userName, electionName) }
     }
 
     override fun launchElection(accessToken: AccessToken, electionName: String, allowEdit: Boolean) {
@@ -113,11 +113,11 @@ class ServiceDelegateToLifecycle(
     override fun tally(accessToken: AccessToken, electionName: String): Tally =
         withService { it.tally(accessToken, electionName) }
 
-    override fun listEligibility(accessToken: AccessToken, electionName:String): List<VoterEligibility> =
+    override fun listEligibility(accessToken: AccessToken, electionName: String): List<VoterEligibility> =
         withService { it.listEligibility(accessToken, electionName) }
 
-    override fun setEligibleVoters(accessToken: AccessToken, electionName: String, voterNames:List<String>) {
-        withService { it.setEligibleVoters(accessToken, electionName, voterNames)}
+    override fun setEligibleVoters(accessToken: AccessToken, electionName: String, voterNames: List<String>) {
+        withService { it.setEligibleVoters(accessToken, electionName, voterNames) }
     }
 
     override fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean =
@@ -125,6 +125,10 @@ class ServiceDelegateToLifecycle(
 
     override fun getBallot(accessToken: AccessToken, voterName: String, electionName: String): BallotSummary? =
         withService { it.getBallot(accessToken, voterName, electionName) }
+
+    override fun changePassword(accessToken: AccessToken, userName: String, password: String) {
+        withService { it.changePassword(accessToken, userName, password) }
+    }
 
     private fun <T> withService(f: (Service) -> T): T =
         eventConnectionLifecycle.withValue { eventConnection ->
