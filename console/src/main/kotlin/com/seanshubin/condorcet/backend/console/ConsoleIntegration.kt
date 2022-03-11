@@ -33,8 +33,9 @@ class ConsoleIntegration : Integration {
     override val sqlException: (String, String, SQLException) -> Unit = notifications::sqlException
     override val uniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator()
     override val clock: Clock = Clock.systemUTC()
-    private val secretsDir: Path = Paths.get("secrets")
-    override val configurationPath: Path = Paths.get("configuration.json")
+    private val configurationDir = Paths.get("local-config")
+    private val secretsDir: Path = configurationDir.resolve("secrets")
+    override val configurationPath: Path = configurationDir.resolve("configuration.json")
     override val secretsConfigurationPath:Path = secretsDir.resolve("secret-configuration.json")
     override val whereKeysAreStored: Path = secretsDir
     override val random: Random = Random.Default
