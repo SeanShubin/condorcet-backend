@@ -81,7 +81,7 @@ class BaseService(
         requirePermission(accessToken, MANAGE_USERS)
         requireCanChangeRole(accessToken.userName, userName, role)
         if (role == PRIMARY_ROLE) {
-            mutableDbCommands.setRole(accessToken.userName, userName, SECONDARY_ROLE)
+            mutableDbCommands.setRole(accessToken.userName, accessToken.userName, SECONDARY_ROLE)
         }
         mutableDbCommands.setRole(accessToken.userName, userName, role)
     }

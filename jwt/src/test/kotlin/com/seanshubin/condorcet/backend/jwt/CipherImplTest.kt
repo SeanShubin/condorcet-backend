@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.jwt
 
 import com.auth0.jwt.exceptions.SignatureVerificationException
+import com.auth0.jwt.exceptions.TokenExpiredException
 import com.seanshubin.condorcet.backend.string.util.HexFormat.fromHexToBytes
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -9,29 +10,55 @@ import kotlin.test.assertFailsWith
 class CipherImplTest {
     @Test
     fun roundTrip() {
-        val cipher = createCipher(oldPublicKey,oldPrivateKey)
+        val tester = createTester()
         val original = mapOf("foo" to "bar")
-        val encoded = cipher.encode(original)
-        val decoded = cipher.decode(encoded)
+        val encoded = tester.cipher.encode(original, ClockStub.minutes(1))
+        val decoded = tester.cipher.decode(encoded)
         assertEquals(original, decoded)
     }
 
     @Test
-    fun willNotDecodeUsingNewKeys() {
-        val oldCipher = createCipher(oldPublicKey,oldPrivateKey)
-        val newCipher = createCipher(newPublicKey, newPrivateKey)
+    fun notExpiredYet(){
+        val tester = createTester()
         val original = mapOf("foo" to "bar")
-        val encoded = oldCipher.encode(original)
-        assertFailsWith<SignatureVerificationException> {
-            newCipher.decode(encoded)
+        val encoded = tester.cipher.encode(original, ClockStub.minutes(2))
+        tester.clock.passTime(ClockStub.minutes(1))
+        val decoded = tester.cipher.decode(encoded)
+        assertEquals(original, decoded)
+    }
+
+    @Test
+    fun expired(){
+        val tester = createTester()
+        val original = mapOf("foo" to "bar")
+        val encoded = tester.cipher.encode(original, ClockStub.minutes(2))
+        tester.clock.passTime(ClockStub.minutes(3))
+        assertFailsWith<TokenExpiredException> {
+            tester.cipher.decode(encoded)
         }
     }
 
-    private fun createCipher(publicKeyHex:String, privateKeyHex:String):Cipher {
+    @Test
+    fun willNotDecodeUsingNewKeys() {
+        val oldTester = createTester(oldPublicKey,oldPrivateKey)
+        val newTester = createTester(newPublicKey,newPrivateKey)
+        val original = mapOf("foo" to "bar")
+        val encoded = oldTester.cipher.encode(original, ClockStub.minutes(1))
+        assertFailsWith<SignatureVerificationException> {
+            newTester.cipher.decode(encoded)
+        }
+    }
+
+    private fun createTester():Tester = createTester(oldPublicKey, oldPrivateKey)
+
+    private fun createTester(publicKeyHex:String, privateKeyHex:String):Tester =
+        Tester(publicKeyHex, privateKeyHex)
+
+    class Tester(publicKeyHex:String, privateKeyHex:String) {
         val keyStore = KeyStoreStub(publicKeyHex, privateKeyHex)
         val algorithmFactory = AlgorithmFactoryImpl(keyStore)
-        val cipher = CipherImpl(algorithmFactory)
-        return cipher
+        val clock = ClockStub()
+        val cipher = CipherImpl(algorithmFactory, clock)
     }
 
     class KeyStoreStub(val publicKeyHex:String, val privateKeyHex:String) : KeyStore {

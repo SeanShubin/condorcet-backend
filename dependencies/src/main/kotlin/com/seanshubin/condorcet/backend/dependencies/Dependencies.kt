@@ -25,11 +25,13 @@ import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 import java.sql.SQLException
+import java.time.Clock
 
 class Dependencies(
     args:Array<String>,
     integration: Integration
 ) {
+    private val clock: Clock = integration.clock
     private val backupFilePath:Path = integration.backupFilePath
     private val configurationPath: Path = integration.configurationPath
     private val secretsConfigurationPath: Path = integration.secretsConfigurationPath
@@ -94,7 +96,7 @@ class Dependencies(
     private val whereKeysAreStored: Path = integration.whereKeysAreStored
     private val keyStore:KeyStore = KeyStoreImpl(files, charset, whereKeysAreStored)
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(keyStore)
-    private val cipher: Cipher = CipherImpl(algorithmFactory)
+    private val cipher: Cipher = CipherImpl(algorithmFactory, clock)
     val handler: Handler = ApiHandler(
         schemaCreator,
         serviceCommandParser,

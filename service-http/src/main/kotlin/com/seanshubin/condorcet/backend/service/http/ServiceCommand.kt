@@ -13,7 +13,9 @@ import com.seanshubin.condorcet.backend.service.RefreshToken
 import com.seanshubin.condorcet.backend.service.ServiceException
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import com.seanshubin.condorcet.backend.service.Tokens
+import java.time.Duration
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 interface ServiceCommand {
     fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue
@@ -418,6 +420,8 @@ interface ServiceCommand {
     }
 
     companion object {
+        val refreshTokenDuration = Duration.of(10, ChronoUnit.MINUTES)
+        val accessTokenDuration = Duration.of(1, ChronoUnit.MINUTES)
         fun UpdateElection.toElectionConfig(): ElectionUpdates =
             ElectionUpdates(
                 newElectionName,
@@ -447,12 +451,13 @@ interface ServiceCommand {
         }
 
         private fun tokenResponse(tokens: Tokens, permissions: List<Permission>, cipher: Cipher): ResponseValue {
-            val refreshTokenString = cipher.encode(mapOf("userName" to tokens.refreshToken.userName))
+            val refreshTokenString = cipher.encode(mapOf("userName" to tokens.refreshToken.userName), refreshTokenDuration)
             val accessTokenString = cipher.encode(
                 mapOf(
                     "userName" to tokens.accessToken.userName,
                     "role" to tokens.accessToken.role.name
-                )
+                ),
+                accessTokenDuration
             )
             val tokenResponse = mapOf(
                 "accessToken" to accessTokenString,
