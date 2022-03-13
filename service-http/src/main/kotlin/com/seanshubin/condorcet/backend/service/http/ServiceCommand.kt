@@ -60,6 +60,19 @@ interface ServiceCommand {
         }
     }
 
+    data class AuthenticateWithToken(val bearerToken: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
+            val accessToken = bearerTokenToAccessToken(bearerToken, environment.cipher)
+            return if (accessToken == null) {
+                responseBuilder().unauthorized("No valid access token").build()
+            } else {
+                val tokens = environment.service.authenticateWithToken(accessToken)
+                val permissions = environment.service.permissionsForRole(tokens.accessToken.role)
+                tokenResponse(tokens, permissions, environment.cipher)
+            }
+        }
+    }
+
     object Logout : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             return responseBuilder().clearRefreshToken().build()
@@ -84,7 +97,7 @@ interface ServiceCommand {
             }
     }
 
-    data class AddElection(val userName:String, val electionName: String) : ServiceCommand {
+    data class AddElection(val userName: String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
                 environment.service.addElection(accessToken, userName, electionName)
@@ -443,6 +456,10 @@ interface ServiceCommand {
 
         private fun RequestValue.accessToken(cipher: Cipher): AccessToken? {
             val bearerToken = bearerToken() ?: return null
+            return bearerTokenToAccessToken(bearerToken, cipher)
+        }
+
+        private fun bearerTokenToAccessToken(bearerToken: String, cipher: Cipher): AccessToken? {
             val decoded = cipher.decode(bearerToken)
             val userName = decoded["userName"] ?: return null
             val roleName = decoded["role"] ?: return null
@@ -451,7 +468,8 @@ interface ServiceCommand {
         }
 
         private fun tokenResponse(tokens: Tokens, permissions: List<Permission>, cipher: Cipher): ResponseValue {
-            val refreshTokenString = cipher.encode(mapOf("userName" to tokens.refreshToken.userName), refreshTokenDuration)
+            val refreshTokenString =
+                cipher.encode(mapOf("userName" to tokens.refreshToken.userName), refreshTokenDuration)
             val accessTokenString = cipher.encode(
                 mapOf(
                     "userName" to tokens.accessToken.userName,

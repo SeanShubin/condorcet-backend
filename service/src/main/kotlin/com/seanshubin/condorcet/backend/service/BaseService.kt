@@ -74,6 +74,11 @@ class BaseService(
         return createTokens(user)
     }
 
+    override fun authenticateWithToken(accessToken: AccessToken): Tokens {
+        val user = findUser(accessToken.userName)
+        return createTokens(user)
+    }
+
     override fun permissionsForRole(role: Role): List<Permission> =
         mutableDbQueries.listPermissions(role)
 

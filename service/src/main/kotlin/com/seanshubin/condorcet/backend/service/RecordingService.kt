@@ -35,9 +35,9 @@ class RecordingService(
     override fun register(userName: String, email: String, password: String): Tokens {
         val requestString =
             "${userName.toKotlinString()}, ${email.toKotlinString()}, ${password.toKotlinString()}"
-        serviceRequestEvent("register",requestString)
+        serviceRequestEvent("register", requestString)
         val response = service.register(userName, email, password)
-        serviceResponseEvent("register",requestString, response.toKotlinString())
+        serviceResponseEvent("register", requestString, response.toKotlinString())
         return response
     }
 
@@ -46,6 +46,14 @@ class RecordingService(
         serviceRequestEvent("authenticate", requestString)
         val response = service.authenticate(nameOrEmail, password)
         serviceResponseEvent("authenticate", requestString, response.toKotlinString())
+        return response
+    }
+
+    override fun authenticateWithToken(accessToken: AccessToken): Tokens {
+        val requestString = accessToken.toKotlinString()
+        serviceRequestEvent("authenticateWithToken", requestString)
+        val response = service.authenticateWithToken(accessToken)
+        serviceResponseEvent("authenticateWithToken", requestString, response.toKotlinString())
         return response
     }
 
@@ -82,7 +90,7 @@ class RecordingService(
         return response
     }
 
-    override fun addElection(accessToken: AccessToken, userName:String, electionName: String) {
+    override fun addElection(accessToken: AccessToken, userName: String, electionName: String) {
         val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
         serviceRequestEvent("addElection", requestString)
         val response = service.addElection(accessToken, userName, electionName)

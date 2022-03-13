@@ -22,6 +22,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "Register" -> JsonMappers.parse<ServiceCommand.Register>(json)
             "Logout" -> ServiceCommand.Logout
             "Authenticate" -> JsonMappers.parse<ServiceCommand.Authenticate>(json)
+            "AuthenticateWithToken" -> JsonMappers.parse<ServiceCommand.AuthenticateWithToken>(json)
             "SetRole" -> JsonMappers.parse<ServiceCommand.SetRole>(json)
             "RemoveUser" -> JsonMappers.parse<ServiceCommand.RemoveUser>(json)
             "ListUsers" -> ServiceCommand.ListUsers

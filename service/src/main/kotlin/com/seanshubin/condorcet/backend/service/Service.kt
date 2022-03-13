@@ -9,6 +9,7 @@ interface Service {
     fun refresh(refreshToken: RefreshToken): Tokens
     fun register(userName: String, email: String, password: String): Tokens
     fun authenticate(nameOrEmail: String, password: String): Tokens
+    fun authenticateWithToken(accessToken:AccessToken): Tokens
     fun permissionsForRole(role:Role):List<Permission>
     fun setRole(accessToken: AccessToken, userName: String, role: Role)
     fun removeUser(accessToken: AccessToken, userName: String)
