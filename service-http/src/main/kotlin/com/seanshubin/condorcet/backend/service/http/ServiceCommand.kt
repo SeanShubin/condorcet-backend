@@ -364,8 +364,12 @@ interface ServiceCommand {
         val refreshTokenString: String? = null,
         val contentType: String? = null,
         val body: String? = null,
-        val shouldClearRefreshToken: Boolean = false
+        val shouldClearRefreshToken: Boolean = false,
+        val cacheControlMaxAgeSeconds: Long? = null
     ) {
+        fun cacheControlMaxAgeSeconds(cacheControlMaxAgeSeconds:Long):ResponseBuilder =
+            copy(cacheControlMaxAgeSeconds = cacheControlMaxAgeSeconds)
+
         fun refreshToken(refreshTokenString: String): ResponseBuilder {
             if (this.refreshTokenString != null) throw RuntimeException("refreshToken already set")
             return copy(refreshTokenString = refreshTokenString)
@@ -396,7 +400,8 @@ interface ServiceCommand {
                 createRefreshTokenCookieList(refreshTokenString)
             }
             val contentTypeHeaderList = createContentTypeHeaderList(contentType)
-            val headers = HeaderList(contentTypeHeaderList + refreshTokenCookieList.map { it.toHeader() })
+            val cacheControlMaxAgeHeaderList = createCacheControlHeaderList(cacheControlMaxAgeSeconds)
+            val headers = HeaderList(contentTypeHeaderList + cacheControlMaxAgeHeaderList + refreshTokenCookieList.map { it.toHeader() })
             return ResponseValue(status, body, headers)
         }
 
@@ -407,8 +412,18 @@ interface ServiceCommand {
                 listOf(createContentTypeHeader(contentType))
             }
 
+        private fun createCacheControlHeaderList(maxAgeSeconds:Long?): List<Header> =
+            if (maxAgeSeconds == null) {
+                emptyList()
+            } else {
+                listOf(createCacheControlHeader(maxAgeSeconds))
+            }
+
         private fun createContentTypeHeader(contentType: String): Header =
             Header("Content-Type", contentType)
+
+        private fun createCacheControlHeader(maxAgeSeconds:Long): Header =
+            Header("Cache-Control", maxAgeSeconds.toString())
 
         private fun createRefreshTokenCookie(refreshTokenString: String): SetCookie =
             SetCookie("Refresh", refreshTokenString, httpOnly = true)
@@ -470,6 +485,7 @@ interface ServiceCommand {
         private fun tokenResponse(tokens: Tokens, permissions: List<Permission>, cipher: Cipher): ResponseValue {
             val refreshTokenString =
                 cipher.encode(mapOf("userName" to tokens.refreshToken.userName), refreshTokenDuration)
+            val cacheControlMaxAgeSeconds = refreshTokenDuration.seconds
             val accessTokenString = cipher.encode(
                 mapOf(
                     "userName" to tokens.accessToken.userName,
@@ -483,7 +499,11 @@ interface ServiceCommand {
                 "role" to tokens.accessToken.role.name,
                 "permissions" to permissions
             )
-            return responseBuilder().refreshToken(refreshTokenString).json(tokenResponse).build()
+            return responseBuilder()
+                .cacheControlMaxAgeSeconds(cacheControlMaxAgeSeconds)
+                .refreshToken(refreshTokenString)
+                .json(tokenResponse)
+                .build()
         }
 
         private fun responseBuilder(): ResponseBuilder = ResponseBuilder()
