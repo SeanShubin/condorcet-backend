@@ -91,7 +91,7 @@ class RecordingService(
     }
 
     override fun addElection(accessToken: AccessToken, userName: String, electionName: String) {
-        val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}"
+        val requestString = "${accessToken.toKotlinString()}, ${userName.toKotlinString()}, ${electionName.toKotlinString()}"
         serviceRequestEvent("addElection", requestString)
         val response = service.addElection(accessToken, userName, electionName)
         serviceResponseEvent("addElection", requestString, response.toKotlinString())

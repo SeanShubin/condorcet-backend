@@ -2,6 +2,8 @@ package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Role.*
+import com.seanshubin.condorcet.backend.domain.Permission.*
+import java.time.Instant
 
 interface Service {
     fun synchronize()

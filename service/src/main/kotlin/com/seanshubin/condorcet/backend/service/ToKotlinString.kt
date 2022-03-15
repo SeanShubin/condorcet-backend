@@ -120,6 +120,7 @@ object ToKotlinString {
 
     fun Tally.toKotlinString(): String =
         "Tally(" +
+                "${electionName.toKotlinString()}, " +
                 "${candidateNames.map { it.toKotlinString() }.toKotlinString()}, " +
                 "${secretBallot.toKotlinString()}, " +
                 "${ballots.map { it.toKotlinString() }.toKotlinString()}, " +
