@@ -1,4 +1,7 @@
 digraph detangled {
+   node [color=cornflowerblue fontcolor=cornflowerblue]
+   edge [color=cornflowerblue]
+   bgcolor=black
   "service" -> "domain";
   "domain" -> "database";
   "database" -> "orm library";
