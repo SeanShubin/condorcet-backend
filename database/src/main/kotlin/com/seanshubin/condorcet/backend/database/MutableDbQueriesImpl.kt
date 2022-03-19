@@ -64,18 +64,18 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
         query(::createRanking, "ranking-select-by-user-election", voterName, electionName)
 
     override fun searchBallot(voterName: String, electionName: String): BallotSummary? {
-        return queryZeroOrOneRow(this::createBallot, "ballot-select-by-user-election", voterName, electionName)
+        return queryZeroOrOneRow(this::attachRankingsToBallot, "ballot-select-by-user-election", voterName, electionName)
     }
 
     override fun listRankings(electionName: String): List<VoterElectionCandidateRank> =
         query(::createVoterElectionRankingRow, "ranking-by-election", electionName)
 
     override fun listBallots(electionName: String): List<RevealedBallot> =
-        queryJoin(
+        queryParentChild(
             ::createBallotSummary,
             ::createRanking,
-            ::createBallotRankingKey,
-            ::createBallot,
+            ::createBallotKey,
+            ::attachRankingsToBallot,
             "ranking-select-by-election",
             electionName
         )
@@ -114,7 +114,7 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
         )
     }
 
-    private fun createBallot(resultSet: ResultSet): BallotSummary {
+    private fun attachRankingsToBallot(resultSet: ResultSet): BallotSummary {
         val userName:String = resultSet.getString("user_name")
         val electionName:String = resultSet.getString("election_name")
         val confirmation:String = resultSet.getString("confirmation")
@@ -150,10 +150,10 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
             resultSet.getTimestamp("when_cast").toInstant()
         )
 
-    private fun createBallotRankingKey(resultSet: ResultSet): Int =
+    private fun createBallotKey(resultSet: ResultSet): Int =
         resultSet.getInt("ballot.id")
 
-    private fun createBallot(ballotSummary: BallotSummary, rankingList: List<Ranking>): RevealedBallot =
+    private fun attachRankingsToBallot(ballotSummary: BallotSummary, rankingList: List<Ranking>): RevealedBallot =
         RevealedBallot(
             ballotSummary.voterName,
             ballotSummary.electionName,

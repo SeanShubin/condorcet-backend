@@ -32,7 +32,7 @@ interface GenericDatabase {
         name:String,
         vararg parameters:Any?)
 
-    fun <ParentType, ChildType, KeyType, ResultType> queryJoin(
+    fun <ParentType, ChildType, KeyType, ResultType> queryParentChild(
         parentFunction: (ResultSet) -> ParentType,
         childFunction: (ResultSet) -> ChildType,
         keyFunction: (ResultSet) -> KeyType,

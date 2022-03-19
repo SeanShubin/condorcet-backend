@@ -120,7 +120,7 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun <ParentType, ChildType, KeyType, ResultType> queryJoin(
+    override fun <ParentType, ChildType, KeyType, ResultType> queryParentChild(
         parentFunction: (ResultSet) -> ParentType,
         childFunction: (ResultSet) -> ChildType,
         keyFunction: (ResultSet) -> KeyType,
