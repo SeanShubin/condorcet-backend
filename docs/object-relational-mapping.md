@@ -310,7 +310,7 @@ For each row, I grab the parent and the child,
 group by the key, and then compose a parent with a list of children.
 
 ```kotlin
-    override fun <ParentType, ChildType, KeyType, ResultType> queryParentChild(
+override fun <ParentType, ChildType, KeyType, ResultType> queryParentChild(
     parentFunction: (ResultSet) -> ParentType,
     childFunction: (ResultSet) -> ChildType,
     parentKeyFunction: (ResultSet) -> KeyType,
