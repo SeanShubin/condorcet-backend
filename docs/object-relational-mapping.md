@@ -212,7 +212,8 @@ interface MutableDbQueries : GenericDatabase {
 If we follow searchElectionByName down to the database implementation,
 we see all we are doing in kotlin code is choosing the name of the query,
 and the order of the parameters.
-We still have not exposed the fact that we are using a relational database or sql.
+Notice that in candidateCount we use the election name rather than the election id,
+so still have not exposed the fact that we are using a relational database or sql.
 
 database module
 ```kotlin
