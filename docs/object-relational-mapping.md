@@ -383,7 +383,7 @@ I value libraries that solve problems I would have had without them.
 It is not impressive for a library to solve a problem created by that library.
 I would rather not have the problem in the first place.
 
-Why this structure?
+So why do I reject typical orm structure in favor of this one?
 
 ![](typical-orm.svg) ![](my-orm.svg)
 
