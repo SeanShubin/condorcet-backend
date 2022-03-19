@@ -310,17 +310,17 @@ For each row, I grab the parent and the child,
 group by the key, and then compose a parent with a list of children.
 
 ```kotlin
-override fun <ParentType, ChildType, KeyType, ResultType> queryParentChild(
+    override fun <ParentType, ChildType, ParentKeyType, ResultType> queryParentChild(
     parentFunction: (ResultSet) -> ParentType,
     childFunction: (ResultSet) -> ChildType,
-    parentKeyFunction: (ResultSet) -> KeyType,
+    parentKeyFunction: (ResultSet) -> ParentKeyType,
     composeFunction: (ParentType, List<ChildType>) -> ResultType,
     name: String,
     vararg parameters: Any?
 ): List<ResultType> {
     val code = queryLoader.load(name)
 
-    data class Row(val parent: ParentType, val child: ChildType, val key: KeyType)
+    data class Row(val parent: ParentType, val child: ChildType, val key: ParentKeyType)
 
     val allRows = connection.queryList(name, code, *parameters) {
         Row(parentFunction(it), childFunction(it), parentKeyFunction(it))
