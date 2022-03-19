@@ -305,7 +305,7 @@ For more complicated structures,
 I use generic data types to compose the strucure,
 and creator functions for the specific instances.
 
-Here is the generic code for handling the parent/child structure.
+Here is generic code for handling a parent/child structure.
 For each row, I grab the parent and the child, 
 group by the key, and then compose a parent with a list of children.
 
