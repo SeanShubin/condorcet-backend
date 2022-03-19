@@ -424,7 +424,7 @@ I would rather not have the problem in the first place.
 
 What about being able to change the underlying database as in other ORM strategies?
 
-While that is often touted as the advantage of some ORM tools,
+While that is often touted as a primary advantage of some ORM tools,
 I have never seen or heard of that being done, not once,
 so I suspect the need for this somewhere between non-existent and rare.
 If we are considering changing to another RELATIONAL database,
