@@ -17,6 +17,17 @@ service module
 data class RefreshToken(val userName: String)
 data class AccessToken(val userName: String, val role: Role)
 data class Tokens(val refreshToken: RefreshToken, val accessToken: AccessToken)
+data class ElectionDetail(
+    val ownerName: String,
+    val electionName: String,
+    val candidateCount: Int,
+    val voterCount:Int,
+    val secretBallot: Boolean = true,
+    val noVotingBefore: Instant? = null,
+    val noVotingAfter: Instant? = null,
+    val allowEdit: Boolean = true,
+    val allowVote: Boolean = false,
+)
 interface Service {
     fun register(userName: String, email: String, password: String): Tokens
     fun setRole(accessToken: AccessToken, userName: String, role: Role)
