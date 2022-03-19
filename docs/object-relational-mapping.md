@@ -390,6 +390,6 @@ So why do I reject typical orm structure in favor of this one?
 The main problem I have with typical orm structures is where they draw the abstraction boundary.
 The domain layer should not cater to the database layer,
 the database layer should be adapted to suit the domain layer.
-This does mean the service layer has to deal with the database layer instead of the domain,
+This does mean the service layer has to deal with the database layer instead of the domain layer having to deal with the database layer,
 but the service layer is glue, it's the service layers job to connect things together.
 The domain layer should be focused on modeling the domain.
