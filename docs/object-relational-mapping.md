@@ -220,9 +220,6 @@ These functions usually only look at the current row of the ResultSet,
 and also handle any needed type conversions,
 such as from a java.sql.Timestamp to an java.time.Instant
 
-This way the orm code can remain generic,
-don't need to specify domain data types.
-
 database module
 ```kotlin
 class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
