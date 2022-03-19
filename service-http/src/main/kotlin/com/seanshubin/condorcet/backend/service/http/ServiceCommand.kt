@@ -448,7 +448,7 @@ interface ServiceCommand {
     }
 
     companion object {
-        val refreshTokenDuration = Duration.of(10, ChronoUnit.MINUTES)
+        val refreshTokenDuration = Duration.of(12, ChronoUnit.HOURS)
         val accessTokenDuration = Duration.of(1, ChronoUnit.MINUTES)
         fun UpdateElection.toElectionConfig(): ElectionUpdates =
             ElectionUpdates(
