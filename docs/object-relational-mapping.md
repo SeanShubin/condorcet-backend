@@ -248,6 +248,40 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     }
 }
 ```
+
+Here are the corresponding sql queries, in separate files
+
+election-select-by-name.sql
+```sql
+select user.name as owner,
+       election.name,
+       election.secret_ballot,
+       election.no_voting_before,
+       election.no_voting_after,
+       election.allow_edit,
+       election.allow_vote
+from election
+         inner join user on election.owner_id = user.id
+where election.name = ?
+```
+
+election-count.sql
+```sql
+select count(id)
+from election
+```
+
+candidate-count-by-election.sql
+```sql
+select
+       count(candidate.id)
+from candidate
+    inner join election
+        on candidate.election_id = election.id
+where
+      election.name = ?
+```
+
 By the time we start talking to JDBC,
 the data types are generic,
 so from here we are not coupled to the domain.
