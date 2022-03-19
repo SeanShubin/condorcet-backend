@@ -50,7 +50,7 @@ Implementation of addElection, in the service module
 ```
 
 The contract of the database does not even expose database ids.
-Also, the service is not just a 1:1 pass-through to the database.
+Also, the service is not a 1:1 pass-through to the database.
 The service often calls many database commands, or composes many database queries.
 
 database module
@@ -215,7 +215,7 @@ and the order of the parameters.
 Notice that in candidateCount we use the election name rather than the election id,
 so still have not exposed the fact that we are using a relational database or sql.
 
-For queries, I just write a mapping function from a ResultSet to a domain object.
+For queries, I write a mapping function from a ResultSet to a domain object.
 These functions usually only look at the current row of the ResultSet,
 and also handle any needed type conversions,
 such as from a java.sql.Timestamp to an java.time.Instant
