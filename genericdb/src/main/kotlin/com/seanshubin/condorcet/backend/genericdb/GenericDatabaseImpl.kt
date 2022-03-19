@@ -94,8 +94,8 @@ class GenericDatabaseImpl(
     override fun <ParentType, ChildType, KeyType, ResultType> queryParentChild(
         parentFunction: (ResultSet) -> ParentType,
         childFunction: (ResultSet) -> ChildType,
-        keyFunction: (ResultSet) -> KeyType,
-        mergeFunction: (ParentType, List<ChildType>) -> ResultType,
+        parentKeyFunction: (ResultSet) -> KeyType,
+        composeFunction: (ParentType, List<ChildType>) -> ResultType,
         name: String,
         vararg parameters: Any?
     ): List<ResultType> {
@@ -104,13 +104,13 @@ class GenericDatabaseImpl(
         data class Row(val parent: ParentType, val child: ChildType, val key: KeyType)
 
         val allRows = connection.queryList(name, code, *parameters) {
-            Row(parentFunction(it), childFunction(it), keyFunction(it))
+            Row(parentFunction(it), childFunction(it), parentKeyFunction(it))
         }
         val grouped = allRows.groupBy { it.key }
         val results = grouped.map { (key, rows) ->
             val parent = rows[0].parent
             val children = rows.map { it.child }
-            mergeFunction(parent, children)
+            composeFunction(parent, children)
         }
         return results
     }

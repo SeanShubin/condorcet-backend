@@ -35,8 +35,8 @@ interface GenericDatabase {
     fun <ParentType, ChildType, KeyType, ResultType> queryParentChild(
         parentFunction: (ResultSet) -> ParentType,
         childFunction: (ResultSet) -> ChildType,
-        keyFunction: (ResultSet) -> KeyType,
-        mergeFunction: (ParentType, List<ChildType>) -> ResultType,
+        parentKeyFunction: (ResultSet) -> KeyType,
+        composeFunction: (ParentType, List<ChildType>) -> ResultType,
         name: String,
         vararg parameters: Any?
     ): List<ResultType>

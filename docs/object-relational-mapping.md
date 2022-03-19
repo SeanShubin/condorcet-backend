@@ -41,12 +41,12 @@ The service delegates to the database to modify the database
 
 Implementation of addElection, in the service module
 ```kotlin
-    override fun addElection(accessToken: AccessToken, userName:String, electionName: String) {
-        requirePermission(accessToken, USE_APPLICATION)
-        val validElectionName = validateElectionName(electionName)
-        requireElectionNameDoesNotExist(electionName)
-        mutableDbCommands.addElection(accessToken.userName, userName, validElectionName)
-    }
+override fun addElection(accessToken: AccessToken, userName:String, electionName: String) {
+    requirePermission(accessToken, USE_APPLICATION)
+    val validElectionName = validateElectionName(electionName)
+    requireElectionNameDoesNotExist(electionName)
+    mutableDbCommands.addElection(accessToken.userName, userName, validElectionName)
+}
 ```
 
 The contract of the database does not even expose database ids.
@@ -311,28 +311,28 @@ group by the key, and then compose a parent with a list of children.
 
 ```kotlin
     override fun <ParentType, ChildType, KeyType, ResultType> queryParentChild(
-        parentFunction: (ResultSet) -> ParentType,
-        childFunction: (ResultSet) -> ChildType,
-        keyFunction: (ResultSet) -> KeyType,
-        mergeFunction: (ParentType, List<ChildType>) -> ResultType,
-        name: String,
-        vararg parameters: Any?
-    ): List<ResultType> {
-        val code = queryLoader.load(name)
+    parentFunction: (ResultSet) -> ParentType,
+    childFunction: (ResultSet) -> ChildType,
+    parentKeyFunction: (ResultSet) -> KeyType,
+    composeFunction: (ParentType, List<ChildType>) -> ResultType,
+    name: String,
+    vararg parameters: Any?
+): List<ResultType> {
+    val code = queryLoader.load(name)
 
-        data class Row(val parent: ParentType, val child: ChildType, val key: KeyType)
+    data class Row(val parent: ParentType, val child: ChildType, val key: KeyType)
 
-        val allRows = connection.queryList(name, code, *parameters) {
-            Row(parentFunction(it), childFunction(it), keyFunction(it))
-        }
-        val grouped = allRows.groupBy { it.key }
-        val results = grouped.map { (key, rows) ->
-            val parent = rows[0].parent
-            val children = rows.map { it.child }
-            mergeFunction(parent, children)
-        }
-        return results
+    val allRows = connection.queryList(name, code, *parameters) {
+        Row(parentFunction(it), childFunction(it), parentKeyFunction(it))
     }
+    val grouped = allRows.groupBy { it.key }
+    val results = grouped.map { (key, rows) ->
+        val parent = rows[0].parent
+        val children = rows.map { it.child }
+        composeFunction(parent, children)
+    }
+    return results
+}
 ```
 
 And here is the invocation, along with the creator functions.
