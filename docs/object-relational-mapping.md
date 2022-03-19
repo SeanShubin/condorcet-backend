@@ -249,7 +249,10 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
 }
 ```
 
-Here are the corresponding sql queries, in separate files
+Here are the corresponding sql queries, in separate files.
+My IDE connects .sql files to the database schema,
+so I have autocomplete, syntax highlighting,
+and I get visual indicators when I type a name wrong.
 
 election-select-by-name.sql
 ```sql
