@@ -4,6 +4,7 @@ import com.seanshubin.condorcet.backend.string.util.RowStyleTableFormatter
 import com.seanshubin.condorcet.backend.string.util.TableFormatter.Companion.plainString
 
 data class GenericTable(
+    val name:String,
     val queryString: String,
     val columnNames: List<String>,
     val rows: List<List<Any>>

@@ -1,5 +1,8 @@
 # Condorcet Backend
 
+## Style Guide
+[Style Guide](docs/style-guide.md)
+
 ## Prerequisites
 
 Make sure you have a mysql database running configured with the settings listed in

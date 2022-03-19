@@ -33,6 +33,9 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     override fun userCount(): Int =
         queryExactlyOneInt("user-count")
 
+    override fun searchElectionByName(name: String): ElectionSummary? =
+        queryZeroOrOneRow(::createElectionSummary, "election-select-by-name", name)
+
     override fun electionCount(): Int =
         queryExactlyOneInt("election-count")
 
@@ -53,10 +56,6 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     }
 
     override fun lastSynced(): Int? = queryZeroOrOneInt("variable-select-last-synced")
-
-    override fun searchElectionByName(name: String): ElectionSummary? {
-        return queryZeroOrOneRow(::createElectionSummary, "election-select-by-name", name)
-    }
 
     override fun listCandidates(electionName: String): List<String> =
         query(::createName, "candidate-select-by-election", electionName)

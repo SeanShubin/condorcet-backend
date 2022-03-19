@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.string.util
 
 import com.seanshubin.condorcet.backend.string.util.TableFormatter.Companion.escapeString
+import com.seanshubin.condorcet.backend.string.util.TableFormatter.Companion.plainString
 import com.seanshubin.condorcet.backend.string.util.TableFormatter.Companion.toBufferedReader
 import com.seanshubin.condorcet.backend.string.util.TableFormatter.Companion.transpose
 import com.seanshubin.condorcet.backend.string.util.TableFormatter.Justify.Left
@@ -242,6 +243,18 @@ data class RowStyleTableFormatter(
                 right = "+",
                 separator = "+"
             )
+        )
+        val markdown = RowStyleTableFormatter(
+            cellToString = plainString,
+            content = RowStyle(
+                left = "| ",
+                middle = " ",
+                right = " |",
+                separator = " | "
+            ),
+            top = null,
+            bottom = null,
+            separator = null
         )
         val minimal = RowStyleTableFormatter(
             cellToString = escapeString,

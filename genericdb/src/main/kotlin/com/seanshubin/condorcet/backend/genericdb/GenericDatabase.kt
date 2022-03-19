@@ -55,7 +55,7 @@ interface GenericDatabase {
     fun tableNames(schema: Schema): List<String>
     fun tableData(schema: Schema, name: String): GenericTable
     fun debugTableData(schema: Schema, tableName: String): GenericTable
-    fun debugQuery(sql: String)
+    fun debugQuery(name:String, sql: String)
     fun purgeDatabase(name: String)
     fun createDatabase(name: String)
     fun useDatabase(name: String)

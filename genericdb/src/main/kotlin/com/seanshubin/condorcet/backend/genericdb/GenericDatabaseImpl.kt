@@ -1,6 +1,5 @@
 package com.seanshubin.condorcet.backend.genericdb
 
-import com.seanshubin.condorcet.backend.genericdb.ConnectionWrapper.Companion.createInt
 import java.sql.ResultSet
 
 class GenericDatabaseImpl(
@@ -116,8 +115,8 @@ class GenericDatabaseImpl(
         return results
     }
 
-    override fun debugQuery(sql: String) {
-        connection.debugQuery(sql)
+    override fun debugQuery(name:String, sql: String) {
+        connection.debugQuery(name, sql)
     }
 
     override fun purgeDatabase(name: String) {
@@ -139,4 +138,6 @@ class GenericDatabaseImpl(
         val sql = "use $name"
         connection.update("useDatabase('$name')", sql)
     }
+
+    private fun createInt(resultSet: ResultSet): Int = resultSet.getInt(1)
 }

@@ -78,3 +78,8 @@ object MutableDbSchema : Schema {
     )
     override val initializeQueryName: String? = "state-db-initialize"
 }
+/*
+DomainObject(a,b,c )
+DatabaseTable(a,b)
+
+ */

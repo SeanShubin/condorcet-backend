@@ -7,7 +7,7 @@ import java.time.Instant
 class ConnectionWrapper(
     private val connection: Connection,
     private val sqlEvent: (String) -> Unit,
-    private val sqlException:(String, String, SQLException) -> Unit
+    private val sqlException: (String, String, SQLException) -> Unit
 ) : AutoCloseable {
     fun <T> query(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> T): T {
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
@@ -19,7 +19,7 @@ class ConnectionWrapper(
 
     fun <T> queryList(name: String, code: String, vararg parameters: Any?, f: (ResultSet) -> T): List<T> {
         val list = mutableListOf<T>()
-        queryStreaming(name, code, *parameters){ resultSet ->
+        queryStreaming(name, code, *parameters) { resultSet ->
             list.add(f(resultSet))
         }
         return list
@@ -30,7 +30,7 @@ class ConnectionWrapper(
         updateParameters(name, parameters, statement)
         statement.use {
             val resultSet = executeQuery(name, statement)
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 f(resultSet)
             }
         }
@@ -53,7 +53,7 @@ class ConnectionWrapper(
             val iterator = ResultSetIterator.consume(resultSet)
             val columnNames = iterator.columnNames
             val rows = iterator.consumeRemainingToTable()
-            GenericTable(code, columnNames, rows)
+            GenericTable(name, code, columnNames, rows)
         }
     }
 
@@ -83,12 +83,6 @@ class ConnectionWrapper(
             }
         }
 
-    fun queryExactlyOneInt(name: String, code: String, vararg parameters: Any?): Int =
-        queryExactlyOneRow(name, code, *parameters) { createInt(it) }
-
-    fun queryZeroOrOneInt(name: String, code: String, vararg parameters: Any?): Int? =
-        queryZeroOrOneRow(name, code, *parameters) { createInt(it) }
-
     fun update(name: String, code: String, vararg parameters: Any?): Int {
         val statement = connection.prepareStatement(code) as ClientPreparedStatement
         updateParameters(name, parameters, statement)
@@ -106,6 +100,7 @@ class ConnectionWrapper(
     }
 
     fun debugQuery(
+        name: String,
         sql: String,
         vararg parameters: Any?
     ) {
@@ -116,7 +111,7 @@ class ConnectionWrapper(
             val iterator = ResultSetIterator.consume(resultSet)
             val columnNames = iterator.columnNames
             val rows = iterator.consumeRemainingToTable()
-            GenericTable(statement.asSql(), columnNames, rows)
+            GenericTable(name, statement.asSql(), columnNames, rows)
         }
         table.toLines().forEach(::println)
     }
@@ -165,8 +160,4 @@ class ConnectionWrapper(
     }
 
     private fun Statement.asSql(): String = (this as ClientPreparedStatement).asSql()
-
-    companion object {
-        fun createInt(resultSet: ResultSet): Int = resultSet.getInt(1)
-    }
 }

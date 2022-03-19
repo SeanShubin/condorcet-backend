@@ -398,7 +398,7 @@ class BaseService(
     private fun GenericTable.toTableData(): TableData {
         val columnNames = this.columnNames
         val rows = this.rows
-        return TableData(columnNames, rows)
+        return TableData(name, columnNames, rows)
     }
 
     private fun validateString(original: String, caption: String, rule: (String) -> Either<String, String>): String =

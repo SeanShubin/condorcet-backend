@@ -214,7 +214,7 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun debugQuery(sql: String) {
+    override fun debugQuery(name:String, sql: String) {
         throw UnsupportedOperationException("not implemented")
     }
 

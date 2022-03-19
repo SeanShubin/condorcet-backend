@@ -1,0 +1,5 @@
+digraph detangled {
+  "service" -> "domain";
+  "domain" -> "database";
+  "database" -> "orm library";
+}
