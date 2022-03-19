@@ -149,47 +149,6 @@ class ConnectionWrapper(
 
   private fun Statement.asSql(): String = (this as ClientPreparedStatement).asSql()
 }
-class ConnectionWrapper(
-  private val connection: Connection,
-  private val sqlEvent: (String) -> Unit,
-  private val sqlException: (String, String, SQLException) -> Unit
-) : AutoCloseable {
-  fun update(name: String, code: String, vararg parameters: Any?): Int {
-    val statement = connection.prepareStatement(code) as ClientPreparedStatement
-    updateParameters(name, parameters, statement)
-    return statement.use {
-      executeUpdate(name, statement)
-    }
-  }
-  private fun updateParameters(name: String, parameters: Array<out Any?>, statement: ClientPreparedStatement) {
-    try {
-      parameters.toList().forEachIndexed { index, any ->
-        val position = index + 1
-        if (any == null) {
-          statement.setObject(position, null)
-        } else when (any) {
-          is String -> statement.setString(position, any)
-          is Boolean -> statement.setBoolean(position, any)
-          is Int -> statement.setInt(position, any)
-          is Instant -> statement.setTimestamp(position, Timestamp.from(any))
-          else -> throw UnsupportedOperationException("Unsupported type ${any.javaClass.simpleName}")
-        }
-      }
-    } catch (ex: SQLException) {
-      throw SQLException("$name\n${statement.asSql()}\n${ex.message}", ex)
-    }
-  }
-  private fun executeUpdate(name: String, statement: PreparedStatement): Int {
-    try {
-      sqlEvent(statement.asSql())
-      return statement.executeUpdate()
-    } catch (ex: SQLException) {
-      sqlException(name, statement.asSql(), ex)
-      throw SQLException("$name\n${statement.asSql()}\n${ex.message}", ex)
-    }
-  }
-  private fun Statement.asSql(): String = (this as ClientPreparedStatement).asSql()
-}
 class GenericDatabaseImpl(
     private val connection: ConnectionWrapper,
     private val queryLoader: QueryLoader
