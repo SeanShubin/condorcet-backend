@@ -215,6 +215,14 @@ and the order of the parameters.
 Notice that in candidateCount we use the election name rather than the election id,
 so still have not exposed the fact that we are using a relational database or sql.
 
+For queries, I just write a mapping function from a ResultSet to a domain object.
+These functions usually only look at the current row of the ResultSet,
+and also handle any needed type conversions,
+such as from a java.sql.Timestamp to an java.time.Instant
+
+This way the orm code can remain generic,
+don't need to specify domain data types.
+
 database module
 ```kotlin
 class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
@@ -243,14 +251,9 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     }
 }
 ```
-
-For queries, I just write a mapping function from a ResultSet to a domain object.
-These functions usually only look at the current row of the ResultSet,
-and also handle any needed type conversions,
-such as from a java.sql.Timestamp to an java.time.Instant
-
-This way the orm code can remain generic,
-don't need to specify domain data types.
+By the time we start talking to JDBC,
+the data types are generic,
+so from here we are not coupled to the domain.
 
 genericdb (orm module)
 ```kotlin
