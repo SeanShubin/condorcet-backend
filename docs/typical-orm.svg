@@ -8,48 +8,48 @@
  viewBox="0.00 0.00 110.69 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
 <title>detangled</title>
-<polygon fill="black" stroke="transparent" points="-4,4 -4,-256 106.69,-256 106.69,4 -4,4"/>
+<polygon fill="#0d1117" stroke="transparent" points="-4,4 -4,-256 106.69,-256 106.69,4 -4,4"/>
 <!-- service -->
 <g id="node1" class="node">
 <title>service</title>
-<ellipse fill="none" stroke="cornflowerblue" cx="51.35" cy="-234" rx="36" ry="18"/>
-<text text-anchor="middle" x="51.35" y="-230.3" font-family="Times,serif" font-size="14.00" fill="cornflowerblue">service</text>
+<ellipse fill="none" stroke="#c9d1d9" cx="51.35" cy="-234" rx="36" ry="18"/>
+<text text-anchor="middle" x="51.35" y="-230.3" font-family="Times,serif" font-size="14.00" fill="#c9d1d9">service</text>
 </g>
 <!-- domain -->
 <g id="node2" class="node">
 <title>domain</title>
-<ellipse fill="none" stroke="cornflowerblue" cx="51.35" cy="-162" rx="37.89" ry="18"/>
-<text text-anchor="middle" x="51.35" y="-158.3" font-family="Times,serif" font-size="14.00" fill="cornflowerblue">domain</text>
+<ellipse fill="none" stroke="#c9d1d9" cx="51.35" cy="-162" rx="37.89" ry="18"/>
+<text text-anchor="middle" x="51.35" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#c9d1d9">domain</text>
 </g>
 <!-- service&#45;&gt;domain -->
 <g id="edge1" class="edge">
 <title>service&#45;&gt;domain</title>
-<path fill="none" stroke="cornflowerblue" d="M51.35,-215.7C51.35,-207.98 51.35,-198.71 51.35,-190.11"/>
-<polygon fill="cornflowerblue" stroke="cornflowerblue" points="54.85,-190.1 51.35,-180.1 47.85,-190.1 54.85,-190.1"/>
+<path fill="none" stroke="#c9d1d9" d="M51.35,-215.7C51.35,-207.98 51.35,-198.71 51.35,-190.11"/>
+<polygon fill="#c9d1d9" stroke="#c9d1d9" points="54.85,-190.1 51.35,-180.1 47.85,-190.1 54.85,-190.1"/>
 </g>
 <!-- database -->
 <g id="node3" class="node">
 <title>database</title>
-<ellipse fill="none" stroke="cornflowerblue" cx="51.35" cy="-90" rx="40.89" ry="18"/>
-<text text-anchor="middle" x="51.35" y="-86.3" font-family="Times,serif" font-size="14.00" fill="cornflowerblue">database</text>
+<ellipse fill="none" stroke="#c9d1d9" cx="51.35" cy="-90" rx="40.89" ry="18"/>
+<text text-anchor="middle" x="51.35" y="-86.3" font-family="Times,serif" font-size="14.00" fill="#c9d1d9">database</text>
 </g>
 <!-- domain&#45;&gt;database -->
 <g id="edge2" class="edge">
 <title>domain&#45;&gt;database</title>
-<path fill="none" stroke="cornflowerblue" d="M51.35,-143.7C51.35,-135.98 51.35,-126.71 51.35,-118.11"/>
-<polygon fill="cornflowerblue" stroke="cornflowerblue" points="54.85,-118.1 51.35,-108.1 47.85,-118.1 54.85,-118.1"/>
+<path fill="none" stroke="#c9d1d9" d="M51.35,-143.7C51.35,-135.98 51.35,-126.71 51.35,-118.11"/>
+<polygon fill="#c9d1d9" stroke="#c9d1d9" points="54.85,-118.1 51.35,-108.1 47.85,-118.1 54.85,-118.1"/>
 </g>
 <!-- orm library -->
 <g id="node4" class="node">
 <title>orm library</title>
-<ellipse fill="none" stroke="cornflowerblue" cx="51.35" cy="-18" rx="51.19" ry="18"/>
-<text text-anchor="middle" x="51.35" y="-14.3" font-family="Times,serif" font-size="14.00" fill="cornflowerblue">orm library</text>
+<ellipse fill="none" stroke="#c9d1d9" cx="51.35" cy="-18" rx="51.19" ry="18"/>
+<text text-anchor="middle" x="51.35" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#c9d1d9">orm library</text>
 </g>
 <!-- database&#45;&gt;orm library -->
 <g id="edge3" class="edge">
 <title>database&#45;&gt;orm library</title>
-<path fill="none" stroke="cornflowerblue" d="M51.35,-71.7C51.35,-63.98 51.35,-54.71 51.35,-46.11"/>
-<polygon fill="cornflowerblue" stroke="cornflowerblue" points="54.85,-46.1 51.35,-36.1 47.85,-46.1 54.85,-46.1"/>
+<path fill="none" stroke="#c9d1d9" d="M51.35,-71.7C51.35,-63.98 51.35,-54.71 51.35,-46.11"/>
+<polygon fill="#c9d1d9" stroke="#c9d1d9" points="54.85,-46.1 51.35,-36.1 47.85,-46.1 54.85,-46.1"/>
 </g>
 </g>
 </svg>
