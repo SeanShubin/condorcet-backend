@@ -383,3 +383,13 @@ I value libraries that solve problems I would have had without them.
 It is not impressive for a library to solve a problem created by that library.
 I would rather not have the problem in the first place.
 
+Why this structure?
+
+![](typical-orm.svg) ![](my-orm.svg)
+
+The main problem I have with typical orm structures is where they draw the abstraction boundary.
+The domain layer should not cater to the database layer,
+the database layer should be adapted to suit the domain layer.
+This does mean the service layer has to deal with the database layer instead of the domain,
+but the service layer is glue, it's the service layers job to connect things together.
+The domain layer should be focused on modeling the domain.
