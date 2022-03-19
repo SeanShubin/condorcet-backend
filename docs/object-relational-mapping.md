@@ -435,7 +435,7 @@ and I only use the features of the SQL dialect that I turn out to actually need.
 If we are considering changing to something other than a relational database,
 this architecture actually makes that easier because I did not couple the domain to the database.
 Primary or foreign keys are not exposed through the service layer or the interfaces in the database layer.
-From the code architecture, we can't tell we are dealing with a relational database until we get to the implementations of the database layer,
+From the architecture, we can't tell we are dealing with a relational database until we get to the implementations of the database layer,
 and even then, most of the code with knowledge of the underling relational database is in the orm library. 
 
 
