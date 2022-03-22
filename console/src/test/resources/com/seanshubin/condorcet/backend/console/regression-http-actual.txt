@@ -194,7 +194,6 @@ Content-Type: application/json
 
 /AddElection
 {
-  "userName" : "Alice",
   "electionName" : "Delete Me"
 }
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiQWxpY2UifQ.W_yCRmifSHIV5T3bQ7T4Xcm6pCpf5S37eK2WxVRLiSaIN5sWtZHSmS4vXlPj68_qqKRQPuZupJxzqXsm9EUpf8iUh81_m1guDGJGvfVbXnlfp4R4i7N2Bf4jNWZ6LOvZequmWNtEaHvL4a3Wu7RmUPqQT_H3x1kCveEj5MyijdA
@@ -203,7 +202,6 @@ Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQsInV
 
 /AddElection
 {
-  "userName" : "Alice",
   "electionName" : "Favorite Ice Cream Flavor"
 }
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiQWxpY2UifQ.W_yCRmifSHIV5T3bQ7T4Xcm6pCpf5S37eK2WxVRLiSaIN5sWtZHSmS4vXlPj68_qqKRQPuZupJxzqXsm9EUpf8iUh81_m1guDGJGvfVbXnlfp4R4i7N2Bf4jNWZ6LOvZequmWNtEaHvL4a3Wu7RmUPqQT_H3x1kCveEj5MyijdA

@@ -66,8 +66,8 @@ class RegressionTest {
             ),
             RemoveUser(userName = "Carol"),
             ListUsers,
-            AddElection(userName = "Alice", electionName = "Delete Me"),
-            AddElection(userName = "Alice", electionName = "Favorite Ice Cream Flavor"),
+            AddElection(electionName = "Delete Me"),
+            AddElection(electionName = "Favorite Ice Cream Flavor"),
             UpdateElection(
                 electionName = "Favorite Ice Cream Flavor",
                 newElectionName = "Favorite Ice Cream",

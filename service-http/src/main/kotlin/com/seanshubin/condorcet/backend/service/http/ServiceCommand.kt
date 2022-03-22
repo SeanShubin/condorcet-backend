@@ -97,10 +97,10 @@ interface ServiceCommand {
             }
     }
 
-    data class AddElection(val userName: String, val electionName: String) : ServiceCommand {
+    data class AddElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.cipher) { accessToken ->
-                environment.service.addElection(accessToken, userName, electionName)
+                environment.service.addElection(accessToken, accessToken.userName, electionName)
                 responseBuilder().build()
             }
     }
