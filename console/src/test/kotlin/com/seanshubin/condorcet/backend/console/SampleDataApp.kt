@@ -172,7 +172,7 @@ object SampleDataApp {
             dave,
             "Dave",
             electionName,
-            restaurantOwnerPreferences
+            saverPreference
         )
         service.castBallot(
             eve,
@@ -190,7 +190,7 @@ object SampleDataApp {
             grace,
             "Grace",
             electionName,
-            speculatorPreferences
+            restaurantOwnerPreferences
         )
         service.castBallot(
             heidi,
