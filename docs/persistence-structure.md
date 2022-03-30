@@ -14,6 +14,7 @@ I categorize every datum into one of two kinds
       - not computed from parts or another source
   - consistent
       - for CAP Theorem tradeoffs, consistency is favored over availability
+      - Every read receives the most recent write or an error
 - Working Copy
   - This is a current view of all the events that happened up until this point.
   - not canonical
@@ -26,6 +27,7 @@ I categorize every datum into one of two kinds
       - can be derived from original source
   - available
       - for CAP Theorem tradeoffs, availability is favored over consistency
+      - Every request receives a (non-error) response, without the guarantee that it contains the most recent write
 
 For every piece of data you have,
 you should decide which of these two categories are most appropriate.
