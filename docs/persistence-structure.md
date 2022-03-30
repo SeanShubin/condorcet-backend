@@ -5,7 +5,7 @@ I categorize every datum into one of two kinds
   - This is a recording of events that happened, with no processing or computations.
     All original information is here, with all other information recomputable from this.
   - canonical
-      - if there is any discrepancy with other types of data, the immutable data is considered to be the source of truth
+      - if there is any discrepancy with other types of data, this is considered to be the authority 
   - immutable
       - in the context of computer science, immutable means only create and read operations are allowed, update and delete operations are not allowed
   - durable
