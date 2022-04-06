@@ -15,7 +15,7 @@ I categorize every datum into one of two kinds
   - consistent
       - for CAP Theorem tradeoffs, consistency is favored over availability
       - Every read receives the most recent write or an error
-- Working Copy
+- Working Copy, or View
   - This is a current view of all the events that happened up until this point.
   - not canonical
       - source of truth is elsewhere
