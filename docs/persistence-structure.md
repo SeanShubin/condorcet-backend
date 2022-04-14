@@ -96,11 +96,12 @@ candidate table
 |   2 |           1 | Green |
 |   1 |           1 | Red   |
 
-For now, I have kept the mutable data in 3rd normal form.
+For now, I have kept the mutable data normalized.
+For more information on normalization, look up normal forms within the context of database normalization.
 
 I don't necessarily keep my data in a relational database, or even start it out there.
-I maintain a model of my data in 3rd normal form, as that helps me think clearly about design.
-From the data model in 3rd normal form, I denormalize as necessary.
+I maintain a normalized model of my data, as that helps me think clearly about design.
+Then, I denormalize as necessary during implementation.
 If I am denormalizing for performance reasons, I only do this once I have measured actual production performance.
 I also keep a denormalized view corresponding to an event log,
 to make sure I retain all data from destructive operations such as update or delete.
