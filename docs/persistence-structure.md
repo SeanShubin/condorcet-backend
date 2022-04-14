@@ -1,5 +1,9 @@
 # Persistence Structure
 
+source definition of immutable
+track all data you can, but practical limitations (resource limitations, pii, truth without no historical data)
+CQRS - https://martinfowler.com/bliki/CQRS.html
+
 I categorize every datum into one of two kinds
 - Source of Truth
   - This is a recording of events that happened, with no processing or computations.
@@ -15,7 +19,7 @@ I categorize every datum into one of two kinds
   - consistent
       - for CAP Theorem tradeoffs, consistency is favored over availability
       - Every read receives the most recent write or an error
-- Working Copy, or View
+- Working Copies or Projections
   - This is a current view of all the events that happened up until this point.
   - not canonical
       - source of truth is elsewhere
