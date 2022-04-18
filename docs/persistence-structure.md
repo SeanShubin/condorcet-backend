@@ -1,9 +1,15 @@
 # Persistence Structure
 
-source definition of immutable
-track all data you can, but practical limitations (resource limitations, pii, truth without no historical data)
-CQRS - https://martinfowler.com/bliki/CQRS.html
+## Summary
+- Immutable data is like medical records, they don't change, but more information can be added to your history
+- Mutable data is like whiteboard, data can be deleted or changed after it is created
+- Early limitations of storage technology caused software engineers to optimize for space,
+  resulting in data models that were different from the physical analog of adding files to a filling cabinet,
+  leading to the reliance on mutable data being the default state
+- For modern applications, our default state should be to rely on immutable data,
+  that is no deletes, no updates, until we can articulate a good reason why we don't need to.
 
+## Categories
 I categorize every datum into one of two kinds
 - Source of Truth
   - This is a recording of events that happened, with no processing or computations.
@@ -27,12 +33,25 @@ I categorize every datum into one of two kinds
   - computed
       - can be derived from original source
 
-For every piece of data you have,
-you should decide which of these two categories are most appropriate.
-You should not have other categories.
-You should not mix the two types of data in the same data store.
-When designing your persistence strategy,
-explore the limits of both extremes to help you puzzle out an appropriate middle.
+Immutable databases are typically going to be event streams.
+It is recording a thing, that happened in the past, at a certain time.
+
+Mutable databases are going to have a lot more variety,
+as they are tailored to how they are accessed rather than how the data gets there.
+A lot of times you will have different projections or derivations of the same data, driven by different access needs.
+
+For both immutable and mutable databases, I try to have an incremental data model.
+The immutable data model tends to evolve from me adding new types of events that my system needs to support.
+The mutable data model tends to evolve from how I end up accessing that data. 
+
+For every piece of data I have,
+I decide which of these two categories are most appropriate.
+I do not have other categories.
+I do not mix the two types of data in the same data store.
+My suggestion is that when designing your persistence strategy,
+explore the limits of both extremes to help you puzzle out an appropriate middle,
+but make the immutable strategy your default extreme,
+as making a mistake in that direction can be fixed later.
 
 At one extreme, you could go with ONLY persisting immutable data.
 This means you keep all of the computed data in memory,
@@ -49,6 +68,7 @@ Pay attention to every update and delete operation, these operations destroy dat
 How certain are you that no update or delete operation will be run by mistake?
 How certain are you that you will never need the destroyed information in the future?
 
+## Example
 For this application, I use both types of persistence.
 The immutable data is a denormalized event log.
 You can tell it is not even in first normal form because the "text" column of the "event" table has more than one piece of information in it.
@@ -94,17 +114,21 @@ candidate table
 |   2 |           1 | Green |
 |   1 |           1 | Red   |
 
-For now, I have kept the mutable data normalized.
+For now, I have normalized the mutable data.
 For more information on normalization, look up normal forms within the context of database normalization.
 
 I don't necessarily keep my data in a relational database, or even start it out there.
-I maintain a normalized model of my data, as that helps me think clearly about design.
+I try to incrementally maintain a normalized model of my data, as that helps me think clearly about design.
 Then, I denormalize as necessary during implementation.
-If I am denormalizing for performance reasons, I only do this once I have measured actual production performance.
-I also keep a denormalized view corresponding to an event log,
-to make sure I retain all data from destructive operations such as update or delete.
+If I am denormalizing for performance reasons, I make sure to measure actual production performance.
+I also don't worry about normalizing my event streams,
+as for those the priority is to protect all original data from destructive operations such as update or delete.
 
-Relational databases are good at giving you decent overall performance for when you don't know how data will be accessed,
-or when data will be accessed in multiple ways that can't be optimized together.
-Key-value stores or graph databases are better for when you want to optimize for specific data access patterns at the expense of others.
-Triple stores give you a mix of the capabilities of both.
+## Final Thoughts
+- Think about both extremes of immutable vs. mutable patterns, but remember that immutable patterns are more forgiving of the unexpected.
+- Take into account the tradeoffs between how eventual consistency and ACID (atomicity, consistency, isolation, durability) meet your scalability needs.
+- If you don't know, don't throw away information, have a history of how you got into the current state
+
+## Further Reading
+- Java Concurrency in Practice, Section 3.4, Immutability
+- [Command Query Responsibility Segregation](https://martinfowler.com/bliki/CQRS.html)
