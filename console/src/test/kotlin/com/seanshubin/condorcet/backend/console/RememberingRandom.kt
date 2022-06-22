@@ -30,7 +30,8 @@ class RememberingRandom(
             result
         }
     }
-    companion object{
+
+    companion object {
         val LineRegex = Regex("""from (\d+) until (\d+) resulted in (\d+)""")
     }
 }

@@ -4,6 +4,6 @@ class ImmutableDbOperations(
     val immutableDbQueries: ImmutableDbQueries,
     val immutableDbCommands: ImmutableDbCommands
 ) {
-    operator fun component1():ImmutableDbQueries = immutableDbQueries
-    operator fun component2():ImmutableDbCommands = immutableDbCommands
+    operator fun component1(): ImmutableDbQueries = immutableDbQueries
+    operator fun component2(): ImmutableDbCommands = immutableDbCommands
 }

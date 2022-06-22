@@ -5,8 +5,15 @@ import javax.mail.Session
 import javax.mail.internet.InternetAddress
 import javax.mail.internet.MimeMessage
 
-class SmtpMailService(private val mailConfiguration: MailConfiguration):MailService {
-    override fun sendMail(fromName: String, subject: String, body: String, toAddress: String, toPersonal: String) {
+class SmtpMailService(
+    private val mailConfiguration: MailConfiguration,
+    val sendMailEvent: (SendMailCommand) -> Unit
+) : MailService {
+    override fun sendMail(sendMailCommand: SendMailCommand) {
+        val toAddress = sendMailCommand.toAddress
+        val toPersonal = sendMailCommand.toPersonal
+        val subject = sendMailCommand.subject
+        val body = sendMailCommand.body
         val mailProperties = System.getProperties()
         mailProperties["mail.transport.protocol"] = "smtp"
         mailProperties["mail.smtp.port"] = 587
@@ -23,8 +30,9 @@ class SmtpMailService(private val mailConfiguration: MailConfiguration):MailServ
         val user = mailConfiguration.lookupUser()
         val password = mailConfiguration.lookupPassword()
         session.transport.use {
-            it.connect(host,user,password)
+            it.connect(host, user, password)
             it.sendMessage(mimeMessage, mimeMessage.allRecipients)
         }
+        sendMailEvent(sendMailCommand)
     }
 }

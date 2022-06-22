@@ -27,23 +27,24 @@ object DocumentationDataApp {
         service.addElection(bob, "Bob", "Favorite Color")
         service.setCandidates(bob, "Favorite Color", listOf("Red", "Green", "Blue"))
         val accessToken = AccessToken("Alice", Role.OWNER)
-        val path = Paths.get("docs","markdown-tables.md")
+        val path = Paths.get("docs", "markdown-tables.md")
         val charset = StandardCharsets.UTF_8
-        val bufferedWriter = Files.newBufferedWriter(path, charset, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
+        val bufferedWriter =
+            Files.newBufferedWriter(path, charset, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING)
         val writer = PrintWriter(bufferedWriter)
         writer.use {
             service.eventData(accessToken).toMarkdownLines().forEach(writer::println)
-            service.listTables(alice).forEach{tableName->
+            service.listTables(alice).forEach { tableName ->
                 service.tableData(alice, tableName).toMarkdownLines().forEach(writer::println)
             }
         }
     }
 
-    private fun TableData.toMarkdownLines():List<String> {
+    private fun TableData.toMarkdownLines(): List<String> {
         val tableFormat = RowStyleTableFormatter.markdown
         val caption = listOf("", "$name table", "")
         val firstRow = columnNames
-        val secondRow = columnNames.map{ "---"}
+        val secondRow = columnNames.map { "---" }
         val headerRows = listOf(firstRow, secondRow)
         val tableRows = headerRows + rows
         val lines = caption + tableFormat.format(tableRows)

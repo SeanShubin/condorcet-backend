@@ -7,20 +7,25 @@ import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.mail.MailService
-import com.seanshubin.condorcet.backend.mail.SmtpMailService
-import com.seanshubin.condorcet.backend.service.Service
+import com.seanshubin.condorcet.backend.server.Configuration
+import com.seanshubin.condorcet.backend.service.AccessToken
 import com.seanshubin.condorcet.backend.service.BaseService
 import com.seanshubin.condorcet.backend.service.RecordingService
+import com.seanshubin.condorcet.backend.service.Service
 import java.time.Clock
+import java.time.Duration
 
 class ServiceDependencies(
     integration: Integration,
     eventConnection: ConnectionWrapper,
     stateConnection: ConnectionWrapper,
-    mailService: MailService
+    mailService: MailService,
+    configuration: Configuration,
+    emailAccessTokenExpire: Duration,
+    createUpdatePasswordLink: (AccessToken) -> String
 ) {
-    private val serviceRequestEvent:(String, String)->Unit = integration.serviceRequestEvent
-    private val serviceResponseEvent:(String, String, String)->Unit = integration.serviceResponseEvent
+    private val serviceRequestEvent: (String, String) -> Unit = integration.serviceRequestEvent
+    private val serviceResponseEvent: (String, String, String) -> Unit = integration.serviceResponseEvent
     private val queryLoader: QueryLoader = QueryLoaderFromResource()
     private val oneWayHash: OneWayHash = Sha256Hash()
     private val uniqueIdGenerator: UniqueIdGenerator = integration.uniqueIdGenerator
@@ -61,7 +66,11 @@ class ServiceDependencies(
         random,
         clock,
         uniqueIdGenerator,
-        mailService
+        mailService,
+        configuration.mail.lookupFromAddress,
+        configuration.mail.lookupAppName,
+        emailAccessTokenExpire,
+        createUpdatePasswordLink
     )
-    val service:Service = RecordingService(baseService, serviceRequestEvent, serviceResponseEvent)
+    val service: Service = RecordingService(baseService, serviceRequestEvent, serviceResponseEvent)
 }

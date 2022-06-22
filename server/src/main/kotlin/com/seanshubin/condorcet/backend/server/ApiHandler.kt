@@ -6,13 +6,13 @@ import com.seanshubin.condorcet.backend.http.HeaderList
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.io.ioutil.consumeString
-import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.service.Parsers
 import com.seanshubin.condorcet.backend.service.Service
 import com.seanshubin.condorcet.backend.service.ServiceException
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
 import com.seanshubin.condorcet.backend.service.http.ServiceEnvironment
+import com.seanshubin.condorcet.backend.service.http.TokenUtil
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.server.Request
@@ -23,10 +23,10 @@ class ApiHandler(
     private val schemaCreator: SchemaCreator,
     private val serviceCommandParser: ServiceCommandParser,
     private val service: Service,
-    private val cipher: Cipher,
+    private val tokenUtil: TokenUtil,
     private val requestEvent: (RequestValue) -> Unit,
     private val responseEvent: (ResponseValue) -> Unit,
-    private val topLevelException:(Throwable) ->Unit
+    private val topLevelException: (Throwable) -> Unit
 ) : AbstractHandler() {
     override fun handle(
         target: String,
@@ -38,7 +38,7 @@ class ApiHandler(
         val requestValue = request.toRequestValue(target)
         requestEvent(requestValue)
         val serviceCommand = serviceCommandParser.parse(serviceRequestName, requestValue.body)
-        val environment = ServiceEnvironment(service, cipher, topLevelException)
+        val environment = ServiceEnvironment(service, tokenUtil, topLevelException)
         val responseValue = exec(serviceCommand, environment, requestValue)
         responseEvent(responseValue)
         responseValue.writeTo(response)

@@ -28,7 +28,9 @@ class TallyTest {
     fun ties() {
         val electionName = "Ties"
         val createBallotsFunction = newCreateBallotsFunction()
-        fun createBallots(quantity:Int, vararg candidate:String):List<RevealedBallot> = createBallotsFunction(quantity, candidate)
+        fun createBallots(quantity: Int, vararg candidate: String): List<RevealedBallot> =
+            createBallotsFunction(quantity, candidate)
+
         val candidates = listOf("a", "b", "c", "d", "e")
         val ballots =
             createBallots(1, "a", "b") +
@@ -40,7 +42,7 @@ class TallyTest {
         assertEquals(places, tally.places)
     }
 
-    private fun newCreateBallotsFunction():(Int, Array<out String>) -> List<RevealedBallot> =
+    private fun newCreateBallotsFunction(): (Int, Array<out String>) -> List<RevealedBallot> =
         makeCreateRankingsFunction(UserRepository(), ConfirmationRepository(), ClockStub())
 
     private fun makeCreateRankingsFunction(
@@ -49,7 +51,8 @@ class TallyTest {
         clockStub: ClockStub
     ): (Int, Array<out String>) -> List<RevealedBallot> {
         fun createRankings(quantity: Int, vararg candidates: String): List<RevealedBallot> {
-            val rankings = candidates.mapIndexed { index, candidate -> Ranking(candidate, index + 1) }.sortedBy { it.candidateName }
+            val rankings = candidates.mapIndexed { index, candidate -> Ranking(candidate, index + 1) }
+                .sortedBy { it.candidateName }
             return (1..quantity).map {
                 val user = userRepository.newUser()
                 val election = "some election"

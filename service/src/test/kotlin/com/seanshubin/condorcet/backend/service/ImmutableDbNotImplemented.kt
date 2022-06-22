@@ -1,8 +1,8 @@
 package com.seanshubin.condorcet.backend.service
 
+import com.seanshubin.condorcet.backend.database.Event
 import com.seanshubin.condorcet.backend.database.ImmutableDbCommands
 import com.seanshubin.condorcet.backend.database.ImmutableDbQueries
-import com.seanshubin.condorcet.backend.database.Event
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
 import java.io.PrintWriter
@@ -77,7 +77,7 @@ interface ImmutableDbNotImplemented : ImmutableDbQueries, ImmutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun debugQuery(name:String, sql: String) {
+    override fun debugQuery(name: String, sql: String) {
         throw UnsupportedOperationException("not implemented")
     }
 

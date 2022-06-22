@@ -11,15 +11,18 @@ import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankings
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
-import com.seanshubin.condorcet.backend.domain.Role.Companion.SECONDARY_ROLE
-import com.seanshubin.condorcet.backend.domain.Role.Companion.PRIMARY_ROLE
 import com.seanshubin.condorcet.backend.domain.Role.Companion.DEFAULT_ROLE
+import com.seanshubin.condorcet.backend.domain.Role.Companion.PRIMARY_ROLE
+import com.seanshubin.condorcet.backend.domain.Role.Companion.SECONDARY_ROLE
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.mail.MailService
+import com.seanshubin.condorcet.backend.mail.SendMailCommand
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
+import com.seanshubin.condorcet.backend.string.util.DurationFormat
 import java.time.Clock
+import java.time.Duration
 import java.time.Instant
 import kotlin.random.Random
 
@@ -32,7 +35,11 @@ class BaseService(
     private val random: Random,
     private val clock: Clock,
     private val uniqueIdGenerator: UniqueIdGenerator,
-    private val mailService: MailService
+    private val mailService: MailService,
+    private val lookupFromAddress: () -> String,
+    private val lookupAppName: () -> String,
+    private val emailAccessTokenExpire: Duration,
+    private val createUpdatePasswordLink: (AccessToken) -> String
 ) : Service {
     override fun synchronize() {
         synchronizer.synchronize()
@@ -46,7 +53,7 @@ class BaseService(
     }
 
     override fun refresh(refreshToken: RefreshToken): Tokens {
-        val user = findUser(refreshToken.userName)
+        val user = findUserByName(refreshToken.userName)
         val accessToken = AccessToken(user.name, user.role)
         return Tokens(refreshToken, accessToken)
     }
@@ -63,7 +70,7 @@ class BaseService(
             DEFAULT_ROLE
         }
         createUser(validName, validEmail, validPassword, role)
-        val user = findUser(validName)
+        val user = findUserByName(validName)
         return createTokens(user)
     }
 
@@ -75,7 +82,7 @@ class BaseService(
     }
 
     override fun authenticateWithToken(accessToken: AccessToken): Tokens {
-        val user = findUser(accessToken.userName)
+        val user = findUserByName(accessToken.userName)
         return createTokens(user)
     }
 
@@ -93,10 +100,10 @@ class BaseService(
 
     override fun removeUser(accessToken: AccessToken, userName: String) {
         requirePermission(accessToken, MANAGE_USERS)
-        val user = findUser(userName)
+        val user = findUserByName(userName)
         requireGreaterRole(accessToken, user)
-        if(isSelf(accessToken, user) && userCount() > 1){
-            fail(UNSUPPORTED,"Can not remove yourself unless you are the only user")
+        if (isSelf(accessToken, user) && userCount() > 1) {
+            fail(UNSUPPORTED, "Can not remove yourself unless you are the only user")
         }
         mutableDbCommands.removeUser(accessToken.userName, userName)
     }
@@ -113,7 +120,7 @@ class BaseService(
         return list
     }
 
-    override fun addElection(accessToken: AccessToken, userName:String, electionName: String) {
+    override fun addElection(accessToken: AccessToken, userName: String, electionName: String) {
         requirePermission(accessToken, USE_APPLICATION)
         val validElectionName = validateElectionName(electionName)
         requireElectionNameDoesNotExist(electionName)
@@ -322,9 +329,32 @@ class BaseService(
     }
 
     override fun changePassword(accessToken: AccessToken, userName: String, password: String) {
-        requireIsUser(accessToken, userName, "User '${accessToken.userName}' is not allowed to change password for user '$userName'")
+        requireIsUser(
+            accessToken,
+            userName,
+            "User '${accessToken.userName}' is not allowed to change password for user '$userName'"
+        )
         val (salt, hash) = passwordUtil.createSaltAndHash(password)
         mutableDbCommands.setPassword(accessToken.userName, userName, salt, hash)
+    }
+
+    override fun sendLoginLinkByEmail(email: String) {
+        val user = findUserByEmail(email)
+        val accessToken = AccessToken(user.name, user.role)
+        val fromAddress = lookupFromAddress()
+        val appName = lookupAppName()
+        val subject = "Change password for $appName"
+        val updatePasswordLink = createUpdatePasswordLink(accessToken)
+        val formattedDuration = DurationFormat.Companion.seconds.format(emailAccessTokenExpire.seconds)
+        val bodyLines = listOf(
+            "Use this link to update your password",
+            "It will expire in $formattedDuration",
+            updatePasswordLink
+        )
+        val body = bodyLines.joinToString("\n")
+
+        val sendMailCommand = SendMailCommand(fromAddress, subject, body, user.email, user.name)
+        mailService.sendMail(sendMailCommand)
     }
 
     private fun requireIsUser(accessToken: AccessToken, userName: String, message: String) {
@@ -334,13 +364,17 @@ class BaseService(
     }
 
     private fun findUserRolePermissions(userName: String): UserRolePermissions {
-        val user = findUser(userName)
+        val user = findUserByName(userName)
         val permissions = permissionsForRole(user.role)
         return UserRolePermissions(userName, user.role, permissions)
     }
 
-    private fun findUser(userName: String): User {
+    private fun findUserByName(userName: String): User {
         return mutableDbQueries.findUserByName(userName)
+    }
+
+    private fun findUserByEmail(email: String): User {
+        return mutableDbQueries.findUserByEmail(email)
     }
 
     private fun userExists(name: String): Boolean = mutableDbQueries.searchUserByName(name) != null
@@ -431,7 +465,7 @@ class BaseService(
 
     private fun castNewBallot(
         accessToken: AccessToken,
-        voterName:String,
+        voterName: String,
         electionName: String,
         rankings: List<Ranking>
     ) {
@@ -488,31 +522,34 @@ class BaseService(
         mutableDbCommands.createUser(userName, userName, email, salt, hash, role)
     }
 
-    private fun validateUserName(userName:String):String =
+    private fun validateUserName(userName: String): String =
         validateString(userName, "name", Validation.userName)
-    private fun validateEmail(email:String):String =
+
+    private fun validateEmail(email: String): String =
         validateString(email, "email", Validation.email)
-    private fun validatePassword(password:String):String =
+
+    private fun validatePassword(password: String): String =
         validateString(password, "password", Validation.password)
-    private fun validateNameOrEmail(nameOrEmail:String):String =
+
+    private fun validateNameOrEmail(nameOrEmail: String): String =
         validateString(nameOrEmail, "nameOrEmail", Validation.nameOrEmail)
 
-    private fun userCount():Int = mutableDbQueries.userCount()
+    private fun userCount(): Int = mutableDbQueries.userCount()
 
-    private fun findUserByNameOrEmail(nameOrEmail:String): User {
+    private fun findUserByNameOrEmail(nameOrEmail: String): User {
         return searchUserByNameOrEmail(nameOrEmail)
             ?: fail(NOT_FOUND, "User with name or email '$nameOrEmail' does not exist")
     }
 
-    private fun requirePasswordMatches(nameOrEmail:String, password:String, salt:String, hash:String){
-        if(!passwordUtil.passwordMatches(password, salt, hash)){
+    private fun requirePasswordMatches(nameOrEmail: String, password: String, salt: String, hash: String) {
+        if (!passwordUtil.passwordMatches(password, salt, hash)) {
             fail(UNAUTHORIZED, "Authentication failed for user with name or email '$nameOrEmail'")
         }
     }
 
-    private fun requireCanChangeRole(authorizingUserName:String, targetUserName:String, role:Role){
+    private fun requireCanChangeRole(authorizingUserName: String, targetUserName: String, role: Role) {
         val authorizingUserRolePermissions = findUserRolePermissions(authorizingUserName)
-        val targetUser = findUser(targetUserName)
+        val targetUser = findUserByName(targetUserName)
         val targetUserRole = UserRole(targetUser.name, targetUser.role)
         val canChangeRole = authorizingUserRolePermissions.canChangeRole(targetUserRole, role)
         canChangeRole.mapLeft { message ->
@@ -520,38 +557,44 @@ class BaseService(
         }
     }
 
-    private fun requireGreaterRole(accessToken: AccessToken, user: User){
-        if(accessToken.role <= user.role){
-            fail(UNAUTHORIZED, "${accessToken.userName} with role ${accessToken.role} does not have greater role than ${user.name} with role ${user.role}")
+    private fun requireGreaterRole(accessToken: AccessToken, user: User) {
+        if (accessToken.role <= user.role) {
+            fail(
+                UNAUTHORIZED,
+                "${accessToken.userName} with role ${accessToken.role} does not have greater role than ${user.name} with role ${user.role}"
+            )
         }
     }
 
-    private fun validateElectionName(electionName:String):String =
+    private fun validateElectionName(electionName: String): String =
         validateString(electionName, "name", Validation.electionName)
 
-    private fun searchElection(electionName:String):ElectionSummary? =
+    private fun searchElection(electionName: String): ElectionSummary? =
         mutableDbQueries.searchElectionByName(electionName)
 
-    private fun requireElectionNameDoesNotExist(electionName:String){
+    private fun requireElectionNameDoesNotExist(electionName: String) {
         val election = searchElection(electionName)
-        if(election != null){
+        if (election != null) {
             fail(CONFLICT, "Election named $electionName already exists")
         }
     }
 
-    private fun requireIsElectionOwner(accessToken: AccessToken, electionName:String){
+    private fun requireIsElectionOwner(accessToken: AccessToken, electionName: String) {
         val election = findElection(electionName)
         requireIsElectionOwner(accessToken, election)
     }
 
-    private fun requireIsElectionOwner(accessToken: AccessToken, election:ElectionSummary){
-        if(accessToken.userName != election.ownerName){
-            fail(UNAUTHORIZED, "Election ${election.electionName} is owned by ${election.ownerName}, not ${accessToken.userName}")
+    private fun requireIsElectionOwner(accessToken: AccessToken, election: ElectionSummary) {
+        if (accessToken.userName != election.ownerName) {
+            fail(
+                UNAUTHORIZED,
+                "Election ${election.electionName} is owned by ${election.ownerName}, not ${accessToken.userName}"
+            )
         }
     }
 
-    private fun requireHasNoEndDate(election:ElectionSummary, message:String){
-        if(election.noVotingAfter != null) {
+    private fun requireHasNoEndDate(election: ElectionSummary, message: String) {
+        if (election.noVotingAfter != null) {
             fail(UNSUPPORTED, message)
         }
     }
@@ -562,32 +605,32 @@ class BaseService(
         return electionUpdates.copy(newElectionName = validNewName)
     }
 
-    private fun validateCandidateNames(candidateNames: List<String>):List<String> =
+    private fun validateCandidateNames(candidateNames: List<String>): List<String> =
         validateStringList(candidateNames, "candidate", Validation.candidateName)
 
-    private fun requireAfterElectionStarted(election:ElectionSummary, now:Instant){
+    private fun requireAfterElectionStarted(election: ElectionSummary, now: Instant) {
         val noVotingBefore = election.noVotingBefore ?: return
-        if(now < noVotingBefore) {
+        if (now < noVotingBefore) {
             fail(UNSUPPORTED, "Election ${election.electionName} has not started yet")
         }
     }
 
-    private fun requireAfterElectionEnded(election:ElectionSummary, now:Instant){
+    private fun requireAfterElectionEnded(election: ElectionSummary, now: Instant) {
         val noVotingBefore = election.noVotingAfter ?: return
-        if(now < noVotingBefore) {
+        if (now < noVotingBefore) {
             fail(UNSUPPORTED, "Election ${election.electionName} has not ended yet")
         }
     }
 
-    private fun requireElectionCanNotVote(election:ElectionSummary){
-        if(election.allowVote) {
+    private fun requireElectionCanNotVote(election: ElectionSummary) {
+        if (election.allowVote) {
             fail(UNSUPPORTED, "Election ${election.electionName} is still accepting votes")
         }
     }
 
-    private fun requireElectionCanNotEdit(election:ElectionSummary){
-        if(election.allowEdit) {
-            if(election.allowVote){
+    private fun requireElectionCanNotEdit(election: ElectionSummary) {
+        if (election.allowEdit) {
+            if (election.allowVote) {
                 fail(UNSUPPORTED, "Election ${election.electionName} has not launched yet")
             } else {
                 fail(UNSUPPORTED, "Election ${election.electionName} has not been finalized yet")
@@ -595,9 +638,9 @@ class BaseService(
         }
     }
 
-    private fun requireElectionCanEdit(election:ElectionSummary){
-        if(!election.allowEdit) {
-            if(election.allowVote){
+    private fun requireElectionCanEdit(election: ElectionSummary) {
+        if (!election.allowEdit) {
+            if (election.allowVote) {
                 fail(UNSUPPORTED, "Election ${election.electionName} is closed for edits once launched")
             } else {
                 fail(UNSUPPORTED, "Election ${election.electionName} can not be edited once it has been finalized")
@@ -605,13 +648,13 @@ class BaseService(
         }
     }
 
-    private fun requireNotLaunched(election:ElectionSummary){
-        if(election.allowEdit) {
-            if(election.allowVote){
+    private fun requireNotLaunched(election: ElectionSummary) {
+        if (election.allowEdit) {
+            if (election.allowVote) {
                 fail(UNSUPPORTED, "Election ${election.electionName} is closed for edits once launched")
             }
         } else {
-            if(election.allowVote){
+            if (election.allowVote) {
                 fail(UNSUPPORTED, "Election ${election.electionName} is closed for edits once launched")
             } else {
                 fail(UNSUPPORTED, "Election ${election.electionName} can not be edited once it has been finalized")
@@ -619,30 +662,30 @@ class BaseService(
         }
     }
 
-    private fun requireTallyAvailable(electionName:String, now: Instant){
+    private fun requireTallyAvailable(electionName: String, now: Instant) {
         val election = findElection(electionName)
         requireAfterElectionStarted(election, now)
-        if(!election.secretBallot) return
+        if (!election.secretBallot) return
         requireAfterElectionEnded(election, now)
         requireElectionCanNotVote(election)
         requireElectionCanNotEdit(election)
     }
 
-    private fun requireCanSeeBallot(accessToken: AccessToken, voterName:String, electionName:String, now:Instant){
-        if(accessToken.userName == voterName) return
+    private fun requireCanSeeBallot(accessToken: AccessToken, voterName: String, electionName: String, now: Instant) {
+        if (accessToken.userName == voterName) return
         val election = findElection(electionName)
-        if(election.secretBallot){
+        if (election.secretBallot) {
             fail(UNAUTHORIZED, "Can only see your own ballot in secret ballot election $electionName")
         }
         requireTallyAvailable(electionName, now)
     }
 
-    private fun candidateCount(electionName:String):Int =
+    private fun candidateCount(electionName: String): Int =
         mutableDbQueries.candidateCount(electionName)
 
-    private fun requireHasMoreThanOneCandidate(electionName: String){
+    private fun requireHasMoreThanOneCandidate(electionName: String) {
         val candidateCount = candidateCount(electionName)
-        if(candidateCount < 2){
+        if (candidateCount < 2) {
             fail(UNSUPPORTED, "Election can not be launched with less than 2 candidates, has $candidateCount")
         }
     }

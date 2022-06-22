@@ -9,7 +9,7 @@ interface Configuration {
     val mutableDatabase: DatabaseConfiguration
     val mail: MailConfiguration
     val server: ServerConfiguration
-    fun reify(){
+    fun reify() {
         rootDatabase.reify()
         immutableDatabase.reify()
         mail.reify()

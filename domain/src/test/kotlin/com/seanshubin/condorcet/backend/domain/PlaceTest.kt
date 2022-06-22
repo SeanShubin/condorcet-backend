@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class PlaceTest {
     @Test
-    fun adjustForTies(){
+    fun adjustForTies() {
         // given
         val places = listOf(
             Place(1, "a"),
@@ -33,7 +33,7 @@ class PlaceTest {
     }
 
     @Test
-    fun adjustForThreeWayTie(){
+    fun adjustForThreeWayTie() {
         // given
         val places = listOf(
             Place(1, "a"),

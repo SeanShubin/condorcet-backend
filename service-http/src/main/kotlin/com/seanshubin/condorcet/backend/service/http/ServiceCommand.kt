@@ -5,17 +5,15 @@ import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Ranking
 import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.global.constants.Constants
 import com.seanshubin.condorcet.backend.http.*
 import com.seanshubin.condorcet.backend.json.JsonMappers
-import com.seanshubin.condorcet.backend.jwt.Cipher
 import com.seanshubin.condorcet.backend.service.AccessToken
 import com.seanshubin.condorcet.backend.service.RefreshToken
 import com.seanshubin.condorcet.backend.service.ServiceException
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
 import com.seanshubin.condorcet.backend.service.Tokens
-import java.time.Duration
 import java.time.Instant
-import java.time.temporal.ChronoUnit
 
 interface ServiceCommand {
     fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue
@@ -31,13 +29,13 @@ interface ServiceCommand {
 
     object Refresh : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            val refreshToken = request.refreshToken(environment.cipher)
+            val refreshToken = request.refreshToken(environment.tokenUtil)
             return if (refreshToken == null) {
                 responseBuilder().unauthorized("No valid refresh token").build()
             } else {
                 val tokens = environment.service.refresh(refreshToken)
                 val permissions = environment.service.permissionsForRole(tokens.accessToken.role)
-                tokenResponse(tokens, permissions, environment.cipher)
+                tokenResponse(tokens, permissions, environment.tokenUtil)
             }
         }
 
@@ -48,7 +46,7 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             val tokens = environment.service.register(userName, email, password)
             val permissions = environment.service.permissionsForRole(tokens.accessToken.role)
-            return tokenResponse(tokens, permissions, environment.cipher)
+            return tokenResponse(tokens, permissions, environment.tokenUtil)
         }
     }
 
@@ -56,19 +54,19 @@ interface ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             val tokens = environment.service.authenticate(nameOrEmail, password)
             val permissions = environment.service.permissionsForRole(tokens.accessToken.role)
-            return tokenResponse(tokens, permissions, environment.cipher)
+            return tokenResponse(tokens, permissions, environment.tokenUtil)
         }
     }
 
     data class AuthenticateWithToken(val bearerToken: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            val accessToken = bearerTokenToAccessToken(bearerToken, environment.cipher)
+            val accessToken = environment.tokenUtil.bearerTokenStringToAccessToken(bearerToken)
             return if (accessToken == null) {
                 responseBuilder().unauthorized("No valid access token").build()
             } else {
                 val tokens = environment.service.authenticateWithToken(accessToken)
                 val permissions = environment.service.permissionsForRole(tokens.accessToken.role)
-                tokenResponse(tokens, permissions, environment.cipher)
+                tokenResponse(tokens, permissions, environment.tokenUtil)
             }
         }
     }
@@ -83,7 +81,7 @@ interface ServiceCommand {
 
     data class SetRole(val userName: String, val role: Role) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.setRole(accessToken, userName, role)
                 responseBuilder().build()
             }
@@ -91,7 +89,7 @@ interface ServiceCommand {
 
     data class RemoveUser(val userName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.removeUser(accessToken, userName)
                 responseBuilder().build()
             }
@@ -99,7 +97,7 @@ interface ServiceCommand {
 
     data class AddElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.addElection(accessToken, accessToken.userName, electionName)
                 responseBuilder().build()
             }
@@ -107,7 +105,7 @@ interface ServiceCommand {
 
     data class LaunchElection(val electionName: String, val allowEdit: Boolean) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.launchElection(accessToken, electionName, allowEdit)
                 responseBuilder().build()
             }
@@ -115,7 +113,7 @@ interface ServiceCommand {
 
     data class FinalizeElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.finalizeElection(accessToken, electionName)
                 responseBuilder().build()
             }
@@ -131,7 +129,7 @@ interface ServiceCommand {
         val noVotingAfter: Instant?
     ) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val electionConfig = toElectionConfig()
                 environment.service.updateElection(accessToken, electionName, electionConfig)
                 responseBuilder().build()
@@ -140,7 +138,7 @@ interface ServiceCommand {
 
     data class GetElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val election = environment.service.getElection(accessToken, electionName)
                 responseBuilder().json(election).build()
             }
@@ -148,7 +146,7 @@ interface ServiceCommand {
 
     data class DeleteElection(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.deleteElection(accessToken, electionName)
                 responseBuilder().build()
             }
@@ -156,7 +154,7 @@ interface ServiceCommand {
 
     object ListElections : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val elections = environment.service.listElections(accessToken)
                 responseBuilder().json(elections).build()
             }
@@ -166,7 +164,7 @@ interface ServiceCommand {
 
     object ListUsers : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val users = environment.service.listUsers(accessToken)
                 responseBuilder().json(users).build()
             }
@@ -176,7 +174,7 @@ interface ServiceCommand {
 
     object UserCount : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val userCount = environment.service.userCount(accessToken)
                 responseBuilder().json(userCount).build()
             }
@@ -186,7 +184,7 @@ interface ServiceCommand {
 
     object ElectionCount : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val electionCount = environment.service.electionCount(accessToken)
                 responseBuilder().json(electionCount).build()
             }
@@ -196,7 +194,7 @@ interface ServiceCommand {
 
     object TableCount : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val tableCount = environment.service.tableCount(accessToken)
                 responseBuilder().json(tableCount).build()
             }
@@ -206,7 +204,7 @@ interface ServiceCommand {
 
     object EventCount : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val eventCount = environment.service.eventCount(accessToken)
                 responseBuilder().json(eventCount).build()
             }
@@ -216,7 +214,7 @@ interface ServiceCommand {
 
     object ListTables : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val tables = environment.service.listTables(accessToken)
                 responseBuilder().json(tables).build()
             }
@@ -226,7 +224,7 @@ interface ServiceCommand {
 
     data class TableData(val tableName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val tableData = environment.service.tableData(accessToken, tableName)
                 responseBuilder().json(tableData).build()
             }
@@ -234,7 +232,7 @@ interface ServiceCommand {
 
     data class DebugTableData(val tableName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val tableData = environment.service.debugTableData(accessToken, tableName)
                 responseBuilder().json(tableData).build()
             }
@@ -242,7 +240,7 @@ interface ServiceCommand {
 
     object EventData : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val eventData = environment.service.eventData(accessToken)
                 responseBuilder().json(eventData).build()
             }
@@ -252,7 +250,7 @@ interface ServiceCommand {
 
     data class SetCandidates(val electionName: String, val candidateNames: List<String>) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.setCandidates(accessToken, electionName, candidateNames)
                 responseBuilder().build()
             }
@@ -260,7 +258,7 @@ interface ServiceCommand {
 
     data class ListCandidates(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val candidateNames = environment.service.listCandidates(accessToken, electionName)
                 responseBuilder().json(candidateNames).build()
             }
@@ -268,7 +266,7 @@ interface ServiceCommand {
 
     data class SetEligibleVoters(val electionName: String, val userNames: List<String>) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.setEligibleVoters(accessToken, electionName, userNames)
                 responseBuilder().build()
             }
@@ -277,7 +275,7 @@ interface ServiceCommand {
     data class CastBallot(val voterName: String, val electionName: String, val rankings: List<Ranking>) :
         ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.castBallot(accessToken, voterName, electionName, rankings)
                 responseBuilder().build()
             }
@@ -285,7 +283,7 @@ interface ServiceCommand {
 
     data class ListRankings(val voterName: String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val rankings = environment.service.listRankings(accessToken, voterName, electionName)
                 responseBuilder().json(rankings).build()
             }
@@ -293,7 +291,7 @@ interface ServiceCommand {
 
     data class Tally(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val tally = environment.service.tally(accessToken, electionName)
                 responseBuilder().json(tally).build()
             }
@@ -301,7 +299,7 @@ interface ServiceCommand {
 
     data class GetBallot(val voterName: String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val ballot = environment.service.getBallot(accessToken, voterName, electionName)
                 responseBuilder().json(ballot).build()
             }
@@ -309,7 +307,7 @@ interface ServiceCommand {
 
     data class ListEligibility(val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val voterNames = environment.service.listEligibility(accessToken, electionName)
                 responseBuilder().json(voterNames).build()
             }
@@ -317,7 +315,7 @@ interface ServiceCommand {
 
     data class IsEligible(val userName: String, val electionName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val isEligible = environment.service.isEligible(accessToken, userName, electionName)
                 responseBuilder().json(isEligible).build()
             }
@@ -325,10 +323,17 @@ interface ServiceCommand {
 
     data class ChangePassword(val userName: String, val password: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
-            requireAccessToken(request, environment.cipher) { accessToken ->
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 environment.service.changePassword(accessToken, userName, password)
                 responseBuilder().build()
             }
+    }
+
+    data class SendLoginLinkByEmail(val email: String) : ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
+            environment.service.sendLoginLinkByEmail(email)
+            return responseBuilder().build()
+        }
     }
 
     data class Unsupported(val commandName: String, val content: String) : ServiceCommand {
@@ -367,7 +372,7 @@ interface ServiceCommand {
         val shouldClearRefreshToken: Boolean = false,
         val cacheControlMaxAgeSeconds: Long? = null
     ) {
-        fun cacheControlMaxAgeSeconds(cacheControlMaxAgeSeconds:Long):ResponseBuilder =
+        fun cacheControlMaxAgeSeconds(cacheControlMaxAgeSeconds: Long): ResponseBuilder =
             copy(cacheControlMaxAgeSeconds = cacheControlMaxAgeSeconds)
 
         fun refreshToken(refreshTokenString: String): ResponseBuilder {
@@ -401,7 +406,8 @@ interface ServiceCommand {
             }
             val contentTypeHeaderList = createContentTypeHeaderList(contentType)
             val cacheControlMaxAgeHeaderList = createCacheControlHeaderList(cacheControlMaxAgeSeconds)
-            val headers = HeaderList(contentTypeHeaderList + cacheControlMaxAgeHeaderList + refreshTokenCookieList.map { it.toHeader() })
+            val headers =
+                HeaderList(contentTypeHeaderList + cacheControlMaxAgeHeaderList + refreshTokenCookieList.map { it.toHeader() })
             return ResponseValue(status, body, headers)
         }
 
@@ -412,7 +418,7 @@ interface ServiceCommand {
                 listOf(createContentTypeHeader(contentType))
             }
 
-        private fun createCacheControlHeaderList(maxAgeSeconds:Long?): List<Header> =
+        private fun createCacheControlHeaderList(maxAgeSeconds: Long?): List<Header> =
             if (maxAgeSeconds == null) {
                 emptyList()
             } else {
@@ -422,7 +428,7 @@ interface ServiceCommand {
         private fun createContentTypeHeader(contentType: String): Header =
             Header("Content-Type", contentType)
 
-        private fun createCacheControlHeader(maxAgeSeconds:Long): Header =
+        private fun createCacheControlHeader(maxAgeSeconds: Long): Header =
             Header("Cache-Control", maxAgeSeconds.toString())
 
         private fun createRefreshTokenCookie(refreshTokenString: String): SetCookie =
@@ -448,8 +454,6 @@ interface ServiceCommand {
     }
 
     companion object {
-        val refreshTokenDuration = Duration.of(12, ChronoUnit.HOURS)
-        val accessTokenDuration = Duration.of(1, ChronoUnit.MINUTES)
         fun UpdateElection.toElectionConfig(): ElectionUpdates =
             ElectionUpdates(
                 newElectionName,
@@ -460,39 +464,18 @@ interface ServiceCommand {
                 noVotingAfter
             )
 
-        private fun RequestValue.refreshToken(cipher: Cipher): RefreshToken? {
-            val refreshTokenString = cookieValue("Refresh") ?: return null
-            if (refreshTokenString.isBlank()) return null
-            val decoded = cipher.decode(refreshTokenString)
-            val userName = decoded["userName"] ?: return null
-            return RefreshToken(userName)
-
+        private fun RequestValue.refreshToken(tokenUtil: TokenUtil): RefreshToken? {
+            return tokenUtil.toRefreshToken(cookieValue("Refresh"))
         }
 
-        private fun RequestValue.accessToken(cipher: Cipher): AccessToken? {
-            val bearerToken = bearerToken() ?: return null
-            return bearerTokenToAccessToken(bearerToken, cipher)
+        private fun RequestValue.accessToken(tokenUtil: TokenUtil): AccessToken? {
+            return tokenUtil.bearerTokenStringToAccessToken(bearerToken())
         }
 
-        private fun bearerTokenToAccessToken(bearerToken: String, cipher: Cipher): AccessToken? {
-            val decoded = cipher.decode(bearerToken)
-            val userName = decoded["userName"] ?: return null
-            val roleName = decoded["role"] ?: return null
-            val role = Role.valueOf(roleName)
-            return AccessToken(userName, role)
-        }
-
-        private fun tokenResponse(tokens: Tokens, permissions: List<Permission>, cipher: Cipher): ResponseValue {
-            val refreshTokenString =
-                cipher.encode(mapOf("userName" to tokens.refreshToken.userName), refreshTokenDuration)
-            val cacheControlMaxAgeSeconds = refreshTokenDuration.seconds
-            val accessTokenString = cipher.encode(
-                mapOf(
-                    "userName" to tokens.accessToken.userName,
-                    "role" to tokens.accessToken.role.name
-                ),
-                accessTokenDuration
-            )
+        private fun tokenResponse(tokens: Tokens, permissions: List<Permission>, tokenUtil: TokenUtil): ResponseValue {
+            val refreshTokenString = tokenUtil.toRefreshTokenString(tokens.refreshToken)
+            val cacheControlMaxAgeSeconds = Constants.refreshTokenDuration.seconds
+            val accessTokenString = tokenUtil.toAccessTokenString(tokens.accessToken, Constants.accessTokenDuration)
             val tokenResponse = mapOf(
                 "accessToken" to accessTokenString,
                 "userName" to tokens.accessToken.userName,
@@ -517,11 +500,11 @@ interface ServiceCommand {
 
         private fun requireAccessToken(
             request: RequestValue,
-            cipher: Cipher,
+            tokenUtil: TokenUtil,
             f: (AccessToken) -> ResponseValue
         ): ResponseValue {
             return try {
-                val accessToken = request.accessToken(cipher)
+                val accessToken = request.accessToken(tokenUtil)
                 if (accessToken == null) {
                     responseBuilder().unauthorized("No valid access token").build()
                 } else {

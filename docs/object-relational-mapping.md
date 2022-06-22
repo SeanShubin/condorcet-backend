@@ -8,11 +8,12 @@ My orm dependency structure
 
 ![](my-orm.svg)
 
-I never let my service layer become aware of database keys.
-The only reason I used database keys is at the database layer to perform joins or lookups.
-My intention is to protect the abstraction boundary between the service and the database.
+I never let my service layer become aware of database keys. The only reason I used database keys is at the database
+layer to perform joins or lookups. My intention is to protect the abstraction boundary between the service and the
+database.
 
 service module
+
 ```kotlin
 data class RefreshToken(val userName: String)
 data class AccessToken(val userName: String, val role: Role)
@@ -40,6 +41,7 @@ interface Service {
 The service delegates to the database to modify the database
 
 Implementation of addElection, in the service module
+
 ```kotlin
 override fun addElection(accessToken: AccessToken, userName:String, electionName: String) {
     requirePermission(accessToken, USE_APPLICATION)
@@ -49,11 +51,11 @@ override fun addElection(accessToken: AccessToken, userName:String, electionName
 }
 ```
 
-The contract of the database does not even expose database ids.
-Also, the service is not a 1:1 pass-through to the database.
-The service often calls many database commands, or composes many database queries.
+The contract of the database does not even expose database ids. Also, the service is not a 1:1 pass-through to the
+database. The service often calls many database commands, or composes many database queries.
 
 database module
+
 ```kotlin
 interface MutableDbCommands {
     fun createUser(
@@ -71,12 +73,12 @@ interface MutableDbCommands {
 }
 ```
 
-If we follow addElection down to the database implementation,
-we see all we are doing in kotlin code is choosing the name of the query,
-and the order of the parameters.
-We still have not exposed the fact that we are using a relational database or sql.
+If we follow addElection down to the database implementation, we see all we are doing in kotlin code is choosing the
+name of the query, and the order of the parameters. We still have not exposed the fact that we are using a relational
+database or sql.
 
 database module
+
 ```kotlin
 class MutableDbCommandsImpl(
     genericDatabase: GenericDatabase
@@ -87,10 +89,10 @@ class MutableDbCommandsImpl(
 }
 ```
 
-We finally get to library that handles object relational mapping.
-It is at this point that we start talking to JDBC.
+We finally get to library that handles object relational mapping. It is at this point that we start talking to JDBC.
 
 genericdb (orm module)
+
 ```kotlin
 class QueryLoaderFromResource : QueryLoader {
   override fun load(name: String): String {
@@ -160,21 +162,22 @@ class GenericDatabaseImpl(
 }
 ```
 
-Finally, the sql statements are not sitting in kotlin files, they are in .sql files.
-This allows us to connect our Integrated Development Environment to the database,
-so we have autocomplete and syntax highlighting while we write our queries,
-as well as being warned when we mistype a column name.
+Finally, the sql statements are not sitting in kotlin files, they are in .sql files. This allows us to connect our
+Integrated Development Environment to the database, so we have autocomplete and syntax highlighting while we write our
+queries, as well as being warned when we mistype a column name.
 
 election-insert.sql
+
 ```sql
 insert into election (owner_id, name)
 values ((select id from user where name = ?), ?)
 ```
 
-All of our sql statements can be found in the [database](../database/src/main/resources/com/seanshubin/condorcet/backend/database/) module
-Since our sql is isolated, we can write an integration test for each one.
-You can usually get away with only a single integration test per query.
-It is a matter of setting up the data such that each bit of conditional logic can be tested by the existence or nonexistence of a row.
+All of our sql statements can be found in
+the [database](../database/src/main/resources/com/seanshubin/condorcet/backend/database/) module Since our sql is
+isolated, we can write an integration test for each one. You can usually get away with only a single integration test
+per query. It is a matter of setting up the data such that each bit of conditional logic can be tested by the existence
+or nonexistence of a row.
 
 The genericdb (orm module), that only has to be written once, can be tested by stubbing out resultsets.
 
@@ -185,6 +188,7 @@ Now let's have a look at queries
 The service delegates to the database to query the database.
 
 Implementation of getElection, in the service module
+
 ```kotlin
 override fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail {
     requirePermission(accessToken, VIEW_APPLICATION)
@@ -196,11 +200,11 @@ override fun getElection(accessToken: AccessToken, electionName: String): Electi
 }
 ```
 
-Notice that the service executes 3 queries.
-I could have also made a single query for this api call,
-as I am not locked in to a 1:1 mapping between service calls and database calls.
+Notice that the service executes 3 queries. I could have also made a single query for this api call, as I am not locked
+in to a 1:1 mapping between service calls and database calls.
 
 database module
+
 ```kotlin
 interface MutableDbQueries : GenericDatabase {
     fun searchElectionByName(name: String): ElectionSummary?
@@ -209,18 +213,16 @@ interface MutableDbQueries : GenericDatabase {
 }
 ```
 
-If we follow searchElectionByName down to the database implementation,
-we see all we are doing in kotlin code is choosing the name of the query,
-and the order of the parameters.
-Notice that in candidateCount we use the election name rather than the election id,
-so still have not exposed the fact that we are using a relational database or sql.
+If we follow searchElectionByName down to the database implementation, we see all we are doing in kotlin code is
+choosing the name of the query, and the order of the parameters. Notice that in candidateCount we use the election name
+rather than the election id, so still have not exposed the fact that we are using a relational database or sql.
 
-For queries, I write a mapping function from a ResultSet to a domain object.
-These functions usually only look at the current row of the ResultSet,
-and also handle any needed type conversions,
-such as from a java.sql.Timestamp to an java.time.Instant
+For queries, I write a mapping function from a ResultSet to a domain object. These functions usually only look at the
+current row of the ResultSet, and also handle any needed type conversions, such as from a java.sql.Timestamp to an
+java.time.Instant
 
 database module
+
 ```kotlin
 class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     GenericDatabase by genericDatabase {
@@ -249,12 +251,11 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
 }
 ```
 
-Here are the corresponding sql queries, in separate files.
-My IDE connects .sql files to the database schema,
-so I have autocomplete, syntax highlighting,
-and I get visual indicators when I type a name wrong.
+Here are the corresponding sql queries, in separate files. My IDE connects .sql files to the database schema, so I have
+autocomplete, syntax highlighting, and I get visual indicators when I type a name wrong.
 
 election-select-by-name.sql
+
 ```sql
 select user.name as owner,
        election.name,
@@ -269,12 +270,14 @@ where election.name = ?
 ```
 
 election-count.sql
+
 ```sql
 select count(id)
 from election
 ```
 
 candidate-count-by-election.sql
+
 ```sql
 select
        count(candidate.id)
@@ -285,11 +288,10 @@ where
       election.name = ?
 ```
 
-By the time we start talking to JDBC,
-the data types are generic,
-so from here we are not coupled to the domain.
+By the time we start talking to JDBC, the data types are generic, so from here we are not coupled to the domain.
 
 genericdb (orm module)
+
 ```kotlin
 class ConnectionWrapper(
   private val connection: Connection,
@@ -333,18 +335,17 @@ class GenericDatabaseImpl(
 Here are sql statements backing the getElection feature
 
 election-insert.sql
+
 ```sql
 insert into election (owner_id, name)
 values ((select id from user where name = ?), ?)
 ```
 
-For more complicated structures,
-I use generic data types to compose the strucure,
-and creator functions for the specific instances.
+For more complicated structures, I use generic data types to compose the strucure, and creator functions for the
+specific instances.
 
-Here is generic code for handling a parent/child structure.
-For each row, I grab the parent and the child, 
-group by the key, and then compose a parent with a list of children.
+Here is generic code for handling a parent/child structure. For each row, I grab the parent and the child, group by the
+key, and then compose a parent with a list of children.
 
 ```kotlin
 override fun <ParentType, ChildType, ParentKeyType, ResultType> queryParentChild(
@@ -411,41 +412,32 @@ private fun attachRankingsToBallot(ballotSummary: BallotSummary, rankingList: Li
         rankingList.map { Ranking(it.candidateName, it.rank) })
 ```
 
-
 What about query caching?
 
-A lot of times you can eliminate the need for this by arranging your code so that you are not making repetitive calls to the database.
-If you know you are likely to need the data soon, keep it in memory.
-This is harder to do if your queries are dynamically generated by something you don't control.
-I value libraries that solve problems I would have had without them.
-It is not impressive for a library to solve a problem created by that library.
-I would rather not have the problem in the first place.
-
+A lot of times you can eliminate the need for this by arranging your code so that you are not making repetitive calls to
+the database. If you know you are likely to need the data soon, keep it in memory. This is harder to do if your queries
+are dynamically generated by something you don't control. I value libraries that solve problems I would have had without
+them. It is not impressive for a library to solve a problem created by that library. I would rather not have the problem
+in the first place.
 
 What about being able to change the underlying database as in other ORM strategies?
 
-While that is often touted as a primary advantage of some ORM tools,
-I have never seen or heard of that being done, not once,
-so I suspect the need for this somewhere between non-existent and rare.
-If we are considering changing to another RELATIONAL database,
-the only changes entail updating the keyword and reserved word lists,
-and minor changes to the SQL queries,
-as SQL does not actually vary that much between relational databases,
-and I only use the features of the SQL dialect that I turn out to actually need.
-If we are considering changing to something other than a relational database,
-this architecture actually makes that easier because I did not couple the domain to the database.
-Primary or foreign keys are not exposed through the service layer or the interfaces in the database layer.
-From the architecture, we can't tell we are dealing with a relational database until we get to the implementations of the database layer,
-and even then, most of the code with knowledge of the underling relational database is in the orm library. 
-
+While that is often touted as a primary advantage of some ORM tools, I have never seen or heard of that being done, not
+once, so I suspect the need for this somewhere between non-existent and rare. If we are considering changing to another
+RELATIONAL database, the only changes entail updating the keyword and reserved word lists, and minor changes to the SQL
+queries, as SQL does not actually vary that much between relational databases, and I only use the features of the SQL
+dialect that I turn out to actually need. If we are considering changing to something other than a relational database,
+this architecture actually makes that easier because I did not couple the domain to the database. Primary or foreign
+keys are not exposed through the service layer or the interfaces in the database layer. From the architecture, we can't
+tell we are dealing with a relational database until we get to the implementations of the database layer, and even then,
+most of the code with knowledge of the underling relational database is in the orm library.
 
 So why do I reject typical orm design in favor of this one?
 
 ![](typical-orm.svg) ![](my-orm.svg)
 
-The main problem I have with typical orm designs is where they draw the abstraction boundary.
-The domain layer should not cater to the database layer,
-the database layer should be adapted to suit the domain layer.
-This does mean the service layer has to deal with the database layer instead of the domain layer having to deal with the database layer,
-but the service layer is glue, it's the service layers job to connect things together.
-The domain layer should be focused on modeling the domain.
+The main problem I have with typical orm designs is where they draw the abstraction boundary. The domain layer should
+not cater to the database layer, the database layer should be adapted to suit the domain layer. This does mean the
+service layer has to deal with the database layer instead of the domain layer having to deal with the database layer,
+but the service layer is glue, it's the service layers job to connect things together. The domain layer should be
+focused on modeling the domain.

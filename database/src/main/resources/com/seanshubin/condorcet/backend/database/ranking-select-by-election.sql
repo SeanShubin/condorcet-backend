@@ -1,11 +1,10 @@
-select
-    ballot.id,
-    user.name user,
-    election.name election,
-    ballot.confirmation,
-    ballot.when_cast,
-    ranking.rank,
-    candidate.name candidate
+select ballot.id,
+       user.name      user,
+       election.name  election,
+       ballot.confirmation,
+       ballot.when_cast,
+       ranking.rank,
+       candidate.name candidate
 from ballot
          inner join ranking on ballot.id = ranking.ballot_id
          inner join user on ballot.user_id = user.id

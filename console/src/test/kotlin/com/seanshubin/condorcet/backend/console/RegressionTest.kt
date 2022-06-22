@@ -8,10 +8,6 @@ import com.seanshubin.condorcet.backend.domain.Role
 import com.seanshubin.condorcet.backend.service.RegexConstants
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand
 import com.seanshubin.condorcet.backend.service.http.ServiceCommand.*
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -188,7 +184,8 @@ class RegressionTest {
                 electionName = "Favorite Ice Cream"
             ),
             GetBallot(voterName = "Alice", electionName = "Favorite Ice Cream"),
-            ChangePassword(userName = "Alice", password = "new-alice-password")
+            ChangePassword(userName = "Alice", password = "new-alice-password"),
+            SendLoginLinkByEmail(email = "alice@email.com")
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

@@ -7,7 +7,7 @@ import java.security.interfaces.RSAPublicKey
 import java.security.spec.PKCS8EncodedKeySpec
 import java.security.spec.X509EncodedKeySpec
 
-class AlgorithmFactoryImpl(private val keyStore:KeyStore) : AlgorithmFactory {
+class AlgorithmFactoryImpl(private val keyStore: KeyStore) : AlgorithmFactory {
     override fun create(): Algorithm {
         val publicKeyBytes = keyStore.publicKey()
         val privateKeyBytes = keyStore.privateKey()

@@ -1,5 +1,7 @@
 package com.seanshubin.condorcet.backend.console
 
+import com.seanshubin.condorcet.backend.configuration.util.ConfigurationFactory
+import com.seanshubin.condorcet.backend.configuration.util.JsonFileConfigurationFactory
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.contract.FilesDelegate
 import com.seanshubin.condorcet.backend.crypto.SecureRandomIdGenerator
@@ -9,6 +11,10 @@ import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
 import com.seanshubin.condorcet.backend.logger.LoggerFactory
+import com.seanshubin.condorcet.backend.mail.MailService
+import com.seanshubin.condorcet.backend.mail.SendMailCommand
+import com.seanshubin.condorcet.backend.server.Configuration
+import com.seanshubin.condorcet.backend.server.JsonConfiguration
 import com.seanshubin.condorcet.backend.server.Notifications
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
@@ -50,12 +56,18 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val stateTableEvent: (GenericTable) -> Unit = regressionNotifications::stateTableEvent
     override val topLevelException: (Throwable) -> Unit = regressionNotifications::topLevelException
     override val sqlException: (String, String, SQLException) -> Unit = regressionNotifications::sqlException
+    override val sendMailEvent: (SendMailCommand) -> Unit = regressionNotifications::sendMailEvent
     override val uniqueIdGenerator: UniqueIdGenerator =
         RememberingUuidGenerator(realUniqueIdGenerator, uniqueIdGeneratorPath)
     override val clock: Clock = RememberingClock(realClock, clockPath)
-    override val configurationPath: Path = regressionSnapshotDir.resolve("configuration.json")
-    override val secretsConfigurationPath:Path = regressionSnapshotDir.resolve("secret-configuration.json")
+    private val configurationPath: Path = regressionSnapshotDir.resolve("configuration.json")
+    private val secretsConfigurationPath: Path = regressionSnapshotDir.resolve("secret-configuration.json")
+    private val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(configurationPath, files)
+    private val secretsConfigurationFactory: ConfigurationFactory =
+        JsonFileConfigurationFactory(secretsConfigurationPath, files)
+    override val configuration: Configuration = JsonConfiguration(configurationFactory, secretsConfigurationFactory)
     override val whereKeysAreStored: Path = regressionSnapshotDir
     private val backingRandom = Random.Default
     override val random: Random = RememberingRandom(backingRandom, randomPath)
+    override val mailService: MailService = MailServiceStub(sendMailEvent)
 }

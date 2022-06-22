@@ -14,6 +14,13 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
             name
         )
 
+    override fun findUserByEmail(email: String): User =
+        queryExactlyOneRow(
+            ::createUser,
+            "user-select-by-email",
+            email
+        )
+
     override fun searchUserByName(name: String): User? =
         queryZeroOrOneRow(
             ::createUser,
@@ -64,7 +71,12 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
         query(::createRanking, "ranking-select-by-user-election", voterName, electionName)
 
     override fun searchBallot(voterName: String, electionName: String): BallotSummary? {
-        return queryZeroOrOneRow(this::attachRankingsToBallot, "ballot-select-by-user-election", voterName, electionName)
+        return queryZeroOrOneRow(
+            this::attachRankingsToBallot,
+            "ballot-select-by-user-election",
+            voterName,
+            electionName
+        )
     }
 
     override fun listRankings(electionName: String): List<VoterElectionCandidateRank> =
@@ -81,7 +93,7 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
         )
 
     override fun listVoterNames(): List<String> =
-        query(::createName,"user-by-permission", Permission.USE_APPLICATION.toString())
+        query(::createName, "user-by-permission", Permission.USE_APPLICATION.toString())
 
     override fun listVotersForElection(electionName: String): List<String> =
         query(::createName, "user-by-election", electionName)
@@ -115,9 +127,9 @@ class MutableDbQueriesImpl(genericDatabase: GenericDatabase) : MutableDbQueries,
     }
 
     private fun attachRankingsToBallot(resultSet: ResultSet): BallotSummary {
-        val userName:String = resultSet.getString("user_name")
-        val electionName:String = resultSet.getString("election_name")
-        val confirmation:String = resultSet.getString("confirmation")
+        val userName: String = resultSet.getString("user_name")
+        val electionName: String = resultSet.getString("election_name")
+        val confirmation: String = resultSet.getString("confirmation")
         val whenCast: Instant = resultSet.getTimestamp("when_cast").toInstant()
         return BallotSummary(userName, electionName, confirmation, whenCast)
     }

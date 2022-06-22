@@ -8,5 +8,6 @@ enum class RegressionFile(val fileName: String, val extension: String) {
     EVENT_TABLE("event-table", "txt"),
     STATE("state", "sql"),
     STATE_TABLE("state-table", "txt"),
-    TOP_LEVEL_EXCEPTION("top-level-exception", "txt");
+    TOP_LEVEL_EXCEPTION("top-level-exception", "txt"),
+    MAIL("mail", "txt");
 }

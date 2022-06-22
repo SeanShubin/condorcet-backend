@@ -31,7 +31,7 @@ class RestoreRunner(
                             stateConnection
                         )
                         val eventCount = immutableDbQueries.eventCount()
-                        if(eventCount > 0) {
+                        if (eventCount > 0) {
                             println("Not restoring from $backupFilePath, immutable database not empty, it has $eventCount events")
                         } else {
                             files.newBufferedReader(backupFilePath, charset).use { bufferedReader ->

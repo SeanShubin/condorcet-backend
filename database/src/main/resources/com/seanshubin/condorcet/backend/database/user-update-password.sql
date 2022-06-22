@@ -1,4 +1,5 @@
 update
     user
-set salt = ?, hash = ?
+set salt = ?,
+    hash = ?
 where name = ?

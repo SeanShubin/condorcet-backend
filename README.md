@@ -1,6 +1,7 @@
 # Condorcet Backend
 
 ## Style Guide
+
 [Style Guide](docs/style-guide.md)
 
 ## Prerequisites

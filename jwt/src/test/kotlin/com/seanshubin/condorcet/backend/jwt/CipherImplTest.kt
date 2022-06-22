@@ -18,7 +18,7 @@ class CipherImplTest {
     }
 
     @Test
-    fun notExpiredYet(){
+    fun notExpiredYet() {
         val tester = createTester()
         val original = mapOf("foo" to "bar")
         val encoded = tester.cipher.encode(original, ClockStub.minutes(2))
@@ -28,7 +28,7 @@ class CipherImplTest {
     }
 
     @Test
-    fun expired(){
+    fun expired() {
         val tester = createTester()
         val original = mapOf("foo" to "bar")
         val encoded = tester.cipher.encode(original, ClockStub.minutes(2))
@@ -40,8 +40,8 @@ class CipherImplTest {
 
     @Test
     fun willNotDecodeUsingNewKeys() {
-        val oldTester = createTester(oldPublicKey,oldPrivateKey)
-        val newTester = createTester(newPublicKey,newPrivateKey)
+        val oldTester = createTester(oldPublicKey, oldPrivateKey)
+        val newTester = createTester(newPublicKey, newPrivateKey)
         val original = mapOf("foo" to "bar")
         val encoded = oldTester.cipher.encode(original, ClockStub.minutes(1))
         assertFailsWith<SignatureVerificationException> {
@@ -49,19 +49,19 @@ class CipherImplTest {
         }
     }
 
-    private fun createTester():Tester = createTester(oldPublicKey, oldPrivateKey)
+    private fun createTester(): Tester = createTester(oldPublicKey, oldPrivateKey)
 
-    private fun createTester(publicKeyHex:String, privateKeyHex:String):Tester =
+    private fun createTester(publicKeyHex: String, privateKeyHex: String): Tester =
         Tester(publicKeyHex, privateKeyHex)
 
-    class Tester(publicKeyHex:String, privateKeyHex:String) {
+    class Tester(publicKeyHex: String, privateKeyHex: String) {
         val keyStore = KeyStoreStub(publicKeyHex, privateKeyHex)
         val algorithmFactory = AlgorithmFactoryImpl(keyStore)
         val clock = ClockStub()
         val cipher = CipherImpl(algorithmFactory, clock)
     }
 
-    class KeyStoreStub(val publicKeyHex:String, val privateKeyHex:String) : KeyStore {
+    class KeyStoreStub(val publicKeyHex: String, val privateKeyHex: String) : KeyStore {
         override fun privateKey(): ByteArray {
             return privateKeyHex.fromHexToBytes()
         }

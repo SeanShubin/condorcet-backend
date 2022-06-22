@@ -19,8 +19,8 @@ object ToKotlinString {
         return "Pair(${first.toKotlinString()}, ${second.toKotlinString()})"
     }
 
-    fun Map<String, String>.toKotlinString():String {
-        val pairs = map{it.toPair().toKotlinString()}.joinToString(", ")
+    fun Map<String, String>.toKotlinString(): String {
+        val pairs = map { it.toPair().toKotlinString() }.joinToString(", ")
         return "mapOf(${pairs})"
     }
 
@@ -87,7 +87,7 @@ object ToKotlinString {
     fun Ranking.toKotlinString(): String =
         "Ranking(${candidateName.toKotlinString()}, ${rank.toKotlinString()})"
 
-    private fun Ballot.toKotlinString():String = when(this){
+    private fun Ballot.toKotlinString(): String = when (this) {
         is SecretBallot -> this.toKotlinString()
         is RevealedBallot -> this.toKotlinString()
         else -> throw UnsupportedOperationException("Unknown Ballot type ${this.javaClass.name}")

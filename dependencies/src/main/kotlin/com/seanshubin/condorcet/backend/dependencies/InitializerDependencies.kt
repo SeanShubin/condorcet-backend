@@ -7,9 +7,9 @@ import com.seanshubin.condorcet.backend.genericdb.*
 class InitializerDependencies(
     integration: Integration,
     connection: ConnectionWrapper,
-    val lookupImmutableSchemaName:() -> String,
-    val lookupMutableSchemaName:() -> String
-    ) {
+    val lookupImmutableSchemaName: () -> String,
+    val lookupMutableSchemaName: () -> String
+) {
     private val eventTableEvent: (GenericTable) -> Unit = integration.eventTableEvent
     private val stateTableEvent: (GenericTable) -> Unit = integration.stateTableEvent
     private val queryLoader: QueryLoader = QueryLoaderFromResource()

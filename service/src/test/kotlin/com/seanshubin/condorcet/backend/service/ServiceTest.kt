@@ -4,6 +4,8 @@ import com.seanshubin.condorcet.backend.crypto.OneWayHash
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.domain.Role
 import org.junit.Test
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 import kotlin.test.assertEquals
 
 class ServiceTest {
@@ -86,6 +88,10 @@ class ServiceTest {
         private val synchronizer = SynchronizerStub()
         private val random = RandomStub()
         private val mailService = MailServiceUnsupportedOperation()
+        private val lookupFromAddress = { "from-address" }
+        private val lookupAppName = { "app-name" }
+        private val emailAccessTokenExpire = Duration.of(10, ChronoUnit.MINUTES)
+        private val createUpdatePasswordLink = { accessToken: AccessToken -> "update-password-link" }
         val service: Service = BaseService(
             passwordUtil,
             eventDbFake,
@@ -95,7 +101,11 @@ class ServiceTest {
             random,
             clock,
             uniqueIdGenerator,
-            mailService
+            mailService,
+            lookupFromAddress,
+            lookupAppName,
+            emailAccessTokenExpire,
+            createUpdatePasswordLink
         )
     }
 }

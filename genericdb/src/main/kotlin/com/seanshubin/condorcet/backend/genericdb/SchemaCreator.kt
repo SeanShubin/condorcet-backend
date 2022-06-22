@@ -7,8 +7,9 @@ interface SchemaCreator {
     fun initialize()
     fun listAllData()
     fun listAllDebugData()
-    companion object{
-        fun isDatabaseMissing(ex:SQLException):Boolean =
+
+    companion object {
+        fun isDatabaseMissing(ex: SQLException): Boolean =
             ex.message?.contains("Unknown database", ignoreCase = true) == true
     }
 }

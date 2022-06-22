@@ -10,6 +10,7 @@ import kotlin.test.assertEquals
 class UserRolePermissionsTest {
     val allPermissions = Permission.values().toList()
     val allPermissionsExceptManageUsers = allPermissions.filterNot { it == Permission.MANAGE_USERS }
+
     @Test
     fun typicalCase() {
         val someOwner = UserRolePermissions("owner", OWNER, allPermissions)
@@ -17,7 +18,7 @@ class UserRolePermissionsTest {
         val someAdmin = UserRolePermissions("admin", ADMIN, allPermissions)
         val someUser = UserRole("user", USER)
         val someObserver = UserRole("observer", OBSERVER)
-        val someNoAccess= UserRole("no-access", NO_ACCESS)
+        val someNoAccess = UserRole("no-access", NO_ACCESS)
         verifyCanChangeRoleTo(someOwner, someUser, AUDITOR, Right(Unit))
         verifyCanChangeRoleTo(someAuditor, someObserver, NO_ACCESS, Right(Unit))
         verifyCanChangeRoleTo(someAdmin, someNoAccess, USER, Right(Unit))
@@ -33,7 +34,7 @@ class UserRolePermissionsTest {
     @Test
     fun canNotChangeSelfRole() {
         val someOwner = UserRolePermissions("owner", OWNER, allPermissions)
-        val someAdmin= UserRolePermissions("admin", ADMIN, allPermissions)
+        val someAdmin = UserRolePermissions("admin", ADMIN, allPermissions)
         verifyCanChangeRoleTo(someOwner, someOwner.toUserRole(), OWNER, Left("may not change role of self"))
         verifyCanChangeRoleTo(someOwner, someOwner.toUserRole(), ADMIN, Left("may not change role of self"))
         verifyCanChangeRoleTo(someAdmin, someAdmin.toUserRole(), OWNER, Left("may not change role of self"))
@@ -42,7 +43,7 @@ class UserRolePermissionsTest {
 
     @Test
     fun mayOnlyAssignLessorRoles() {
-        val someAdmin= UserRolePermissions("admin", ADMIN, allPermissions)
+        val someAdmin = UserRolePermissions("admin", ADMIN, allPermissions)
         val someUser = UserRole("user", USER)
         verifyCanChangeRoleTo(someAdmin, someUser, ADMIN, Left("may only assign lessor roles"))
         verifyCanChangeRoleTo(someAdmin, someUser, AUDITOR, Left("may only assign lessor roles"))
@@ -50,7 +51,7 @@ class UserRolePermissionsTest {
 
     @Test
     fun mayOnlyAssignToUsersWithLessorRoles() {
-        val someAdmin= UserRolePermissions("admin", ADMIN, allPermissions)
+        val someAdmin = UserRolePermissions("admin", ADMIN, allPermissions)
         val someAuditor = UserRole("auditor", AUDITOR)
         val otherAdmin = UserRole("other admin", ADMIN)
         verifyCanChangeRoleTo(someAdmin, someAuditor, USER, Left("may only modify users with lessor roles"))
@@ -64,7 +65,7 @@ class UserRolePermissionsTest {
         val someAdmin = UserRolePermissions("admin", ADMIN, allPermissionsExceptManageUsers)
         val someUser = UserRole("user", USER)
         val someObserver = UserRole("observer", OBSERVER)
-        val someNoAccess= UserRole("no-access", NO_ACCESS)
+        val someNoAccess = UserRole("no-access", NO_ACCESS)
         verifyCanChangeRoleTo(someOwner, someUser, AUDITOR, Left("must have MANAGE_USERS permission"))
         verifyCanChangeRoleTo(someAuditor, someObserver, NO_ACCESS, Left("must have MANAGE_USERS permission"))
         verifyCanChangeRoleTo(someAdmin, someNoAccess, USER, Left("must have MANAGE_USERS permission"))
@@ -83,13 +84,18 @@ class UserRolePermissionsTest {
         verifyListedRolesFor(someAdmin, someNoAccess, listOf(NO_ACCESS, OBSERVER, VOTER, USER))
     }
 
-    fun verifyListedRolesFor(self:UserRolePermissions, target:UserRole, expected: List<Role>){
+    fun verifyListedRolesFor(self: UserRolePermissions, target: UserRole, expected: List<Role>) {
         val actual = self.listedRolesFor(target)
         assertEquals(expected, actual, "$self $target")
     }
 
-    fun verifyCanChangeRoleTo(self:UserRolePermissions, target:UserRole, newRole:Role, expected:Either<String, Unit>){
+    fun verifyCanChangeRoleTo(
+        self: UserRolePermissions,
+        target: UserRole,
+        newRole: Role,
+        expected: Either<String, Unit>
+    ) {
         val actual = self.canChangeRole(target, newRole)
-        assertEquals(expected, actual,"$self $target $newRole")
+        assertEquals(expected, actual, "$self $target $newRole")
     }
 }

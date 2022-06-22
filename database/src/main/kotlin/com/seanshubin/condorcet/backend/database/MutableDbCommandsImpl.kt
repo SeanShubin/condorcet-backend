@@ -17,7 +17,14 @@ class MutableDbCommandsImpl(
         update("variable-insert-last-synced", lastSynced)
     }
 
-    override fun createUser(authority: String, userName: String, email: String, salt: String, hash: String, role: Role) {
+    override fun createUser(
+        authority: String,
+        userName: String,
+        email: String,
+        salt: String,
+        hash: String,
+        role: Role
+    ) {
         update("user-insert", userName, email, salt, hash, role.name)
     }
 
@@ -43,12 +50,12 @@ class MutableDbCommandsImpl(
         }
         if (updates.clearNoVotingBefore == true) {
             update("election-update-no-voting-before", null, updatedName)
-        } else if(updates.noVotingBefore != null) {
+        } else if (updates.noVotingBefore != null) {
             update("election-update-no-voting-before", updates.noVotingBefore, updatedName)
         }
         if (updates.clearNoVotingAfter == true) {
             update("election-update-no-voting-after", null, updatedName)
-        } else if(updates.noVotingAfter != null) {
+        } else if (updates.noVotingAfter != null) {
             update("election-update-no-voting-after", updates.noVotingAfter, updatedName)
         }
         if (updates.allowEdit != null) {
@@ -87,7 +94,14 @@ class MutableDbCommandsImpl(
         }
     }
 
-    override fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>, confirmation:String, now:Instant) {
+    override fun castBallot(
+        authority: String,
+        voterName: String,
+        electionName: String,
+        rankings: List<Ranking>,
+        confirmation: String,
+        now: Instant
+    ) {
         update("ballot-insert", voterName, electionName, confirmation, now)
         setRankings(authority, confirmation, electionName, rankings)
     }
@@ -110,7 +124,7 @@ class MutableDbCommandsImpl(
         }
     }
 
-    override fun setPassword(authority: String, userName: String, salt: String, hash:String) {
+    override fun setPassword(authority: String, userName: String, salt: String, hash: String) {
         update("user-update-password", salt, hash, userName)
     }
 }

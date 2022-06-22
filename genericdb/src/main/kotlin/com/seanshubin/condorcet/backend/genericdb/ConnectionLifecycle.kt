@@ -6,7 +6,7 @@ import java.sql.SQLException
 class ConnectionLifecycle(
     private val databaseConfiguration: DatabaseConfiguration,
     private val sqlEvent: (String) -> Unit,
-    private val sqlException:(String, String, SQLException) -> Unit
+    private val sqlException: (String, String, SQLException) -> Unit
 ) : Lifecycle<ConnectionWrapper> {
     override fun <U> withValue(f: (ConnectionWrapper) -> U): U {
         val host = databaseConfiguration.lookupHost()

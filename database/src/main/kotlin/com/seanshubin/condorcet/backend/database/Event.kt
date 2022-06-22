@@ -9,11 +9,12 @@ data class Event(
     val type: String,
     val text: String
 ) {
-    fun toLine():String = toRow().joinToString("\t")
+    fun toLine(): String = toRow().joinToString("\t")
 
-    private fun toRow():List<Any> = listOf(id, whenHappened, authority, type, text)
-    companion object{
-        fun fromLine(line:String):Event {
+    private fun toRow(): List<Any> = listOf(id, whenHappened, authority, type, text)
+
+    companion object {
+        fun fromLine(line: String): Event {
             val parts = line.split('\t')
             val id = parts[0].toInt()
             val whenHappened = Instant.parse(parts[1])

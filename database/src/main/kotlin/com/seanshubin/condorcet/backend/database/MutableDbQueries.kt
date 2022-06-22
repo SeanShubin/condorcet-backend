@@ -5,12 +5,13 @@ import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
 
 interface MutableDbQueries : GenericDatabase {
     fun findUserByName(name: String): User
+    fun findUserByEmail(email: String): User
     fun searchUserByName(name: String): User?
     fun searchUserByEmail(email: String): User?
     fun userCount(): Int
     fun electionCount(): Int
-    fun candidateCount(electionName:String):Int
-    fun voterCount(electionName:String):Int
+    fun candidateCount(electionName: String): Int
+    fun voterCount(electionName: String): Int
     fun tableCount(): Int
     fun listUsers(): List<User>
     fun listElections(): List<ElectionSummary>
@@ -22,8 +23,8 @@ interface MutableDbQueries : GenericDatabase {
     fun listRankings(electionName: String): List<VoterElectionCandidateRank>
     fun searchBallot(voterName: String, electionName: String): BallotSummary?
     fun listBallots(electionName: String): List<RevealedBallot>
-    fun listVoterNames():List<String>
-    fun listVotersForElection(electionName:String):List<String>
-    fun listUserNames():List<String>
-    fun listPermissions(role:Role):List<Permission>
+    fun listVoterNames(): List<String>
+    fun listVotersForElection(electionName: String): List<String>
+    fun listUserNames(): List<String>
+    fun listPermissions(role: Role): List<Permission>
 }

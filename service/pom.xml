@@ -35,6 +35,16 @@
             <artifactId>condorcet-backend-mail</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.seanshubin.condorcet.backend</groupId>
+            <artifactId>condorcet-backend-jwt</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.seanshubin.condorcet.backend</groupId>
+            <artifactId>condorcet-backend-global-constants</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <parent>
         <groupId>com.seanshubin.condorcet.backend</groupId>

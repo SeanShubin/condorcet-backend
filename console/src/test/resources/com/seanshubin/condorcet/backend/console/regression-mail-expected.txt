@@ -1,0 +1,7 @@
+from   : system@regression-test.com
+to     : Alice<alice@email.com>
+subject: Change password for regression test
+Use this link to update your password
+It will expire in 10 minutes
+regression-test.com/changePassword?accessToken=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2NTU4NTcxNDcsInVzZXJOYW1lIjoiQWxpY2UifQ.GrIvChQUM-MK51NsQDIgUFd8NzPvOaXv9qBOopmVkZLVR5ZA8kasRFqNc6eSNZJDaCW8YgukTqhrYySvcVyuAzT8dqS6F5LEAuUa-FcQnz85nrPBZYm6fwzuhL9UOaubegNn6RFHsf-QoZ08BU2q5SlLyR6Oe_YAKazwMzNNUD4
+

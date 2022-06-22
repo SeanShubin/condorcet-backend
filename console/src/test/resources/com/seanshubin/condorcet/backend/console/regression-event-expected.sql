@@ -5,25 +5,25 @@ from event
 where id > 0
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-03-13 01:21:43.876718', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"95127FEBEA8BD883B729D2D84CF4BC51","hash":"A820B9ACBBAE29C9D8C95AA85450ACF3BB911A4D80737E2F1BE9D51BCE2ECB1A","role":"VOTER"}');
+values ('2022-03-13 01:21:43.876718', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"95127FEBEA8BD883B729D2D84CF4BC51","hash":"A820B9ACBBAE29C9D8C95AA85450ACF3BB911A4D80737E2F1BE9D51BCE2ECB1A","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 1
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-03-13 01:21:43.985961', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"168A7E74F7E93F3AD3FFF89BCAEB8965","hash":"B6EA0C8348FC80D297B22779874F224DCD6E01D6140BA1547D677F9168C2E4AC","role":"VOTER"}');
+values ('2022-03-13 01:21:43.985961', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"168A7E74F7E93F3AD3FFF89BCAEB8965","hash":"B6EA0C8348FC80D297B22779874F224DCD6E01D6140BA1547D677F9168C2E4AC","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 2
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-03-13 01:21:44.122167', 'Dave', 'AddUser', '{"name":"Dave","email":"dave@email.com","salt":"28E7E88968AEA760BDC7E9C27EB29083","hash":"797E878E90C3936917ED74B3CE92915F7373ECBEA023107F437321F7AD1D5FFA","role":"VOTER"}');
+values ('2022-03-13 01:21:44.122167', 'Dave', 'AddUser', '{"name":"Dave","email":"dave@email.com","salt":"28E7E88968AEA760BDC7E9C27EB29083","hash":"797E878E90C3936917ED74B3CE92915F7373ECBEA023107F437321F7AD1D5FFA","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 3
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-03-13 01:21:44.221046', 'Eve', 'AddUser', '{"name":"Eve","email":"eve@email.com","salt":"5CD781EC81444AAC3B43D60DAD621B15","hash":"E79D34E6D38A14C470ABFD5B840C5E8217DDC7C66D9F49A66C6EC7A78D2C9D7E","role":"VOTER"}');
+values ('2022-03-13 01:21:44.221046', 'Eve', 'AddUser', '{"name":"Eve","email":"eve@email.com","salt":"5CD781EC81444AAC3B43D60DAD621B15","hash":"E79D34E6D38A14C470ABFD5B840C5E8217DDC7C66D9F49A66C6EC7A78D2C9D7E","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 4

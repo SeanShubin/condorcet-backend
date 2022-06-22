@@ -67,7 +67,7 @@
     console            [ server dependencies ]
     dependencies       [ server ]
     server             [ jetty service-http configuration-util ]
-    service-http       [ service http jwt ]
+    service-http       [ service http jwt global-constants ]
     jwt                [ java-jwt contract string-util ]
     http               []
     service            [ crypto io database json logger mail ]
@@ -82,6 +82,7 @@
     string-util        []
     mail               [ java-mail ]
     configuration-util [ json contract]
+    global-constants   []
   }
   detangler [console]
   consoleEntryPoint {

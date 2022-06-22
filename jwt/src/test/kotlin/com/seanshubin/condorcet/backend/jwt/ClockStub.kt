@@ -6,7 +6,7 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
-class ClockStub: Clock() {
+class ClockStub : Clock() {
     var currentTime = Clock.systemUTC().instant()
     override fun instant(): Instant {
         return currentTime
@@ -20,11 +20,11 @@ class ClockStub: Clock() {
         throw UnsupportedOperationException("not implemented")
     }
 
-    fun passTime(duration:Duration){
+    fun passTime(duration: Duration) {
         currentTime = currentTime.plus(duration)
     }
 
     companion object {
-        fun minutes(quantity:Int): Duration = Duration.of(quantity.toLong(), ChronoUnit.MINUTES)
+        fun minutes(quantity: Int): Duration = Duration.of(quantity.toLong(), ChronoUnit.MINUTES)
     }
 }

@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.service
 
-import com.seanshubin.condorcet.backend.database.*
+import com.seanshubin.condorcet.backend.database.MutableDbCommands
+import com.seanshubin.condorcet.backend.database.MutableDbQueries
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.genericdb.Schema
@@ -16,7 +17,14 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun createUser(authority: String, userName: String, email: String, salt: String, hash: String, role: Role) {
+    override fun createUser(
+        authority: String,
+        userName: String,
+        email: String,
+        salt: String,
+        hash: String,
+        role: Role
+    ) {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -214,7 +222,7 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun debugQuery(name:String, sql: String) {
+    override fun debugQuery(name: String, sql: String) {
         throw UnsupportedOperationException("not implemented")
     }
 
@@ -259,7 +267,11 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
         throw UnsupportedOperationException("not implemented")
     }
 
-    override fun setPassword(authority: String, userName: String, salt: String, hash:String) {
+    override fun setPassword(authority: String, userName: String, salt: String, hash: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun findUserByEmail(email: String): User {
         throw UnsupportedOperationException("not implemented")
     }
 }

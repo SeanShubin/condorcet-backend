@@ -37,11 +37,18 @@ interface MutableDbCommands {
 
     fun removeVoters(authority: String, electionName: String, voterNames: List<String>)
 
-    fun castBallot(authority: String, voterName: String, electionName: String, rankings: List<Ranking>, confirmation:String, now: Instant)
+    fun castBallot(
+        authority: String,
+        voterName: String,
+        electionName: String,
+        rankings: List<Ranking>,
+        confirmation: String,
+        now: Instant
+    )
 
-    fun setRankings(authority: String, confirmation:String, electionName:String, rankings: List<Ranking>)
+    fun setRankings(authority: String, confirmation: String, electionName: String, rankings: List<Ranking>)
 
-    fun updateWhenCast(authority:String, confirmation: String, now:Instant)
+    fun updateWhenCast(authority: String, confirmation: String, now: Instant)
 
-    fun setPassword(authority:String, userName:String, salt:String, hash:String)
+    fun setPassword(authority: String, userName: String, salt: String, hash: String)
 }

@@ -33,10 +33,10 @@ Content-Type: application/json
 Cache-Control: 43200
 Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDMsInVzZXJOYW1lIjoiQm9iIn0.NVMibxgYxSX2a3HdYX8MN-aGiJynRNCzEGmXGq76xEh6_jMjh0GtDsRu-uyMCZ2podb1h941y1GcVLMNGO600mDSK5d0BkTjfkbaRXeezm__Qp7kU6OUZmXl7LLDVWvVha9XwMHVXjmWCqsWGks1Pd2NK0x_AT6DCXNQ_qJ_-oM; HttpOnly
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjMsInVzZXJOYW1lIjoiQm9iIn0.Gn2ytG0b8sMnecGs63-igcV7XtL-A8j-mnRq3QLWoe4osXEAELa1-VLSeghcmviHhoJpSu047qLa9feRuqwXfmV7yaeezk5UuUz-bMJERZnu8-GUsyE4xzasQWyhmW5i36QSa1n_WX6RhPxx1XbH8Sr7OzzflfHEojzv2At-z6s",
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2MywidXNlck5hbWUiOiJCb2IifQ.gbTxKOvDGDhknJBCo0HT1RcavXSaqDwiIND-3gkvqd1X6F1tKQueGsVAn9tsAI7qwrxwerlRCyj07kAcjzIKSW0vxAV99ggIbnk3Jl7Zq9qljuR-S36HpgdQe0Qd_K4HEt4RXBLS2r0nauhEtVaKwGmJAU8oAnOZGbVOVukcYN4",
   "userName" : "Bob",
-  "role" : "VOTER",
-  "permissions" : [ "VOTE", "VIEW_APPLICATION" ]
+  "role" : "USER",
+  "permissions" : [ "USE_APPLICATION", "VOTE", "VIEW_APPLICATION" ]
 }
 
 /Register
@@ -45,17 +45,17 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDM
   "email" : "carol@email.com",
   "password" : "carol-password"
 }
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjMsInVzZXJOYW1lIjoiQm9iIn0.Gn2ytG0b8sMnecGs63-igcV7XtL-A8j-mnRq3QLWoe4osXEAELa1-VLSeghcmviHhoJpSu047qLa9feRuqwXfmV7yaeezk5UuUz-bMJERZnu8-GUsyE4xzasQWyhmW5i36QSa1n_WX6RhPxx1XbH8Sr7OzzflfHEojzv2At-z6s
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2MywidXNlck5hbWUiOiJCb2IifQ.gbTxKOvDGDhknJBCo0HT1RcavXSaqDwiIND-3gkvqd1X6F1tKQueGsVAn9tsAI7qwrxwerlRCyj07kAcjzIKSW0vxAV99ggIbnk3Jl7Zq9qljuR-S36HpgdQe0Qd_K4HEt4RXBLS2r0nauhEtVaKwGmJAU8oAnOZGbVOVukcYN4
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDMsInVzZXJOYW1lIjoiQm9iIn0.NVMibxgYxSX2a3HdYX8MN-aGiJynRNCzEGmXGq76xEh6_jMjh0GtDsRu-uyMCZ2podb1h941y1GcVLMNGO600mDSK5d0BkTjfkbaRXeezm__Qp7kU6OUZmXl7LLDVWvVha9XwMHVXjmWCqsWGks1Pd2NK0x_AT6DCXNQ_qJ_-oM
 200
 Content-Type: application/json
 Cache-Control: 43200
 Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQsInVzZXJOYW1lIjoiQ2Fyb2wifQ.D5paybTdZAt-hk3hn8UaH6DEMukFbpWgcc7JAuFs4eyPdDmZW71ujBXiWwdDk43Y8yxBF6qKQuBYYx1Q0bFvBrS2xRWLXyFi8O1Vl1IXNvtiQ7k5JkZgSFAzWxvEK3u_4VvqwK5xYnkkO1gALc50-B4l_ZPLrq86Qsz4sRKOcdI; HttpOnly
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiQ2Fyb2wifQ.AUJvv2u8dNmfa5_BtWcAPz156bweVS8vlLuemgk5JsmR-PJz2C19B-3z52LeQHD8FKAh4SpRr5rng5s2PjocI3DHj4rV-t1Q3epz4YV--oYIPUJ2nzpAYP860b2tKBi4X1MCG9fbLHBQKTodJdTE00Tr9V0VE784HUfHmGKjnFE",
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2NCwidXNlck5hbWUiOiJDYXJvbCJ9.h2avPv4Hl3EaeoSDtg7tL9ECklMvct75mBcFRAtDUI2w92ZU777z4BqQiOBoInTKfSQUVEqfdYYLIOYwnDrSyWeUfaYP6VoAmeE2HrWPhh-pxjsWOx9kOaFsQuZ03CAuTW2JCF2YJwcW-vi6T-Po5vzdLgIvIuEBC9dJ5H5Qn1k",
   "userName" : "Carol",
-  "role" : "VOTER",
-  "permissions" : [ "VOTE", "VIEW_APPLICATION" ]
+  "role" : "USER",
+  "permissions" : [ "USE_APPLICATION", "VOTE", "VIEW_APPLICATION" ]
 }
 
 /Register
@@ -64,17 +64,17 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQ
   "email" : "dave@email.com",
   "password" : "dave-password"
 }
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiQ2Fyb2wifQ.AUJvv2u8dNmfa5_BtWcAPz156bweVS8vlLuemgk5JsmR-PJz2C19B-3z52LeQHD8FKAh4SpRr5rng5s2PjocI3DHj4rV-t1Q3epz4YV--oYIPUJ2nzpAYP860b2tKBi4X1MCG9fbLHBQKTodJdTE00Tr9V0VE784HUfHmGKjnFE
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2NCwidXNlck5hbWUiOiJDYXJvbCJ9.h2avPv4Hl3EaeoSDtg7tL9ECklMvct75mBcFRAtDUI2w92ZU777z4BqQiOBoInTKfSQUVEqfdYYLIOYwnDrSyWeUfaYP6VoAmeE2HrWPhh-pxjsWOx9kOaFsQuZ03CAuTW2JCF2YJwcW-vi6T-Po5vzdLgIvIuEBC9dJ5H5Qn1k
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQsInVzZXJOYW1lIjoiQ2Fyb2wifQ.D5paybTdZAt-hk3hn8UaH6DEMukFbpWgcc7JAuFs4eyPdDmZW71ujBXiWwdDk43Y8yxBF6qKQuBYYx1Q0bFvBrS2xRWLXyFi8O1Vl1IXNvtiQ7k5JkZgSFAzWxvEK3u_4VvqwK5xYnkkO1gALc50-B4l_ZPLrq86Qsz4sRKOcdI
 200
 Content-Type: application/json
 Cache-Control: 43200
 Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQsInVzZXJOYW1lIjoiRGF2ZSJ9.Oz-K12_0CqzI_Ynh0xLy3szL7pogodXrq8Gc1Sh9AN6jn_eEpfVdeS-KGeyLrhxVWaS65tarGfvALYVTigniwdKMIvzh_1dg5Ct6g_FtbdFQ9HZahVlu8TO4VX6R4mPXT_s83fzgZocX6HicPrNcfKre7AV4rVx_mUHUAq3SYCU; HttpOnly
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiRGF2ZSJ9.GjwS7mLVDT8mdGEPVLXUmr4BuGVBrwRZ9D4S4r6n-LPxXtUyBgi-0X68FGrJ8nXMUGXrrchn7T7zFmsO2a16XIp1foqjy-Jso5LTUAuWVkMUnAv0_RcE_uXzd3drNw_YT3y7wBaBYD3w128YgP3aL269vWUmvY8V0fGu1nQAoRI",
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2NCwidXNlck5hbWUiOiJEYXZlIn0.eh-uaNvbdDFOEiPpdsEdeJHcRViCvxvzM5SftY3mkHtutPuocd8OWrFE2O3jA2aSBukA6yflDXlCAtI5Wdjq7wnm5x2vRNtvAw-WQO5ez35vnZ-srD6dObr6jW6jRO6SfjW0CBsuSI3dS22fX8SPGqjI1tJQaLfAGcdvuM7bKEM",
   "userName" : "Dave",
-  "role" : "VOTER",
-  "permissions" : [ "VOTE", "VIEW_APPLICATION" ]
+  "role" : "USER",
+  "permissions" : [ "USE_APPLICATION", "VOTE", "VIEW_APPLICATION" ]
 }
 
 /Register
@@ -83,21 +83,21 @@ Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQ
   "email" : "eve@email.com",
   "password" : "eve-password"
 }
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiRGF2ZSJ9.GjwS7mLVDT8mdGEPVLXUmr4BuGVBrwRZ9D4S4r6n-LPxXtUyBgi-0X68FGrJ8nXMUGXrrchn7T7zFmsO2a16XIp1foqjy-Jso5LTUAuWVkMUnAv0_RcE_uXzd3drNw_YT3y7wBaBYD3w128YgP3aL269vWUmvY8V0fGu1nQAoRI
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2NCwidXNlck5hbWUiOiJEYXZlIn0.eh-uaNvbdDFOEiPpdsEdeJHcRViCvxvzM5SftY3mkHtutPuocd8OWrFE2O3jA2aSBukA6yflDXlCAtI5Wdjq7wnm5x2vRNtvAw-WQO5ez35vnZ-srD6dObr6jW6jRO6SfjW0CBsuSI3dS22fX8SPGqjI1tJQaLfAGcdvuM7bKEM
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQsInVzZXJOYW1lIjoiRGF2ZSJ9.Oz-K12_0CqzI_Ynh0xLy3szL7pogodXrq8Gc1Sh9AN6jn_eEpfVdeS-KGeyLrhxVWaS65tarGfvALYVTigniwdKMIvzh_1dg5Ct6g_FtbdFQ9HZahVlu8TO4VX6R4mPXT_s83fzgZocX6HicPrNcfKre7AV4rVx_mUHUAq3SYCU
 200
 Content-Type: application/json
 Cache-Control: 43200
 Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQsInVzZXJOYW1lIjoiRXZlIn0.Sd5d4gWLn5gLKb_PISnNw8eBD6FhWOOVCSu43N3ybzXgbtcLrrvT-Yj7AOzS43EZqfhoAa4hOkz1vp9z-kqhtuoO2s7RwO1hsSwl0gDaG-C-THF7KJwMFHxZVXX3xTenZmsBwRy1ZvnwnTuv6xQKPV5nMqWGFanMonjM0Aj2qOA; HttpOnly
 {
-  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiRXZlIn0.Ueonnaskl9ZbFJEZtj3HntP1LLQQKEgufOJ0CC71tmnRUxRI4mOs3WArTWkzJi9eEgC5V0LEbu05H-Q6E1qlweW4EqBJF1l7SNcXi54Pv8rwzukkoqPUEGBrlJFtXPJeSlRlazYVp2UpH6f7RfXg9TRjvoEwg5Izm081JNTpiz0",
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2NCwidXNlck5hbWUiOiJFdmUifQ.KOGQ_FqvtBfydS_h6oo6jlRVu0E85TwchG9rAt2zkbPuiCtt3uZ9bEuwltAmYVZYGXONfAhKjIkI33giHBkFEf1ApWoFlqjUWZt8CZmwS5CNb6TbVRolGc2OJQMXlZYlb_GE0X3PGjST0VYOKJST4RlnoGcDOQ895LeDquqZLy4",
   "userName" : "Eve",
-  "role" : "VOTER",
-  "permissions" : [ "VOTE", "VIEW_APPLICATION" ]
+  "role" : "USER",
+  "permissions" : [ "USE_APPLICATION", "VOTE", "VIEW_APPLICATION" ]
 }
 
 /Logout
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiRXZlIn0.Ueonnaskl9ZbFJEZtj3HntP1LLQQKEgufOJ0CC71tmnRUxRI4mOs3WArTWkzJi9eEgC5V0LEbu05H-Q6E1qlweW4EqBJF1l7SNcXi54Pv8rwzukkoqPUEGBrlJFtXPJeSlRlazYVp2UpH6f7RfXg9TRjvoEwg5Izm081JNTpiz0
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2NCwidXNlck5hbWUiOiJFdmUifQ.KOGQ_FqvtBfydS_h6oo6jlRVu0E85TwchG9rAt2zkbPuiCtt3uZ9bEuwltAmYVZYGXONfAhKjIkI33giHBkFEf1ApWoFlqjUWZt8CZmwS5CNb6TbVRolGc2OJQMXlZYlb_GE0X3PGjST0VYOKJST4RlnoGcDOQ895LeDquqZLy4
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDQsInVzZXJOYW1lIjoiRXZlIn0.Sd5d4gWLn5gLKb_PISnNw8eBD6FhWOOVCSu43N3ybzXgbtcLrrvT-Yj7AOzS43EZqfhoAa4hOkz1vp9z-kqhtuoO2s7RwO1hsSwl0gDaG-C-THF7KJwMFHxZVXX3xTenZmsBwRy1ZvnwnTuv6xQKPV5nMqWGFanMonjM0Aj2qOA
 200
 Set-Cookie: Refresh=; HttpOnly
@@ -107,7 +107,7 @@ Set-Cookie: Refresh=; HttpOnly
   "nameOrEmail" : "Alice",
   "password" : "alice-password"
 }
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVk9URVIiLCJleHAiOjE2NDcxMzQ1NjQsInVzZXJOYW1lIjoiRXZlIn0.Ueonnaskl9ZbFJEZtj3HntP1LLQQKEgufOJ0CC71tmnRUxRI4mOs3WArTWkzJi9eEgC5V0LEbu05H-Q6E1qlweW4EqBJF1l7SNcXi54Pv8rwzukkoqPUEGBrlJFtXPJeSlRlazYVp2UpH6f7RfXg9TRjvoEwg5Izm081JNTpiz0
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsImV4cCI6MTY0NzEzNDU2NCwidXNlck5hbWUiOiJFdmUifQ.KOGQ_FqvtBfydS_h6oo6jlRVu0E85TwchG9rAt2zkbPuiCtt3uZ9bEuwltAmYVZYGXONfAhKjIkI33giHBkFEf1ApWoFlqjUWZt8CZmwS5CNb6TbVRolGc2OJQMXlZYlb_GE0X3PGjST0VYOKJST4RlnoGcDOQ895LeDquqZLy4
 Cookie: Refresh=
 200
 Content-Type: application/json
@@ -488,7 +488,7 @@ Content-Type: application/json
 {
   "name" : "event",
   "columnNames" : [ "id", "when", "authority", "type", "text" ],
-  "rows" : [ [ 1, "2022-03-13T01:21:43.136621", "Alice", "AddUser", "{\"name\":\"Alice\",\"email\":\"alice@email.com\",\"salt\":\"86E2763B5F192DCA4CEC3CE22023E273\",\"hash\":\"86765C5FC67880E5A65E15B5259242AC8AB8CAA3FE9F62AF00447626228ED4FF\",\"role\":\"OWNER\"}" ], [ 2, "2022-03-13T01:21:43.876718", "Bob", "AddUser", "{\"name\":\"Bob\",\"email\":\"bob@email.com\",\"salt\":\"95127FEBEA8BD883B729D2D84CF4BC51\",\"hash\":\"A820B9ACBBAE29C9D8C95AA85450ACF3BB911A4D80737E2F1BE9D51BCE2ECB1A\",\"role\":\"VOTER\"}" ], [ 3, "2022-03-13T01:21:43.985961", "Carol", "AddUser", "{\"name\":\"Carol\",\"email\":\"carol@email.com\",\"salt\":\"168A7E74F7E93F3AD3FFF89BCAEB8965\",\"hash\":\"B6EA0C8348FC80D297B22779874F224DCD6E01D6140BA1547D677F9168C2E4AC\",\"role\":\"VOTER\"}" ], [ 4, "2022-03-13T01:21:44.122167", "Dave", "AddUser", "{\"name\":\"Dave\",\"email\":\"dave@email.com\",\"salt\":\"28E7E88968AEA760BDC7E9C27EB29083\",\"hash\":\"797E878E90C3936917ED74B3CE92915F7373ECBEA023107F437321F7AD1D5FFA\",\"role\":\"VOTER\"}" ], [ 5, "2022-03-13T01:21:44.221046", "Eve", "AddUser", "{\"name\":\"Eve\",\"email\":\"eve@email.com\",\"salt\":\"5CD781EC81444AAC3B43D60DAD621B15\",\"hash\":\"E79D34E6D38A14C470ABFD5B840C5E8217DDC7C66D9F49A66C6EC7A78D2C9D7E\",\"role\":\"VOTER\"}" ], [ 6, "2022-03-13T01:21:44.575872", "Alice", "SetRole", "{\"name\":\"Bob\",\"role\":\"USER\"}" ], [ 7, "2022-03-13T01:21:44.633436", "Alice", "SetRole", "{\"name\":\"Dave\",\"role\":\"USER\"}" ], [ 8, "2022-03-13T01:21:44.678235", "Alice", "SetRole", "{\"name\":\"Eve\",\"role\":\"USER\"}" ], [ 9, "2022-03-13T01:21:44.742803", "Alice", "RemoveUser", "{\"name\":\"Carol\"}" ], [ 10, "2022-03-13T01:21:44.86151", "Alice", "AddElection", "{\"owner\":\"Alice\",\"name\":\"Delete Me\"}" ], [ 11, "2022-03-13T01:21:44.91723", "Alice", "AddElection", "{\"owner\":\"Alice\",\"name\":\"Favorite Ice Cream Flavor\"}" ], [ 12, "2022-03-13T01:21:44.994712", "Alice", "UpdateElection", "{\"name\":\"Favorite Ice Cream Flavor\",\"updates\":{\"newElectionName\":\"Favorite Ice Cream\",\"secretBallot\":true,\"clearNoVotingBefore\":true,\"noVotingBefore\":null,\"clearNoVotingAfter\":true,\"noVotingAfter\":null,\"allowVote\":null,\"allowEdit\":null}}" ], [ 13, "2022-03-13T01:21:45.067256", "Alice", "AddCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Chocolate\",\"Vanilla\",\"Strawberry\"]}" ], [ 14, "2022-03-13T01:21:45.138625", "Alice", "AddVoters", "{\"electionName\":\"Favorite Ice Cream\",\"voterNames\":[\"Alice\",\"Bob\",\"Dave\"]}" ], [ 15, "2022-03-13T01:21:45.295126", "Alice", "UpdateElection", "{\"name\":\"Favorite Ice Cream\",\"updates\":{\"newElectionName\":null,\"secretBallot\":null,\"clearNoVotingBefore\":null,\"noVotingBefore\":null,\"clearNoVotingAfter\":null,\"noVotingAfter\":null,\"allowVote\":true,\"allowEdit\":true}}" ], [ 16, "2022-03-13T01:21:45.380475", "Alice", "CastBallot", "{\"voterName\":\"Alice\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"candidateName\":\"Vanilla\",\"rank\":1},{\"candidateName\":\"Chocolate\",\"rank\":2}],\"confirmation\":\"8FDE24EC97C067F3315B31120D97ADE0\",\"now\":\"2022-03-13T01:21:45.378690Z\"}" ], [ 17, "2022-03-13T01:21:45.44093", "Alice", "RemoveCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Strawberry\"]}" ], [ 18, "2022-03-13T01:21:45.452531", "Alice", "AddCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Butter Pecan\",\"Neapolitan\",\"Mint\",\"Chocolate Chip\"]}" ], [ 19, "2022-03-13T01:21:45.504489", "Alice", "SetRankings", "{\"confirmation\":\"8FDE24EC97C067F3315B31120D97ADE0\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"candidateName\":\"Chocolate Chip\",\"rank\":1},{\"candidateName\":\"Neapolitan\",\"rank\":2},{\"candidateName\":\"Chocolate\",\"rank\":3},{\"candidateName\":\"Vanilla\",\"rank\":4},{\"candidateName\":\"Butter Pecan\",\"rank\":5},{\"candidateName\":\"Mint\",\"rank\":6}]}" ], [ 20, "2022-03-13T01:21:45.53352", "Alice", "UpdateWhenCast", "{\"confirmation\":\"8FDE24EC97C067F3315B31120D97ADE0\",\"now\":\"2022-03-13T01:21:45.503531Z\"}" ], [ 21, "2022-03-13T01:21:45.7038", "Alice", "DeleteElection", "{\"name\":\"Delete Me\"}" ] ]
+  "rows" : [ [ 1, "2022-03-13T01:21:43.136621", "Alice", "AddUser", "{\"name\":\"Alice\",\"email\":\"alice@email.com\",\"salt\":\"86E2763B5F192DCA4CEC3CE22023E273\",\"hash\":\"86765C5FC67880E5A65E15B5259242AC8AB8CAA3FE9F62AF00447626228ED4FF\",\"role\":\"OWNER\"}" ], [ 2, "2022-03-13T01:21:43.876718", "Bob", "AddUser", "{\"name\":\"Bob\",\"email\":\"bob@email.com\",\"salt\":\"95127FEBEA8BD883B729D2D84CF4BC51\",\"hash\":\"A820B9ACBBAE29C9D8C95AA85450ACF3BB911A4D80737E2F1BE9D51BCE2ECB1A\",\"role\":\"USER\"}" ], [ 3, "2022-03-13T01:21:43.985961", "Carol", "AddUser", "{\"name\":\"Carol\",\"email\":\"carol@email.com\",\"salt\":\"168A7E74F7E93F3AD3FFF89BCAEB8965\",\"hash\":\"B6EA0C8348FC80D297B22779874F224DCD6E01D6140BA1547D677F9168C2E4AC\",\"role\":\"USER\"}" ], [ 4, "2022-03-13T01:21:44.122167", "Dave", "AddUser", "{\"name\":\"Dave\",\"email\":\"dave@email.com\",\"salt\":\"28E7E88968AEA760BDC7E9C27EB29083\",\"hash\":\"797E878E90C3936917ED74B3CE92915F7373ECBEA023107F437321F7AD1D5FFA\",\"role\":\"USER\"}" ], [ 5, "2022-03-13T01:21:44.221046", "Eve", "AddUser", "{\"name\":\"Eve\",\"email\":\"eve@email.com\",\"salt\":\"5CD781EC81444AAC3B43D60DAD621B15\",\"hash\":\"E79D34E6D38A14C470ABFD5B840C5E8217DDC7C66D9F49A66C6EC7A78D2C9D7E\",\"role\":\"USER\"}" ], [ 6, "2022-03-13T01:21:44.575872", "Alice", "SetRole", "{\"name\":\"Bob\",\"role\":\"USER\"}" ], [ 7, "2022-03-13T01:21:44.633436", "Alice", "SetRole", "{\"name\":\"Dave\",\"role\":\"USER\"}" ], [ 8, "2022-03-13T01:21:44.678235", "Alice", "SetRole", "{\"name\":\"Eve\",\"role\":\"USER\"}" ], [ 9, "2022-03-13T01:21:44.742803", "Alice", "RemoveUser", "{\"name\":\"Carol\"}" ], [ 10, "2022-03-13T01:21:44.86151", "Alice", "AddElection", "{\"owner\":\"Alice\",\"name\":\"Delete Me\"}" ], [ 11, "2022-03-13T01:21:44.91723", "Alice", "AddElection", "{\"owner\":\"Alice\",\"name\":\"Favorite Ice Cream Flavor\"}" ], [ 12, "2022-03-13T01:21:44.994712", "Alice", "UpdateElection", "{\"name\":\"Favorite Ice Cream Flavor\",\"updates\":{\"newElectionName\":\"Favorite Ice Cream\",\"secretBallot\":true,\"clearNoVotingBefore\":true,\"noVotingBefore\":null,\"clearNoVotingAfter\":true,\"noVotingAfter\":null,\"allowVote\":null,\"allowEdit\":null}}" ], [ 13, "2022-03-13T01:21:45.067256", "Alice", "AddCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Chocolate\",\"Vanilla\",\"Strawberry\"]}" ], [ 14, "2022-03-13T01:21:45.138625", "Alice", "AddVoters", "{\"electionName\":\"Favorite Ice Cream\",\"voterNames\":[\"Alice\",\"Bob\",\"Dave\"]}" ], [ 15, "2022-03-13T01:21:45.295126", "Alice", "UpdateElection", "{\"name\":\"Favorite Ice Cream\",\"updates\":{\"newElectionName\":null,\"secretBallot\":null,\"clearNoVotingBefore\":null,\"noVotingBefore\":null,\"clearNoVotingAfter\":null,\"noVotingAfter\":null,\"allowVote\":true,\"allowEdit\":true}}" ], [ 16, "2022-03-13T01:21:45.380475", "Alice", "CastBallot", "{\"voterName\":\"Alice\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"candidateName\":\"Vanilla\",\"rank\":1},{\"candidateName\":\"Chocolate\",\"rank\":2}],\"confirmation\":\"8FDE24EC97C067F3315B31120D97ADE0\",\"now\":\"2022-03-13T01:21:45.378690Z\"}" ], [ 17, "2022-03-13T01:21:45.44093", "Alice", "RemoveCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Strawberry\"]}" ], [ 18, "2022-03-13T01:21:45.452531", "Alice", "AddCandidates", "{\"electionName\":\"Favorite Ice Cream\",\"candidateNames\":[\"Butter Pecan\",\"Neapolitan\",\"Mint\",\"Chocolate Chip\"]}" ], [ 19, "2022-03-13T01:21:45.504489", "Alice", "SetRankings", "{\"confirmation\":\"8FDE24EC97C067F3315B31120D97ADE0\",\"electionName\":\"Favorite Ice Cream\",\"rankings\":[{\"candidateName\":\"Chocolate Chip\",\"rank\":1},{\"candidateName\":\"Neapolitan\",\"rank\":2},{\"candidateName\":\"Chocolate\",\"rank\":3},{\"candidateName\":\"Vanilla\",\"rank\":4},{\"candidateName\":\"Butter Pecan\",\"rank\":5},{\"candidateName\":\"Mint\",\"rank\":6}]}" ], [ 20, "2022-03-13T01:21:45.53352", "Alice", "UpdateWhenCast", "{\"confirmation\":\"8FDE24EC97C067F3315B31120D97ADE0\",\"now\":\"2022-03-13T01:21:45.503531Z\"}" ], [ 21, "2022-03-13T01:21:45.7038", "Alice", "DeleteElection", "{\"name\":\"Delete Me\"}" ] ]
 }
 
 /Authenticate
@@ -1164,6 +1164,14 @@ Content-Type: application/json
 {
   "userName" : "Alice",
   "password" : "new-alice-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2NDcxMzQ1NjYsInVzZXJOYW1lIjoiQWxpY2UifQ.CPyUg4tyx9roQyx9iYFrD6Abhmo9TPoPMQqNh8VjMCxvKd8px9zvw6q5_7la3n6X_dw9816AaFFqndGBV_PvuKQZJzXhLBZOjDn8xD0mQrRehUlTVxNOOsicP_Pm2HkQHBgLxXf9_KqDvmj-5R3l06SMIVKwnxoai1SUNfpv6yk
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDYsInVzZXJOYW1lIjoiQWxpY2UifQ.FwXgatXW4DQIoXCNotKqPCZJXZ6pX8p_JtDqZbLIaKzPGiydpcG-t_5nDyzXhiw8ayijoDqpsz8lmBAJMb6TggXSNhmRGFr3WmkpZPOI-OloX4iSGJnKSdUel7Uf4_vqpLeUzTCLo-revMdzX_4Xsg3vBckC6BYAnxopAV1_E44
+200
+
+/SendLoginLinkByEmail
+{
+  "email" : "alice@email.com"
 }
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2NDcxMzQ1NjYsInVzZXJOYW1lIjoiQWxpY2UifQ.CPyUg4tyx9roQyx9iYFrD6Abhmo9TPoPMQqNh8VjMCxvKd8px9zvw6q5_7la3n6X_dw9816AaFFqndGBV_PvuKQZJzXhLBZOjDn8xD0mQrRehUlTVxNOOsicP_Pm2HkQHBgLxXf9_KqDvmj-5R3l06SMIVKwnxoai1SUNfpv6yk
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDYsInVzZXJOYW1lIjoiQWxpY2UifQ.FwXgatXW4DQIoXCNotKqPCZJXZ6pX8p_JtDqZbLIaKzPGiydpcG-t_5nDyzXhiw8ayijoDqpsz8lmBAJMb6TggXSNhmRGFr3WmkpZPOI-OloX4iSGJnKSdUel7Uf4_vqpLeUzTCLo-revMdzX_4Xsg3vBckC6BYAnxopAV1_E44

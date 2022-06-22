@@ -2,8 +2,6 @@ package com.seanshubin.condorcet.backend.server
 
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.database.ImmutableDbOperations
-import com.seanshubin.condorcet.backend.database.ImmutableDbQueries
-import com.seanshubin.condorcet.backend.genericdb.ConnectionLifecycle
 import com.seanshubin.condorcet.backend.genericdb.ConnectionWrapper
 import com.seanshubin.condorcet.backend.genericdb.Lifecycle
 import java.io.PrintWriter
@@ -18,7 +16,7 @@ class BackupRunner(
     private val eventConnectionLifecycle: Lifecycle<ConnectionWrapper>,
     private val stateConnectionLifecycle: Lifecycle<ConnectionWrapper>,
     private val createImmutableDbOperations: (ConnectionWrapper, ConnectionWrapper) -> ImmutableDbOperations
-):Runnable {
+) : Runnable {
     override fun run() {
         eventConnectionLifecycle.withValue { eventConnection ->
             stateConnectionLifecycle.withValue { stateConnection ->

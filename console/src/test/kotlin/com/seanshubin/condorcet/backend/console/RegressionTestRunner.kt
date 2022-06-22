@@ -19,14 +19,15 @@ class RegressionTestRunner(
         dependencies.schemaCreator.listAllDebugData()
     }
 
-    fun handleCommand(fakeBrowser: FakeBrowser, index:Int, command: ServiceCommand) {
+    fun handleCommand(fakeBrowser: FakeBrowser, index: Int, command: ServiceCommand) {
         val target = "/" + command.javaClass.simpleName
         val baseRequest = Request(null, null)
         val request = RequestStub(fakeBrowser, target, command)
         val response = ResponseStub()
         dependencies.handler.handle(target, baseRequest, request, response)
-        if(response.status != 200){
-            val header = "command[$index] failed\nRegression test is for happy path only, only responses with status 200 expected"
+        if (response.status != 200) {
+            val header =
+                "command[$index] failed\nRegression test is for happy path only, only responses with status 200 expected"
             val lines = listOf(header) + request.toLines() + listOf("") + response.toLines()
             throw RuntimeException(lines.joinToString("\n"))
         }

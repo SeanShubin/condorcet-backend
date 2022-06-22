@@ -1,5 +1,6 @@
 package com.seanshubin.condorcet.backend.genericdb
 
+import com.mysql.cj.PreparedQuery
 import com.mysql.cj.jdbc.ClientPreparedStatement
 import java.sql.*
 import java.time.Instant
@@ -159,5 +160,9 @@ class ConnectionWrapper(
         }
     }
 
-    private fun Statement.asSql(): String = (this as ClientPreparedStatement).asSql()
+    private fun Statement.asSql(): String {
+        this as ClientPreparedStatement
+        val query = this.query as PreparedQuery
+        return query.asSql()
+    }
 }

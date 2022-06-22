@@ -22,7 +22,9 @@
     }
   },
   "mail" : {
-    "host" : "email-host",
-    "user" : "email-user"
+    "host" : "regression-test.com",
+    "user" : "system",
+    "from" : "system@regression-test.com",
+    "applicationName" : "regression test"
   }
 }

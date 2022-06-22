@@ -1,11 +1,18 @@
 package com.seanshubin.condorcet.backend.service
 
-import com.seanshubin.condorcet.backend.domain.User
 import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.domain.User
 
 class MutableDbFake : MutableDbNotImplemented {
     val users = mutableListOf<User>()
-    override fun createUser(authority: String, userName: String, email: String, salt: String, hash: String, role: Role) {
+    override fun createUser(
+        authority: String,
+        userName: String,
+        email: String,
+        salt: String,
+        hash: String,
+        role: Role
+    ) {
         users.add(User(userName, email, salt, hash, role))
     }
 

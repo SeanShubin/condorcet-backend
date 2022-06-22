@@ -1,11 +1,21 @@
 package com.seanshubin.condorcet.backend.console
 
+import com.seanshubin.condorcet.backend.configuration.util.ConfigurationFactory
+import com.seanshubin.condorcet.backend.configuration.util.JsonFileConfigurationFactory
+import com.seanshubin.condorcet.backend.contract.FilesContract
+import com.seanshubin.condorcet.backend.contract.FilesDelegate
 import com.seanshubin.condorcet.backend.crypto.SecureRandomIdGenerator
 import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.dependencies.Integration
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.http.RequestValue
 import com.seanshubin.condorcet.backend.http.ResponseValue
+import com.seanshubin.condorcet.backend.mail.MailConfiguration
+import com.seanshubin.condorcet.backend.mail.MailService
+import com.seanshubin.condorcet.backend.mail.SendMailCommand
+import com.seanshubin.condorcet.backend.mail.SmtpMailService
+import com.seanshubin.condorcet.backend.server.Configuration
+import com.seanshubin.condorcet.backend.server.JsonConfiguration
 import com.seanshubin.condorcet.backend.server.LoggingNotificationsFactory
 import com.seanshubin.condorcet.backend.server.Notifications
 import java.nio.file.Path
@@ -31,12 +41,21 @@ class ConsoleIntegration : Integration {
     override val serviceResponseEvent: (String, String, String) -> Unit = notifications::serviceResponseEvent
     override val topLevelException: (Throwable) -> Unit = notifications::topLevelException
     override val sqlException: (String, String, SQLException) -> Unit = notifications::sqlException
+    override val sendMailEvent: (SendMailCommand) -> Unit = notifications::sendMailEvent
     override val uniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator()
     override val clock: Clock = Clock.systemUTC()
     private val configurationDir = Paths.get("local-config")
     private val secretsDir: Path = configurationDir.resolve("secrets")
-    override val configurationPath: Path = configurationDir.resolve("configuration.json")
-    override val secretsConfigurationPath:Path = secretsDir.resolve("secret-configuration.json")
+    private val configurationPath: Path = configurationDir.resolve("configuration.json")
+    private val secretsConfigurationPath: Path = secretsDir.resolve("secret-configuration.json")
+    private val files: FilesContract = FilesDelegate
+    private val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(configurationPath, files)
+    private val secretsConfigurationFactory: ConfigurationFactory =
+        JsonFileConfigurationFactory(secretsConfigurationPath, files)
+    override val configuration: Configuration =
+        JsonConfiguration(configurationFactory, secretsConfigurationFactory)
     override val whereKeysAreStored: Path = secretsDir
     override val random: Random = Random.Default
+    private val mailConfiguration: MailConfiguration = configuration.mail
+    override val mailService: MailService = SmtpMailService(mailConfiguration, sendMailEvent)
 }

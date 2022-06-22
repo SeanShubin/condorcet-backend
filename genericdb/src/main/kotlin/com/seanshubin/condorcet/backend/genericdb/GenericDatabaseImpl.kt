@@ -115,7 +115,7 @@ class GenericDatabaseImpl(
         return results
     }
 
-    override fun debugQuery(name:String, sql: String) {
+    override fun debugQuery(name: String, sql: String) {
         connection.debugQuery(name, sql)
     }
 

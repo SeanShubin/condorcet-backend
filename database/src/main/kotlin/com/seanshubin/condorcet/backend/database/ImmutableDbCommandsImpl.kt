@@ -1,7 +1,6 @@
 package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
-import java.time.Clock
 import java.time.Instant
 
 class ImmutableDbCommandsImpl(

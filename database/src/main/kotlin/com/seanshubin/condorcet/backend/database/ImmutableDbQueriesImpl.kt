@@ -1,12 +1,11 @@
 package com.seanshubin.condorcet.backend.database
 
 import com.seanshubin.condorcet.backend.genericdb.GenericDatabase
-import java.io.BufferedWriter
 import java.io.PrintWriter
-import java.io.Writer
 import java.sql.ResultSet
 
-class ImmutableDbQueriesImpl(genericDatabase: GenericDatabase) : ImmutableDbQueries, GenericDatabase by genericDatabase {
+class ImmutableDbQueriesImpl(genericDatabase: GenericDatabase) : ImmutableDbQueries,
+    GenericDatabase by genericDatabase {
     override fun eventsToSync(lastEventSynced: Int): List<Event> =
         query(::createEvent, "event-select-unsynced", lastEventSynced)
 
@@ -14,7 +13,7 @@ class ImmutableDbQueriesImpl(genericDatabase: GenericDatabase) : ImmutableDbQuer
         queryExactlyOneInt("event-count")
 
     override fun backupToWriter(writer: PrintWriter) {
-        fun emitEvent(event:Event) {
+        fun emitEvent(event: Event) {
             writer.println(event.toLine())
         }
         queryStreaming(::createEvent, ::emitEvent, "event-select")

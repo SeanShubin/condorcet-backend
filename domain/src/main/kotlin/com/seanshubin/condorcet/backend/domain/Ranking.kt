@@ -4,7 +4,7 @@ import kotlin.math.max
 import kotlin.random.Random
 
 data class Ranking(val candidateName: String, val rank: Int?) {
-    companion object{
+    companion object {
         fun List<Ranking>.prefers(a: String, b: String): Boolean =
             rankingFor(a) < rankingFor(b)
 
@@ -14,7 +14,7 @@ data class Ranking(val candidateName: String, val rank: Int?) {
         fun List<Ranking>.listToString() =
             joinToString(" ") { (candidateName, rank) -> "$rank $candidateName" }
 
-        fun List<Ranking>.voterBiasedOrdering(random: Random):List<Ranking>{
+        fun List<Ranking>.voterBiasedOrdering(random: Random): List<Ranking> {
             val rankAscending = Comparator<Ranking> { o1, o2 ->
                 val rank1 = o1?.rank ?: Int.MAX_VALUE
                 val rank2 = o2?.rank ?: Int.MAX_VALUE
@@ -29,33 +29,33 @@ data class Ranking(val candidateName: String, val rank: Int?) {
 
         fun List<Ranking>.addMissingCandidates(allCandidates: List<String>): List<Ranking> {
             val existingCandidates = this.map { it.candidateName }
-            val isMissing = {candidate:String -> !existingCandidates.contains(candidate)}
+            val isMissing = { candidate: String -> !existingCandidates.contains(candidate) }
             val missingCandidates = allCandidates.filter(isMissing)
-            val newRankings = missingCandidates.map { Ranking(it, null)}
+            val newRankings = missingCandidates.map { Ranking(it, null) }
             return this + newRankings
         }
 
-        fun List<Ranking>.normalizeRankings():List<Ranking> {
+        fun List<Ranking>.normalizeRankings(): List<Ranking> {
             val distinctOrderedRanks = this.mapNotNull { it.rank }.distinct().sorted()
-            val normalized =(1..distinctOrderedRanks.size)
+            val normalized = (1..distinctOrderedRanks.size)
             val newRankMap = distinctOrderedRanks.zip(normalized).toMap()
-            val lastRank = distinctOrderedRanks.size+1
-            val result = map{(name, rank)->
+            val lastRank = distinctOrderedRanks.size + 1
+            val result = map { (name, rank) ->
                 val newRank = newRankMap[rank] ?: lastRank
                 Ranking(name, newRank)
             }
             return result
         }
 
-        fun List<Ranking>.effectiveRankings(candidateNames:List<String>):List<Ranking> =
+        fun List<Ranking>.effectiveRankings(candidateNames: List<String>): List<Ranking> =
             addMissingCandidates(candidateNames).normalizeRankings()
 
-        fun List<Ranking>.matchOrderToCandidates(candidateNames:List<String>):List<Ranking> {
+        fun List<Ranking>.matchOrderToCandidates(candidateNames: List<String>): List<Ranking> {
             val byCandidate = this.associateBy { it.candidateName }
-            return candidateNames.map{byCandidate.getValue(it)}
+            return candidateNames.map { byCandidate.getValue(it) }
         }
 
-        object RankingListComparator:Comparator<List<Ranking>>{
+        object RankingListComparator : Comparator<List<Ranking>> {
             override fun compare(firstRankingList: List<Ranking>, secondRankingList: List<Ranking>): Int {
                 val firstRankList = firstRankingList.mapNotNull { it.rank }
                 val secondRankList = secondRankingList.mapNotNull { it.rank }
@@ -63,23 +63,23 @@ data class Ranking(val candidateName: String, val rank: Int?) {
             }
         }
 
-        object RankListComparator:Comparator<List<Int>>{
+        object RankListComparator : Comparator<List<Int>> {
             override fun compare(firstList: List<Int>, secondList: List<Int>): Int {
                 val maxSize = max(firstList.size, secondList.size)
                 var compareResult = 0
                 var index = 0
-                while(index < maxSize){
+                while (index < maxSize) {
                     val firstValue = firstList[index]
                     val secondValue = secondList[index]
                     compareResult = RankComparator.compare(firstValue, secondValue)
-                    if(compareResult != 0) break
+                    if (compareResult != 0) break
                     index++
                 }
                 return compareResult
             }
         }
 
-        object RankComparator:Comparator<Int>{
+        object RankComparator : Comparator<Int> {
             override fun compare(first: Int, second: Int): Int = first.compareTo(second)
         }
     }

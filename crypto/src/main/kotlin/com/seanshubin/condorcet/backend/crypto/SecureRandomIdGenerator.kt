@@ -9,7 +9,8 @@ class SecureRandomIdGenerator : UniqueIdGenerator {
         secureRandom.nextBytes(bytes)
         return bytes.toCompactHex()
     }
+
     companion object {
-        private val secureRandom:SecureRandom = SecureRandom()
+        private val secureRandom: SecureRandom = SecureRandom()
     }
 }

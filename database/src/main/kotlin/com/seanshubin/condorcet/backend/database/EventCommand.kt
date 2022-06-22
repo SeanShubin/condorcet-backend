@@ -83,19 +83,20 @@ interface EventCommand {
         }
     }
 
-    data class UpdateWhenCast(val confirmation: String, val now:Instant) : EventCommand {
+    data class UpdateWhenCast(val confirmation: String, val now: Instant) : EventCommand {
         override fun exec(authority: String, mutableDbCommands: MutableDbCommands) {
             mutableDbCommands.updateWhenCast(authority, confirmation, now)
         }
     }
 
-    data class SetRankings(val confirmation: String, val electionName:String, val rankings: List<Ranking>) : EventCommand {
+    data class SetRankings(val confirmation: String, val electionName: String, val rankings: List<Ranking>) :
+        EventCommand {
         override fun exec(authority: String, mutableDbCommands: MutableDbCommands) {
             mutableDbCommands.setRankings(authority, confirmation, electionName, rankings)
         }
     }
 
-    data class SetPassword(val userName:String, val salt:String, val hash:String):EventCommand {
+    data class SetPassword(val userName: String, val salt: String, val hash: String) : EventCommand {
         override fun exec(authority: String, mutableDbCommands: MutableDbCommands) {
             mutableDbCommands.setPassword(authority, userName, salt, hash)
         }

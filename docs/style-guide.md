@@ -1,4 +1,5 @@
 # Style Guide
+
 - [Object Relational Mapping](object-relational-mapping.md)
 - [Persistence Structure](persistence-structure.md)
 - [Effective Logging](effective-logging.md)
