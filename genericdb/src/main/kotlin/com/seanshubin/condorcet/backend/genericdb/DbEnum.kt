@@ -20,7 +20,7 @@ data class DbEnum<T : Enum<T>>(
     }
 
     private fun handleKeyword(s: String): String =
-        if (MysqlConstants.reservedWords.contains(s.toLowerCase())) {
+        if (MysqlConstants.reservedWords.contains(s.lowercase())) {
             """`$s`"""
         } else {
             s

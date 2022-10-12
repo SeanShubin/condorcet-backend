@@ -11,7 +11,6 @@ class CipherImpl(
     private val algorithmFactory: AlgorithmFactory,
     private val clock: Clock
 ) : Cipher {
-    private val jwtClock = JwtClock(clock)
     override fun encode(map: Map<String, String>, validFor: Duration): String {
         val algorithm: Algorithm = algorithmFactory.create()
         val jwt = JWT.create()
@@ -29,7 +28,7 @@ class CipherImpl(
     override fun decode(token: String): Map<String, String> {
         val algorithm: Algorithm = algorithmFactory.create()
         val baseVerification = JWT.require(algorithm) as JWTVerifier.BaseVerification
-        val verifier = baseVerification.build(jwtClock)
+        val verifier = baseVerification.build(clock)
         val decoded = verifier.verify(token)
         val result = decoded.claims.keys.mapNotNull { key ->
             val value = decoded.claims[key]?.asString()

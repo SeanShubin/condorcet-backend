@@ -8,8 +8,8 @@ object MysqlConstants {
 
     init {
         val keywordsString = ClassLoaderUtil.loadResourceAsString("mysql-keywords.txt")
-        keywords = keywordsString.split("\n").map { it.toLowerCase() }.toSet()
+        keywords = keywordsString.split("\n").map { it.lowercase() }.toSet()
         val reservedWordsString = ClassLoaderUtil.loadResourceAsString("mysql-reserved-words.txt")
-        reservedWords = reservedWordsString.split("\n").map { it.toLowerCase() }.toSet()
+        reservedWords = reservedWordsString.split("\n").map { it.lowercase() }.toSet()
     }
 }

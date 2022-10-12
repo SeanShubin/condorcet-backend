@@ -107,7 +107,7 @@ class GenericDatabaseImpl(
             Row(parentFunction(it), childFunction(it), parentKeyFunction(it))
         }
         val grouped = allRows.groupBy { it.key }
-        val results = grouped.map { (key, rows) ->
+        val results = grouped.map { (_, rows) ->
             val parent = rows[0].parent
             val children = rows.map { it.child }
             composeFunction(parent, children)

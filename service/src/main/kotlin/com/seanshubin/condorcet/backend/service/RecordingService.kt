@@ -273,12 +273,12 @@ class RecordingService(
         return response
     }
 
-    override fun setEligibleVoters(accessToken: AccessToken, electionName: String, userNames: List<String>) {
+    override fun setEligibleVoters(accessToken: AccessToken, electionName: String, voterNames: List<String>) {
         val requestString = "${accessToken.toKotlinString()}, ${electionName.toKotlinString()}, ${
-            userNames.map { it.toKotlinString() }.toKotlinString()
+            voterNames.map { it.toKotlinString() }.toKotlinString()
         }"
         serviceRequestEvent("setEligibleVoters", requestString)
-        val response = service.setEligibleVoters(accessToken, electionName, userNames)
+        val response = service.setEligibleVoters(accessToken, electionName, voterNames)
         serviceResponseEvent("setEligibleVoters", requestString, response.toKotlinString())
         return response
     }
