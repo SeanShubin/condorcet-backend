@@ -36,10 +36,8 @@ class BaseService(
     private val clock: Clock,
     private val uniqueIdGenerator: UniqueIdGenerator,
     private val mailService: MailService,
-    private val lookupFromAddress: () -> String,
-    private val lookupAppName: () -> String,
     private val emailAccessTokenExpire: Duration,
-    private val createUpdatePasswordLink: (AccessToken) -> String
+    private val createUpdatePasswordLink: (AccessToken, String) -> String
 ) : Service {
     override fun synchronize() {
         synchronizer.synchronize()
@@ -338,13 +336,12 @@ class BaseService(
         mutableDbCommands.setPassword(accessToken.userName, userName, salt, hash)
     }
 
-    override fun sendLoginLinkByEmail(email: String) {
+    override fun sendLoginLinkByEmail(email: String, baseUri:String) {
         val user = findUserByEmail(email)
         val accessToken = AccessToken(user.name, user.role)
-        val fromAddress = lookupFromAddress()
-        val appName = lookupAppName()
-        val subject = "Change password for $appName"
-        val updatePasswordLink = createUpdatePasswordLink(accessToken)
+        val subject = "Change password for $baseUri"
+        val fromName = "system"
+        val updatePasswordLink = createUpdatePasswordLink(accessToken, baseUri)
         val formattedDuration = DurationFormat.Companion.seconds.format(emailAccessTokenExpire.seconds)
         val bodyLines = listOf(
             "Use this link to update your password",
@@ -353,7 +350,7 @@ class BaseService(
         )
         val body = bodyLines.joinToString("\n")
 
-        val sendMailCommand = SendMailCommand(fromAddress, subject, body, user.email, user.name)
+        val sendMailCommand = SendMailCommand(fromName, subject, body, user.email, user.name)
         mailService.sendMail(sendMailCommand)
     }
 

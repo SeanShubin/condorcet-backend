@@ -63,9 +63,8 @@ class Dependencies(
     private val keyStore: KeyStore = KeyStoreImpl(files, charset, whereKeysAreStored)
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(keyStore)
     private val cipher: Cipher = CipherImpl(algorithmFactory, clock)
-    private val lookupHost: () -> String = configuration.mail.lookupHost
-    private val tokenUtil: TokenUtil = TokenUtilImpl(lookupHost, cipher)
-    private val createUpdatePasswordLink: (AccessToken) -> String = tokenUtil::createUpdatePasswordLink
+    private val tokenUtil: TokenUtil = TokenUtilImpl(cipher)
+    private val createUpdatePasswordLink: (AccessToken, String) -> String = tokenUtil::createUpdatePasswordLink
     private val createService: (ConnectionWrapper, ConnectionWrapper, MailService) -> Service =
         { eventConnection, stateConnection, mailService ->
             ServiceDependencies(

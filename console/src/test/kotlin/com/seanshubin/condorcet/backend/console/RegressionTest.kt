@@ -185,7 +185,7 @@ class RegressionTest {
             ),
             GetBallot(voterName = "Alice", electionName = "Favorite Ice Cream"),
             ChangePassword(userName = "Alice", password = "new-alice-password"),
-            SendLoginLinkByEmail(email = "alice@email.com")
+            SendLoginLinkByEmail(email = "alice@email.com", baseUri = "http://pairwisevote.org")
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

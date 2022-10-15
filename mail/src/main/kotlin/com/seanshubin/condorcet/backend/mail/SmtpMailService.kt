@@ -10,6 +10,7 @@ class SmtpMailService(
     val sendMailEvent: (SendMailCommand) -> Unit
 ) : MailService {
     override fun sendMail(sendMailCommand: SendMailCommand) {
+        val fromName = sendMailCommand.fromName
         val toAddress = sendMailCommand.toAddress
         val toPersonal = sendMailCommand.toPersonal
         val subject = sendMailCommand.subject
@@ -21,7 +22,8 @@ class SmtpMailService(
         mailProperties["mail.smtp.auth"] = "true"
         val session = Session.getDefaultInstance(mailProperties)
         val mimeMessage = MimeMessage(session)
-        val fromAddress = mailConfiguration.lookupFromAddress()
+        val fromDomain = mailConfiguration.lookupFromDomain()
+        val fromAddress = "$fromName@$fromDomain"
         mimeMessage.setFrom(InternetAddress(fromAddress))
         mimeMessage.setRecipient(Message.RecipientType.TO, InternetAddress(toAddress, toPersonal))
         mimeMessage.subject = subject

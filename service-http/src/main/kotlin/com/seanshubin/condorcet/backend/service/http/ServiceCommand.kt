@@ -329,9 +329,9 @@ interface ServiceCommand {
             }
     }
 
-    data class SendLoginLinkByEmail(val email: String) : ServiceCommand {
+    data class SendLoginLinkByEmail(val email: String, val baseUri:String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
-            environment.service.sendLoginLinkByEmail(email)
+            environment.service.sendLoginLinkByEmail(email, baseUri)
             return responseBuilder().build()
         }
     }

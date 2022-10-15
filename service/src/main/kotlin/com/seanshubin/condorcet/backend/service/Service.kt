@@ -38,5 +38,5 @@ interface Service {
     fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean
     fun getBallot(accessToken: AccessToken, voterName: String, electionName: String): BallotSummary?
     fun changePassword(accessToken: AccessToken, userName: String, password: String)
-    fun sendLoginLinkByEmail(email: String)
+    fun sendLoginLinkByEmail(email: String, baseUri:String)
 }

@@ -310,10 +310,10 @@ class RecordingService(
         return response
     }
 
-    override fun sendLoginLinkByEmail(email: String) {
-        val requestString = email
+    override fun sendLoginLinkByEmail(email: String, baseUri:String) {
+        val requestString = "${email.toKotlinString()}, ${baseUri.toKotlinString()}"
         serviceRequestEvent("sendLoginLinkByEmail", requestString)
-        val response = service.sendLoginLinkByEmail(email)
+        val response = service.sendLoginLinkByEmail(email, baseUri)
         serviceResponseEvent("sendLoginLinkByEmail", requestString, response.toKotlinString())
         return response
     }

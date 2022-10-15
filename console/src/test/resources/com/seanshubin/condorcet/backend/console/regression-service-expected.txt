@@ -166,6 +166,6 @@ BallotSummary("Alice", "Favorite Ice Cream", "8FDE24EC97C067F3315B31120D97ADE0",
 changePassword(AccessToken("Alice", OWNER), "Alice", "new-alice-password")
 Unit
 
-sendLoginLinkByEmail(alice@email.com)
+sendLoginLinkByEmail("alice@email.com", "http://pairwisevote.org")
 Unit
 

@@ -88,10 +88,8 @@ class ServiceTest {
         private val synchronizer = SynchronizerStub()
         private val random = RandomStub()
         private val mailService = MailServiceUnsupportedOperation()
-        private val lookupFromAddress = { "from-address" }
-        private val lookupAppName = { "app-name" }
         private val emailAccessTokenExpire = Duration.of(10, ChronoUnit.MINUTES)
-        private val createUpdatePasswordLink = { accessToken: AccessToken -> "update-password-link" }
+        private val createUpdatePasswordLink = { accessToken: AccessToken, baseUri:String -> "update-password-link" }
         val service: Service = BaseService(
             passwordUtil,
             eventDbFake,
@@ -102,8 +100,6 @@ class ServiceTest {
             clock,
             uniqueIdGenerator,
             mailService,
-            lookupFromAddress,
-            lookupAppName,
             emailAccessTokenExpire,
             createUpdatePasswordLink
         )

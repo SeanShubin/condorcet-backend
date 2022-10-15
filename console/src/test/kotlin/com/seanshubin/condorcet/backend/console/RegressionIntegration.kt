@@ -62,9 +62,9 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val clock: Clock = RememberingClock(realClock, clockPath)
     private val configurationPath: Path = regressionSnapshotDir.resolve("configuration.json")
     private val secretsConfigurationPath: Path = regressionSnapshotDir.resolve("secret-configuration.json")
-    private val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(configurationPath, files)
+    private val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(files, configurationPath)
     private val secretsConfigurationFactory: ConfigurationFactory =
-        JsonFileConfigurationFactory(secretsConfigurationPath, files)
+        JsonFileConfigurationFactory(files, secretsConfigurationPath)
     override val configuration: Configuration = JsonConfiguration(configurationFactory, secretsConfigurationFactory)
     override val whereKeysAreStored: Path = regressionSnapshotDir
     private val backingRandom = Random.Default

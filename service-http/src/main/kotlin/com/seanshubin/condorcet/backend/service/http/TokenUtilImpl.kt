@@ -8,7 +8,6 @@ import com.seanshubin.condorcet.backend.service.RefreshToken
 import java.time.Duration
 
 class TokenUtilImpl(
-    private val lookupHost: () -> String,
     private val cipher: Cipher
 ) : TokenUtil {
     override fun toRefreshTokenString(refreshToken: RefreshToken): String =
@@ -23,10 +22,9 @@ class TokenUtilImpl(
             duration
         )
 
-    override fun createUpdatePasswordLink(accessToken: AccessToken): String {
-        val host = lookupHost()
+    override fun createUpdatePasswordLink(accessToken: AccessToken, baseUri: String): String {
         val accessTokenString = toAccessTokenString(accessToken, Constants.emailAccessTokenDuration)
-        val link = "$host/changePassword?accessToken=$accessTokenString"
+        val link = "$baseUri/changePassword?accessToken=$accessTokenString"
         return link
     }
 

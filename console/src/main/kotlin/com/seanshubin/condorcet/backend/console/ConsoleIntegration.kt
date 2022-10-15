@@ -49,9 +49,9 @@ class ConsoleIntegration : Integration {
     private val configurationPath: Path = configurationDir.resolve("configuration.json")
     private val secretsConfigurationPath: Path = secretsDir.resolve("secret-configuration.json")
     private val files: FilesContract = FilesDelegate
-    private val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(configurationPath, files)
+    private val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(files, configurationPath)
     private val secretsConfigurationFactory: ConfigurationFactory =
-        JsonFileConfigurationFactory(secretsConfigurationPath, files)
+        JsonFileConfigurationFactory(files, secretsConfigurationPath)
     override val configuration: Configuration =
         JsonConfiguration(configurationFactory, secretsConfigurationFactory)
     override val whereKeysAreStored: Path = secretsDir

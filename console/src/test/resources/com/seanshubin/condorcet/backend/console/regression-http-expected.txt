@@ -1171,7 +1171,8 @@ Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDYsInV
 
 /SendLoginLinkByEmail
 {
-  "email" : "alice@email.com"
+  "email" : "alice@email.com",
+  "baseUri" : "http://pairwisevote.org"
 }
 Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2NDcxMzQ1NjYsInVzZXJOYW1lIjoiQWxpY2UifQ.CPyUg4tyx9roQyx9iYFrD6Abhmo9TPoPMQqNh8VjMCxvKd8px9zvw6q5_7la3n6X_dw9816AaFFqndGBV_PvuKQZJzXhLBZOjDn8xD0mQrRehUlTVxNOOsicP_Pm2HkQHBgLxXf9_KqDvmj-5R3l06SMIVKwnxoai1SUNfpv6yk
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NDcxNzc3MDYsInVzZXJOYW1lIjoiQWxpY2UifQ.FwXgatXW4DQIoXCNotKqPCZJXZ6pX8p_JtDqZbLIaKzPGiydpcG-t_5nDyzXhiw8ayijoDqpsz8lmBAJMb6TggXSNhmRGFr3WmkpZPOI-OloX4iSGJnKSdUel7Uf4_vqpLeUzTCLo-revMdzX_4Xsg3vBckC6BYAnxopAV1_E44

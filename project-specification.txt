@@ -52,6 +52,7 @@
     mysql-jdbc {
         group mysql
         artifact mysql-connector-java
+        lockedAtVersion 8.0.30
     }
     java-jwt {
         group com.auth0
@@ -83,6 +84,7 @@
     mail               [ java-mail ]
     configuration-util [ json contract]
     global-constants   []
+    prototype          [ mail configuration-util string-util ]
   }
   detangler [console]
   consoleEntryPoint {

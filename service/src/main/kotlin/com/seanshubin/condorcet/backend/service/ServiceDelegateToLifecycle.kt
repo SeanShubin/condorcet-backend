@@ -133,8 +133,8 @@ class ServiceDelegateToLifecycle(
         withService { it.changePassword(accessToken, userName, password) }
     }
 
-    override fun sendLoginLinkByEmail(email: String) {
-        withService { it.sendLoginLinkByEmail(email) }
+    override fun sendLoginLinkByEmail(email: String, baseUri:String) {
+        withService { it.sendLoginLinkByEmail(email, baseUri) }
     }
 
     private fun <T> withService(f: (Service) -> T): T =

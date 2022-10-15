@@ -4,13 +4,11 @@ interface MailConfiguration {
     val lookupHost: () -> String
     val lookupUser: () -> String
     val lookupPassword: () -> String
-    val lookupFromAddress: () -> String
-    val lookupAppName: () -> String
+    val lookupFromDomain: () -> String
     fun reify() {
         lookupHost()
         lookupUser()
         lookupPassword()
-        lookupFromAddress()
-        lookupAppName()
+        lookupFromDomain()
     }
 }

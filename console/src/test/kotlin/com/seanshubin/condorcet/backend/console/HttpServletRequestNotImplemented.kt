@@ -107,6 +107,7 @@ abstract class HttpServletRequestNotImplemented : HttpServletRequest {
         throw UnsupportedOperationException()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun getRealPath(path: String?): String {
         throw UnsupportedOperationException()
     }
@@ -255,6 +256,7 @@ abstract class HttpServletRequestNotImplemented : HttpServletRequest {
         throw UnsupportedOperationException()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun isRequestedSessionIdFromUrl(): Boolean {
         throw UnsupportedOperationException()
     }

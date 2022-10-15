@@ -87,10 +87,12 @@ abstract class HttpServletResponseNotImplemented : HttpServletResponse {
         throw UnsupportedOperationException()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun encodeUrl(url: String?): String {
         throw UnsupportedOperationException()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun encodeRedirectUrl(url: String?): String {
         throw UnsupportedOperationException()
     }
@@ -135,6 +137,7 @@ abstract class HttpServletResponseNotImplemented : HttpServletResponse {
         throw UnsupportedOperationException()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun setStatus(sc: Int, sm: String?) {
         throw UnsupportedOperationException()
     }

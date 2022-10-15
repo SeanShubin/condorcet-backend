@@ -22,7 +22,7 @@ class ServiceDependencies(
     mailService: MailService,
     configuration: Configuration,
     emailAccessTokenExpire: Duration,
-    createUpdatePasswordLink: (AccessToken) -> String
+    createUpdatePasswordLink: (AccessToken, String) -> String
 ) {
     private val serviceRequestEvent: (String, String) -> Unit = integration.serviceRequestEvent
     private val serviceResponseEvent: (String, String, String) -> Unit = integration.serviceResponseEvent
@@ -67,8 +67,6 @@ class ServiceDependencies(
         clock,
         uniqueIdGenerator,
         mailService,
-        configuration.mail.lookupFromAddress,
-        configuration.mail.lookupAppName,
         emailAccessTokenExpire,
         createUpdatePasswordLink
     )

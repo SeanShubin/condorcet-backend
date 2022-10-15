@@ -1,123 +1,100 @@
 package com.seanshubin.condorcet.backend.configuration.util
 
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.seanshubin.condorcet.backend.configuration.util.Converters.IntConverter
+import com.seanshubin.condorcet.backend.configuration.util.Converters.StringConverter
 import com.seanshubin.condorcet.backend.contract.FilesContract
-import com.seanshubin.condorcet.backend.json.JsonMappers
 import java.nio.file.Path
+import java.time.Instant
+import com.seanshubin.condorcet.backend.json.JsonMappers.pretty
+import com.seanshubin.condorcet.backend.json.JsonMappers.parser
 
 class JsonFileConfigurationFactory(
-    private val configurationPath: Path,
-    private val files: FilesContract
+    private val files: FilesContract,
+    private val configFilePath: Path
 ) : ConfigurationFactory {
-    override fun createStringLookup(default: Any, path: List<String>): () -> String {
-        fun lookupString(): String {
-            val theObject = loadObject(default, path)
-            val theString = castToString(theObject, path)
-            return theString
+    override fun intAt(default: Any?, keys: List<String>): ConfigurationElement<Int> =
+        genericElement(IntConverter, default, keys)
+
+    override fun stringAt(default: Any?, keys: List<String>): ConfigurationElement<String> =
+        genericElement(StringConverter, default, keys)
+
+    private fun <T> genericElement(
+        converter: Converter<T>,
+        default: Any?,
+        keys: List<String>
+    ): ConfigurationElement<T> {
+        val loadFunction = genericLoadFunction(converter, default, keys)
+        val storeFunction = genericStoreFunction<T>(keys)
+        return object : ConfigurationElement<T> {
+            override val load: () -> T get() = loadFunction
+            override val store: (T) -> Unit get() = storeFunction
         }
-        return ::lookupString
     }
 
-    override fun createIntLookup(default: Any, path: List<String>): () -> Int {
-        fun lookupInt(): Int {
-            val theObject = loadObject(default, path)
-            val theInt = castToInt(theObject, path)
-            return theInt
-        }
-        return ::lookupInt
-    }
-
-    private fun loadObject(default: Any, path: List<String>): Any? {
-        if (!files.exists(configurationPath)) {
-            storeObject(default, path)
-        }
-        val text = files.readString(configurationPath)
-        val model: Any? = JsonMappers.parser.readValue(text)
-        val value = getObject(model, default, path)
-        storeObject(value, path)
-        return value
-    }
-
-    private fun storeObject(value: Any?, path: List<String>) {
-        if (!files.exists(configurationPath)) {
-            if (configurationPath.parent != null && !files.exists(configurationPath.parent)) {
-                files.createDirectories(configurationPath.parent)
-            }
-            files.writeString(configurationPath, "{}")
-        }
-        val oldText = files.readString(configurationPath)
-        val oldModel: Any? = JsonMappers.parser.readValue(oldText)
-        val newModel = putObject(oldModel, value, path)
-        val newText = JsonMappers.pretty.writeValueAsString(newModel)
-        files.writeString(configurationPath, newText)
-    }
-
-    private fun putObject(untypedDestination: Any?, value: Any?, path: List<String>): Map<String, Any?> {
-        val destination = castToJsonObject(untypedDestination, path)
-        val head = path[0]
-        val tail = path.drop(1)
-        return if (path.size == 1) {
-            destination + (head to value)
+    private fun <T> genericLoadFunction(converter: Converter<T>, default: Any?, keys: List<String>): () -> T = {
+        val untyped = loadUntyped(default.toJsonType(), keys)
+        val value = untyped.value
+        val typed = converter.convert(value)
+        if (typed == null) {
+            val expectedType = converter.sourceType.simpleName
+            val valueType = value?.javaClass?.simpleName ?: "null type"
+            val pathString = keys.joinToString(".")
+            val message = "At path $pathString, expected type $expectedType, got $valueType for: $value"
+            throw RuntimeException(message)
         } else {
-            val existing = destination[head]
-            if (existing == null) {
-                destination + (head to putObject(emptyMap<String, Any?>(), value, tail))
-            } else {
-                destination + (head to putObject(existing, value, tail))
-            }
+            typed
         }
     }
 
-    private fun getObject(untypedSource: Any?, default: Any?, path: List<String>): Any? {
-        val source = castToJsonObject(untypedSource, path)
-        val head = path[0]
-        val tail = path.drop(1)
-        return if (path.size == 1) {
-            if (source.containsKey(head)) {
-                source[head]
-            } else {
-                default
+    private fun <T> genericStoreFunction(keys: List<String>): (T) -> Unit = { value ->
+        storeUntyped(value.toJsonType(), keys)
+    }
+
+    private fun Any?.toJsonType(): Any? =
+        when (this) {
+            null -> null
+            is String -> this
+            is Int -> this
+            is Long -> this
+            is Path -> this.toString()
+            is Instant -> this.toString()
+            is List<*> -> this
+            else -> {
+                val typeName = this.javaClass.name
+                throw RuntimeException("Don't know how to convert '$this' of type '$typeName' to a JSON type")
             }
+        }
+
+    private fun loadUntyped(default: Any?, keys: List<String>): Untyped {
+        val untyped = loadConfig()
+        return if (untyped.hasValueAtPath(*keys.toTypedArray())) {
+            Untyped(untyped.getValueAtPath(*keys.toTypedArray()))
         } else {
-            val existing = source[head]
-            if (existing == null) {
-                default
-            } else {
-                getObject(existing, default, tail)
-            }
+            val newUntyped = untyped.setValueAtPath(default, *keys.toTypedArray())
+            val jsonText = pretty.writeValueAsString(newUntyped.value)
+            files.writeString(configFilePath, jsonText)
+            loadUntyped(default, keys)
         }
     }
 
-    private fun castToString(value: Any?, path: List<String>): String =
-        when (value) {
-            null -> throwCastError(null, "null", "String", path)
-            is String -> value
-            else -> throwCastError(value, value.javaClass.simpleName, "String", path)
-        }
+    private fun storeUntyped(value: Any?, keys: List<String>) {
+        val untyped = loadConfig()
+        val newUntyped = untyped.setValueAtPath(value, *keys.toTypedArray())
+        val jsonText = pretty.writeValueAsString(newUntyped.value)
+        files.writeString(configFilePath, jsonText)
+    }
 
-    private fun castToInt(value: Any?, path: List<String>): Int =
-        when (value) {
-            null -> throwCastError(null, "null", "Int", path)
-            is Int -> value
-            else -> throwCastError(value, value.javaClass.simpleName, "Int", path)
-        }
+    private fun loadConfig() :Untyped {
+        ensureFileExists()
+        val text = files.readString(configFilePath)
+        val untyped = Untyped(parser.readValue<Any?>(text))
+        return untyped
+    }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun castToJsonObject(value: Any?, path: List<String>): Map<String, Any?> =
-        when (value) {
-            null -> throwCastError(null, "null", "Map<String, Object>", path)
-            is Map<*, *> -> value as Map<String, Any?>
-            else -> throwCastError(value, value.javaClass.simpleName, "Map<String, Object>", path)
+    private fun ensureFileExists() {
+        if (!files.exists(configFilePath)) {
+            files.writeString(configFilePath, "{}")
         }
-
-    private fun throwCastError(
-        value: Any?,
-        sourceTypeName: String,
-        destinationTypeName: String,
-        path: List<String>
-    ): Nothing {
-        val joinedPath = path.joinToString(".")
-        val message = "Unable to cast value $value of type $sourceTypeName to $destinationTypeName at path $joinedPath"
-        throw ClassCastException(message)
     }
 }
