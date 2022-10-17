@@ -23,20 +23,25 @@ object SendMailPrototypeApp {
         val files: FilesContract = FilesDelegate
         val configFilePath = Paths.get("local-config","secrets","send-mail-prototype-config.json")
         val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(files, configFilePath)
+        val host = configurationFactory.stringAt("email host", listOf("email", "host")).load()
         val user = configurationFactory.stringAt("email user", listOf("email", "user")).load()
         val password = configurationFactory.stringAt("email password", listOf("email", "password")).load()
         val smtpPassword = composeSmtpPassword(password)
         val counterConfig = configurationFactory.intAt(0, listOf("counter"))
         val counter = counterConfig.load() + 1
         counterConfig.store(counter)
+        val mailProperties = Properties()
+        mailProperties["mail.transport.protocol"] = "smtp"
+        mailProperties["mail.smtp.port"] = 587
+        mailProperties["mail.smtp.starttls.enable"] = "true"
+        mailProperties["mail.smtp.auth"] = "true"
         val props = System.getProperties()
-        props["mail.transport.protocol"] = "smtp"
-        props["mail.smtp.port"] = 587
-        props["mail.smtp.starttls.enable"] = "true"
-        props["mail.smtp.auth"] = "true"
+        mailProperties.forEach{ key, value ->
+            props[key] = value
+        }
         val session = Session.getDefaultInstance(props)
         val msg = MimeMessage(session)
-        msg.setFrom(InternetAddress("alice@pairwisevote.com", "Alice"))
+//        msg.setFrom(InternetAddress("alice@pairwisevote.com", "Alice"))
         msg.setRecipient(Message.RecipientType.TO, InternetAddress("seanshubin@gmail.com"))
         msg.subject = "Amazon SES test $counter (SMTP interface accessed using Java)"
         msg.setContent(
@@ -50,10 +55,15 @@ object SendMailPrototypeApp {
         )
         val transport = session.transport
         try {
+            println("host = $host")
+            println("user = $user")
+            println("password = ${password[0]}<snip>${password[password.length-1]}")
+            println("properties")
+            mailProperties.map{"  $it"}.forEach(::println)
             transport.connect(
-                "email-smtp.us-east-1.amazonaws.com",
+                host,
                 user,
-                smtpPassword
+                password
             )
             transport.sendMessage(msg, msg.allRecipients)
         } finally {
