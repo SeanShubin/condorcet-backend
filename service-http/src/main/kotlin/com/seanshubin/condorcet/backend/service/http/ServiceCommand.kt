@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.service.http
 
 import com.auth0.jwt.exceptions.JWTDecodeException
+import com.auth0.jwt.exceptions.TokenExpiredException
 import com.seanshubin.condorcet.backend.domain.ElectionUpdates
 import com.seanshubin.condorcet.backend.domain.Permission
 import com.seanshubin.condorcet.backend.domain.Ranking
@@ -329,7 +330,7 @@ interface ServiceCommand {
             }
     }
 
-    data class SendLoginLinkByEmail(val email: String, val baseUri:String) : ServiceCommand {
+    data class SendLoginLinkByEmail(val email: String, val baseUri: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             environment.service.sendLoginLinkByEmail(email, baseUri)
             return responseBuilder().build()
@@ -510,6 +511,9 @@ interface ServiceCommand {
                 } else {
                     f(accessToken)
                 }
+            } catch (ex: TokenExpiredException) {
+                val bearerToken = request.bearerToken() ?: "<null>"
+                responseBuilder().unauthorized("Token expired ($bearerToken): ${ex.message}").build()
             } catch (ex: JWTDecodeException) {
                 val bearerToken = request.bearerToken() ?: "<null>"
                 responseBuilder().unauthorized("Unable to decode access token ($bearerToken): ${ex.message}").build()
