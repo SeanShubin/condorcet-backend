@@ -1,13 +1,13 @@
 package com.seanshubin.condorcet.backend.crypto
 
-import com.seanshubin.condorcet.backend.string.util.HexFormat.toCompactHex
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
 import java.security.SecureRandom
 
-class SecureRandomIdGenerator : UniqueIdGenerator {
+class SecureRandomIdGenerator(private val byteArrayFormat: ByteArrayFormat) : UniqueIdGenerator {
     override fun uniqueId(): String {
         val bytes = ByteArray(16)
         secureRandom.nextBytes(bytes)
-        return bytes.toCompactHex()
+        return byteArrayFormat.encodeCompact(bytes)
     }
 
     companion object {

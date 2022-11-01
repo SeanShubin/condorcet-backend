@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.crypto
 
-import org.junit.Test
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
+import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -9,8 +10,9 @@ class PasswordUtilTest {
     fun validPassword() {
         // given
         val password = "foo"
-        val uniqueIdGenerator = SecureRandomIdGenerator()
-        val oneWayHash = Sha256Hash()
+        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+        val uniqueIdGenerator = SecureRandomIdGenerator(byteArrayFormat)
+        val oneWayHash = Sha256Hash(byteArrayFormat)
         val passwordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
         val saltAndHash = passwordUtil.createSaltAndHash(password)
 
@@ -25,8 +27,9 @@ class PasswordUtilTest {
     fun invalidPassword() {
         // given
         val password = "foo"
-        val uniqueIdGenerator = SecureRandomIdGenerator()
-        val oneWayHash = Sha256Hash()
+        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+        val uniqueIdGenerator = SecureRandomIdGenerator(byteArrayFormat)
+        val oneWayHash = Sha256Hash(byteArrayFormat)
         val passwordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
         val saltAndHash = passwordUtil.createSaltAndHash(password)
 

@@ -17,6 +17,8 @@ import com.seanshubin.condorcet.backend.service.http.ServiceCommandParser
 import com.seanshubin.condorcet.backend.service.http.ServiceCommandParserImpl
 import com.seanshubin.condorcet.backend.service.http.TokenUtil
 import com.seanshubin.condorcet.backend.service.http.TokenUtilImpl
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
 import org.eclipse.jetty.server.Handler
 import org.eclipse.jetty.server.Server
 import java.nio.charset.Charset
@@ -60,7 +62,8 @@ class Dependencies(
     private val serverContract: ServerContract = JettyServer(server)
     private val charset: Charset = StandardCharsets.UTF_8
     private val whereKeysAreStored: Path = integration.whereKeysAreStored
-    private val keyStore: KeyStore = KeyStoreImpl(files, charset, whereKeysAreStored)
+    private val byteArrayFormat:ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+    private val keyStore: KeyStore = KeyStoreImpl(files, charset, whereKeysAreStored, byteArrayFormat)
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(keyStore)
     private val cipher: Cipher = CipherImpl(algorithmFactory, clock)
     private val tokenUtil: TokenUtil = TokenUtilImpl(cipher)

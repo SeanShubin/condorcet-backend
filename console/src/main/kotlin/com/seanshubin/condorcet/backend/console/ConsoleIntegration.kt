@@ -18,6 +18,8 @@ import com.seanshubin.condorcet.backend.server.Configuration
 import com.seanshubin.condorcet.backend.server.JsonConfiguration
 import com.seanshubin.condorcet.backend.server.LoggingNotificationsFactory
 import com.seanshubin.condorcet.backend.server.Notifications
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.sql.SQLException
@@ -42,7 +44,8 @@ class ConsoleIntegration : Integration {
     override val topLevelException: (Throwable) -> Unit = notifications::topLevelException
     override val sqlException: (String, String, SQLException) -> Unit = notifications::sqlException
     override val sendMailEvent: (SendMailCommand) -> Unit = notifications::sendMailEvent
-    override val uniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator()
+    private val byteArrayFormat:ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+    override val uniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator(byteArrayFormat)
     override val clock: Clock = Clock.systemUTC()
     private val configurationDir = Paths.get("local-config")
     private val secretsDir: Path = configurationDir.resolve("secrets")

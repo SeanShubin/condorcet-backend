@@ -12,6 +12,8 @@ import com.seanshubin.condorcet.backend.service.AccessToken
 import com.seanshubin.condorcet.backend.service.BaseService
 import com.seanshubin.condorcet.backend.service.RecordingService
 import com.seanshubin.condorcet.backend.service.Service
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
 import java.time.Clock
 import java.time.Duration
 
@@ -27,7 +29,8 @@ class ServiceDependencies(
     private val serviceRequestEvent: (String, String) -> Unit = integration.serviceRequestEvent
     private val serviceResponseEvent: (String, String, String) -> Unit = integration.serviceResponseEvent
     private val queryLoader: QueryLoader = QueryLoaderFromResource()
-    private val oneWayHash: OneWayHash = Sha256Hash()
+    private val byteArrayFormat:ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+    private val oneWayHash: OneWayHash = Sha256Hash(byteArrayFormat)
     private val uniqueIdGenerator: UniqueIdGenerator = integration.uniqueIdGenerator
     private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
     private val random = integration.random

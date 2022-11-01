@@ -1,7 +1,7 @@
 package com.seanshubin.condorcet.backend.service
 
 import arrow.core.Either
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ValidationTest {

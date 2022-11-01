@@ -16,6 +16,8 @@ import com.seanshubin.condorcet.backend.mail.SendMailCommand
 import com.seanshubin.condorcet.backend.server.Configuration
 import com.seanshubin.condorcet.backend.server.JsonConfiguration
 import com.seanshubin.condorcet.backend.server.Notifications
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
@@ -30,7 +32,8 @@ class RegressionIntegration(phase: Phase) : Integration {
     override val backupFilePath: Path = regressionSnapshotDir.resolve("backup.txt")
     val clockPath = regressionSnapshotDir.resolve("deterministic-clock.txt")
     val realClock = Clock.systemUTC()
-    val realUniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator()
+    val byteArrayFormat:ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+    val realUniqueIdGenerator: UniqueIdGenerator = SecureRandomIdGenerator(byteArrayFormat)
     val uniqueIdGeneratorPath = regressionSnapshotDir.resolve("deterministic-unique-id.txt")
     val randomPath = regressionSnapshotDir.resolve("deterministic-random.txt")
     val charset: Charset = StandardCharsets.UTF_8

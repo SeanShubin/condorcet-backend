@@ -2,7 +2,7 @@ package com.seanshubin.condorcet.backend.service
 
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CaseInsensitiveStringListUtilTest {

@@ -3,7 +3,7 @@ package com.seanshubin.condorcet.backend.service
 import com.seanshubin.condorcet.backend.crypto.OneWayHash
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.domain.Role
-import org.junit.Test
+import kotlin.test.Test
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 import kotlin.test.assertEquals

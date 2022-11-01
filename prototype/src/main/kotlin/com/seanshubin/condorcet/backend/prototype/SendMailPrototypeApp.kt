@@ -4,13 +4,8 @@ import com.seanshubin.condorcet.backend.configuration.util.ConfigurationFactory
 import com.seanshubin.condorcet.backend.configuration.util.JsonFileConfigurationFactory
 import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.contract.FilesDelegate
-import com.seanshubin.condorcet.backend.string.util.HexFormat.fromHexToBytes
-import com.seanshubin.condorcet.backend.string.util.HexFormat.toCompactHex
-import java.nio.charset.StandardCharsets
 import java.nio.file.Paths
 import java.util.*
-import javax.crypto.Mac
-import javax.crypto.spec.SecretKeySpec
 import javax.mail.Message
 import javax.mail.Session
 import javax.mail.internet.InternetAddress
@@ -26,7 +21,6 @@ object SendMailPrototypeApp {
         val host = configurationFactory.stringAt("email host", listOf("email", "host")).load()
         val user = configurationFactory.stringAt("email user", listOf("email", "user")).load()
         val password = configurationFactory.stringAt("email password", listOf("email", "password")).load()
-        val smtpPassword = composeSmtpPassword(password)
         val counterConfig = configurationFactory.intAt(0, listOf("counter"))
         val counter = counterConfig.load() + 1
         counterConfig.store(counter)
@@ -69,34 +63,5 @@ object SendMailPrototypeApp {
         } finally {
             transport.close()
         }
-    }
-
-    fun hmacSha256(data:String, key:String):String {
-        val algorithm = "HmacSHA256"
-        val secretKeySpec = SecretKeySpec(key.toByteArray(StandardCharsets.UTF_8), algorithm)
-        val mac = Mac.getInstance(algorithm)
-        mac.init(secretKeySpec)
-        val bytes = mac.doFinal(data.toByteArray(StandardCharsets.UTF_8))
-        return bytes.toCompactHex()
-    }
-
-    fun base64(bytes:ByteArray):String =
-        Base64.getEncoder().encodeToString(bytes)
-
-    fun composeSmtpPassword(secretKey:String):String{
-        val date = "11111111";
-        val service = "ses";
-        val terminal = "aws4_request";
-        val message = "SendRawEmail";
-        val version = "04";
-        val region = "us-east-1"
-        val kDate = hmacSha256(date, "AWS4$secretKey")
-        val kRegion = hmacSha256(region, kDate)
-        val kService = hmacSha256(service, kRegion)
-        val kTerminal = hmacSha256(terminal, kService)
-        val kMessage = hmacSha256(message, kTerminal)
-        val signatureAndVersion = version + kMessage
-        val smtpPassword = base64(signatureAndVersion.fromHexToBytes())
-        return smtpPassword
     }
 }

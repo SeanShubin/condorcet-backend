@@ -1,6 +1,7 @@
 package com.seanshubin.condorcet.backend.crypto
 
-import org.junit.Test
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
@@ -8,8 +9,9 @@ class Sha256HashTest {
     @Test
     fun sameThingsHashSame() {
         // given
+        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
         val oneWayHash: OneWayHash =
-            Sha256Hash()
+            Sha256Hash(byteArrayFormat)
 
         // when
         val hash1 = oneWayHash.hash("same thing")
@@ -22,8 +24,9 @@ class Sha256HashTest {
     @Test
     fun differentThingsHashDifferent() {
         // given
+        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
         val oneWayHash: OneWayHash =
-            Sha256Hash()
+            Sha256Hash(byteArrayFormat)
 
         // when
         val hash1 = oneWayHash.hash("one thing")

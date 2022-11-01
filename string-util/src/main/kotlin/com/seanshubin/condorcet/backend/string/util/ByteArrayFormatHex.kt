@@ -1,12 +1,17 @@
 package com.seanshubin.condorcet.backend.string.util
 
-object HexFormat {
-    fun ByteArray.toCompactHex(): String = joinToString("", transform = ::byteToHex)
-    fun ByteArray.toPrettyHex(): String = map(::byteToHex).windowed(16, 16, partialWindows = true)
-        .joinToString("\n") { list -> list.joinToString(" ") }
+class ByteArrayFormatHex:ByteArrayFormat {
+    override fun encodeCompact(bytes: ByteArray): String {
+        return bytes.joinToString("", transform = ::byteToHex)
+    }
 
-    fun String.fromHexToBytes(): ByteArray {
-        return replace(whitespaceRegex, "").uppercase().toList().windowed(2, 2).map { (first, second) ->
+    override fun encodePretty(bytes: ByteArray): String {
+        return bytes.map(::byteToHex).windowed(16, 16, partialWindows = true)
+            .joinToString("\n") { list -> list.joinToString(" ") }
+    }
+
+    override fun decode(s: String): ByteArray {
+        return s.replace(whitespaceRegex, "").uppercase().toList().windowed(2, 2).map { (first, second) ->
             (digitValues.getValue(first) * 16 + digitValues.getValue(second)).toByte()
         }.toByteArray()
     }

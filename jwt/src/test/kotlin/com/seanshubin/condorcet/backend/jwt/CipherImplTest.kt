@@ -2,8 +2,9 @@ package com.seanshubin.condorcet.backend.jwt
 
 import com.auth0.jwt.exceptions.SignatureVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
-import com.seanshubin.condorcet.backend.string.util.HexFormat.fromHexToBytes
-import org.junit.Test
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
+import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
@@ -55,19 +56,22 @@ class CipherImplTest {
         Tester(publicKeyHex, privateKeyHex)
 
     class Tester(publicKeyHex: String, privateKeyHex: String) {
-        val keyStore = KeyStoreStub(publicKeyHex, privateKeyHex)
+        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+        val keyStore = KeyStoreStub(byteArrayFormat, publicKeyHex, privateKeyHex)
         val algorithmFactory = AlgorithmFactoryImpl(keyStore)
         val clock = ClockStub()
         val cipher = CipherImpl(algorithmFactory, clock)
     }
 
-    class KeyStoreStub(val publicKeyHex: String, val privateKeyHex: String) : KeyStore {
+    class KeyStoreStub(private val byteArrayFormat:ByteArrayFormat,
+                       private val publicKeyEncoded: String,
+                       private val privateKeyEncoded: String) : KeyStore {
         override fun privateKey(): ByteArray {
-            return privateKeyHex.fromHexToBytes()
+            return byteArrayFormat.decode(privateKeyEncoded)
         }
 
         override fun publicKey(): ByteArray {
-            return publicKeyHex.fromHexToBytes()
+            return byteArrayFormat.decode(publicKeyEncoded)
         }
     }
 
