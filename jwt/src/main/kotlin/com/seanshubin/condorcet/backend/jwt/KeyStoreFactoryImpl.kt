@@ -2,7 +2,7 @@ package com.seanshubin.condorcet.backend.jwt
 
 import java.security.KeyPairGenerator
 
-class KeyPairFactoryImpl : KeyPairFactory {
+class KeyStoreFactoryImpl : KeyPairFactory {
     override fun generateKeyPair(): KeyStore {
         val keyPairGenerator = KeyPairGenerator.getInstance("RSA")
         keyPairGenerator.initialize(1024)
