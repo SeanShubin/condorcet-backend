@@ -63,7 +63,8 @@ class Dependencies(
     private val charset: Charset = StandardCharsets.UTF_8
     private val whereKeysAreStored: Path = integration.whereKeysAreStored
     private val byteArrayFormat:ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
-    private val keyStore: KeyStore = KeyStoreImpl(files, charset, whereKeysAreStored, byteArrayFormat)
+    private val keyPairFactory:KeyPairFactory = KeyPairFactoryImpl()
+    private val keyStore: KeyStore = KeyStoreImpl(files, charset, whereKeysAreStored, byteArrayFormat, keyPairFactory)
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(keyStore)
     private val cipher: Cipher = CipherImpl(algorithmFactory, clock)
     private val tokenUtil: TokenUtil = TokenUtilImpl(cipher)

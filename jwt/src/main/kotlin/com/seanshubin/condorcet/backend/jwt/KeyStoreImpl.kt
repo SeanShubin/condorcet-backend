@@ -10,7 +10,8 @@ class KeyStoreImpl(
     private val files: FilesContract,
     private val charset: Charset,
     private val basePath: Path,
-    private val byteArrayFormat: ByteArrayFormat
+    private val byteArrayFormat: ByteArrayFormat,
+    private val keyPairFactory: KeyPairFactory
 ) : KeyStore {
     private val publicKeyPath: Path = basePath.resolve("rsa-public-key.txt")
     private val privateKeyPath: Path = basePath.resolve("rsa-private-key.txt")
@@ -38,11 +39,9 @@ class KeyStoreImpl(
 
     private fun createBoth() {
         files.createDirectories(basePath)
-        val keyPairGenerator = KeyPairGenerator.getInstance("RSA")
-        keyPairGenerator.initialize(1024)
-        val keyPair = keyPairGenerator.generateKeyPair()
-        writeKey(publicKeyPath, keyPair.public.encoded)
-        writeKey(privateKeyPath, keyPair.private.encoded)
+        val keyPair = keyPairFactory.generateKeyPair()
+        writeKey(publicKeyPath, keyPair.publicKey())
+        writeKey(privateKeyPath, keyPair.privateKey())
     }
 
     private fun writeKey(path: Path, bytes: ByteArray) {
