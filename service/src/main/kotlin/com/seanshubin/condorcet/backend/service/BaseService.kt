@@ -9,7 +9,8 @@ import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
-import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankings
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsKeepNulls
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsReplaceNulls
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import com.seanshubin.condorcet.backend.domain.Role.Companion.DEFAULT_ROLE
 import com.seanshubin.condorcet.backend.domain.Role.Companion.PRIMARY_ROLE
@@ -466,7 +467,7 @@ class BaseService(
         electionName: String,
         rankings: List<Ranking>
     ) {
-        val effectiveRankings = rankings.normalizeRankings()
+        val effectiveRankings = rankings.normalizeRankingsKeepNulls()
         val now = clock.instant()
         val confirmation = uniqueIdGenerator.uniqueId()
         mutableDbCommands.castBallot(
@@ -485,7 +486,7 @@ class BaseService(
         confirmation: String,
         rankings: List<Ranking>
     ) {
-        val effectiveRankings = rankings.normalizeRankings()
+        val effectiveRankings = rankings.normalizeRankingsKeepNulls()
         val now = clock.instant()
         mutableDbCommands.setRankings(accessToken.userName, confirmation, electionName, effectiveRankings)
         mutableDbCommands.updateWhenCast(accessToken.userName, confirmation, now)

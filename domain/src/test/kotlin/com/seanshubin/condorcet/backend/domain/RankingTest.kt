@@ -1,7 +1,8 @@
 package com.seanshubin.condorcet.backend.domain
 
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
-import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankings
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsReplaceNulls
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsKeepNulls
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import kotlin.random.Random
 import kotlin.test.Test
@@ -43,7 +44,7 @@ class RankingTest {
     }
 
     @Test
-    fun normalizeRankings() {
+    fun normalizeRankingsKeepNulls() {
         val a = Ranking("a", -4)
         val b = Ranking("b", 9)
         val c = Ranking("c", 2)
@@ -55,7 +56,36 @@ class RankingTest {
         val i = Ranking("i", 0)
         val j = Ranking("j", 2)
         val input = listOf(a, b, c, d, e, f, g, h, i, j)
-        val actual = input.normalizeRankings()
+        val actual = input.normalizeRankingsKeepNulls()
+        val expected = listOf(
+            Ranking("a", 1),
+            Ranking("b", 6),
+            Ranking("c", 3),
+            Ranking("d", 3),
+            Ranking("e", 4),
+            Ranking("f", null),
+            Ranking("g", 5),
+            Ranking("h", null),
+            Ranking("i", 2),
+            Ranking("j", 3)
+        )
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun normalizeRankingsReplaceNulls() {
+        val a = Ranking("a", -4)
+        val b = Ranking("b", 9)
+        val c = Ranking("c", 2)
+        val d = Ranking("d", 2)
+        val e = Ranking("e", 3)
+        val f = Ranking("f", null)
+        val g = Ranking("g", 5)
+        val h = Ranking("h", null)
+        val i = Ranking("i", 0)
+        val j = Ranking("j", 2)
+        val input = listOf(a, b, c, d, e, f, g, h, i, j)
+        val actual = input.normalizeRankingsReplaceNulls()
         val expected = listOf(
             Ranking("a", 1),
             Ranking("b", 6),
