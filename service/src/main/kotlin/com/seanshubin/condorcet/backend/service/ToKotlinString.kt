@@ -75,6 +75,11 @@ object ToKotlinString {
                 "${clearNoVotingAfter.toKotlinString()}, " +
                 "${noVotingAfter})"
 
+    fun UserUpdates.toKotlinString(): String =
+        "UserUpdates(" +
+                "${userName.toKotlinString()}, " +
+                "${email.toKotlinString()})"
+
     fun VoterEligibility.toKotlinString(): String =
         "VoterEligibility(${voterName.toKotlinString()}, ${eligible.toKotlinString()})"
 

@@ -52,6 +52,7 @@ class ServiceCommandParserImpl : ServiceCommandParser {
             "GetBallot" -> JsonMappers.parse<ServiceCommand.GetBallot>(json)
             "ChangePassword" -> JsonMappers.parse<ServiceCommand.ChangePassword>(json)
             "SendLoginLinkByEmail" -> JsonMappers.parse<ServiceCommand.SendLoginLinkByEmail>(json)
+            "UpdateUser" -> JsonMappers.parse<ServiceCommand.UpdateUser>(json)
             else -> ServiceCommand.Unsupported(name, json)
         }
     }

@@ -274,4 +274,12 @@ interface MutableDbNotImplemented : MutableDbQueries, MutableDbCommands {
     override fun findUserByEmail(email: String): User {
         throw UnsupportedOperationException("not implemented")
     }
+
+    override fun setUserName(authority: String, oldUserName: String, newUserName: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
+
+    override fun setEmail(authority: String, userName: String, email: String) {
+        throw UnsupportedOperationException("not implemented")
+    }
 }

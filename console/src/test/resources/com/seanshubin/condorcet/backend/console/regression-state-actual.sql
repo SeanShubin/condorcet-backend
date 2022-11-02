@@ -1183,3 +1183,34 @@ select name,
        role
 from user
 where email = 'alice@email.com';
+select name,
+       email,
+       salt,
+       hash,
+       role
+from user
+where name = 'Alice';
+select role, permission
+from role_permission
+where role = 'OWNER'
+  and permission = 'USE_APPLICATION';
+select value
+from int_variable
+where name = 'last-synced';
+update
+    user
+set email = 'alice@email2'
+where name = 'Alice';
+update int_variable
+set value = 26
+where name = 'last-synced';
+select value
+from int_variable
+where name = 'last-synced';
+update
+    user
+set name = 'Alice Smith'
+where name = 'Alice';
+update int_variable
+set value = 27
+where name = 'last-synced';

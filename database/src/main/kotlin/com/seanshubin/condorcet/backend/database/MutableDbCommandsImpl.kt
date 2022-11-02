@@ -127,4 +127,12 @@ class MutableDbCommandsImpl(
     override fun setPassword(authority: String, userName: String, salt: String, hash: String) {
         update("user-update-password", salt, hash, userName)
     }
+
+    override fun setUserName(authority: String, oldUserName: String, newUserName: String) {
+        update("user-update-name", newUserName, oldUserName)
+    }
+
+    override fun setEmail(authority: String, userName: String, email: String) {
+        update("user-update-email", email, userName)
+    }
 }

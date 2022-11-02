@@ -89,6 +89,14 @@ class SyncCommands(
         processEvent(authority, EventCommand.SetPassword(userName, salt, hash))
     }
 
+    override fun setUserName(authority: String, oldUserName: String, newUserName: String) {
+        processEvent(authority, EventCommand.SetUserName(oldUserName, newUserName))
+    }
+
+    override fun setEmail(authority: String, userName: String, email: String) {
+        processEvent(authority, EventCommand.SetEmail(userName, email))
+    }
+
     private fun processEvent(authority: String, eventCommand: EventCommand) {
         val now = clock.instant()
         immutableDbCommands.addEvent(

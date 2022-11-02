@@ -152,6 +152,22 @@ class BaseService(
         mutableDbCommands.updateElection(accessToken.userName, electionName, validElectionUpdates)
     }
 
+    override fun updateUser(accessToken: AccessToken, userName: String, userUpdates: UserUpdates) {
+        val user = findUserByName(userName)
+        requirePermission(accessToken, USE_APPLICATION)
+        if(!isSelf(accessToken, user)){
+            requireGreaterRole(accessToken, user)
+        }
+        val email = userUpdates.email
+        if(email != null){
+            mutableDbCommands.setEmail(accessToken.userName, userName, email)
+        }
+        val newUserName = userUpdates.userName
+        if(newUserName != null){
+            mutableDbCommands.setUserName(accessToken.userName, userName, newUserName)
+        }
+    }
+
     override fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail {
         requirePermission(accessToken, VIEW_APPLICATION)
         val election = findElection(electionName)

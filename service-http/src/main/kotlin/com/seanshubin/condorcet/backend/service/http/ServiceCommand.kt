@@ -2,10 +2,7 @@ package com.seanshubin.condorcet.backend.service.http
 
 import com.auth0.jwt.exceptions.JWTDecodeException
 import com.auth0.jwt.exceptions.TokenExpiredException
-import com.seanshubin.condorcet.backend.domain.ElectionUpdates
-import com.seanshubin.condorcet.backend.domain.Permission
-import com.seanshubin.condorcet.backend.domain.Ranking
-import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.global.constants.Constants
 import com.seanshubin.condorcet.backend.http.*
 import com.seanshubin.condorcet.backend.json.JsonMappers
@@ -335,6 +332,15 @@ interface ServiceCommand {
             environment.service.sendLoginLinkByEmail(email, baseUri)
             return responseBuilder().build()
         }
+    }
+
+    data class UpdateUser(val userName:String, val newUserName:String?, val newEmail:String?):ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
+                val userUpdates = UserUpdates(newUserName, newEmail)
+                environment.service.updateUser(accessToken, userName, userUpdates)
+                responseBuilder().build()
+            }
     }
 
     data class Unsupported(val commandName: String, val content: String) : ServiceCommand {

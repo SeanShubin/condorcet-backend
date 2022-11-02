@@ -19,6 +19,8 @@ class EventCommandParserImpl : EventCommandParser {
             "SetRankings" -> JsonMappers.parse<EventCommand.SetRankings>(content)
             "UpdateWhenCast" -> JsonMappers.parse<EventCommand.UpdateWhenCast>(content)
             "SetPassword" -> JsonMappers.parse<EventCommand.SetPassword>(content)
+            "SetUserName" -> JsonMappers.parse<EventCommand.SetUserName>(content)
+            "SetEmail" -> JsonMappers.parse<EventCommand.SetEmail>(content)
             else -> throw RuntimeException("Unsupported database operation '$name'")
         }
     }

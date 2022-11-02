@@ -51,4 +51,8 @@ interface MutableDbCommands {
     fun updateWhenCast(authority: String, confirmation: String, now: Instant)
 
     fun setPassword(authority: String, userName: String, salt: String, hash: String)
+
+    fun setUserName(authority:String, oldUserName:String, newUserName:String)
+
+    fun setEmail(authority:String, userName:String, email:String)
 }
