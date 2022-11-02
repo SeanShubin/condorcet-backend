@@ -5,7 +5,7 @@ import java.security.SecureRandom
 
 class SecureRandomIdGenerator(private val byteArrayFormat: ByteArrayFormat) : UniqueIdGenerator {
     override fun uniqueId(): String {
-        val bytes = ByteArray(16)
+        val bytes = ByteArray(32)
         secureRandom.nextBytes(bytes)
         return byteArrayFormat.encodeCompact(bytes)
     }
