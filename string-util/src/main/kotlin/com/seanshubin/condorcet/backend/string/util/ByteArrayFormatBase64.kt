@@ -2,9 +2,9 @@ package com.seanshubin.condorcet.backend.string.util
 
 import java.util.*
 
-class ByteArrayFormatBase64:ByteArrayFormat {
+class ByteArrayFormatBase64 : ByteArrayFormat {
     override fun encodeCompact(bytes: ByteArray): String {
-        return Base64.getEncoder().encodeToString(bytes)
+        return Base64.getEncoder().encodeToString(bytes).removeTrailing('=')
     }
 
     override fun encodePretty(bytes: ByteArray): String {
@@ -17,7 +17,11 @@ class ByteArrayFormatBase64:ByteArrayFormat {
         val compact = s.trim().split(whitespace).joinToString("")
         return Base64.getDecoder().decode(compact)
     }
+
     companion object {
         private val whitespace = Regex("""\s+""")
+        private fun String.removeTrailing(c: Char): String =
+            if (endsWith(c)) substring(0, length - 1).removeTrailing(c)
+            else this
     }
 }

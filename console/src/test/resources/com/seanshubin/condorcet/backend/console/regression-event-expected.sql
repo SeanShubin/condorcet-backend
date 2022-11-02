@@ -1,29 +1,29 @@
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:14.303455', 'Alice', 'AddUser', '{"name":"Alice","email":"alice@email.com","salt":"mu69MMmRyEyWfgfIJKMnaMDm9LejGHrl/3NxaIBXr7o=","hash":"6Wz4XZhc1TVHac9r2U57NGQftRrIzx4dc0OxIkU371g=","role":"OWNER"}');
+values ('2022-11-02 00:11:14.303455', 'Alice', 'AddUser', '{"name":"Alice","email":"alice@email.com","salt":"mu69MMmRyEyWfgfIJKMnaMDm9LejGHrl/3NxaIBXr7o=","hash":"6Wz4XZhc1TVHac9r2U57NGQftRrIzx4dc0OxIkU371g","role":"OWNER"}');
 select id, `when`, authority, type, text
 from event
 where id > 0
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:14.733557', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=","hash":"Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k=","role":"USER"}');
+values ('2022-11-02 00:11:14.733557', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=","hash":"Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 1
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:14.854937', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"YWh8eaWRk+eHNGFJwFQWubm/xaqIO26ZcjWoiOs+CMc=","hash":"agOUHYCjA3JXQ3euSE2KZUf1ot8keb+IKsD2Z2gmbzw=","role":"USER"}');
+values ('2022-11-02 00:11:14.854937', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"YWh8eaWRk+eHNGFJwFQWubm/xaqIO26ZcjWoiOs+CMc=","hash":"agOUHYCjA3JXQ3euSE2KZUf1ot8keb+IKsD2Z2gmbzw","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 2
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:14.962174', 'Dave', 'AddUser', '{"name":"Dave","email":"dave@email.com","salt":"x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=","hash":"OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE=","role":"USER"}');
+values ('2022-11-02 00:11:14.962174', 'Dave', 'AddUser', '{"name":"Dave","email":"dave@email.com","salt":"x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=","hash":"OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 3
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:15.069882', 'Eve', 'AddUser', '{"name":"Eve","email":"eve@email.com","salt":"D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=","hash":"MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU=","role":"USER"}');
+values ('2022-11-02 00:11:15.069882', 'Eve', 'AddUser', '{"name":"Eve","email":"eve@email.com","salt":"D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=","hash":"MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 4
@@ -146,7 +146,7 @@ from event
 where id > 23
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:17.922758', 'Alice', 'SetPassword', '{"userName":"Alice","salt":"GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=","hash":"gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8="}');
+values ('2022-11-02 00:11:17.922758', 'Alice', 'SetPassword', '{"userName":"Alice","salt":"GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=","hash":"gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8"}');
 select id, `when`, authority, type, text
 from event
 where id > 24

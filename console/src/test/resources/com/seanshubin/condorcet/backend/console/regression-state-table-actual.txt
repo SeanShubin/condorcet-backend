@@ -51,17 +51,17 @@ select * from role_permission
 ║21│OWNER   │VIEW_APPLICATION║
 ╚══╧════════╧════════════════╝
 select * from user
-╔══╤═════╤═══════════════╤═════╤════════════════════════════════════════════╤════════════════════════════════════════════╗
-║id│name │email          │role │salt                                        │hash                                        ║
-╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼────────────────────────────────────────────╢
-║ 1│Alice│alice@email.com│OWNER│GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=│gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8=║
-╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼────────────────────────────────────────────╢
-║ 2│Bob  │bob@email.com  │USER │spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=│Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k=║
-╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼────────────────────────────────────────────╢
-║ 4│Dave │dave@email.com │USER │x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=│OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE=║
-╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼────────────────────────────────────────────╢
-║ 5│Eve  │eve@email.com  │USER │D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=│MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU=║
-╚══╧═════╧═══════════════╧═════╧════════════════════════════════════════════╧════════════════════════════════════════════╝
+╔══╤═════╤═══════════════╤═════╤════════════════════════════════════════════╤═══════════════════════════════════════════╗
+║id│name │email          │role │salt                                        │hash                                       ║
+╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼───────────────────────────────────────────╢
+║ 1│Alice│alice@email.com│OWNER│GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=│gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8║
+╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼───────────────────────────────────────────╢
+║ 2│Bob  │bob@email.com  │USER │spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=│Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k║
+╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼───────────────────────────────────────────╢
+║ 4│Dave │dave@email.com │USER │x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=│OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE║
+╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼───────────────────────────────────────────╢
+║ 5│Eve  │eve@email.com  │USER │D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=│MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU║
+╚══╧═════╧═══════════════╧═════╧════════════════════════════════════════════╧═══════════════════════════════════════════╝
 select * from election
 ╔══╤════════╤══════════════════╤═════════════╤════════════════╤═══════════════╤══════════╤══════════╗
 ║id│owner_id│name              │secret_ballot│no_voting_before│no_voting_after│allow_vote│allow_edit║
@@ -204,17 +204,17 @@ select *
 from user
 order by user.id
 
-╔══╤═════╤═══════════════╤═════╤════════════════════════════════════════════╤════════════════════════════════════════════╗
-║id│name │email          │role │salt                                        │hash                                        ║
-╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼────────────────────────────────────────────╢
-║ 1│Alice│alice@email.com│OWNER│GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=│gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8=║
-╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼────────────────────────────────────────────╢
-║ 2│Bob  │bob@email.com  │USER │spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=│Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k=║
-╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼────────────────────────────────────────────╢
-║ 4│Dave │dave@email.com │USER │x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=│OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE=║
-╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼────────────────────────────────────────────╢
-║ 5│Eve  │eve@email.com  │USER │D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=│MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU=║
-╚══╧═════╧═══════════════╧═════╧════════════════════════════════════════════╧════════════════════════════════════════════╝
+╔══╤═════╤═══════════════╤═════╤════════════════════════════════════════════╤═══════════════════════════════════════════╗
+║id│name │email          │role │salt                                        │hash                                       ║
+╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼───────────────────────────────────────────╢
+║ 1│Alice│alice@email.com│OWNER│GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=│gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8║
+╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼───────────────────────────────────────────╢
+║ 2│Bob  │bob@email.com  │USER │spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=│Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k║
+╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼───────────────────────────────────────────╢
+║ 4│Dave │dave@email.com │USER │x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=│OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE║
+╟──┼─────┼───────────────┼─────┼────────────────────────────────────────────┼───────────────────────────────────────────╢
+║ 5│Eve  │eve@email.com  │USER │D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=│MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU║
+╚══╧═════╧═══════════════╧═════╧════════════════════════════════════════════╧═══════════════════════════════════════════╝
 select election.id,
        election.owner_id,
        user.name owner,

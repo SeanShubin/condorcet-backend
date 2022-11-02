@@ -29,7 +29,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Alice', 'alice@email.com', 'mu69MMmRyEyWfgfIJKMnaMDm9LejGHrl/3NxaIBXr7o=', '6Wz4XZhc1TVHac9r2U57NGQftRrIzx4dc0OxIkU371g=', 'OWNER');
+values ('Alice', 'alice@email.com', 'mu69MMmRyEyWfgfIJKMnaMDm9LejGHrl/3NxaIBXr7o=', '6Wz4XZhc1TVHac9r2U57NGQftRrIzx4dc0OxIkU371g', 'OWNER');
 update int_variable
 set value = 1
 where name = 'last-synced';
@@ -67,7 +67,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Bob', 'bob@email.com', 'spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=', 'Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k=', 'USER');
+values ('Bob', 'bob@email.com', 'spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=', 'Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k', 'USER');
 update int_variable
 set value = 2
 where name = 'last-synced';
@@ -105,7 +105,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Carol', 'carol@email.com', 'YWh8eaWRk+eHNGFJwFQWubm/xaqIO26ZcjWoiOs+CMc=', 'agOUHYCjA3JXQ3euSE2KZUf1ot8keb+IKsD2Z2gmbzw=', 'USER');
+values ('Carol', 'carol@email.com', 'YWh8eaWRk+eHNGFJwFQWubm/xaqIO26ZcjWoiOs+CMc=', 'agOUHYCjA3JXQ3euSE2KZUf1ot8keb+IKsD2Z2gmbzw', 'USER');
 update int_variable
 set value = 3
 where name = 'last-synced';
@@ -143,7 +143,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Dave', 'dave@email.com', 'x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=', 'OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE=', 'USER');
+values ('Dave', 'dave@email.com', 'x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=', 'OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE', 'USER');
 update int_variable
 set value = 4
 where name = 'last-synced';
@@ -181,7 +181,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Eve', 'eve@email.com', 'D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=', 'MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU=', 'USER');
+values ('Eve', 'eve@email.com', 'D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=', 'MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU', 'USER');
 update int_variable
 set value = 5
 where name = 'last-synced';
@@ -1171,7 +1171,7 @@ where name = 'last-synced';
 update
     user
 set salt = 'GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=',
-    hash = 'gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8='
+    hash = 'gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8'
 where name = 'Alice';
 update int_variable
 set value = 25
