@@ -169,3 +169,6 @@ Unit
 sendLoginLinkByEmail("alice@email.com", "http://pairwisevote.org")
 Unit
 
+updateUser(AccessToken("Alice", OWNER), "Alice", UserUpdates("Alice Smith", "alice@email2"))
+Unit
+

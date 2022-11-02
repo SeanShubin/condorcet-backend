@@ -151,3 +151,15 @@ select id, `when`, authority, type, text
 from event
 where id > 24
 order by id;
+insert into event (`when`, authority, type, text)
+values ('2022-11-02 18:11:19.187392', 'Alice', 'SetEmail', '{"userName":"Alice","email":"alice@email2"}');
+select id, `when`, authority, type, text
+from event
+where id > 25
+order by id;
+insert into event (`when`, authority, type, text)
+values ('2022-11-02 18:11:19.198439', 'Alice', 'SetUserName', '{"oldUserName":"Alice","newUserName":"Alice Smith"}');
+select id, `when`, authority, type, text
+from event
+where id > 26
+order by id;
