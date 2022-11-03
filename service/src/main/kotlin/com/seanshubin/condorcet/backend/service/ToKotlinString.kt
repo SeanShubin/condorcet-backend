@@ -44,6 +44,9 @@ object ToKotlinString {
             allowedRoles.map { it.toKotlinString() }.toKotlinString()
         })"
 
+    fun UserNameEmail.toKotlinString(): String =
+        "UserNameEmail(${name.toKotlinString()}, ${email.toKotlinString()})"
+
     fun ElectionSummary.toKotlinString(): String =
         "ElectionSummary(" +
                 "${ownerName.toKotlinString()}, " +

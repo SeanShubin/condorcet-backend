@@ -186,7 +186,12 @@ class RegressionTest {
             GetBallot(voterName = "Alice", electionName = "Favorite Ice Cream"),
             ChangePassword(userName = "Alice", password = "new-alice-password"),
             SendLoginLinkByEmail(email = "alice@email.com", baseUri = "http://pairwisevote.org"),
-            UpdateUser(userName = "Alice", newUserName = "Alice Smith", newEmail = "alice@email2")
+            UpdateUser(userName = "Alice", newUserName = "Alice Smith", newEmail = "alice@email2"),
+            Authenticate(
+                nameOrEmail = "Alice Smith",
+                password = "new-alice-password"
+            ),
+            GetUser(userName = "Alice Smith")
         )
         val tester = Tester()
         tester.generateMissingExpectations(commands)

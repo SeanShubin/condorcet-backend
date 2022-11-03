@@ -10,11 +10,11 @@ import com.seanshubin.condorcet.backend.domain.*
 import com.seanshubin.condorcet.backend.domain.Permission.*
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsKeepNulls
-import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsReplaceNulls
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import com.seanshubin.condorcet.backend.domain.Role.Companion.DEFAULT_ROLE
 import com.seanshubin.condorcet.backend.domain.Role.Companion.PRIMARY_ROLE
 import com.seanshubin.condorcet.backend.domain.Role.Companion.SECONDARY_ROLE
+import com.seanshubin.condorcet.backend.domain.UserNameEmail.Companion.toUserNameEmail
 import com.seanshubin.condorcet.backend.genericdb.GenericTable
 import com.seanshubin.condorcet.backend.mail.MailService
 import com.seanshubin.condorcet.backend.mail.SendMailCommand
@@ -166,6 +166,15 @@ class BaseService(
         if(newUserName != null){
             mutableDbCommands.setUserName(accessToken.userName, userName, newUserName)
         }
+    }
+
+    override fun getUser(accessToken: AccessToken, userName: String): UserNameEmail {
+        requirePermission(accessToken, USE_APPLICATION)
+        val user = findUserByName(userName)
+        if(!isSelf(accessToken, user)){
+            requirePermission(accessToken, MANAGE_USERS)
+        }
+        return user.toUserNameEmail()
     }
 
     override fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail {

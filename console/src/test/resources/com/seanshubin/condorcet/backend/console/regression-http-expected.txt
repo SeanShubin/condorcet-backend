@@ -1188,3 +1188,34 @@ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiL
 Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NjczOTEwNzcsInVzZXJOYW1lIjoiQWxpY2UifQ.dAg3Jsq7fQTgf6aZT--zcyxFsSPoNNZ9RBtJJUUTWfq_EFq4_AgbXSwkCJGsBzWeLghJXP5lkfiHEFDPpskXDAvh8FXMGwNh3Sm6Ctv0V2Iadsanp-GBjSaB80SMDcjF7VF8Cnxf4MQcRI1tTzPEsklsNCnr9dq659x1LL2gsOw
 200
 
+/Authenticate
+{
+  "nameOrEmail" : "Alice Smith",
+  "password" : "new-alice-password"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2NjczNDc5MzcsInVzZXJOYW1lIjoiQWxpY2UifQ.eO_4_D_-JOacCSmRVcsLNj92Dq10QhvRLTafWPEzQBfNU39mVtEoqEFfucLgY860xdHHU6awDbCj9VXqB2g0LP45RRKsvSmmWvIUdOBvJOvBox2Bppub-8OR2fHwvJ5ydOHGEzISU4DjT-unmCBX5n-lubgjJrEBmmao8fU_EJk
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2NjczOTEwNzcsInVzZXJOYW1lIjoiQWxpY2UifQ.dAg3Jsq7fQTgf6aZT--zcyxFsSPoNNZ9RBtJJUUTWfq_EFq4_AgbXSwkCJGsBzWeLghJXP5lkfiHEFDPpskXDAvh8FXMGwNh3Sm6Ctv0V2Iadsanp-GBjSaB80SMDcjF7VF8Cnxf4MQcRI1tTzPEsklsNCnr9dq659x1LL2gsOw
+200
+Content-Type: application/json
+Cache-Control: 43200
+Set-Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2Njc0NTU4ODAsInVzZXJOYW1lIjoiQWxpY2UgU21pdGgifQ.iCSh-gVAbouhmoaqmJOJnglYO3Z8cJU8uHGhZ-dBBzf0kw9uuggQOl7tyqtWJT4lEkYJVaM8bhluTYUaYi-ieJ0Py5FXAhDk4ekfOm1GZ26zo7AuYo3uMevMwUShuhcP2W6aCbxscI8MKxTLHKn0FD1vQcxdlSaTE20ExjWIMdY; HttpOnly
+{
+  "accessToken" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2Njc0MTI3NDAsInVzZXJOYW1lIjoiQWxpY2UgU21pdGgifQ.XbFyYQErk3L7zjSLRykJBu1x5Rna_HyyILED2VSuq8k8o0HSYVj2aLgCrhXqhE61rdti-i8Z-NFTuw9xbq02TNGDSTVNVIYQeICQQVodIYuBFn357FSpdEdigSs_yDo9MV9UMqmUsI12vJaIUcjmiTo5-JG351mq4yWC8Qixi58",
+  "userName" : "Alice Smith",
+  "role" : "OWNER",
+  "permissions" : [ "TRANSFER_OWNER", "VIEW_SECRETS", "MANAGE_USERS", "USE_APPLICATION", "VOTE", "VIEW_APPLICATION" ]
+}
+
+/GetUser
+{
+  "userName" : "Alice Smith"
+}
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJyb2xlIjoiT1dORVIiLCJleHAiOjE2Njc0MTI3NDAsInVzZXJOYW1lIjoiQWxpY2UgU21pdGgifQ.XbFyYQErk3L7zjSLRykJBu1x5Rna_HyyILED2VSuq8k8o0HSYVj2aLgCrhXqhE61rdti-i8Z-NFTuw9xbq02TNGDSTVNVIYQeICQQVodIYuBFn357FSpdEdigSs_yDo9MV9UMqmUsI12vJaIUcjmiTo5-JG351mq4yWC8Qixi58
+Cookie: Refresh=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2Njc0NTU4ODAsInVzZXJOYW1lIjoiQWxpY2UgU21pdGgifQ.iCSh-gVAbouhmoaqmJOJnglYO3Z8cJU8uHGhZ-dBBzf0kw9uuggQOl7tyqtWJT4lEkYJVaM8bhluTYUaYi-ieJ0Py5FXAhDk4ekfOm1GZ26zo7AuYo3uMevMwUShuhcP2W6aCbxscI8MKxTLHKn0FD1vQcxdlSaTE20ExjWIMdY
+200
+Content-Type: application/json
+{
+  "name" : "Alice Smith",
+  "email" : "alice@email2"
+}
+

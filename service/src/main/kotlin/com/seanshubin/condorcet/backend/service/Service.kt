@@ -18,6 +18,7 @@ interface Service {
     fun finalizeElection(accessToken: AccessToken, electionName: String)
     fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates)
     fun updateUser(accessToken: AccessToken, userName: String, userUpdates: UserUpdates)
+    fun getUser(accessToken: AccessToken, userName: String):UserNameEmail
     fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail
     fun deleteElection(accessToken: AccessToken, electionName: String)
     fun listElections(accessToken: AccessToken): List<ElectionSummary>

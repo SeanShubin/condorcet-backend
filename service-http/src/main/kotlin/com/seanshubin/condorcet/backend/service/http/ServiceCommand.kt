@@ -343,6 +343,14 @@ interface ServiceCommand {
             }
     }
 
+    data class GetUser(val userName:String):ServiceCommand {
+        override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
+            requireAccessToken(request, environment.tokenUtil) { accessToken ->
+                val user = environment.service.getUser(accessToken, userName)
+                responseBuilder().json(user).build()
+            }
+    }
+
     data class Unsupported(val commandName: String, val content: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue {
             return responseBuilder().unsupported("Unsupported command '$commandName'\n$content").build()

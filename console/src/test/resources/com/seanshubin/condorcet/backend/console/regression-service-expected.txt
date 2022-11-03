@@ -172,3 +172,12 @@ Unit
 updateUser(AccessToken("Alice", OWNER), "Alice", UserUpdates("Alice Smith", "alice@email2"))
 Unit
 
+authenticate("Alice Smith", "new-alice-password")
+Tokens(RefreshToken("Alice Smith"),AccessToken("Alice Smith", OWNER))
+
+permissionsForRole(OWNER)
+listOf(TRANSFER_OWNER,VIEW_SECRETS,MANAGE_USERS,USE_APPLICATION,VOTE,VIEW_APPLICATION)
+
+getUser(AccessToken("Alice Smith", OWNER), "Alice Smith"})
+UserNameEmail("Alice Smith", "alice@email2")
+

@@ -325,4 +325,12 @@ class RecordingService(
         serviceResponseEvent("updateUser", requestString, response.toKotlinString())
         return response
     }
+
+    override fun getUser(accessToken: AccessToken, userName: String): UserNameEmail {
+        val requestString = "${accessToken.toKotlinString()}, ${userName.toKotlinString()}}"
+        serviceRequestEvent("getUser", requestString)
+        val response = service.getUser(accessToken, userName)
+        serviceResponseEvent("getUser", requestString, response.toKotlinString())
+        return response
+    }
 }
