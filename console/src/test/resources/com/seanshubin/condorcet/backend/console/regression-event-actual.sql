@@ -1,29 +1,29 @@
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:14.303455', 'Alice', 'AddUser', '{"name":"Alice","email":"alice@email.com","salt":"mu69MMmRyEyWfgfIJKMnaMDm9LejGHrl/3NxaIBXr7o=","hash":"6Wz4XZhc1TVHac9r2U57NGQftRrIzx4dc0OxIkU371g","role":"OWNER"}');
+values ('2022-11-02 00:11:14.303455', 'Alice', 'AddUser', '{"name":"Alice","email":"alice@email.com","salt":"LFIvycKxNVS0g8s6bA0Pq49dk9Kej6dnmwZOFFKG1Ic","hash":"as3YwX+MoNWB8Dlbk7vccm1z/bK3hl1pN/kaR2W6sPI","role":"OWNER"}');
 select id, `when`, authority, type, text
 from event
 where id > 0
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:14.733557', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=","hash":"Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k","role":"USER"}');
+values ('2022-11-02 00:11:14.733557', 'Bob', 'AddUser', '{"name":"Bob","email":"bob@email.com","salt":"Q64BJiEeD3vxr0D4qOJPQ04+sbnHVKySyaUPahP5dCI","hash":"iWBf2M2HjvVbmzIShzlAC6yTwqieGaU8sh0r2BUY6Rg","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 1
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:14.854937', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"YWh8eaWRk+eHNGFJwFQWubm/xaqIO26ZcjWoiOs+CMc=","hash":"agOUHYCjA3JXQ3euSE2KZUf1ot8keb+IKsD2Z2gmbzw","role":"USER"}');
+values ('2022-11-02 00:11:14.854937', 'Carol', 'AddUser', '{"name":"Carol","email":"carol@email.com","salt":"KSlIxtAnbqk26NmxTk2eucYtae4WFUxLq60Bmknf9sQ","hash":"cPzoVu3rYjA9GeV1bxBKU6HMw8BCRnN0LkyGOfq2znc","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 2
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:14.962174', 'Dave', 'AddUser', '{"name":"Dave","email":"dave@email.com","salt":"x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=","hash":"OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE","role":"USER"}');
+values ('2022-11-02 00:11:14.962174', 'Dave', 'AddUser', '{"name":"Dave","email":"dave@email.com","salt":"csnTO/Ogqits+VtszeoNi2jgUOf8AHlcWbI7HWKxIhQ","hash":"/DzUvu1yOwztsHmPBLOjsM/LDLyffwrYBvwoUSNjyxM","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 3
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:15.069882', 'Eve', 'AddUser', '{"name":"Eve","email":"eve@email.com","salt":"D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=","hash":"MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU","role":"USER"}');
+values ('2022-11-02 00:11:15.069882', 'Eve', 'AddUser', '{"name":"Eve","email":"eve@email.com","salt":"584syS7RSw4/q9PlDbIAHH4rCs/6K9GZak2ALOsnJac","hash":"egzfsBOy49KnWgj/BuZySA4JRRTUF1lzW5XEuYvD+Og","role":"USER"}');
 select id, `when`, authority, type, text
 from event
 where id > 4
@@ -89,7 +89,7 @@ from event
 where id > 14
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:16.348205', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Vanilla","rank":1},{"candidateName":"Chocolate","rank":2}],"confirmation":"2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc=","now":"2022-11-02T00:11:16.340168Z"}');
+values ('2022-11-02 00:11:16.348205', 'Alice', 'CastBallot', '{"voterName":"Alice","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Vanilla","rank":1},{"candidateName":"Chocolate","rank":2}],"confirmation":"2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc","now":"2022-11-02T00:11:16.340168Z"}');
 select id, `when`, authority, type, text
 from event
 where id > 15
@@ -107,13 +107,13 @@ from event
 where id > 17
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:16.500031', 'Alice', 'SetRankings', '{"confirmation":"2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc=","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Chocolate Chip","rank":1},{"candidateName":"Neapolitan","rank":2},{"candidateName":"Chocolate","rank":3},{"candidateName":"Vanilla","rank":4},{"candidateName":"Butter Pecan","rank":5},{"candidateName":"Mint","rank":6}]}');
+values ('2022-11-02 00:11:16.500031', 'Alice', 'SetRankings', '{"confirmation":"2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Chocolate Chip","rank":1},{"candidateName":"Neapolitan","rank":2},{"candidateName":"Chocolate","rank":3},{"candidateName":"Vanilla","rank":4},{"candidateName":"Butter Pecan","rank":5},{"candidateName":"Mint","rank":6}]}');
 select id, `when`, authority, type, text
 from event
 where id > 18
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:16.524856', 'Alice', 'UpdateWhenCast', '{"confirmation":"2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc=","now":"2022-11-02T00:11:16.499172Z"}');
+values ('2022-11-02 00:11:16.524856', 'Alice', 'UpdateWhenCast', '{"confirmation":"2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc","now":"2022-11-02T00:11:16.499172Z"}');
 select id, `when`, authority, type, text
 from event
 where id > 19
@@ -128,13 +128,13 @@ select count(id)
 from event;
 select * from event;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:17.344327', 'Bob', 'CastBallot', '{"voterName":"Bob","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Chocolate","rank":1},{"candidateName":"Chocolate Chip","rank":2},{"candidateName":"Vanilla","rank":3},{"candidateName":"Mint","rank":4},{"candidateName":"Butter Pecan","rank":5},{"candidateName":"Neapolitan","rank":6}],"confirmation":"jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y=","now":"2022-11-02T00:11:17.343050Z"}');
+values ('2022-11-02 00:11:17.344327', 'Bob', 'CastBallot', '{"voterName":"Bob","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Chocolate","rank":1},{"candidateName":"Chocolate Chip","rank":2},{"candidateName":"Vanilla","rank":3},{"candidateName":"Mint","rank":4},{"candidateName":"Butter Pecan","rank":5},{"candidateName":"Neapolitan","rank":6}],"confirmation":"Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I","now":"2022-11-02T00:11:17.343050Z"}');
 select id, `when`, authority, type, text
 from event
 where id > 21
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:17.50783', 'Dave', 'CastBallot', '{"voterName":"Dave","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Mint","rank":1},{"candidateName":"Chocolate Chip","rank":2},{"candidateName":"Neapolitan","rank":3},{"candidateName":"Chocolate","rank":4},{"candidateName":"Vanilla","rank":5},{"candidateName":"Butter Pecan","rank":6}],"confirmation":"39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc=","now":"2022-11-02T00:11:17.506646Z"}');
+values ('2022-11-02 00:11:17.50783', 'Dave', 'CastBallot', '{"voterName":"Dave","electionName":"Favorite Ice Cream","rankings":[{"candidateName":"Mint","rank":1},{"candidateName":"Chocolate Chip","rank":2},{"candidateName":"Neapolitan","rank":3},{"candidateName":"Chocolate","rank":4},{"candidateName":"Vanilla","rank":5},{"candidateName":"Butter Pecan","rank":6}],"confirmation":"sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw","now":"2022-11-02T00:11:17.506646Z"}');
 select id, `when`, authority, type, text
 from event
 where id > 22
@@ -146,7 +146,7 @@ from event
 where id > 23
 order by id;
 insert into event (`when`, authority, type, text)
-values ('2022-11-02 00:11:17.922758', 'Alice', 'SetPassword', '{"userName":"Alice","salt":"GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=","hash":"gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8"}');
+values ('2022-11-02 00:11:17.922758', 'Alice', 'SetPassword', '{"userName":"Alice","salt":"FYY+dmn+bZTJdUQOFvBdYc/83PQs5M6B4VAgaKb/2J8","hash":"+gIvAJlp0hI81UDIAv6It0mECt9F7+gh8it+AfkuJY0"}');
 select id, `when`, authority, type, text
 from event
 where id > 24

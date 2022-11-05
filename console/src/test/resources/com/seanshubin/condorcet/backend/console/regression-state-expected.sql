@@ -29,7 +29,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Alice', 'alice@email.com', 'mu69MMmRyEyWfgfIJKMnaMDm9LejGHrl/3NxaIBXr7o=', '6Wz4XZhc1TVHac9r2U57NGQftRrIzx4dc0OxIkU371g', 'OWNER');
+values ('Alice', 'alice@email.com', 'LFIvycKxNVS0g8s6bA0Pq49dk9Kej6dnmwZOFFKG1Ic', 'as3YwX+MoNWB8Dlbk7vccm1z/bK3hl1pN/kaR2W6sPI', 'OWNER');
 update int_variable
 set value = 1
 where name = 'last-synced';
@@ -67,7 +67,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Bob', 'bob@email.com', 'spjK5ffE5/CNFFL5uLxTSIEEvrllIqVS8XmzgjzbLVU=', 'Au9pUzRKN04g0G/64yUs+2DFzsfq2m4gSPqh4Sj9P2k', 'USER');
+values ('Bob', 'bob@email.com', 'Q64BJiEeD3vxr0D4qOJPQ04+sbnHVKySyaUPahP5dCI', 'iWBf2M2HjvVbmzIShzlAC6yTwqieGaU8sh0r2BUY6Rg', 'USER');
 update int_variable
 set value = 2
 where name = 'last-synced';
@@ -105,7 +105,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Carol', 'carol@email.com', 'YWh8eaWRk+eHNGFJwFQWubm/xaqIO26ZcjWoiOs+CMc=', 'agOUHYCjA3JXQ3euSE2KZUf1ot8keb+IKsD2Z2gmbzw', 'USER');
+values ('Carol', 'carol@email.com', 'KSlIxtAnbqk26NmxTk2eucYtae4WFUxLq60Bmknf9sQ', 'cPzoVu3rYjA9GeV1bxBKU6HMw8BCRnN0LkyGOfq2znc', 'USER');
 update int_variable
 set value = 3
 where name = 'last-synced';
@@ -143,7 +143,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Dave', 'dave@email.com', 'x3s3jABExhlX+MeJl5YtIUKlheujRsDvlp4qB4ntn9Y=', 'OJ24dKzC0MDfTmlvDVvfdFlPNJPrRkQteHXVwGWq7LE', 'USER');
+values ('Dave', 'dave@email.com', 'csnTO/Ogqits+VtszeoNi2jgUOf8AHlcWbI7HWKxIhQ', '/DzUvu1yOwztsHmPBLOjsM/LDLyffwrYBvwoUSNjyxM', 'USER');
 update int_variable
 set value = 4
 where name = 'last-synced';
@@ -181,7 +181,7 @@ insert into user (name,
                   salt,
                   hash,
                   role)
-values ('Eve', 'eve@email.com', 'D+fWYeIiF0vntWjpGLPbKqOKgSaoJat5PswAuvLBo3o=', 'MjLabSeHJFlRlA+0lfpQG1NraABKZXFB4j/VIlTLklU', 'USER');
+values ('Eve', 'eve@email.com', '584syS7RSw4/q9PlDbIAHH4rCs/6K9GZak2ALOsnJac', 'egzfsBOy49KnWgj/BuZySA4JRRTUF1lzW5XEuYvD+Og', 'USER');
 update int_variable
 set value = 5
 where name = 'last-synced';
@@ -578,13 +578,13 @@ where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Alice'),
         (select id from election where name = 'Favorite Ice Cream'),
-        '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc=',
+        '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc',
         '2022-11-02 00:11:16.340168');
 delete
 from ranking
-where ballot_id = (select id from ballot where confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc=');
+where ballot_id = (select id from ballot where confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc='),
+values ((select ballot.id from ballot where ballot.confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc'),
         (
             select candidate.id
             from candidate
@@ -593,7 +593,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08
               and candidate.name = 'Vanilla'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc='),
+values ((select ballot.id from ballot where ballot.confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc'),
         (
             select candidate.id
             from candidate
@@ -676,9 +676,9 @@ from int_variable
 where name = 'last-synced';
 delete
 from ranking
-where ballot_id = (select id from ballot where confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc=');
+where ballot_id = (select id from ballot where confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc='),
+values ((select ballot.id from ballot where ballot.confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc'),
         (
             select candidate.id
             from candidate
@@ -687,7 +687,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08
               and candidate.name = 'Chocolate Chip'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc='),
+values ((select ballot.id from ballot where ballot.confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc'),
         (
             select candidate.id
             from candidate
@@ -696,7 +696,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08
               and candidate.name = 'Neapolitan'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc='),
+values ((select ballot.id from ballot where ballot.confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc'),
         (
             select candidate.id
             from candidate
@@ -705,7 +705,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08
               and candidate.name = 'Chocolate'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc='),
+values ((select ballot.id from ballot where ballot.confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc'),
         (
             select candidate.id
             from candidate
@@ -714,7 +714,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08
               and candidate.name = 'Vanilla'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc='),
+values ((select ballot.id from ballot where ballot.confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc'),
         (
             select candidate.id
             from candidate
@@ -723,7 +723,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08
               and candidate.name = 'Butter Pecan'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc='),
+values ((select ballot.id from ballot where ballot.confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc'),
         (
             select candidate.id
             from candidate
@@ -739,7 +739,7 @@ from int_variable
 where name = 'last-synced';
 update ballot
 set when_cast = '2022-11-02 00:11:16.499172'
-where confirmation = '2Khjmwi9q8y08gnYQ7ioUoaSmdanqDogMp66NwvQRpc=';
+where confirmation = '2PziIg7qU7INxq2Hup1trR5cnhC00caBVorUIkf4BDc';
 update int_variable
 set value = 20
 where name = 'last-synced';
@@ -914,13 +914,13 @@ where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Bob'),
         (select id from election where name = 'Favorite Ice Cream'),
-        'jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y=',
+        'Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I',
         '2022-11-02 00:11:17.34305');
 delete
 from ranking
-where ballot_id = (select id from ballot where confirmation = 'jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y=');
+where ballot_id = (select id from ballot where confirmation = 'Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y='),
+values ((select ballot.id from ballot where ballot.confirmation = 'Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I'),
         (
             select candidate.id
             from candidate
@@ -929,7 +929,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCO
               and candidate.name = 'Chocolate'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y='),
+values ((select ballot.id from ballot where ballot.confirmation = 'Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I'),
         (
             select candidate.id
             from candidate
@@ -938,7 +938,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCO
               and candidate.name = 'Chocolate Chip'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y='),
+values ((select ballot.id from ballot where ballot.confirmation = 'Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I'),
         (
             select candidate.id
             from candidate
@@ -947,7 +947,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCO
               and candidate.name = 'Vanilla'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y='),
+values ((select ballot.id from ballot where ballot.confirmation = 'Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I'),
         (
             select candidate.id
             from candidate
@@ -956,7 +956,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCO
               and candidate.name = 'Mint'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y='),
+values ((select ballot.id from ballot where ballot.confirmation = 'Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I'),
         (
             select candidate.id
             from candidate
@@ -965,7 +965,7 @@ values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCO
               and candidate.name = 'Butter Pecan'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = 'jUubd/FehXhCOlhNsLegZdddQS04clejQc6DQZYv44Y='),
+values ((select ballot.id from ballot where ballot.confirmation = 'Q2crPhJGgW4CS0x+EkVH9Mc2aoNZGTBQyMx8JvWFl6I'),
         (
             select candidate.id
             from candidate
@@ -1012,13 +1012,13 @@ where name = 'last-synced';
 insert into ballot (user_id, election_id, confirmation, when_cast)
 values ((select id from user where name = 'Dave'),
         (select id from election where name = 'Favorite Ice Cream'),
-        '39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc=',
+        'sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw',
         '2022-11-02 00:11:17.506646');
 delete
 from ranking
-where ballot_id = (select id from ballot where confirmation = '39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc=');
+where ballot_id = (select id from ballot where confirmation = 'sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw');
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc='),
+values ((select ballot.id from ballot where ballot.confirmation = 'sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw'),
         (
             select candidate.id
             from candidate
@@ -1027,7 +1027,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9c
               and candidate.name = 'Mint'),
         1);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc='),
+values ((select ballot.id from ballot where ballot.confirmation = 'sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw'),
         (
             select candidate.id
             from candidate
@@ -1036,7 +1036,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9c
               and candidate.name = 'Chocolate Chip'),
         2);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc='),
+values ((select ballot.id from ballot where ballot.confirmation = 'sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw'),
         (
             select candidate.id
             from candidate
@@ -1045,7 +1045,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9c
               and candidate.name = 'Neapolitan'),
         3);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc='),
+values ((select ballot.id from ballot where ballot.confirmation = 'sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw'),
         (
             select candidate.id
             from candidate
@@ -1054,7 +1054,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9c
               and candidate.name = 'Chocolate'),
         4);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc='),
+values ((select ballot.id from ballot where ballot.confirmation = 'sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw'),
         (
             select candidate.id
             from candidate
@@ -1063,7 +1063,7 @@ values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9c
               and candidate.name = 'Vanilla'),
         5);
 insert into ranking (ballot_id, candidate_id, `rank`)
-values ((select ballot.id from ballot where ballot.confirmation = '39zeqJl2itJ9cX+exU4rYE8JN9RS50fP2khSIqud0oc='),
+values ((select ballot.id from ballot where ballot.confirmation = 'sdUhDdpjvoDuYLrzoYDSOVcZYoDOwSSDbE0IlFVrlpw'),
         (
             select candidate.id
             from candidate
@@ -1170,8 +1170,8 @@ from int_variable
 where name = 'last-synced';
 update
     user
-set salt = 'GZvFrxTJryoDbOeymIAKG6EAsz199NFmd4S8jN8+EmI=',
-    hash = 'gWzGUtpikw5JDydU1qRn6z4rLo/Zt+XkvRbgAU/+ah8'
+set salt = 'FYY+dmn+bZTJdUQOFvBdYc/83PQs5M6B4VAgaKb/2J8',
+    hash = '+gIvAJlp0hI81UDIAv6It0mECt9F7+gh8it+AfkuJY0'
 where name = 'Alice';
 update int_variable
 set value = 25

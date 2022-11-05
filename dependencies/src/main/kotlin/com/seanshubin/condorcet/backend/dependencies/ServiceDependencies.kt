@@ -14,6 +14,7 @@ import com.seanshubin.condorcet.backend.service.RecordingService
 import com.seanshubin.condorcet.backend.service.Service
 import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
 import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
+import java.nio.charset.Charset
 import java.time.Clock
 import java.time.Duration
 
@@ -22,7 +23,7 @@ class ServiceDependencies(
     eventConnection: ConnectionWrapper,
     stateConnection: ConnectionWrapper,
     mailService: MailService,
-    configuration: Configuration,
+    charset: Charset,
     emailAccessTokenExpire: Duration,
     createUpdatePasswordLink: (AccessToken, String) -> String
 ) {
@@ -30,9 +31,9 @@ class ServiceDependencies(
     private val serviceResponseEvent: (String, String, String) -> Unit = integration.serviceResponseEvent
     private val queryLoader: QueryLoader = QueryLoaderFromResource()
     private val byteArrayFormat:ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
-    private val oneWayHash: OneWayHash = Sha256Hash(byteArrayFormat)
+    private val oneWayHash: OneWayHash = Sha256Hash
     private val uniqueIdGenerator: UniqueIdGenerator = integration.uniqueIdGenerator
-    private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
+    private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash, charset)
     private val random = integration.random
     private val eventGenericDatabase: GenericDatabase = GenericDatabaseImpl(
         eventConnection,
@@ -71,7 +72,8 @@ class ServiceDependencies(
         uniqueIdGenerator,
         mailService,
         emailAccessTokenExpire,
-        createUpdatePasswordLink
+        createUpdatePasswordLink,
+        byteArrayFormat
     )
     val service: Service = RecordingService(baseService, serviceRequestEvent, serviceResponseEvent)
 }

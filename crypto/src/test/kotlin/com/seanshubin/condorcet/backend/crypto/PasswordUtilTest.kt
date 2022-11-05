@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.crypto
 
-import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
+import java.nio.charset.StandardCharsets
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -10,10 +10,10 @@ class PasswordUtilTest {
     fun validPassword() {
         // given
         val password = "foo"
-        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
-        val uniqueIdGenerator = SecureRandomIdGenerator(byteArrayFormat)
-        val oneWayHash = Sha256Hash(byteArrayFormat)
-        val passwordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
+        val charset = StandardCharsets.UTF_8
+        val uniqueIdGenerator = SecureRandomIdGenerator
+        val oneWayHash = Sha256Hash
+        val passwordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash, charset)
         val saltAndHash = passwordUtil.createSaltAndHash(password)
 
         // when
@@ -27,10 +27,10 @@ class PasswordUtilTest {
     fun invalidPassword() {
         // given
         val password = "foo"
-        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
-        val uniqueIdGenerator = SecureRandomIdGenerator(byteArrayFormat)
-        val oneWayHash = Sha256Hash(byteArrayFormat)
-        val passwordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
+        val charset = StandardCharsets.UTF_8
+        val uniqueIdGenerator = SecureRandomIdGenerator
+        val oneWayHash = Sha256Hash
+        val passwordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash, charset)
         val saltAndHash = passwordUtil.createSaltAndHash(password)
 
         // when

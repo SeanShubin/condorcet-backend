@@ -3,6 +3,10 @@ package com.seanshubin.condorcet.backend.service
 import com.seanshubin.condorcet.backend.crypto.OneWayHash
 import com.seanshubin.condorcet.backend.crypto.PasswordUtil
 import com.seanshubin.condorcet.backend.domain.Role
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
 import kotlin.test.Test
 import java.time.Duration
 import java.time.temporal.ChronoUnit
@@ -82,7 +86,8 @@ class ServiceTest {
         val uniqueIdGenerator = UniqueIdGeneratorStub(sample)
         private val clock = ClockStub()
         private val oneWayHash: OneWayHash = OneWayHashStub(sample)
-        private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash)
+        private val charset: Charset = StandardCharsets.UTF_8
+        private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash, charset)
         private val eventDbFake = ImmutableDbFake()
         val stateDbFake = MutableDbFake()
         private val synchronizer = SynchronizerStub()
@@ -90,6 +95,7 @@ class ServiceTest {
         private val mailService = MailServiceUnsupportedOperation()
         private val emailAccessTokenExpire = Duration.of(10, ChronoUnit.MINUTES)
         private val createUpdatePasswordLink = { accessToken: AccessToken, baseUri:String -> "update-password-link" }
+        private val byteArrayFormat: ByteArrayFormat =  ByteArrayFormatServiceLocator.byteArrayFormat
         val service: Service = BaseService(
             passwordUtil,
             eventDbFake,
@@ -101,7 +107,8 @@ class ServiceTest {
             uniqueIdGenerator,
             mailService,
             emailAccessTokenExpire,
-            createUpdatePasswordLink
+            createUpdatePasswordLink,
+            byteArrayFormat
         )
     }
 }

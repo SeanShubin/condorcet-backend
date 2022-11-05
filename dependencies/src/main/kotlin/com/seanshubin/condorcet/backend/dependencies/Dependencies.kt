@@ -75,7 +75,8 @@ class Dependencies(
                 integration,
                 eventConnection,
                 stateConnection,
-                mailService, configuration,
+                mailService,
+                charset,
                 Constants.emailAccessTokenDuration,
                 createUpdatePasswordLink
             ).service
@@ -88,7 +89,7 @@ class Dependencies(
                 eventConnection,
                 stateConnection,
                 mailService,
-                configuration,
+                charset,
                 emailAccessTokenExpire,
                 createUpdatePasswordLink
             )

@@ -6,16 +6,15 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class Sha256HashTest {
+    val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
     @Test
     fun sameThingsHashSame() {
         // given
-        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
-        val oneWayHash: OneWayHash =
-            Sha256Hash(byteArrayFormat)
+        val oneWayHash: OneWayHash = Sha256Hash
 
         // when
-        val hash1 = oneWayHash.hash("same thing")
-        val hash2 = oneWayHash.hash("same thing")
+        val hash1 = byteArrayFormat.encodeCompact(oneWayHash.hash("same thing".toByteArray()))
+        val hash2 = byteArrayFormat.encodeCompact(oneWayHash.hash("same thing".toByteArray()))
 
         // then
         assertEquals(hash1, hash2)
@@ -24,13 +23,11 @@ class Sha256HashTest {
     @Test
     fun differentThingsHashDifferent() {
         // given
-        val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
-        val oneWayHash: OneWayHash =
-            Sha256Hash(byteArrayFormat)
+        val oneWayHash: OneWayHash = Sha256Hash
 
         // when
-        val hash1 = oneWayHash.hash("one thing")
-        val hash2 = oneWayHash.hash("another thing")
+        val hash1 = byteArrayFormat.encodeCompact(oneWayHash.hash("one thing".toByteArray()))
+        val hash2 = byteArrayFormat.encodeCompact(oneWayHash.hash("another thing".toByteArray()))
 
         // then
         assertNotEquals(hash1, hash2)

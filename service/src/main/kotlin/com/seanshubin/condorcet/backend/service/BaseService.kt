@@ -21,6 +21,7 @@ import com.seanshubin.condorcet.backend.mail.SendMailCommand
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.extra
 import com.seanshubin.condorcet.backend.service.CaseInsensitiveStringListUtil.missing
 import com.seanshubin.condorcet.backend.service.ServiceException.Category.*
+import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
 import com.seanshubin.condorcet.backend.string.util.DurationFormat
 import java.time.Clock
 import java.time.Duration
@@ -38,7 +39,8 @@ class BaseService(
     private val uniqueIdGenerator: UniqueIdGenerator,
     private val mailService: MailService,
     private val emailAccessTokenExpire: Duration,
-    private val createUpdatePasswordLink: (AccessToken, String) -> String
+    private val createUpdatePasswordLink: (AccessToken, String) -> String,
+    private val byteArrayFormat: ByteArrayFormat
 ) : Service {
     override fun synchronize() {
         synchronizer.synchronize()
@@ -494,7 +496,8 @@ class BaseService(
     ) {
         val effectiveRankings = rankings.normalizeRankingsKeepNulls()
         val now = clock.instant()
-        val confirmation = uniqueIdGenerator.uniqueId()
+        val confirmationBytes = uniqueIdGenerator.uniqueId()
+        val confirmation = byteArrayFormat.encodeCompact(confirmationBytes)
         mutableDbCommands.castBallot(
             accessToken.userName,
             voterName,
