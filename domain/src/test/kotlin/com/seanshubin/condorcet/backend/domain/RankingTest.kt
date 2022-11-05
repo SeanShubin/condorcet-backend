@@ -1,8 +1,8 @@
 package com.seanshubin.condorcet.backend.domain
 
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.addMissingCandidates
-import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsReplaceNulls
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsKeepNulls
+import com.seanshubin.condorcet.backend.domain.Ranking.Companion.normalizeRankingsReplaceNulls
 import com.seanshubin.condorcet.backend.domain.Ranking.Companion.voterBiasedOrdering
 import kotlin.random.Random
 import kotlin.test.Test

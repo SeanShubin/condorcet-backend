@@ -7,9 +7,9 @@ import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
 import com.seanshubin.condorcet.backend.string.util.ByteArrayFormatServiceLocator
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
-import kotlin.test.Test
 import java.time.Duration
 import java.time.temporal.ChronoUnit
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ServiceTest {
@@ -94,8 +94,8 @@ class ServiceTest {
         private val random = RandomStub()
         private val mailService = MailServiceUnsupportedOperation()
         private val emailAccessTokenExpire = Duration.of(10, ChronoUnit.MINUTES)
-        private val createUpdatePasswordLink = { accessToken: AccessToken, baseUri:String -> "update-password-link" }
-        private val byteArrayFormat: ByteArrayFormat =  ByteArrayFormatServiceLocator.byteArrayFormat
+        private val createUpdatePasswordLink = { accessToken: AccessToken, baseUri: String -> "update-password-link" }
+        private val byteArrayFormat: ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
         val service: Service = BaseService(
             passwordUtil,
             eventDbFake,

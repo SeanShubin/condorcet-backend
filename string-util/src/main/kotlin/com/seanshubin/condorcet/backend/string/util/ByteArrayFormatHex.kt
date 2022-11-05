@@ -1,6 +1,6 @@
 package com.seanshubin.condorcet.backend.string.util
 
-class ByteArrayFormatHex:ByteArrayFormat {
+class ByteArrayFormatHex : ByteArrayFormat {
     override fun encodeCompact(bytes: ByteArray): String {
         return bytes.joinToString("", transform = ::byteToHex)
     }

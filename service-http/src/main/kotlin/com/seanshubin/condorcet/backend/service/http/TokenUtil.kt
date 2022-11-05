@@ -9,5 +9,5 @@ interface TokenUtil {
     fun toRefreshTokenString(refreshToken: RefreshToken): String
     fun toRefreshToken(refreshTokenString: String?): RefreshToken?
     fun bearerTokenStringToAccessToken(bearerTokenString: String?): AccessToken?
-    fun createUpdatePasswordLink(accessToken: AccessToken, baseUri:String): String
+    fun createUpdatePasswordLink(accessToken: AccessToken, baseUri: String): String
 }

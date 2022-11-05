@@ -4,7 +4,6 @@ import com.seanshubin.condorcet.backend.contract.FilesContract
 import com.seanshubin.condorcet.backend.string.util.ByteArrayFormat
 import java.nio.charset.Charset
 import java.nio.file.Path
-import java.security.KeyPairGenerator
 
 class KeyStoreImpl(
     private val files: FilesContract,

@@ -334,7 +334,7 @@ interface ServiceCommand {
         }
     }
 
-    data class UpdateUser(val userName:String, val newUserName:String?, val newEmail:String?):ServiceCommand {
+    data class UpdateUser(val userName: String, val newUserName: String?, val newEmail: String?) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val userUpdates = UserUpdates(newUserName, newEmail)
@@ -343,7 +343,7 @@ interface ServiceCommand {
             }
     }
 
-    data class GetUser(val userName:String):ServiceCommand {
+    data class GetUser(val userName: String) : ServiceCommand {
         override fun exec(environment: ServiceEnvironment, request: RequestValue): ResponseValue =
             requireAccessToken(request, environment.tokenUtil) { accessToken ->
                 val user = environment.service.getUser(accessToken, userName)

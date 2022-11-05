@@ -310,7 +310,7 @@ class RecordingService(
         return response
     }
 
-    override fun sendLoginLinkByEmail(email: String, baseUri:String) {
+    override fun sendLoginLinkByEmail(email: String, baseUri: String) {
         val requestString = "${email.toKotlinString()}, ${baseUri.toKotlinString()}"
         serviceRequestEvent("sendLoginLinkByEmail", requestString)
         val response = service.sendLoginLinkByEmail(email, baseUri)
@@ -319,7 +319,8 @@ class RecordingService(
     }
 
     override fun updateUser(accessToken: AccessToken, userName: String, userUpdates: UserUpdates) {
-        val requestString = "${accessToken.toKotlinString()}, ${userName.toKotlinString()}, ${userUpdates.toKotlinString()}"
+        val requestString =
+            "${accessToken.toKotlinString()}, ${userName.toKotlinString()}, ${userUpdates.toKotlinString()}"
         serviceRequestEvent("updateUser", requestString)
         val response = service.updateUser(accessToken, userName, userUpdates)
         serviceResponseEvent("updateUser", requestString, response.toKotlinString())

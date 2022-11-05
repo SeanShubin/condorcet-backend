@@ -10,7 +10,7 @@ data class SaltAndHash(val salt: String, val hash: String) {
             password: String,
             uniqueIdGenerator: UniqueIdGenerator,
             oneWayHash: OneWayHash,
-            charset:Charset
+            charset: Charset
         ): SaltAndHash {
             val saltBytes = uniqueIdGenerator.uniqueId()
             val passwordBytes = password.toByteArray(charset)

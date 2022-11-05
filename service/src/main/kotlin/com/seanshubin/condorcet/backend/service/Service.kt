@@ -18,7 +18,7 @@ interface Service {
     fun finalizeElection(accessToken: AccessToken, electionName: String)
     fun updateElection(accessToken: AccessToken, electionName: String, electionUpdates: ElectionUpdates)
     fun updateUser(accessToken: AccessToken, userName: String, userUpdates: UserUpdates)
-    fun getUser(accessToken: AccessToken, userName: String):UserNameEmail
+    fun getUser(accessToken: AccessToken, userName: String): UserNameEmail
     fun getElection(accessToken: AccessToken, electionName: String): ElectionDetail
     fun deleteElection(accessToken: AccessToken, electionName: String)
     fun listElections(accessToken: AccessToken): List<ElectionSummary>
@@ -40,5 +40,5 @@ interface Service {
     fun isEligible(accessToken: AccessToken, userName: String, electionName: String): Boolean
     fun getBallot(accessToken: AccessToken, voterName: String, electionName: String): BallotSummary?
     fun changePassword(accessToken: AccessToken, userName: String, password: String)
-    fun sendLoginLinkByEmail(email: String, baseUri:String)
+    fun sendLoginLinkByEmail(email: String, baseUri: String)
 }

@@ -157,15 +157,15 @@ class BaseService(
     override fun updateUser(accessToken: AccessToken, userName: String, userUpdates: UserUpdates) {
         val user = findUserByName(userName)
         requirePermission(accessToken, USE_APPLICATION)
-        if(!isSelf(accessToken, user)){
+        if (!isSelf(accessToken, user)) {
             requireGreaterRole(accessToken, user)
         }
         val email = userUpdates.email
-        if(email != null){
+        if (email != null) {
             mutableDbCommands.setEmail(accessToken.userName, userName, email)
         }
         val newUserName = userUpdates.userName
-        if(newUserName != null){
+        if (newUserName != null) {
             mutableDbCommands.setUserName(accessToken.userName, userName, newUserName)
         }
     }
@@ -173,7 +173,7 @@ class BaseService(
     override fun getUser(accessToken: AccessToken, userName: String): UserNameEmail {
         requirePermission(accessToken, USE_APPLICATION)
         val user = findUserByName(userName)
-        if(!isSelf(accessToken, user)){
+        if (!isSelf(accessToken, user)) {
             requirePermission(accessToken, MANAGE_USERS)
         }
         return user.toUserNameEmail()
@@ -364,7 +364,7 @@ class BaseService(
         mutableDbCommands.setPassword(accessToken.userName, userName, salt, hash)
     }
 
-    override fun sendLoginLinkByEmail(email: String, baseUri:String) {
+    override fun sendLoginLinkByEmail(email: String, baseUri: String) {
         val user = findUserByEmail(email)
         val accessToken = AccessToken(user.name, user.role)
         val subject = "Change password for $baseUri"

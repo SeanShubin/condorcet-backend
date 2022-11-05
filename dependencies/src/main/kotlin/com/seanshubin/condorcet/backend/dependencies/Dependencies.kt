@@ -62,8 +62,8 @@ class Dependencies(
     private val serverContract: ServerContract = JettyServer(server)
     private val charset: Charset = StandardCharsets.UTF_8
     private val whereKeysAreStored: Path = integration.whereKeysAreStored
-    private val byteArrayFormat:ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
-    private val keyPairFactory:KeyPairFactory = KeyStoreFactoryImpl()
+    private val byteArrayFormat: ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+    private val keyPairFactory: KeyPairFactory = KeyStoreFactoryImpl()
     private val keyStore: KeyStore = KeyStoreImpl(files, charset, whereKeysAreStored, byteArrayFormat, keyPairFactory)
     private val algorithmFactory: AlgorithmFactory = AlgorithmFactoryImpl(keyStore)
     private val cipher: Cipher = CipherImpl(algorithmFactory, clock)

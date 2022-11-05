@@ -9,11 +9,12 @@ class Sample {
     fun email(): String = "email-${string()}@email.com"
     fun password(): String = "password-${string()}"
     fun uniqueId(): ByteArray = "unique-id-${string()}".toByteArray()
-    fun hash(inputBytes: ByteArray):ByteArray {
+    fun hash(inputBytes: ByteArray): ByteArray {
         val inputString = byteArrayFormat.encodeCompact(inputBytes)
         val outputString = "hash-for($inputString)"
         return outputString.toByteArray()
     }
+
     companion object {
         val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
     }

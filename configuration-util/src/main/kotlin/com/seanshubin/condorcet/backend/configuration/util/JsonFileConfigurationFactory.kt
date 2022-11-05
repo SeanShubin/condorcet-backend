@@ -4,10 +4,10 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.seanshubin.condorcet.backend.configuration.util.Converters.IntConverter
 import com.seanshubin.condorcet.backend.configuration.util.Converters.StringConverter
 import com.seanshubin.condorcet.backend.contract.FilesContract
+import com.seanshubin.condorcet.backend.json.JsonMappers.parser
+import com.seanshubin.condorcet.backend.json.JsonMappers.pretty
 import java.nio.file.Path
 import java.time.Instant
-import com.seanshubin.condorcet.backend.json.JsonMappers.pretty
-import com.seanshubin.condorcet.backend.json.JsonMappers.parser
 
 class JsonFileConfigurationFactory(
     private val files: FilesContract,
@@ -85,7 +85,7 @@ class JsonFileConfigurationFactory(
         files.writeString(configFilePath, jsonText)
     }
 
-    private fun loadConfig() :Untyped {
+    private fun loadConfig(): Untyped {
         ensureFileExists()
         val text = files.readString(configFilePath)
         val untyped = Untyped(parser.readValue<Any?>(text))

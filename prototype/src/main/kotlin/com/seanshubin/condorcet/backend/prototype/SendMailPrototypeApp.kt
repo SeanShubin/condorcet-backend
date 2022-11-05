@@ -16,7 +16,7 @@ object SendMailPrototypeApp {
     @JvmStatic
     fun main(args: Array<String>) {
         val files: FilesContract = FilesDelegate
-        val configFilePath = Paths.get("local-config","secrets","send-mail-prototype-config.json")
+        val configFilePath = Paths.get("local-config", "secrets", "send-mail-prototype-config.json")
         val configurationFactory: ConfigurationFactory = JsonFileConfigurationFactory(files, configFilePath)
         val host = configurationFactory.stringAt("email host", listOf("email", "host")).load()
         val user = configurationFactory.stringAt("email user", listOf("email", "user")).load()
@@ -30,7 +30,7 @@ object SendMailPrototypeApp {
         mailProperties["mail.smtp.starttls.enable"] = "true"
         mailProperties["mail.smtp.auth"] = "true"
         val props = System.getProperties()
-        mailProperties.forEach{ key, value ->
+        mailProperties.forEach { key, value ->
             props[key] = value
         }
         val session = Session.getDefaultInstance(props)
@@ -51,9 +51,9 @@ object SendMailPrototypeApp {
         try {
             println("host = $host")
             println("user = $user")
-            println("password = ${password[0]}<snip>${password[password.length-1]}")
+            println("password = ${password[0]}<snip>${password[password.length - 1]}")
             println("properties")
-            mailProperties.map{"  $it"}.forEach(::println)
+            mailProperties.map { "  $it" }.forEach(::println)
             transport.connect(
                 host,
                 user,

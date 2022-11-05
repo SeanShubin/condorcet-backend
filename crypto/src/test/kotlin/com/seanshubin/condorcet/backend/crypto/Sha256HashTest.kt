@@ -7,6 +7,7 @@ import kotlin.test.assertNotEquals
 
 class Sha256HashTest {
     val byteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+
     @Test
     fun sameThingsHashSame() {
         // given

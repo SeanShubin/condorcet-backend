@@ -42,10 +42,10 @@ class ByteArrayFormatBase64Test {
         val bytes = (0..255).map { it.toByte() }.toByteArray()
         val expected =
             "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4" +
-            "OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3Bx" +
-            "cnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmq" +
-            "q6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj" +
-            "5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w"
+                    "OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3Bx" +
+                    "cnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmq" +
+                    "q6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj" +
+                    "5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w"
         val byteArrayFormat = ByteArrayFormatBase64()
 
         // when
@@ -92,6 +92,7 @@ class ByteArrayFormatBase64Test {
         assertEquals(bytes.toList(), decoded.toList())
         assertEquals(expected, encoded)
     }
+
     @Test
     fun padding1() {
         // given

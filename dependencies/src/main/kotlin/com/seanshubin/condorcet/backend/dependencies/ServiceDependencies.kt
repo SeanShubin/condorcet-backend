@@ -7,7 +7,6 @@ import com.seanshubin.condorcet.backend.crypto.UniqueIdGenerator
 import com.seanshubin.condorcet.backend.database.*
 import com.seanshubin.condorcet.backend.genericdb.*
 import com.seanshubin.condorcet.backend.mail.MailService
-import com.seanshubin.condorcet.backend.server.Configuration
 import com.seanshubin.condorcet.backend.service.AccessToken
 import com.seanshubin.condorcet.backend.service.BaseService
 import com.seanshubin.condorcet.backend.service.RecordingService
@@ -30,7 +29,7 @@ class ServiceDependencies(
     private val serviceRequestEvent: (String, String) -> Unit = integration.serviceRequestEvent
     private val serviceResponseEvent: (String, String, String) -> Unit = integration.serviceResponseEvent
     private val queryLoader: QueryLoader = QueryLoaderFromResource()
-    private val byteArrayFormat:ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
+    private val byteArrayFormat: ByteArrayFormat = ByteArrayFormatServiceLocator.byteArrayFormat
     private val oneWayHash: OneWayHash = Sha256Hash
     private val uniqueIdGenerator: UniqueIdGenerator = integration.uniqueIdGenerator
     private val passwordUtil: PasswordUtil = PasswordUtil(uniqueIdGenerator, oneWayHash, charset)

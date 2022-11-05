@@ -142,7 +142,7 @@ class ServiceDelegateToLifecycle(
     }
 
     override fun getUser(accessToken: AccessToken, userName: String): UserNameEmail =
-        withService { it.getUser(accessToken, userName)}
+        withService { it.getUser(accessToken, userName) }
 
     private fun <T> withService(f: (Service) -> T): T =
         eventConnectionLifecycle.withValue { eventConnection ->

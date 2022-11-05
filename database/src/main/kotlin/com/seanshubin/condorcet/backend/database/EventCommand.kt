@@ -102,13 +102,13 @@ interface EventCommand {
         }
     }
 
-    data class SetUserName(val oldUserName:String, val newUserName:String):EventCommand{
+    data class SetUserName(val oldUserName: String, val newUserName: String) : EventCommand {
         override fun exec(authority: String, mutableDbCommands: MutableDbCommands) {
             mutableDbCommands.setUserName(authority, oldUserName, newUserName)
         }
     }
 
-    data class SetEmail(val userName:String, val email:String):EventCommand{
+    data class SetEmail(val userName: String, val email: String) : EventCommand {
         override fun exec(authority: String, mutableDbCommands: MutableDbCommands) {
             mutableDbCommands.setEmail(authority, userName, email)
         }
